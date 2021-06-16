@@ -1,6 +1,6 @@
 ![](img/logo.png)
 
-# Workshop CDSB 2021: Análisis avanzado de datos de RNA-seq de célula única con R: desde la documentación a la interpretación de resultados.
+# Workshop CDSB 2021: Análisis avanzado de datos transcriptómicos de célula única con R: desde la documentación a la interpretación de resultados.
 
 ## 9-13 de agosto de 2021
 
