@@ -1,0 +1,154 @@
+---
+title: "Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor"
+author:
+  - name: Leonardo Collado-Torres
+    affiliation:
+    - Lieber Institute for Brain Development, Johns Hopkins Medical Campus
+site: bookdown::bookdown_site
+apple-touch-sin: "icon_192.png"
+apple-touch-icon-size: 192
+favicon: "icon_32.png"
+github-repo: "ComunidadBioInfo/cdsb2021_scRNAseq"
+documentclass: book
+output:
+  bookdown::gitbook
+---
+
+
+![](img/logo.png)
+
+# Información del taller {-}
+
+**9-13 de agosto de 2021**
+
+¡Bienvenidxs al taller _Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor_!
+
+<p align="justify">
+
+En los últimos años, la generación y análisis de transcriptomas de célula única ha cobrado gran importancia para resolver preguntas biológicas. En este taller revisaremos los métodos más recientes para analizar datos de single cell RNA-seq (transcriptómica en células únicas), usando paquetes de R especializados que están disponibles libremente vía Bioconductor. Este taller estará basado en el libro Orchestrating Single Cell Analysis with Bioconductor que fue publicado en Nature Methods y es de los artículos con mayor publicidad en 2020 y 2021.
+
+
+Durante este taller aprenderás las herramientas estadísticas para analizar datos de transcriptómica en células únicas usando Bioconductor. Revisaremos qué es un análisis de datos de célula única, cuáles son las principales diferencias entre el análisis de transcriptomas de célula única y en bulk, cómo documentar tu análisis y algunas herramientas para interpretar tus resultados. 
+</p>
+
+
+## Formato del curso: en línea {-}
+
+<p align="justify">
+Este es un curso digital. Las sesiones y material del curso serán presentados en línea. Esta modalidad incluirá grabaciones de video o audio del material, intercambio de archivos y sesiones de discusión temáticos, ejercicios de auto-evaluación y acceso a los instructores para comentarios durante el curso.
+</p>
+
+
+## ¿Quién es nuestra audiencia? {-}
+
+<p align="justify">
+Este curso está dirigido a personas que desean aprender cómo analizar datos transcriptómicos de célula única usando paquetes de R/Bioconductor .
+</p>
+
+
+## Formulario de registro  {-}
+
+TODO
+
+## Instructores {-}
+
+- [Dr. Leonardo Collado-Torres](https://comunidadbioinfo.github.io/authors/lcollado/)
+
+
+## Ponentes invitados {-}
+
+* [Ricardo Ramirez](TODO)
+
+
+## Temario  {-}
+
+Consulta el calendario de este curso en: <http://bit.ly/calendarcdsb2021>
+
+-	Introducción al RNA-seq de célula única (scRNA-seq).
+-	Introducción a scRNA-seq con Bioconductor
+-	Estructura e importe de datos
+-	Control de calidad
+-	Normalización de datos
+-	Selección de genes
+-	Reducción de dimensiones
+-	Clustering e identificación de genes marcadores
+-	Interpretación de resultados
+
+
+
+## Código de Conducta {-}
+
+Seguiremos el código de conducta de la CDSB México [comunidadbioinfo.github.io/es/codigo-de-conducta/](https://comunidadbioinfo.github.io/es/codigo-de-conducta/) además del código de conducta de Bioconductor [bioconductor.org/about/code-of-conduct/](http://bioconductor.org/about/code-of-conduct/). 
+
+
+## Pre-requisitos {-}
+
+De forma general, 
+
+-	Computadora con al menos 8Gb de memoria y permisos de administrador para instalar paqueterías de R.
+-	Tener instalado R y RStudio en su última versión.
+-	Conocimientos básicos de secuenciación de transcriptomas.
+-	Conocimientos básicos de RStudio (Creación de Rscripts, manejo de la consola de RStudio, manejo del espacio de visualización).
+-	Conocimiento intermedio de R (Manejo de variables, lectura de archivos, creación y manejo de data frames y listas, generación de gráficas básicas, conocimiento sobre cómo instalar paqueterías desde CRAN y Bioconductor).
+
+
+Más específicamente, computadora con al menos 8 GB de memoria RAM, aplicación Zoom https://zoom.us/download, R versión 4.1 instalada de CRAN https://cran.r-project.org/ (ver video de https://youtu.be/6knyHlUe1cM sobre como instalar R en macOS o winOS), RStudio versión 1.4 https://www.rstudio.com/products/rstudio/download/#download, y los siguientes paquetes de R y Bioconductor:
+
+```{r install, eval = FALSE}
+## Para instalar paquetes
+if (!requireNamespace("remotes", quietly = TRUE)) {
+      install.packages("remotes")
+  }
+
+## Para instalar paquetes de Bioconductor
+remotes::install_cran("BiocManager")
+BiocManager::version()
+# El anterior comando debe mostrar que estás usando la versión 3.12
+BiocManager::install("iSEE")
+BiocManager::install("scRNAseq")
+BiocManager::install("scater")
+BiocManager::install("Rtsne")
+BiocManager::install("recount3")
+```
+
+
+## Organizadores {-}
+
+* Comunidad de Desarrolladores de Software en Bioinformática [CDSB](https://twitter.com/CDSBMexico)
+* Red Mexicana de Bioinformática [RMB](https://twitter.com/RBioinformatica)
+* Nodo Nacional de Bioinformática en la UNAM [NNB-CCG](https://twitter.com/nnb_unam)
+
+
+## Información sesión de R{-}
+
+Details on the R version used for making this book. The source code is available at [`lcolladotor/rnaseq_LCG-UNAM_2021`](https://github.com/lcolladotor/rnaseq_LCG-UNAM_2021).
+
+```{r session_packages, eval = TRUE, message = FALSE}
+library("sessioninfo")
+library("iSEE")
+library("scRNAseq")
+library("scater")
+library("Rtsne")
+library("recount3")
+```
+
+```{r session_info}
+## Reproducibility information
+options(width = 120)
+session_info()
+proc.time()
+```
+
+Fecha de la última actualización de esta página: `r Sys.time()`.
+
+## Licencia  {-}
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+
+## Patrocinadores {-}
+
+Agradecemos a nuestros patrocinadores:
+
+<a href="https://comunidadbioinfo.github.io/es/post/cs_and_s_event_fund_award/#.YJH-wbVKj8A"><img src="https://comunidadbioinfo.github.io/post/2021-01-27-cs_and_s_event_fund_award/spanish_cs_and_s_award.jpeg" width="400px" align="center"/></a>
+
