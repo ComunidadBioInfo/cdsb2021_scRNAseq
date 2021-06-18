@@ -71,19 +71,32 @@ TODO
 
 Consulta el calendario de este curso en: <http://bit.ly/calendarcdsb2021>
 
+Día 1
 
 * Introducción a R y RStudio
 * Ejercicio usando `usethis`, `here` y `postcards`
 * Introducción al RNA-seq de célula única (scRNA-seq)
 * Introducción a scRNA-seq con Bioconductor y al libro de OSCA
+
+Día 2
+
 * Estructura e importe de datos
 * _Comunidades RLadies_
 * Control de calidad
+
+Día 3
+
 * Normalización de datos
 * _Foto y actividades de la comunidad_
 * Selección de genes
+
+Día 4
+
 * Reducción de dimensiones
 * Clustering e identificación de genes marcadores
+
+Día 5
+
 * Anotación de clusters de células
 * Análisis de expresión diferencial
 * Plática científica del ponente invitadx
@@ -132,6 +145,13 @@ BiocManager::install("recount3")
 * Nodo Nacional de Bioinformática en la UNAM [NNB-CCG](https://twitter.com/nnb_unam)
 
 
+## Patrocinadores {-}
+
+Agradecemos a nuestros patrocinadores:
+
+<a href="https://comunidadbioinfo.github.io/es/post/cs_and_s_event_fund_award/#.YJH-wbVKj8A"><img src="https://comunidadbioinfo.github.io/post/2021-01-27-cs_and_s_event_fund_award/spanish_cs_and_s_award.jpeg" width="400px" align="center"/></a>
+
+
 ## Información sesión de R{-}
 
 Details on the R version used for making this book. The source code is available at [`lcolladotor/rnaseq_LCG-UNAM_2021`](https://github.com/lcolladotor/rnaseq_LCG-UNAM_2021).
@@ -157,11 +177,3 @@ Fecha de la última actualización de esta página: `r Sys.time()`.
 ## Licencia  {-}
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
-
-
-## Patrocinadores {-}
-
-Agradecemos a nuestros patrocinadores:
-
-<a href="https://comunidadbioinfo.github.io/es/post/cs_and_s_event_fund_award/#.YJH-wbVKj8A"><img src="https://comunidadbioinfo.github.io/post/2021-01-27-cs_and_s_event_fund_award/spanish_cs_and_s_award.jpeg" width="400px" align="center"/></a>
-
