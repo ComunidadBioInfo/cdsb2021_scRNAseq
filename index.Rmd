@@ -52,28 +52,41 @@ TODO
 
 ## Instructores {-}
 
-- [Dr. Leonardo Collado-Torres](https://comunidadbioinfo.github.io/authors/lcollado/)
+- [Dr. Leonardo Collado-Torres](https://twitter.com/lcolladotor)
+- [Dra. Yalbi Balderas](https://twitter.com/yalbi_ibm)
 
 
 ## Ponentes invitados {-}
 
-* [Ricardo Ramirez](TODO)
+* [Ricardo Ramirez Flores](https://twitter.com/roramirezf94)
+* [Ana Beatriz Villaseñor Altamirano](https://twitter.com/AnaBetty2304)
+
+## Ayudantes {-}
+
+* [Jesús Vélez Santiago](https://twitter.com/jvelezmagic)
+* [Mónica Padilla Gálvez](https://twitter.com/mpadilla905)
 
 
 ## Temario  {-}
 
 Consulta el calendario de este curso en: <http://bit.ly/calendarcdsb2021>
 
--	Introducción al RNA-seq de célula única (scRNA-seq).
--	Introducción a scRNA-seq con Bioconductor
--	Estructura e importe de datos
--	Control de calidad
--	Normalización de datos
--	Selección de genes
--	Reducción de dimensiones
--	Clustering e identificación de genes marcadores
--	Interpretación de resultados
 
+* Introducción a R y RStudio
+* Ejercicio usando `usethis`, `here` y `postcards`
+* Introducción al RNA-seq de célula única (scRNA-seq)
+* Introducción a scRNA-seq con Bioconductor y al libro de OSCA
+* Estructura e importe de datos
+* _Comunidades RLadies_
+* Control de calidad
+* Normalización de datos
+* _Foto y actividades de la comunidad_
+* Selección de genes
+* Reducción de dimensiones
+* Clustering e identificación de genes marcadores
+* Anotación de clusters de células
+* Análisis de expresión diferencial
+* Plática científica del ponente invitadx
 
 
 ## Código de Conducta {-}
