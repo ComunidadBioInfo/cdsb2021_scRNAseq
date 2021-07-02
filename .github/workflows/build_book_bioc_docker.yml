@@ -121,13 +121,20 @@ jobs:
           ## Enable installing XML from source if needed
           brew install libxml2
           echo "XML_CONFIG=/usr/local/opt/libxml2/bin/xml2-config" >> $GITHUB_ENV
+
           ## Required to install magick as noted at
           ## https://github.com/r-lib/usethis/commit/f1f1e0d10c1ebc75fd4c18fa7e2de4551fd9978f#diff-9bfee71065492f63457918efcd912cf2
           brew install imagemagick@6
+
           ## For textshaping, required by ragg, and required by pkgdown
           brew install harfbuzz fribidi
+
           ## For installing usethis's dependency gert
           brew install libgit2
+
+          ## For Cairo, based on https://stackoverflow.com/a/55008052/9374370
+          brew install libjpeg
+          brew install libtiff
 
       - name: Install Windows system dependencies
         if: runner.os == 'Windows'
