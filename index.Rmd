@@ -48,23 +48,28 @@ Este curso está dirigido a personas que desean aprender cómo analizar datos tr
 
 ## Formulario de registro  {-}
 
-TODO
+http://congresos.nnb.unam.mx/EBM2021/
 
 ## Instructores {-}
 
-- [Dr. Leonardo Collado-Torres](https://twitter.com/lcolladotor)
-- [Dra. Yalbi Balderas](https://twitter.com/yalbi_ibm)
+* [Leonardo Collado-Torres](https://twitter.com/lcolladotor)
+* [Yalbi Balderas](https://twitter.com/yalbi_ibm)
 
 
-## Ponentes invitados {-}
+## Ponentes e instructores invitados {-}
 
-* [Ricardo Ramirez Flores](https://twitter.com/roramirezf94)
 * [Ana Beatriz Villaseñor Altamirano](https://twitter.com/AnaBetty2304)
+* [Citlali Gil Aguillon](https://twitter.com/argininaa)
+* [Elisa Márquez Zavala](https://twitter.com/naielisha)
+* [Laura Lucila Gómez Romero](https://twitter.com/lawrah20)
+* [Ricardo Ramirez Flores](https://twitter.com/roramirezf94)
 
 ## Ayudantes {-}
 
 * [Jesús Vélez Santiago](https://twitter.com/jvelezmagic)
+* [Kevin Emmanuel Meza Landeros](https://twitter.com/KevsGenomic)
 * [Mónica Padilla Gálvez](https://twitter.com/mpadilla905)
+
 
 
 ## Temario  {-}
@@ -75,8 +80,7 @@ Día 1
 
 * Introducción a R y RStudio
 * Ejercicio usando `usethis`, `here` y `postcards`
-* Introducción al RNA-seq de célula única (scRNA-seq)
-* Introducción a scRNA-seq con Bioconductor y al libro de OSCA
+* Introducción a RNA-seq de célula única (scRNA-seq) con Bioconductor y al libro de OSCA
 
 Día 2
 
