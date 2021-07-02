@@ -204,7 +204,7 @@ _Consulta el calendario de este curso en: <http://bit.ly/calendarcdsb2021>._
 | 14:00-15:30 | Descanso: comida | |
 | 15:30-17:30 | Selección de genes | TBD |
 | 17:30-18:00 | (opcional) Interactúa con lxs instructores y ayudantes | |
-| **Día 4:Agosto 12, 2021** |      |      |
+| **Día 4: Agosto 12, 2021** |      |      |
 | 08:00-09:00 | (opcional) Ayuda con instalación de paquetes de R | |
 | 09:00-11:00 | Reducción de dimensiones | TBD |
 | 11:00-11:30 | Descanso | |
@@ -242,6 +242,8 @@ Las ligas de Zoom están disponibles exclusivamente para lxs participantes de CD
 Agradecemos a nuestros patrocinadores:
 
 <a href="https://comunidadbioinfo.github.io/es/post/cs_and_s_event_fund_award/#.YJH-wbVKj8A"><img src="https://comunidadbioinfo.github.io/post/2021-01-27-cs_and_s_event_fund_award/spanish_cs_and_s_award.jpeg" width="400px" align="center"/></a>
+
+<a href="https://www.r-consortium.org/"><img src="https://www.r-consortium.org/wp-content/uploads/sites/13/2016/09/RConsortium_Horizontal_Pantone.png" width="400px" align="center"/></a>
 
 
 ## Información sesión de R{-}
