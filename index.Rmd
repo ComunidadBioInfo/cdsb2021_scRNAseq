@@ -201,25 +201,25 @@ _Consulta el calendario de este curso en: <http://bit.ly/calendarcdsb2021>._
 | 09:00-10:30 | Normalización de datos | [Ana Beatriz Villaseñor Altamirano](https://twitter.com/AnaBetty2304) |
 | 10:30-11:00 | Foto | |
 | 11:00-11:30 | Descanso | |
-| 11:30-12:30 | Selección de genes | TBD |
+| 11:30-12:30 | Selección de genes | [Yalbi Balderas](https://twitter.com/yalbi_ibm) |
 | 12:30-14:00 | Actividades para construir la comunidad | [Leonardo Collado-Torres](http://comunidadbioinfo.github.io/authors/lcollado/) |
 | 14:00-15:30 | Descanso: comida | |
-| 15:30-17:30 | Selección de genes | TBD |
+| 15:30-17:30 | Selección de genes | [Laura Lucila Gómez Romero](https://twitter.com/lawrah20) |
 | 17:30-18:00 | (opcional) Interactúa con lxs instructores y ayudantes | |
 | **Día 4: Agosto 12, 2021** |      |      |
 | 08:00-09:00 | (opcional) Ayuda con instalación de paquetes de R | |
-| 09:00-11:00 | Reducción de dimensiones | TBD |
+| 09:00-11:00 | Reducción de dimensiones | [Laura Lucila Gómez Romero](https://twitter.com/lawrah20) |
 | 11:00-11:30 | Descanso | |
-| 11:30-14:00 | Clustering | TDB |
+| 11:30-14:00 | Clustering | [Laura Lucila Gómez Romero](https://twitter.com/lawrah20) |
 | 14:00-15:30 | Descanso: comida | |
-| 15:30-17:30 | Identificación de genes marcadores | TBD |
+| 15:30-17:30 | Identificación de genes marcadores | [Yalbi Balderas](https://twitter.com/yalbi_ibm) |
 | 17:30-18:30 | CDSB 2021: Evento social remoto | |
 | **Día 5: Agosto 13, 2021** |      |      |
 | 08:00-09:00 | (opcional) Ayuda con instalación de paquetes de R | |
-| 09:00-10:30 | Anotación de clusters de células | TBD |
+| 09:00-10:30 | Anotación de clusters de células | [Yalbi Balderas](https://twitter.com/yalbi_ibm) |
 | 10:30-11:00 | Evaluación del taller | [Irma Martínez Flores](https://www.ccg.unam.mx/irma-martinez-flores/) y [Shirley Alquicira Hernández](https://www.ccg.unam.mx/shirley-alquicira-hernandez/) |
 | 11:00-11:30 | Descanso | |
-| 11:30-14:00 | Análisis de expresión diferencial | TBD |
+| 11:30-14:00 | Análisis de expresión diferencial | [Leonardo Collado-Torres](http://comunidadbioinfo.github.io/authors/lcollado/) |
 | 14:00-15:30 | Descanso: comida | |
 | 15:30-17:00 | Plática científica y sesión de preguntas | [Ricardo Ramirez Flores](https://twitter.com/roramirezf94) |
 | 17:00-17:30 | Clausura y recordatorio de la CDSB |      |
