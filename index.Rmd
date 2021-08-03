@@ -280,6 +280,8 @@ library("iSEE")
 library("pryr")
 library("sessioninfo")
 library("scPipe")
+library("PCAtools")
+library("bluster")
 ```
 
 ```{r session_info}

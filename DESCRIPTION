@@ -37,11 +37,12 @@ Imports:
     Rtsne,
     pheatmap,
     fossil,
-    ggplot2,
     cowplot,
     RColorBrewer,
     plotly,
     iSEE,
     pryr,
-    scPipe
+    scPipe,
+    PCAtools,
+    bluster
 VignetteBuilder: knitr
