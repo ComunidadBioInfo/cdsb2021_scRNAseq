@@ -1,12 +1,88 @@
-# Clustering
+---
+title: "**Clustering**"
+subtitle: "**Bioconductor** para datos transcriptómicos de célula única (**scRNA-seq**) -- **CDSB2020**"  
+author: "Laura Gómez-Romero"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+    includes:
+      in_header:
+        - 'gtag.js'
+---
 
-Instructora: [Laura Gómez-Romero](http://lgomez.github.io/)
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
 
-## Diapositivas de Peter Hickey
+```{r xaringan-themer, include=FALSE}
+library(xaringanthemer)
+solarized_dark(
+  code_font_family = "Fira Code",
+  code_font_url    = "https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css"
+)
+```
+
+class: inverse
+
+.center[
+
+<a href="https://osca.bioconductor.org/"><img src="https://raw.githubusercontent.com/Bioconductor/OrchestratingSingleCellAnalysis-release/master/images/cover.png" style="width: 30%"/></a>
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+
+]
+
+.footnote[Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2020')` o revisalos en l??nea v??a [**comunidadbioinfo.github.io/cdsb2020**](http://comunidadbioinfo.github.io/cdsb2020).]
+
+```{css, echo = FALSE}
+/* From https://github.com/yihui/xaringan/issues/147  */
+.scroll-output {
+  height: 80%;
+  overflow-y: scroll;
+}
+
+/* https://stackoverflow.com/questions/50919104/horizontally-scrollable-output-on-xaringan-slides */
+pre {
+  max-width: 100%;
+  overflow-x: scroll;
+}
+
+/* From https://github.com/yihui/xaringan/wiki/Font-Size */
+.tiny{
+  font-size: 40%
+}
+
+/* From https://github.com/yihui/xaringan/wiki/Title-slide */
+.title-slide {
+  background-image: url(https://raw.githubusercontent.com/Bioconductor/OrchestratingSingleCellAnalysis/master/images/Workflow.png);
+  background-size: 33%;
+  background-position: 0% 100%
+}
+```
+
+---
+
+# Diapositivas de Peter Hickey
 
 Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1YTmP5QLxRg5JIT_bnQtMADg3eszsKEz7l5u6rOMeQ1A/edit)
 
-## Dataset ilustrativo: 10X PBMC4k no filtrado
+Plantilla desarrollada por: "[Leonardo Collado-Torres](http://lcolladotor.github.io/)"
+
+
+---
+
+# Dataset ilustrativo: 10X PBMC4k no filtrado
+
+---
+
+# Dataset ilustrativo: 10X PBMC4k no filtrado
 
 ```{r, warning=FALSE, message=FALSE}
 library(BiocFileCache)
@@ -27,6 +103,10 @@ Descripción [aquí](https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-ge
 
 *Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)*
 
+---
+
+# Dataset ilustrativo: 10X PBMC4k no filtrado
+
 ```{r, warning=FALSE, message=FALSE}
 # gene-annotation
 library(scater)
@@ -41,6 +121,10 @@ set.seed(100)
 e.out <- emptyDrops(counts(sce.pbmc))
 sce.pbmc <- sce.pbmc[,which(e.out$FDR <= 0.001)]
 ```
+
+---
+
+# Dataset ilustrativo: 10X PBMC4k no filtrado
 
 ```{r, warning=FALSE, message=FALSE}
 # quality-control
@@ -58,12 +142,20 @@ sce.pbmc <- computeSumFactors(sce.pbmc, cluster=clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 ```
 
+---
+
+# Dataset ilustrativo: 10X PBMC4k no filtrado
+
 ```{r, warning=FALSE, message=FALSE}
 # variance modelling
 set.seed(1001)
 dec.pbmc <- modelGeneVarByPoisson(sce.pbmc)
 top.pbmc <- getTopHVGs(dec.pbmc, prop=0.1)
 ```
+
+---
+
+# Dataset ilustrativo: 10X PBMC4k no filtrado
 
 ```{r, warning=FALSE, message=FALSE}
 # dimensionality-reduction
@@ -78,7 +170,9 @@ set.seed(1000000)
 sce.pbmc <- runUMAP(sce.pbmc, dimred="PCA")
 ```
 
-## Motivación
+---
+
+# Motivación
 
 **Clustering** es un procedimiento **no supervisado** par definir grupos de células con perfiles de expresión similares
 
@@ -86,7 +180,9 @@ Su propósito principal es resumir los datos en un formato digerido susceptible 
 
 Nos permite asignar **etiquetas** (por ejemplo, tipos celulares) a las células
 
-## ¿Por qué no realizamos el clustering sobre las coordenadas de t-SNE/UMAP?
+---
+
+# ¿Por qué no realizamos el clustering sobre las coordenadas de t-SNE/UMAP?
 
 Las técnicas de t-SNE/UMAP han comprimido datos altamente multi-dimensionales en dos dimensiones
 
@@ -94,7 +190,11 @@ Esta compresión inevitablemente ha provocado la perdida de información
 
 Por lo tanto, agrupamos sobre los PCs y después visualizamos las identidades de los clusters en la gráfica t-SNE/UMAP
 
-## ¿Cuál es el verdadero clustering?
+---
+
+# ¿Cuál es el verdadero clustering?
+
+---
 
 
 <div>
@@ -102,6 +202,10 @@ Por lo tanto, agrupamos sobre los PCs y después visualizamos las identidades de
 <img src="img/real-clustering.png" width="800px">
 </p>
 </div>
+
+---
+
+# ¿Cuál es el verdadero clustering?
 
 **Un cluster no implica un tipo celular**
 
@@ -111,17 +215,29 @@ Nosotros podemos definir tantos clusters como queramos y podemos utilizar el alg
 
 Preguntar por el mejor clustering es similar a preguntar cuál es la mejor magnificación en un microscopio sin contenido
 
-## Clustering basado en grafos
+---
+
+# Clustering basado en grafos
 
 
-### Antecedentes
+---
+
+# Antecedentes
 
 El clustering basado en grafos fue popularizado (más no inventado) por su uso en Seurat
 
 **Objetivo: Construir un grafo en el que cada nodo es una célula que está conectada a sus *vecinos más cercanos* en el espacio multidimensional**
 
 
-### Gráfica de los *k* vecinos más cercanos (k-nearest neighbour -KNN- graph)
+---
+
+# Gráfica de los *k* vecinos más cercanos (k-nearest neighbour -KNN- graph)
+
+Ilustremos como funciona para 20 células
+
+---
+
+# Gráfica KNN
 
 Ilustremos como funciona para 20 células
 
@@ -131,11 +247,23 @@ Ilustremos como funciona para 20 células
 </p>
 </div>
 
+---
+
+# Gráfica KNN
+
+Ilustremos como funciona para 20 células
+
 <div>
 <p style = 'text-align:center;'>
 <img src="img/knn2.png" width="400px">
 </p>
 </div>
+
+---
+
+# Gráfica KNN
+
+Ilustremos como funciona para 20 células
 
 <div>
 <p style = 'text-align:center;'>
@@ -143,13 +271,21 @@ Ilustremos como funciona para 20 células
 </p>
 </div>
 
+---
+
+# Gráfica KNN
+
+Ilustremos como funciona para 20 células
+
 <div>
 <p style = 'text-align:center;'>
 <img src="img/knn19.png" width="400px">
 </p>
 </div>
 
-### Gráfica de los vecinos más próximos compartidos (SNN)
+---
+
+# Gráfica de los vecinos más próximos compartidos (SNN)
 
 De una gráfica KNN se puede construir una grafica SNN
 
@@ -159,23 +295,35 @@ De una gráfica KNN se puede construir una grafica SNN
 </p>
 </div>
 
+---
+
+# Gráfica de los vecinos más próximos compartidos (SNN)
+
+De una gráfica KNN se puede construir una grafica SNN
+
 Podemos asignar **pesos** a cada arista del grafo, basándonos en la similaridad de las células involucradas, dándole pesos más altos a células que están más cercanamente relacionadas
 
-### Gráfica SNN con pesos en las aristas
+---
+
+# Gráfica SNN con pesos en las aristas
 
 <div>
 <p style = 'text-align:center;'>
 <img src="img/knn-snn-3.png" width="800px">
 </p>
 </div>
+---
 
-### Pasando de una gráfica SNN pesada cluster mediante detección de comunidades
+# Pasando de una gráfica SNN pesada cluster mediante detección de comunidades
 
 A partir de una gráfica SNN pesada podemos aplicar algoritmos para identificar **comunidades** de células
 
 Comunidades son grupos de células que están **más conectadas a células en el mismo grupo que lo que están a células de un grupo diferente**
 
 Cada comunidad representa un cluster
+---
+
+# Pasando de una gráfica SNN pesada a clusters mediante detección de comunidades
 
 <div>
 <p style = 'text-align:center;'>
@@ -183,7 +331,9 @@ Cada comunidad representa un cluster
 </p>
 </div>
 
-### Resumen de clustering basado en grafos
+---
+
+# Resumen de clustering basado en grafos
 
 * La construcción y búsqueda de una red KNN es rápida, por lo tanto, es escalable para datasets grandes
 * Debes evitar obtener conclusiones fuertes acerca de la forma de los clusters o la distribución de células dentro de cada cluster
@@ -191,14 +341,18 @@ Cada comunidad representa un cluster
 
 Después de la construcción del grafo, no se almacena información adicional más alla de las células vecinas. Esto puede producir subclusters artificiales en regiones con muchas células
 
-## Implementación
+---
+
+# Implementación
 
 * ¿Cuántas céulas vecinas debo considerar durante la construcción del grafo?
 * ¿Cómo debo pesar las aristas?
 * ¿Cuál algoritmo de detección de comunidades se debe usar para definir los clusters?
 
 
-## Clustering basado en grafos
+---
+
+# Clustering basado en grafos
 
 ```{r, warning=FALSE, message=FALSE}
 library(scran)
@@ -207,6 +361,10 @@ g <- buildSNNGraph(sce.pbmc, k=10, use.dimred = "PCA")
 # Identify communities using the Walktrap method
 clust <- igraph::cluster_walktrap(g)$membership
 ```
+
+---
+
+# Clustering basado en grafos
 
 ```{r, warning=FALSE, message=FALSE, , fig.dim = c(6, 4)}
 # Visualise clusters on t-SNE plot
@@ -217,13 +375,17 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by="cluster")
 
 **¿Qué pasa si utilizas una k más grande o más pequeña?**
 
-### Detalles adicionales del ejemplo previo
+---
+
+# Detalles adicionales del ejemplo previo
 
 * KNNs se basan en la distancia Euclideana entre células
 * Las aristas se crean entre todos los pares de células que comparten por lo menos un vecino
 * Usa el esquema de peso de: [Xu and Su (2015)](https://pubmed.ncbi.nlm.nih.gov/25805722/)
 
-### Eligiendo un valor de *k*
+---
+
+# Eligiendo un valor de *k*
 
 * El valor de *k* puede ser toscamente interpretado como el tamaño anticipado de la subpoblación más pequeña
 
@@ -231,7 +393,9 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by="cluster")
 
 * Esto incrementa el riesgo de que la subpoblación en cuestión no forme su propio cluster
 
-### Estilo Seurat
+---
+
+# Estilo Seurat
 
 ```{r, warning=FALSE, message=FALSE , fig.dim = c(6, 4)}
 # Jaccard-based weights followed by Louvain clustering
@@ -241,8 +405,9 @@ clust2 <- igraph::cluster_louvain(g)$membership
 sce.pbmc$cluster2 <- factor(clust2)
 plotReducedDim(sce.pbmc, "TSNE", colour_by="cluster2")
 ```
+---
 
-### Clustering basado en un grafo 
+# Clustering basado en un grafo 
 
 **Pipelines basados en Seurat:**
 * Pesos basados en Jacard
@@ -254,13 +419,16 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by="cluster2")
 
 Para detalles sobre la seleccion de parámetros y comparaciones: [visitar esta página](https://osca.bioconductor.org/clustering.html#clustering-graph)
 
+---
+
 <div>
 <p style = 'text-align:center;'>
 <img src="img/seurat-scran.png" width="800px">
 </p>
 </div>
 
-### Evaluando la separación de los clusters
+---
+# Evaluando la separación de los clusters
 
 **Modularidad** es una métrica natural para evaluar la separación entre comunidades/clusters
 
@@ -268,6 +436,8 @@ Definido como la diferencia (escalada) entre el peso total observado de las aris
 
 Nosotros computaremos un **score de modularidad** para cada cluster (usando las tasas en vez de las diferencias)
 
+---
+# Evaluando la separación de los clusters
 
 ```{r, warning=FALSE, message=FALSE}
 library(bluster)
@@ -275,6 +445,7 @@ ratio <- pairwiseModularity(g, clust, as.ratio=TRUE)
 dim(ratio)
 ```
 
+---
 
 ```{r, warning=FALSE, message=FALSE, fig.dim = c(6, 4)}
 library(pheatmap)
@@ -287,8 +458,13 @@ Un dataset que contiene clusters bien separados debería contener la mayoría de
 
 Para más detalles sobre evaluación de la separación entre clusters [visite esta página](https://osca.bioconductor.org/clustering.html#assessing-cluster-separation)
 
+---
 
-## Otros métodos de clustering
+# Otros métodos de clustering
+
+---
+
+# Otros métodos de clustering
 
 **Clustering por k-means**
 
@@ -302,13 +478,23 @@ Para más detalles sobre evaluación de la separación entre clusters [visite es
  + *Produce un dendograma (árbol) representando las células y la similaridad entre subpoblaciones a varias resoluciones*
  - Demasiado lento para correrse en algo más grande que los datasets más pequeños de scRNA-seq
  
-## Evaluando estabilidad de los clusters
+---
+
+# Evaluando estabilidad de los clusters
+
+---
+
+# Evaluando estabilidad de los clusters
 
 Una propiedad deseable de un cluster dado es que éste sea estable a las perturbaciones en los datos de entrada:
 * Pequeños cambios al procesamiento no cambiarán el resultado
 * Esto incrementa la probabilida de que las conclusiones puedan ser replicadas en un estudio independiente
 
 Uno puede hacer un proceso de **bootstrap** para evaluar la estabilidad de un algoritmo de clustering en un dataset dado
+
+---
+
+# Evaluando estabilidad de los clusters
 
 ```{r, warning=FALSE, message=FALSE}
 myClusterFUN <- function(x) {
@@ -324,10 +510,18 @@ coassign <- bootstrapStability(sce.pbmc, FUN=myClusterFUN,
 
 **Coasignación** es la probabilidad de que células elegidas al azar del cluster X y Y sean asignadas al mismo cluster en la réplica del proceso de bootstrap
 
+---
+
+# Evaluando estabilidad de los clusters
+
 ```{r, warning=FALSE, message=FALSE , fig.dim = c(6, 4)}
 pheatmap(coassign, cluster_row=FALSE, cluster_col=FALSE,
   color=rev(viridis::magma(100)))
 ```
+
+---
+
+# Evaluando estabilidad de los clusters
 
 *Probabilidad alta de coasignación indica que X no es estable con respecto a su separación de Y.
 *Queremos altas probabilidades de coasignación en la diagonal
@@ -336,13 +530,21 @@ pheatmap(coassign, cluster_row=FALSE, cluster_col=FALSE,
 
 *Pobre separación puede ser altamente estable*
 
-## Subclustering
+---
 
+# Subclustering
+
+---
+
+# Subclustering
 
 * Mejora la resolucón al repetir el proceso de *feature selection* y *clustering* dentro de un único cluster
 
 * Se enfoca en los HGVs y PCs que son los más relevantes para un cluster específico
 
+---
+
+# Subclustering
 
 ```{r, warning=FALSE, message=FALSE , fig.dim = c(6, 4)}
 g.full <- buildSNNGraph(sce.pbmc, use.dimred="PCA")
@@ -354,6 +556,9 @@ plotExpression(sce.pbmc, features=c("CD3E", "CCR7", "CD69", "CD44"),
 
 *CD3E, CCR7, CD69, y CD44 son marcadores de células T de memoria*. Dentro de las  células T de memoria, ¿dónde están las subpoblaciones CD4+ y CD8+?
 
+---
+
+# Subclustering
 ```{r, warning=FALSE, message=FALSE}
 # Repeating modelling and PCA on the subset of cells we have 
 # identified as memory T-cells (cluster 6).
@@ -368,6 +573,9 @@ clust.memory <- igraph::cluster_walktrap(g.memory)$membership
 sce.memory$clust.memory <- factor(clust.memory)
 ```
 
+---
+
+# Subclustering
 ```{r, warning=FALSE, message=FALSE, fig.dim = c(6, 4)}
 plotExpression(sce.memory, features=c("CD8A", "CD4"),
   x="clust.memory")
@@ -375,11 +583,17 @@ plotExpression(sce.memory, features=c("CD8A", "CD4"),
 
 Expresión de CD4 es bajo, por lo tanto, su cambio es modesto, pero la interpretación es clara
 
+---
+
+# Subclustering
+
 **scran::quickSubCluster()** ciclará sobre los clusters y realizará el proceso de subclustering de acuerdo a una función especificada por el usuario. Esto asume que la misma función es apropiada para todos los clusters
 
 Si tipos celulares o estados celulares se extienden sobre las fronteras de los clusters, entonces un subcluster podría representar contaminación de un tipo celular en un cluster separado
 
-## Resumen y recomendaciones
+---
+
+# Resumen y recomendaciones
 
 **Un cluster no implica un tipo celular**
 
@@ -389,6 +603,10 @@ Nosotros podemos definir tantos clusters como queramos y podemos utilizar el alg
 
 Preguntar por el mejor clustering es similar a preguntar cuál es la mejor magnificación en un microscopio sin contenido
 
+---
+
+# Resumen y recomendaciones
+
 * Clustering basado en grafos es rápido y evita tener que hacer suposiciones fuertes sobre la forma de los clusters o la distribución de las células dentro de cada cluster:
  1. **scran::buildSNNGraph() **
  2. **igraph::cluster_walktrap()** o **igraph::cluster_louvain()**
@@ -396,9 +614,9 @@ Preguntar por el mejor clustering es similar a preguntar cuál es la mejor magni
 **Modularidad y estabilidad** de los clusters son diagnósticos útiles
 
 El proceso de **subclustering** podría mejorar la resolución dentro de clusters grandes
+---
 
-
-## Donde estamos
+# Donde estamos
 
 
 <div>
@@ -406,3 +624,39 @@ El proceso de **subclustering** podría mejorar la resolución dentro de cluster
 <img src="img/resumen-clustering.pdf" width="500px" heigth="400px">
 </p>
 </div>
+
+---
+
+class: middle
+
+.center[
+
+# ¡Gracias!
+
+Las diapositivias fueron hechas con el paquete de R [**xaringan**](https://github.com/yihui/xaringan) y configuradas con [**xaringanthemer**](https://github.com/gadenbuie/xaringanthemer).
+
+Este curso está basado en el libro [**Orchestrating Single Cell Analysis with Bioconductor**](https://osca.bioconductor.org/) de [Aaron Lun](https://www.linkedin.com/in/aaron-lun-869b5894/), [Robert Amezquita](https://robertamezquita.github.io/), [Stephanie Hicks](https://www.stephaniehicks.com/) y [Raphael Gottardo](http://rglab.org), además del [**curso de scRNA-seq para WEHI**](https://drive.google.com/drive/folders/1cn5d-Ey7-kkMiex8-74qxvxtCQT6o72h) creado por [Peter Hickey](https://www.peterhickey.org/).
+
+Puedes encontrar los archivos para este taller en  [comunidadbioinfo/cdsb2021](https://github.com/comunidadbioinfo/cdsb2021). 
+
+Instructor: [**Laura Gómez-Romero**](http://lgomez.github.io/).
+
+]
+
+.footnote[Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2020')` o revísalos en línea vía [**comunidadbioinfo.github.io/cdsb2021**](http://comunidadbioinfo.github.io/cdsb2021).]
+
+---
+
+# Detalles de la sesión de R
+
+
+.scroll-output[
+.tiny[
+
+```{r 'reproducibility', cache = TRUE, dependson=knitr::all_labels()}
+options(width = 120)
+sessioninfo::session_info()
+```
+
+
+]]

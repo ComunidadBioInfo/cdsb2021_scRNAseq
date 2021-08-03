@@ -1,12 +1,85 @@
-# Reducción de dimensiones
+---
+title: "**Reducción de dimensiones	**"
+subtitle: "**Bioconductor** para datos transcriptómicos de célula única (**scRNA-seq**) -- **CDSB2020**"  
+author: "Laura Gómez-Romero"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+    includes:
+      in_header:
+        - 'gtag.js'
+---
 
-Instructora: [Laura Gómez-Romero](http://lgomez.github.io/)
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
 
-## Diapositivas de Peter Hickey
+```{r xaringan-themer, include=FALSE}
+library(xaringanthemer)
+solarized_dark(
+  code_font_family = "Fira Code",
+  code_font_url    = "https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css"
+)
+```
 
-Contenido adapatado de: [aquí](https://docs.google.com/presentation/d/12CjvQ1beZVeCcMQqD6ptzd9YUHbHOksvy3lt_rvWyRs/edit)
+class: inverse
 
-## Motivación
+.center[
+
+<a href="https://osca.bioconductor.org/"><img src="https://raw.githubusercontent.com/Bioconductor/OrchestratingSingleCellAnalysis-release/master/images/cover.png" style="width: 30%"/></a>
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+
+]
+
+.footnote[Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2021')` o revisalos en línea vía [**comunidadbioinfo.github.io/cdsb2021**](http://comunidadbioinfo.github.io/cdsb2020).]
+
+```{css, echo = FALSE}
+/* From https://github.com/yihui/xaringan/issues/147  */
+.scroll-output {
+  height: 80%;
+  overflow-y: scroll;
+}
+
+/* https://stackoverflow.com/questions/50919104/horizontally-scrollable-output-on-xaringan-slides */
+pre {
+  max-width: 100%;
+  overflow-x: scroll;
+}
+
+/* From https://github.com/yihui/xaringan/wiki/Font-Size */
+.tiny{
+  font-size: 40%
+}
+
+/* From https://github.com/yihui/xaringan/wiki/Title-slide */
+.title-slide {
+  background-image: url(https://raw.githubusercontent.com/Bioconductor/OrchestratingSingleCellAnalysis/master/images/Workflow.png);
+  background-size: 33%;
+  background-position: 0% 100%
+}
+```
+
+
+---
+
+# Diapositivas de Peter Hickey
+
+Contenido adapatado de: [aqu??](https://docs.google.com/presentation/d/12CjvQ1beZVeCcMQqD6ptzd9YUHbHOksvy3lt_rvWyRs/edit)
+
+Plantilla desarrollada por: "[Leonardo Collado-Torres](http://lcolladotor.github.io/)"
+
+
+---
+
+# Motivaci??n
 
 El siguiente paso en el análisis de scRNA-seq usualmente consiste en identificar grupos de células "similares"
 
@@ -23,7 +96,9 @@ Si tuviéramos un dataset con dos genes podríamos hacer una gráfica de dos dim
 
 Pero... tenemos decenas de miles de genes : **Reducción de dimensionalidad**
 
-## Reducción de dimensionalidad
+---
+
+# Reducción de dimensionalidad
 
 Es poible porque la expresión de diferentes genes estará correlacionada si estos genes son afectados por el mismo proceso biológico.
 
@@ -35,8 +110,13 @@ Por lo tanto, no necesitamos almacenar información independiente para genes ind
 - Reduce el ruido al "promediar" mútiples genes obteniendo una representación mós precisa de los patrones en los datos
 - Permite una graficación efectiva en dos dimensiones
 
-## Dataset ilustrativo: Zeisel
+---
 
+# Dataset ilustrativo: Zeisel
+
+---
+
+# Dataset ilustrativo: Zeisel
 
 ```{r, warning=FALSE, message=FALSE}
 library(scRNAseq)
@@ -47,7 +127,11 @@ Estudio de tipos celulares en el cerebro de ratón (oligodendrocitos, microglia,
 
 Descripción [aquí](https://osca.bioconductor.org/zeisel-mouse-brain-strt-seq.html)
 
-*Zeisel, A. et al. Brain structure. Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq. Science 347, 1138-1142 (2015)*
+*Zeisel, A. et al. Brain structure. Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq. Science 347, 1138???1142 (2015)*
+
+---
+
+# Dataset ilustrativo: Zeisel
 
 ```{r , warning=FALSE, message=FALSE}
 # Quality control
@@ -59,6 +143,10 @@ qc <- quickPerCellQC(stats,
   percent_subsets=c("altexps_ERCC_percent","subsets_Mt_percent"))
 sce.zeisel <- sce.zeisel[,!qc$discard]
 ```
+
+---
+
+# Dataset ilustrativo: Zeisel
 
 ```{r , warning=FALSE, message=FALSE}
 # normalization
@@ -73,9 +161,13 @@ sce.zeisel <- logNormCounts(sce.zeisel)
 dec.zeisel <- modelGeneVarWithSpikes(sce.zeisel, 
   "ERCC")
 ```
+---
 
-## Dataset ilustrativo: 10x PBMC4k no filtradas
+# Dataset ilustrativo: 10x PBMC4k no filtradas
 
+---
+
+# Dataset ilustrativo: 10x PBMC4k no filtradas
 
 ```{r , warning=FALSE, message=FALSE}
 library(BiocFileCache)
@@ -84,6 +176,9 @@ raw.path <- bfcrpath(bfc, file.path("http://cf.10xgenomics.com/samples",
   "cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz"))
 untar(raw.path, exdir=file.path(tempdir(), "pbmc4k"))
 ```
+---
+
+# Dataset ilustrativo: 10x PBMC4k no filtradas
 
 ```{r , warning=FALSE, message=FALSE}
 library(DropletUtils)
@@ -99,6 +194,11 @@ Descripción [aquí](https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-ge
 
 *Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)*
 
+
+---
+
+# Dataset ilustrativo: 10x PBMC4k no filtradas
+
 ```{r, warning=FALSE, message=FALSE }
 # gene-annotation
 library(scater)
@@ -113,6 +213,9 @@ set.seed(100)
 e.out <- emptyDrops(counts(sce.pbmc))
 sce.pbmc <- sce.pbmc[,which(e.out$FDR <= 0.001)]
 ```
+---
+
+# Dataset ilustrativo: 10x PBMC4k no filtradas
 
 ```{r , warning=FALSE, message=FALSE}
 # quality-control
@@ -129,6 +232,9 @@ clusters <- quickCluster(sce.pbmc)
 sce.pbmc <- computeSumFactors(sce.pbmc, cluster=clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 ```
+---
+
+# Dataset ilustrativo: 10x PBMC4k no filtradas
 
 ```{r }
 # variance modelling
@@ -138,15 +244,23 @@ top.pbmc <- getTopHVGs(dec.pbmc, prop=0.1)
 ```
 
 
-## Análisis de Componentes Principales
+---
+
+# Análisis de Componentes Principales
+
+---
+
+# Análisis de Componentes Principales
 
 PCA es el arma principal de la reducción de dimensionalidad
 
-**PCA descubre las combinaciones (lineales) de "features" que capturan la cantidad más grande de variación**
+**PCA descubre las combinaciones (lineales) de "features" que capturan la cantidad m??s grande de variación**
 
 In PCA, la primer combinación lineal (componente principal) se elige tal que permite capturar la mayor varianza a través de las células. El siguiente PC se elige tal que es "ortogonal" al primero y captura la cantidad más grande de la variación restante, y así sucesivamente...
 
-### PCA aplicado a datos de scRNA-seq
+---
+
+# PCA aplicado a datos de scRNA-seq
 
 Podemos realizar reducción de dimensionalidad al aplicar PCA en la matriz de cuentas transformadas (log-counts matrix) y restringiendo los análisis posteriores a los primeros PCs **(top PCs)**
 
@@ -154,7 +268,9 @@ Podemos realizar reducción de dimensionalidad al aplicar PCA en la matriz de cu
 * La técnica de PCA tiene muchas propiedades teóricas bien estudiadas. 
 * Hay varias formas rápidas de realizar PCA en datasets grandes.
 
-### Suposiciones de PCA aplicadas a los datos de scRNA-seq
+---
+
+# Suposiciones de PCA aplicadas a los datos de scRNA-seq
 
 * Los procesos biológicos afectan múltiples genes en una manera coordinada
 * Los primeros PCs probablemente representan la estructura biológica dado que más variación puede ser capturada considerando el comportamiento correlacionado de muchos genes
@@ -162,6 +278,9 @@ Podemos realizar reducción de dimensionalidad al aplicar PCA en la matriz de cu
 
 **Consideración: Los primeros PCs capturarán "batch effects" (efectos de lote) que afectan muchos genes en una manera coordinada**
 
+---
+
+# Análisis de componentes principales
 
 ```{r , warning=FALSE, message=FALSE}
 library(scran)
@@ -175,15 +294,22 @@ sce.zeisel <- runPCA(sce.zeisel,
 
 Por default, **runPCA()** usa un método rápido aproximado que realiza simulaciones, por lo tanto, es necesario *'configurar la semilla'* para obtener resultados reproducibles
 
-### Eligiendo el número de PCs
+---
+
+# Eligiendo el número de PCs
+
+---
+
+# Eligiendo el número de PCs
 
 *Esta elección en análoga a la elección del numero de HVGs. Elegir más PCs evitará descartar señal biológica a expensas de retener más ruido*
 
 * Es común seleccionar un número de PCs "razonable" pero **arbitrario** (10-50), continuar con el análisis y regresar para checar la robustez de los resultados en cierto rango de valores
 
 Ahora exploraremos algunas estrategias guiadas por los datos (data-driven) para hacer esta selección
+---
 
-### Usando el punto del codo
+# Usando el punto del codo
 
 ```{r, warning=FALSE, message=FALSE, fig.dim = c(5, 4)}
 library(PCAtools)
@@ -195,7 +321,9 @@ abline(v=chosen.elbow, col="red")
 
 Una heurística simple es elegir el número de PCs basado en el **porcentaje de varianza explicado** por PCs sucesivos
 
-### Basados en la estructura de la población
+---
+
+# Basados en la estructura de la población
 
 ```{r }
 choices <- getClusteredPCs(reducedDim(sce.zeisel))
@@ -208,6 +336,10 @@ Supongamos que esperamos *d* subpoblaciones de células, en ese caso, necesitamo
 
 Pero... en un escenario real realmente no sabes cuántas poblaciones hay...
 
+---
+
+# Basados en la estructura de la población
+
 - Intenta con un rango para *d* y únicamente considera valores que produzcan a lo más *d+1* clusters
 - Cuando se seleccionan más clusters con menos dimensiones se produce 'overclustering'
 - Elige una *d* que maximice el número de clusters sin caer en 'overclustering'
@@ -216,7 +348,9 @@ Pero... en un escenario real realmente no sabes cuántas poblaciones hay...
 
 **Desventaja**: Hace suposiciones fuertes sobre la naturaleza de las diferencias biológicas entre los clusters, y de hecho supone la existencia de clusters, los cuales podrían no existir en procesos biológicos como la diferenciación
 
-### Juntando todo
+---
+
+# Juntando todo
 
 ```{r }
 set.seed(100)
@@ -232,8 +366,9 @@ reducedDim(sce.zeisel, "PCA_clusters") <- reducedDim(
   sce.zeisel, "PCA")[,1:chosen.clusters]
 ```
 
-### Usando el ruido técnico
+---
 
+# Usando el ruido t??cnico
 ```{r, warning=FALSE, message=FALSE }
 library(scran)
 set.seed(111001001)
@@ -247,15 +382,22 @@ Conserva todos los PCs hasta que el % de variación explicado alcance algun lím
 
 Por default, denoisePCA() realiza algunas simulaciones, por lo tanto necesitamos *'configurar la semilla'* para obtener resultados reproducibles
 
+---
+
+# Usando el ruido técnico
+
 ```{r }
 dim(reducedDim(denoised.pbmc, "PCA"))
 ```
 
-La dimensionalidad del output es el límite inferior para el número de PCs requeridos para explicar toda la variación biológica. Lo que significa que cualquier número menor de PCs definitivamente descartaría algún aspecto de la señal biológica
+La dimensionalidad del output es el límite inferior para el número de PCs requeridos para explicar toda la variación biológica. Lo que significa que cualquier número menor de PCs definitivamente descartar?? algún aspecto de la señal biológica
 
 **Esto no grantiza que los PCs retenidos capturen toda la señal biológica**
 
 *Esta técnica usualmente retiene más PCs que el método del punto del codo*
+---
+
+# Usando el ruido técnico
 
 ```{r }
 set.seed(001001001)
@@ -268,6 +410,10 @@ dim(reducedDim(denoised.zeisel))
 
 *Los datos de cerebro de Zeisel están cerca de este límite superior*
 
+---
+
+# Usando el ruido técnico
+
 ```{r }
 dec.pbmc2 <- modelGeneVar(sce.pbmc)
 denoised.pbmc2 <- denoisePCA(sce.pbmc, 
@@ -279,19 +425,25 @@ dim(reducedDim(denoised.pbmc2))
 
  *El dataset PBMC está cerca de este límite inferior*
 
-## Reducción de dimensionalidad para visualización
+---
+# Reducción de dimensionalidad para visualización
 
-### Motivación
+---
+# Motivación
 
 Clustering y otros algoritmos operaran fácilmente sobre 10-50 (a lo más) PCs, pero ese número es aún demasiado para la visualización
 
 Por lo tanto, necesitamos estrategias adicionales para la reducción de dimensionalidad si queremos visualizar los datos
 
-### Visualizando con PCA
+---
+# Visualizando con PCA
 
 ```{r, fig.dim = c(6, 4) }
 plotReducedDim(sce.zeisel, dimred="PCA")
 ```
+
+---
+# Visualizando con PCA
 
 ```{r , fig.dim = c(6, 4)}
 plotReducedDim(sce.zeisel, dimred="PCA",
@@ -300,12 +452,16 @@ plotReducedDim(sce.zeisel, dimred="PCA",
 
 PCA es una técnica lineal, por lo tanto, no es eficiente para comprimir diferencias en más de 2 dimensiones en los primeros 2 PCs
 
-### Retos y resumen de la visualización con PCA
+---
+# Retos y resumen de la visualización con PCA
 
 ```{r, fig.dim = c(6, 4) }
 plotReducedDim(sce.zeisel, dimred="PCA", 
   ncomponents=4, colour_by="level1class")
 ```
+
+---
+# Retos y resumen de la visualización con PCA
 
 **Ventajas:**
 - PCA es predecible y no introducirá estructura aritficial en los datos
@@ -313,8 +469,9 @@ plotReducedDim(sce.zeisel, dimred="PCA",
 
 **Desventajas:**
 - Usualmente no es satisfactoria paara visualizar la naturaleza compleja de los datos de scRNA-seq
+---
 
-### Visualización con t-SNE
+# Visualizaci??n con t-SNE
 
 ```{r, fig.dim = c(5, 4) }
 set.seed(00101001101)
@@ -323,8 +480,9 @@ plotReducedDim(sce.zeisel, dimred="TSNE", colour_by="level1class")
 ```
 
 *t-stochastic neighbour embedding (t-SNE)* es la visualización por excelencia de datos de scRNA-seq. **Intenta encontrar una representación (no-lineal) de los datos usando pocas dimensiones que preserve las distancias entre cada punto y sus vecinos en el espacio multi-dimensional**
+---
 
-#### Retos de la visualización con t-SNE
+# Retos de la visualización con t-SNE
 
 ```{r, fig.dim = c(6, 4) }
 set.seed(100)
@@ -333,18 +491,20 @@ sce.zeisel <- runTSNE(sce.zeisel, dimred="PCA",
 plotReducedDim(sce.zeisel, dimred="TSNE",
   colour_by="level1class")
 ```
+---
 
-#### Preguntas
+# Retos de la visualización con t-SNE
 
 - ¿Qué pasa si vuelves a correr **runTSNE()** sin especifica la semilla?
 
 - ¿Qué pasa si especificas la semilla pero cambas el valor del parámetro *perplexity*?
 
+---
 
-#### Continuando
+# Retos de la visualización con t-SNE
 
 
-- Baja perplejidad favorece la resolución de la estrucutura fina, posiblemente al grado de que la visualización parece rudio random.
+- Baja perplejidad favorece la resolución de la estrcutura fina, posiblemente al grado de que la visualizzación parece rudio random.
 
 
 <div>
@@ -353,8 +513,11 @@ plotReducedDim(sce.zeisel, dimred="TSNE",
 </p>
 </div>
 
-El siguiente [foro](http://distill.pub/2016/misread-tsne/) discute la selección de parámetros para t-SNE con cierta profundidad
+El siguiente [foro](http://distill.pub/2016/misread-tsne/) discute la selecci??n de par??metros para t-SNE con cierta profundidad
 
+---
+
+# Retos de la visualización con t-SNE
 
 - No sobreinterpretes los resultados de t-SNE como un 'mapa' de las identidades de las células individuales
 - Componentes aleatorios y selección de parámetors cambiarán la visualización
@@ -364,13 +527,19 @@ El siguiente [foro](http://distill.pub/2016/misread-tsne/) discute la selección
 
 **Aún así: t-SNE es una herramienta probada para visualización general de datos de scRNA-seq y sigue siendo muy popular**
 
-### Visualización con UMAP
+---
+
+# Visualización con UMAP
 
 *Uniform manifold approximation and project (UMAP)* es una alternativa a t-SNE
 
 Así como t-SNE, UMAP **intenta encontrar una representación (no lineal) de pocas dimensiones de los datos que preserve las distancias entre cada puntos y sus vecinos en el espacio multi-dimensional**
 
 t-SNE y UMAP están basados en diferentes teorías matemáticas
+
+---
+
+# Visualización con UMAP
 
 ```{r, fig.dim = c(6, 4) }
 set.seed(1100101001)
@@ -379,12 +548,18 @@ plotReducedDim(sce.zeisel, dimred="UMAP",
   colour_by="level1class")
 ```
 
+---
+
+# Visualización con UMAP
+
 Comparado con t-SNE:
 - UMAP tiende a tener clusters visualmente máss compactos
 - Intenta preservar más de la estructura global que t-SNE
 - Tiende a ser más rápido que t-SNE, lo cual puede ser importante para datasets grandes. La diferencia desaprece cuando se aplican a PCs
 
-#### Retos de la visualización con UMAP
+---
+
+# Retos de la visualización con UMAP
 
 ```{r, fig.dim = c(6, 4) }
 
@@ -394,14 +569,17 @@ sce.zeisel <- runUMAP(sce.zeisel, dimred="PCA",
 plotReducedDim(sce.zeisel, dimred="UMAP",
   colour_by="level1class")
 ```
+---
 
-#### Preguntas
+# Retos de la visualización con UMAP
 
 - ¿Qué pasa si vuelves a correr **runUMAP()** sin especifica la semilla?
 
 - ¿Qué pasa si especificas la semilla pero cambas el valor del parámetro *n_neighbors*?
 
-#### Continuando
+---
+
+# Retos de la visualización con t-UMAP
 
 - Igual que para t-SNE, es necesario configurar una semilla y diferentes valores para los parámetros cambiarán la visualización
 
@@ -409,7 +587,9 @@ plotReducedDim(sce.zeisel, dimred="UMAP",
 
 **TIP: Trata un rango de valores para cada parámetro para asegurarte de que no comprometen ninguna de las conclusiones derivadas de la gráfica UMAP**
 
-### Interpretando las gráficas
+---
+
+# Interpretando las gráficas
 
 **Recuerda:**
 
@@ -418,15 +598,18 @@ plotReducedDim(sce.zeisel, dimred="UMAP",
 
 - No sobre interpretes las gráficas bonitas
 
-### Resumen y recomendaciones
+---
+
+# Resumen y recomendaciones
 
 - Las gráficas de t-SNE y UMAP son herramientas diagnóstico importantes, por ejemplo: para checar si dos clusters son realmente subclusters vecinos o si un cluster puede ser dividido en más de un cluster
 
 - Es debatible cual visualización, t-SNE o UMAP, es más útil o estéticamente agradable.
 
 - Está bien elegir aquélla que funcione mejor para tu análisis (tomando en cuenta que tratarás la gráfica únicamente como una herramienta de visualización/diagnóstico y que no llegarás a ninguna conclusión fuerte basado únicamente en la gráfica )
+---
 
-## Donde estamos
+# Donde estamos
 
 
 <div>
@@ -434,3 +617,38 @@ plotReducedDim(sce.zeisel, dimred="UMAP",
 <img src="img/resumen.pdf" width="500px" heigth="400px">
 </p>
 </div>
+
+---
+class: middle
+
+.center[
+
+# ??Gracias!
+
+Las diapositivias fueron hechas con el paquete de R [**xaringan**](https://github.com/yihui/xaringan) y configuradas con [**xaringanthemer**](https://github.com/gadenbuie/xaringanthemer).
+
+Este curso está basado en el libro [**Orchestrating Single Cell Analysis with Bioconductor**](https://osca.bioconductor.org/) de [Aaron Lun](https://www.linkedin.com/in/aaron-lun-869b5894/), [Robert Amezquita](https://robertamezquita.github.io/), [Stephanie Hicks](https://www.stephaniehicks.com/) y [Raphael Gottardo](http://rglab.org), además del [**curso de scRNA-seq para WEHI**](https://drive.google.com/drive/folders/1cn5d-Ey7-kkMiex8-74qxvxtCQT6o72h) creado por [Peter Hickey](https://www.peterhickey.org/).
+
+Puedes encontrar los archivos para este taller en  [comunidadbioinfo/cdsb2020](https://github.com/comunidadbioinfo/cdsb2021). 
+
+Instructor: [**Laura G??mez-Romero**](http://lgomez.github.io/).
+
+]
+
+.footnote[Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2021')` o revisalos en línea vía [**comunidadbioinfo.github.io/cdsb2020**](http://comunidadbioinfo.github.io/cdsb2021).]
+
+---
+
+# Detalles de la sesión de R
+
+
+.scroll-output[
+.tiny[
+
+```{r 'reproducibility', cache = TRUE, dependson=knitr::all_labels()}
+options(width = 120)
+sessioninfo::session_info()
+```
+
+
+]]
