@@ -187,10 +187,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.6.1" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#pca-aplicado-a-datos-de-scrna-seq"><i class="fa fa-check"></i><b>8.6.1</b> PCA aplicado a datos de scRNA-seq</a></li>
 <li class="chapter" data-level="8.6.2" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#suposiciones-de-pca-aplicadas-a-los-datos-de-scrna-seq"><i class="fa fa-check"></i><b>8.6.2</b> Suposiciones de PCA aplicadas a los datos de scRNA-seq</a></li>
 <li class="chapter" data-level="8.6.3" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#eligiendo-el-número-de-pcs"><i class="fa fa-check"></i><b>8.6.3</b> Eligiendo el número de PCs</a></li>
-<li class="chapter" data-level="8.6.4" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#usando-el-punto-del-codo"><i class="fa fa-check"></i><b>8.6.4</b> Usando el punto del codo</a></li>
-<li class="chapter" data-level="8.6.5" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#basados-en-la-estructura-de-la-población"><i class="fa fa-check"></i><b>8.6.5</b> Basados en la estructura de la población</a></li>
-<li class="chapter" data-level="8.6.6" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#juntando-todo"><i class="fa fa-check"></i><b>8.6.6</b> Juntando todo</a></li>
-<li class="chapter" data-level="8.6.7" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#usando-el-ruido-técnico"><i class="fa fa-check"></i><b>8.6.7</b> Usando el ruido técnico</a></li>
+<li class="chapter" data-level="8.6.4" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#juntando-todo"><i class="fa fa-check"></i><b>8.6.4</b> Juntando todo</a></li>
+<li class="chapter" data-level="8.6.5" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#usando-el-ruido-técnico"><i class="fa fa-check"></i><b>8.6.5</b> Usando el ruido técnico</a></li>
 </ul></li>
 <li class="chapter" data-level="8.7" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#reducción-de-dimensionalidad-para-visualización"><i class="fa fa-check"></i><b>8.7</b> Reducción de dimensionalidad para visualización</a>
 <ul>
@@ -469,12 +467,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="clustering-basado-en-un-grafo" class="section level3" number="9.8.4">
 <h3><span class="header-section-number">9.8.4</span> Clustering basado en un grafo</h3>
-<p><strong>Pipelines basados en Seurat:</strong>
-* Pesos basados en Jacard
-* Clustering Louvain</p>
-<p><strong>Pipelines basados en Scran:</strong>
-* Pesos basados en Randos
-* Clustering Walktrap</p>
+<p><strong>Pipelines basados en Seurat:</strong></p>
+<ul>
+<li>Pesos basados en Jacard</li>
+<li>Clustering Louvain</li>
+</ul>
+<p><strong>Pipelines basados en Scran:</strong></p>
+<ul>
+<li>Pesos basados en Randos</li>
+<li>Clustering Walktrap</li>
+</ul>
 <p>Para detalles sobre la seleccion de parámetros y comparaciones: <a href="https://osca.bioconductor.org/clustering.html#clustering-graph">visitar esta página</a></p>
 <div>
 <p style="text-align:center;">
@@ -516,9 +518,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="evaluando-estabilidad-de-los-clusters" class="section level2" number="9.10">
 <h2><span class="header-section-number">9.10</span> Evaluando estabilidad de los clusters</h2>
-<p>Una propiedad deseable de un cluster dado es que éste sea estable a las perturbaciones en los datos de entrada:
-* Pequeños cambios al procesamiento no cambiarán el resultado
-* Esto incrementa la probabilida de que las conclusiones puedan ser replicadas en un estudio independiente</p>
+<p>Una propiedad deseable de un cluster dado es que éste sea estable a las perturbaciones en los datos de entrada:</p>
+<ul>
+<li>Pequeños cambios al procesamiento no cambiarán el resultado</li>
+<li>Esto incrementa la probabilida de que las conclusiones puedan ser replicadas en un estudio independiente</li>
+</ul>
 <p>Uno puede hacer un proceso de <strong>bootstrap</strong> para evaluar la estabilidad de un algoritmo de clustering en un dataset dado</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="clustering.html#cb44-1" aria-hidden="true" tabindex="-1"></a>myClusterFUN <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb44-2"><a href="clustering.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  g <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(x, <span class="at">use.dimred=</span><span class="st">&quot;PCA&quot;</span>, <span class="at">type=</span><span class="st">&quot;jaccard&quot;</span>)</span>

@@ -187,10 +187,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.6.1" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#pca-aplicado-a-datos-de-scrna-seq"><i class="fa fa-check"></i><b>8.6.1</b> PCA aplicado a datos de scRNA-seq</a></li>
 <li class="chapter" data-level="8.6.2" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#suposiciones-de-pca-aplicadas-a-los-datos-de-scrna-seq"><i class="fa fa-check"></i><b>8.6.2</b> Suposiciones de PCA aplicadas a los datos de scRNA-seq</a></li>
 <li class="chapter" data-level="8.6.3" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#eligiendo-el-número-de-pcs"><i class="fa fa-check"></i><b>8.6.3</b> Eligiendo el número de PCs</a></li>
-<li class="chapter" data-level="8.6.4" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#usando-el-punto-del-codo"><i class="fa fa-check"></i><b>8.6.4</b> Usando el punto del codo</a></li>
-<li class="chapter" data-level="8.6.5" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#basados-en-la-estructura-de-la-población"><i class="fa fa-check"></i><b>8.6.5</b> Basados en la estructura de la población</a></li>
-<li class="chapter" data-level="8.6.6" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#juntando-todo"><i class="fa fa-check"></i><b>8.6.6</b> Juntando todo</a></li>
-<li class="chapter" data-level="8.6.7" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#usando-el-ruido-técnico"><i class="fa fa-check"></i><b>8.6.7</b> Usando el ruido técnico</a></li>
+<li class="chapter" data-level="8.6.4" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#juntando-todo"><i class="fa fa-check"></i><b>8.6.4</b> Juntando todo</a></li>
+<li class="chapter" data-level="8.6.5" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#usando-el-ruido-técnico"><i class="fa fa-check"></i><b>8.6.5</b> Usando el ruido técnico</a></li>
 </ul></li>
 <li class="chapter" data-level="8.7" data-path="reducción-de-dimensiones.html"><a href="reducción-de-dimensiones.html#reducción-de-dimensionalidad-para-visualización"><i class="fa fa-check"></i><b>8.7</b> Reducción de dimensionalidad para visualización</a>
 <ul>
@@ -269,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Instructora: <a href="http://lgomez.github.io/">Laura Gómez-Romero</a></p>
 <div id="diapositivas-de-peter-hickey" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> Diapositivas de Peter Hickey</h2>
-<p>Contenido adapatado de: <a href="https://docs.google.com/presentation/d/12CjvQ1beZVeCcMQqD6ptzd9YUHbHOksvy3lt_rvWyRs/edit">aquí</a></p>
+<p>Contenido adaptado de: <a href="https://docs.google.com/presentation/d/12CjvQ1beZVeCcMQqD6ptzd9YUHbHOksvy3lt_rvWyRs/edit">aquí</a></p>
 </div>
 <div id="motivación" class="section level2" number="8.2">
 <h2><span class="header-section-number">8.2</span> Motivación</h2>
@@ -403,9 +401,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Es común seleccionar un número de PCs “razonable” pero <strong>arbitrario</strong> (10-50), continuar con el análisis y regresar para checar la robustez de los resultados en cierto rango de valores</li>
 </ul>
 <p>Ahora exploraremos algunas estrategias guiadas por los datos (data-driven) para hacer esta selección</p>
-</div>
-<div id="usando-el-punto-del-codo" class="section level3" number="8.6.4">
-<h3><span class="header-section-number">8.6.4</span> Usando el punto del codo</h3>
+<div id="usando-el-punto-del-codo" class="section level4" number="8.6.3.1">
+<h4><span class="header-section-number">8.6.3.1</span> Usando el punto del codo</h4>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="reducción-de-dimensiones.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PCAtools)</span>
 <span id="cb16-2"><a href="reducción-de-dimensiones.html#cb16-2" aria-hidden="true" tabindex="-1"></a>percent.var <span class="ot">&lt;-</span> <span class="fu">attr</span>(<span class="fu">reducedDim</span>(sce.zeisel), <span class="st">&quot;percentVar&quot;</span>)</span>
 <span id="cb16-3"><a href="reducción-de-dimensiones.html#cb16-3" aria-hidden="true" tabindex="-1"></a>chosen.elbow <span class="ot">&lt;-</span> PCAtools<span class="sc">::</span><span class="fu">findElbowPoint</span>(percent.var)</span>
@@ -414,8 +411,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="480" /></p>
 <p>Una heurística simple es elegir el número de PCs basado en el <strong>porcentaje de varianza explicado</strong> por PCs sucesivos</p>
 </div>
-<div id="basados-en-la-estructura-de-la-población" class="section level3" number="8.6.5">
-<h3><span class="header-section-number">8.6.5</span> Basados en la estructura de la población</h3>
+<div id="basados-en-la-estructura-de-la-población" class="section level4" number="8.6.3.2">
+<h4><span class="header-section-number">8.6.3.2</span> Basados en la estructura de la población</h4>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="reducción-de-dimensiones.html#cb17-1" aria-hidden="true" tabindex="-1"></a>choices <span class="ot">&lt;-</span> <span class="fu">getClusteredPCs</span>(<span class="fu">reducedDim</span>(sce.zeisel))</span>
 <span id="cb17-2"><a href="reducción-de-dimensiones.html#cb17-2" aria-hidden="true" tabindex="-1"></a>chosen.clusters <span class="ot">&lt;-</span> <span class="fu">metadata</span>(choices)<span class="sc">$</span>chosen</span></code></pre></div>
 <p>Esta es una aproximación heurística más sofisticada que usa el número de clusters como un <em>proxy</em> del número de subpoblaciones</p>
@@ -429,8 +426,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Ventaja</strong>: Es una solución pragmática que soluciona el equilibrio sesgo-varianza en los análisis posteriores (especialmente clustering)</p>
 <p><strong>Desventaja</strong>: Hace suposiciones fuertes sobre la naturaleza de las diferencias biológicas entre los clusters, y de hecho supone la existencia de clusters, los cuales podrían no existir en procesos biológicos como la diferenciación</p>
 </div>
-<div id="juntando-todo" class="section level3" number="8.6.6">
-<h3><span class="header-section-number">8.6.6</span> Juntando todo</h3>
+</div>
+<div id="juntando-todo" class="section level3" number="8.6.4">
+<h3><span class="header-section-number">8.6.4</span> Juntando todo</h3>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="reducción-de-dimensiones.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
 <span id="cb18-2"><a href="reducción-de-dimensiones.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and store the &#39;full&#39; set of PCs </span></span>
 <span id="cb18-3"><a href="reducción-de-dimensiones.html#cb18-3" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runPCA</span>(sce.zeisel, <span class="at">subset_row=</span>top.zeisel) </span>
@@ -443,8 +441,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb18-10"><a href="reducción-de-dimensiones.html#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">reducedDim</span>(sce.zeisel, <span class="st">&quot;PCA_clusters&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">reducedDim</span>(</span>
 <span id="cb18-11"><a href="reducción-de-dimensiones.html#cb18-11" aria-hidden="true" tabindex="-1"></a>  sce.zeisel, <span class="st">&quot;PCA&quot;</span>)[,<span class="dv">1</span><span class="sc">:</span>chosen.clusters]</span></code></pre></div>
 </div>
-<div id="usando-el-ruido-técnico" class="section level3" number="8.6.7">
-<h3><span class="header-section-number">8.6.7</span> Usando el ruido técnico</h3>
+<div id="usando-el-ruido-técnico" class="section level3" number="8.6.5">
+<h3><span class="header-section-number">8.6.5</span> Usando el ruido técnico</h3>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="reducción-de-dimensiones.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
 <span id="cb19-2"><a href="reducción-de-dimensiones.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111001001</span>)</span>
 <span id="cb19-3"><a href="reducción-de-dimensiones.html#cb19-3" aria-hidden="true" tabindex="-1"></a>denoised.pbmc <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.pbmc, </span>
@@ -494,11 +492,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="reducción-de-dimensiones.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel, <span class="at">dimred=</span><span class="st">&quot;PCA&quot;</span>, </span>
 <span id="cb28-2"><a href="reducción-de-dimensiones.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncomponents=</span><span class="dv">4</span>, <span class="at">colour_by=</span><span class="st">&quot;level1class&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="576" /></p>
-<p><strong>Ventajas:</strong>
-- PCA es predecible y no introducirá estructura aritficial en los datos
-- Es deterministico y robusto a cambios pequeños en los valores de entrada</p>
-<p><strong>Desventajas:</strong>
-- Usualmente no es satisfactoria paara visualizar la naturaleza compleja de los datos de scRNA-seq</p>
+<p><strong>Ventajas:</strong></p>
+<ul>
+<li>PCA es predecible y no introducirá estructura aritficial en los datos</li>
+<li>Es deterministico y robusto a cambios pequeños en los valores de entrada</li>
+</ul>
+<p><strong>Desventajas:</strong></p>
+<ul>
+<li>Usualmente no es satisfactoria paara visualizar la naturaleza compleja de los datos de scRNA-seq</li>
+</ul>
 </div>
 <div id="visualización-con-t-sne" class="section level3" number="8.7.4">
 <h3><span class="header-section-number">8.7.4</span> Visualización con t-SNE</h3>
@@ -554,10 +556,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb31-3"><a href="reducción-de-dimensiones.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel, <span class="at">dimred=</span><span class="st">&quot;UMAP&quot;</span>,</span>
 <span id="cb31-4"><a href="reducción-de-dimensiones.html#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour_by=</span><span class="st">&quot;level1class&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="576" /></p>
-<p>Comparado con t-SNE:
-- UMAP tiende a tener clusters visualmente más compactos
-- Intenta preservar más de la estructura global que t-SNE
-- Tiende a ser más rápido que t-SNE, lo cual puede ser importante para datasets grandes. La diferencia desaprece cuando se aplican a PCs</p>
+<p>Comparado con t-SNE:</p>
+<ul>
+<li>UMAP tiende a tener clusters visualmente más compactos</li>
+<li>Intenta preservar más de la estructura global que t-SNE</li>
+<li>Tiende a ser más rápido que t-SNE, lo cual puede ser importante para datasets grandes. La diferencia desaprece cuando se aplican a PCs</li>
+</ul>
 <div id="retos-de-la-visualización-con-umap" class="section level4" number="8.7.5.1">
 <h4><span class="header-section-number">8.7.5.1</span> Retos de la visualización con UMAP</h4>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="reducción-de-dimensiones.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
