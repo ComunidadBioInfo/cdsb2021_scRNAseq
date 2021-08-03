@@ -4,7 +4,7 @@ Instructora: [Laura Gómez-Romero](http://lgomez.github.io/)
 
 ## Diapositivas de Peter Hickey
 
-Contenido adapatado de: [aquí](https://docs.google.com/presentation/d/12CjvQ1beZVeCcMQqD6ptzd9YUHbHOksvy3lt_rvWyRs/edit)
+Contenido adaptado de: [aquí](https://docs.google.com/presentation/d/12CjvQ1beZVeCcMQqD6ptzd9YUHbHOksvy3lt_rvWyRs/edit)
 
 ## Motivación
 
@@ -183,7 +183,7 @@ Por default, **runPCA()** usa un método rápido aproximado que realiza simulaci
 
 Ahora exploraremos algunas estrategias guiadas por los datos (data-driven) para hacer esta selección
 
-### Usando el punto del codo
+#### Usando el punto del codo
 
 ```{r, warning=FALSE, message=FALSE, fig.dim = c(5, 4)}
 library(PCAtools)
@@ -195,7 +195,7 @@ abline(v=chosen.elbow, col="red")
 
 Una heurística simple es elegir el número de PCs basado en el **porcentaje de varianza explicado** por PCs sucesivos
 
-### Basados en la estructura de la población
+#### Basados en la estructura de la población
 
 ```{r }
 choices <- getClusteredPCs(reducedDim(sce.zeisel))
@@ -308,10 +308,12 @@ plotReducedDim(sce.zeisel, dimred="PCA",
 ```
 
 **Ventajas:**
+
 - PCA es predecible y no introducirá estructura aritficial en los datos
 - Es deterministico y robusto a cambios pequeños en los valores de entrada
 
 **Desventajas:**
+
 - Usualmente no es satisfactoria paara visualizar la naturaleza compleja de los datos de scRNA-seq
 
 ### Visualización con t-SNE
@@ -380,6 +382,7 @@ plotReducedDim(sce.zeisel, dimred="UMAP",
 ```
 
 Comparado con t-SNE:
+
 - UMAP tiende a tener clusters visualmente más compactos
 - Intenta preservar más de la estructura global que t-SNE
 - Tiende a ser más rápido que t-SNE, lo cual puede ser importante para datasets grandes. La diferencia desaprece cuando se aplican a PCs

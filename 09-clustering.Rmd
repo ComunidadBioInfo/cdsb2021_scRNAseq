@@ -245,10 +245,12 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by="cluster2")
 ### Clustering basado en un grafo 
 
 **Pipelines basados en Seurat:**
+
 * Pesos basados en Jacard
 * Clustering Louvain
 
 **Pipelines basados en Scran:**
+
 * Pesos basados en Randos
 * Clustering Walktrap
 
@@ -305,6 +307,7 @@ Para más detalles sobre evaluación de la separación entre clusters [visite es
 ## Evaluando estabilidad de los clusters
 
 Una propiedad deseable de un cluster dado es que éste sea estable a las perturbaciones en los datos de entrada:
+
 * Pequeños cambios al procesamiento no cambiarán el resultado
 * Esto incrementa la probabilida de que las conclusiones puedan ser replicadas en un estudio independiente
 
