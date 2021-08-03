@@ -349,7 +349,7 @@ plotReducedDim(sce.zeisel, dimred="TSNE",
 
 <div>
 <p style = 'text-align:center;'>
-<img src="img/tsne.pdf" width="800px">
+<img src="img/tsne.png" width="800px">
 </p>
 </div>
 
@@ -380,7 +380,7 @@ plotReducedDim(sce.zeisel, dimred="UMAP",
 ```
 
 Comparado con t-SNE:
-- UMAP tiende a tener clusters visualmente máss compactos
+- UMAP tiende a tener clusters visualmente más compactos
 - Intenta preservar más de la estructura global que t-SNE
 - Tiende a ser más rápido que t-SNE, lo cual puede ser importante para datasets grandes. La diferencia desaprece cuando se aplican a PCs
 
@@ -402,6 +402,12 @@ plotReducedDim(sce.zeisel, dimred="UMAP",
 - ¿Qué pasa si especificas la semilla pero cambas el valor del parámetro *n_neighbors*?
 
 #### Continuando
+
+<div>
+<p style = 'text-align:center;'>
+<img src="img/umap.png" width="800px">
+</p>
+</div>
 
 - Igual que para t-SNE, es necesario configurar una semilla y diferentes valores para los parámetros cambiarán la visualización
 
@@ -431,6 +437,6 @@ plotReducedDim(sce.zeisel, dimred="UMAP",
 
 <div>
 <p style = 'text-align:center;'>
-<img src="img/resumen.pdf" width="500px" heigth="400px">
+<img src="img/resumen.png" width="500px" heigth="400px">
 </p>
 </div>

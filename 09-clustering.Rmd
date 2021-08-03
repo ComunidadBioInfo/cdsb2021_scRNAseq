@@ -403,6 +403,6 @@ El proceso de **subclustering** podría mejorar la resolución dentro de cluster
 
 <div>
 <p style = 'text-align:center;'>
-<img src="img/resumen-clustering.pdf" width="500px" heigth="400px">
+<img src="img/resumen-clustering.png" width="500px" heigth="400px">
 </p>
 </div>
