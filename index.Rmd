@@ -185,8 +185,8 @@ _Consulta el calendario de este curso en: <http://bit.ly/calendarcdsb2021>._
 | 11:00-11:30 | Descanso | |
 | 11:30-14:00 | Ejercicio usando `usethis`, `here` y `postcards` | [Citlali Gil Aguillon](https://twitter.com/argininaa) y [Elisa Márquez Zavala](https://twitter.com/naielisha) |
 | 14:00-15:30 | Descanso: comida | |
-| 15:30-17:30 | Introducción a RNA-seq de célula única (scRNA-seq) con Bioconductor y al libro de OSCA | [Citlali Gil Aguillon](https://twitter.com/argininaa) y [Elisa Márquez Zavala](https://twitter.com/naielisha) |
-| 17:30-18:00 | (opcional) Interactúa con lxs instructores y ayudantes | |
+| 15:30-17:00 | Introducción a RNA-seq de célula única (scRNA-seq) con Bioconductor y al libro de OSCA | [Citlali Gil Aguillon](https://twitter.com/argininaa) y [Elisa Márquez Zavala](https://twitter.com/naielisha) |
+| 17:00-18:00 | (Invitada) Principios FAIR para software de investigación | [Paula Andrea](https://twitter.com/orchid00) |
 | **Día 2: Agosto 10, 2021** |      |      |
 | 08:00-09:00 | (opcional) Ayuda con instalación de paquetes de R | |
 | 09:00-11:00 | Estructura e importe de datos | [Citlali Gil Aguillon](https://twitter.com/argininaa) y [Elisa Márquez Zavala](https://twitter.com/naielisha) |
