@@ -1,20 +1,19 @@
 # Control de calidad
 
-# Diapositivas de Peter Hickey
+Instructor: [Leonardo Collado Torres](https://comunidadbioinfo.github.io/es/authors/lcollado/)
+
+## Diapositivas de Peter Hickey
 
 Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1pIiA7fZd1GBxaKQpzT2sPn7C6fIZxEJ8NI4p3UtoIOo/edit#slide=id.p)
 
----
+## Ejercicio 1
 
-# Código de R
-
-.scroll-output[
-
-```{r all_code, cache=TRUE}
+```{r datos_ejercicio_1}
 ## Datos
 library('scRNAseq')
 sce.416b <- LunSpikeInData(which = "416b")
 sce.416b$block <- factor(sce.416b$block)
+
 # Descarga los archivos de anotación de la base de datos de Ensembl
 # correspondientes usando los recursos disponibles vía AnnotationHub
 library('AnnotationHub')
@@ -28,39 +27,25 @@ location <- mapIds(
     keytype = "GENEID",
     column = "SEQNAME"
 )
+
 # Identifica los genes mitocondriales
 is.mito <- which(location == "MT")
 library('scater')
 sce.416b <- addPerCellQC(sce.416b,
     subsets = list(Mito = is.mito))
+## Si quieres guarda los resultados de addPerCellQC() para responder
+## las preguntas del ejercicio. Eventualmente si necesitaremos los
+## resultados de addPerCellQC() para las secciones posteriores a este
+## ejercicio.
 ```
 
-]
 
----
+* ¿Qué cambió en nuestro objeto `sce` después de `addPerCellQC`? ^[Ahora tenemos más información en `colData(sce.416b)`]
+* Haz una gráfica de _boxplots_ del número de genes por bloque (block) de células. ^[`with(colData(sce.416b), boxplot(detected ~ block))`]
 
-# Preguntas
+## Gráficas sobre medidas de control de calidad (QC)
 
---
-
-* ¿Qué cambió en nuestro objeto `sce` después de `addPerCellQC`?
-
---
-
-* Haz una gráfica de _boxplots_ del número de genes por bloque (block) de células. 
-
-???
-
-* Ahora tenemos más información en `colData(sce.416b)`
-* `with(colData(sce.416b), boxplot(detected ~ block))`
-
----
-
-# Gráficas sobre medidas de control de calidad (QC)
-
-.scroll-output[
-
-```{r qc_metrics, cache=TRUE, dependson='all_code'}
+```{r visualizar_qc}
 plotColData(sce.416b, x = "block", y = "detected")
 plotColData(sce.416b, x = "block", y = "detected") +
     scale_y_log10()
@@ -72,19 +57,14 @@ plotColData(sce.416b,
     facet_wrap( ~ phenotype)
 ```
 
-]
-
----
-
-.scroll-output[
-
-```{r all_code_part2, cache = TRUE, dependson='all_code'}
+```{r valores_qc}
 # Valores de límite ejemplo
 qc.lib <- sce.416b$sum < 100000
 qc.nexprs <- sce.416b$detected < 5000
 qc.spike <- sce.416b$altexps_ERCC_percent > 10
 qc.mito <- sce.416b$subsets_Mito_percent > 10
 discard <- qc.lib | qc.nexprs | qc.spike | qc.mito
+
 # Obtenemos un resumen del número de células
 # eliminadas por cada filtro
 DataFrame(
@@ -102,9 +82,11 @@ qc.spike2 <- isOutlier(sce.416b$altexps_ERCC_percent,
 qc.mito2 <- isOutlier(sce.416b$subsets_Mito_percent,
     type = "higher")
 discard2 <- qc.lib2 | qc.nexprs2 | qc.spike2 | qc.mito2
+
 # Extraemos los límites de valores (thresholds)
 attr(qc.lib2, "thresholds")
 attr(qc.nexprs2, "thresholds")
+
 # Obtenemos un resumen del número de células
 # eliminadas por cada filtro
 DataFrame(
@@ -114,6 +96,7 @@ DataFrame(
     MitoProp = sum(qc.mito2),
     Total = sum(discard2)
 )
+
 ## Más pruebas
 plotColData(sce.416b,
     x = "block",
@@ -137,9 +120,11 @@ qc.mito3 <- isOutlier(sce.416b$subsets_Mito_percent,
     type = "higher",
     batch = batch)
 discard3 <- qc.lib3 | qc.nexprs3 | qc.spike3 | qc.mito3
+
 # Extraemos los límites de valores (thresholds)
 attr(qc.lib3, "thresholds")
 attr(qc.nexprs3, "thresholds")
+
 # Obtenemos un resumen del número de células
 # eliminadas por cada filtro
 DataFrame(
@@ -151,38 +136,16 @@ DataFrame(
 )
 ```
 
-]
+## Ejercicio 2: control de calidad
 
----
+* ¿Fue necesario `qc.lib` para crear `discard`? ^[Sí, usando `table(qc.lib , qc.spike)` y `table(qc.lib , qc.mito)`.]
+* ¿Cúal filtro fue más estricto? ¿`discard` o `discard2`? ^[`discard` de `table(discard, discard2)`]
+* Al considerar el grupo de cada muestra (batch), ¿descartamos más células usando un valor de límite automático? ^[Sí, usando `table(discard, discard2, discard3)`]
 
-# Preguntas
-
---
-
-* ¿Fue necesario `qc.lib` para crear `discard`?
-
---
-
-* ¿Cúal filtro fue más estricto? ¿`discard` o `discard2`?
-
---
+## Datos de Grun et al
 
 
-* Al considerar el grupo de cada muestra (batch), ¿descartamos más células usando un valor de límite automático?
-
-
-???
-
-* Sí, usando `table(qc.lib , qc.spike)` y `table(qc.lib , qc.mito)`
-* `discard` de `table(discard, discard2)`
-* Sí, usando `table(discard, discard2, discard3)`
-
-
----
-
-.scroll-output[
-
-```{r use_case, cache=TRUE, dependson= c('all_code', 'all_code_part2')}
+```{r grun_qc}
 sce.grun <- GrunPancreasData()
 sce.grun <- addPerCellQC(sce.grun)
 plotColData(sce.grun, x = "donor", y = "altexps_ERCC_percent")
@@ -207,9 +170,11 @@ plotColData(
     y = "altexps_ERCC_percent",
     colour_by = data.frame(discard = discard.ercc2)
 )
+
 # Agregamos información sobre que células
 # tienen valores extremos
 sce.416b$discard <- discard2
+
 # Haz esta gráfica para cada medida de
 # control de calidad (QC)
 plotColData(
@@ -221,6 +186,7 @@ plotColData(
 ) +
     facet_wrap( ~ phenotype) +
     scale_y_log10()
+
 # Otra gráfica de diagnóstico útil
 plotColData(
     sce.416b,
@@ -232,14 +198,9 @@ plotColData(
     facet_grid(block ~ phenotype)
 ```
 
-]
+## Datos de PBMC
 
-
----
-
-.scroll-output[
-
-```{r use_case_pbmc, cache=TRUE, dependson='all_code'}
+```{r pbmc_qc}
 library('BiocFileCache')
 bfc <- BiocFileCache()
 raw.path <-
@@ -256,6 +217,7 @@ library('Matrix')
 fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
 sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 bcrank <- barcodeRanks(counts(sce.pbmc))
+
 # Mostremos solo los puntos únicos para acelerar
 # el proceso de hacer esta gráfica
 uniq <- !duplicated(bcrank$rank)
@@ -282,12 +244,14 @@ legend(
 )
 set.seed(100)
 e.out <- emptyDrops(counts(sce.pbmc))
+
 # Revisa ?emptyDrops para una explicación de porque hay valores NA
 summary(e.out$FDR <= 0.001)
 set.seed(100)
 limit <- 100
 all.out <-
     emptyDrops(counts(sce.pbmc), lower = limit, test.ambient = TRUE)
+
 # Idealmente, este histograma debería verse uniforme.
 # Picos grandes cerca de cero indican que los _barcodes_
 # con un número total de cuentas menor a "lower" no son
@@ -312,34 +276,16 @@ plot(
 abline(h = attr(discard.mito, "thresholds")["higher"], col = "red")
 ```
 
-]
+## Ejercicio 3: detección de droplets
 
----
+* ¿Por qué `emptyDrops()` regresa valores `NA`? ^[Debajo de `lower` son considerados _droplets_ vacíos. Solo se usan para la correción estadística de pruebas múltiples.]
+* ¿Los valores p son iguales entre `e.out` y `all.out`? ^[No, debido a los `NA`s.]
+* ¿Son iguales si obtienes el subconjunto de valores que no son `NA`? ^[Sí: `identical(e.out$PValue[!is.na(e.out$FDR)], all.out$PValue[!is.na(e.out$FDR)])`.]
 
-# Ejercicios
-
---
-
-* ¿Por qué `emptyDrops()` regresa valores `NA`?
-
---
-
-* ¿Los valores p son iguales entre `e.out` y `all.out`?
-
---
-
-* ¿Son iguales si obtienes el subconjunto de valores que no son `NA`?
-
-???
-
-* Debajo de `lower` son considerados _droplets_ vacíos. Solo se usan para la correción estadística de pruebas múltiples.
-* No, debido a los `NA`s.
-* Sí: `identical(e.out$PValue[!is.na(e.out$FDR)], all.out$PValue[!is.na(e.out$FDR)])`
+## ¿Conviene eliminar datos?
 
 
----
-
-```{r marking, cache=TRUE, dependson='use_case'}
+```{r}
 # Eliminemos las células de calidad baja
 # al quedarnos con las columnas del objeto sce que NO
 # queremos descartar (eso hace el !)
@@ -350,21 +296,9 @@ marked <- sce.416b
 marked$discard <- discard2
 ```
 
---
 
-* ¿Cúal de estos objetos es más grande?
-
---
-
-* ¿Cúal prefieres usar?
-
-???
-
-* `marked` es más grande que `filtered`
-* Yo prefiero usar `marked` si tengo suficiente memoria para usarlo.
-
----
-
+* ¿Cúal de estos objetos es más grande? ^[`marked` es más grande que `filtered`]
+* ¿Cúal prefieres usar? ^[Yo prefiero usar `marked` si tengo suficiente memoria para usarlo.]
 
 ## Detalles de la sesión de R
 
