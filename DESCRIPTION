@@ -45,5 +45,7 @@ Imports:
     scPipe,
     PCAtools,
     bluster,
-    Seurat
+    Seurat,
+    dplyr,
+    patchwork
 VignetteBuilder: knitr
