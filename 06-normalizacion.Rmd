@@ -531,6 +531,9 @@ Y en el material de la  [comunidadbioinfo/cdsb2020](https://github.com/comunidad
 ## Detalles de la sesión de R
 
 ```{r}
+## Información de la sesión de R
+Sys.time()
+proc.time()
 options(width = 120)
 sessioninfo::session_info()
 ```

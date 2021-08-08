@@ -434,6 +434,9 @@ El proceso de **subclustering** podría mejorar la resolución dentro de cluster
 ## Detalles de la sesión de R
 
 ```{r}
+## Información de la sesión de R
+Sys.time()
+proc.time()
 options(width = 120)
 sessioninfo::session_info()
 ```
