@@ -1,8 +1,3 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
 # Normalización de datos
 
 Instructora: [Ana Beatriz Villaseñor Altamirano](https://comunidadbioinfo.github.io/es/authors/anabva/)
@@ -51,7 +46,7 @@ Usaremos el dataset de [**Zeisel**](https://bioconductor.org/books/release/OSCA/
 - Contiene UMIs
 
 
-```{r message=FALSE, warning=FALSE, cache=T}
+```{r message=FALSE, warning=FALSE}
 library('scRNAseq')
 sce.zeisel <- ZeiselBrainData(ensembl = TRUE)
 sce.zeisel
@@ -66,7 +61,7 @@ sce.zeisel
 - Gráfica los resultados
 
 
-```{r all_code, message=FALSE, warning=FALSE, cache=TRUE, include=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 # Control de calidad
 library('scater')
 
@@ -126,7 +121,7 @@ $$ mean(Library Size factor) = 1 $$
 Lo que nos permite que los valores normalizados están en la misma escala y pueden ser útiles para la interpretación. 
 
 
-```{r all_code2, cache=TRUE, dependson='all_code'}
+```{r}
 # Estimar tamaños de librerías
 lib.sf.zeisel <- librarySizeFactors(sce.zeisel)
 # Examina la distribución de los tamaños de librerías
@@ -180,7 +175,7 @@ El método de `scran` resuelve este problema juntando las cuentas de varias cél
 Este factor calculado con las cuentas pool se les regresa individualmente a cada célula mediante decircunvolución (deconvolution). Utilizando este factor se normalizan los datos con `scran::calculateSumFactors()`.
 
 
-```{r all_code3, cache=TRUE, dependson='all_code2'}
+```{r}
 # Normalización por decircunvolución (deconvolution)
 library('scran')
 # Pre-clustering
@@ -255,7 +250,7 @@ Una vez calculados los factores de normalización con `computeSumFactors()`, pod
 
 Estos valores resultantes son valores de expresión normalizados transformados en escala logarítmica.
 
-```{r all_code4, cache=TRUE, dependson='all_code3'}
+```{r}
 # Normalization
 # set.seed(100)
 # clust.zeisel <- quickCluster(sce.zeisel) 
@@ -297,7 +292,7 @@ La normalización de Seurat con `NormalizeData()` (tomado de [aquí](https://git
 
 3. Sumar 1 y tomar el logaritmo natural.
 
-```{r all_code5, cache=TRUE, dependson='all_code4', message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 library('Seurat')
 # Create a Seurat obj
 sce <- sce.zeisel
@@ -535,7 +530,7 @@ Y en el material de la  [comunidadbioinfo/cdsb2020](https://github.com/comunidad
 
 ## Detalles de la sesión de R
 
-```{r 'reproducibility', cache = TRUE, dependson=knitr::all_labels()}
+```{r}
 options(width = 120)
 sessioninfo::session_info()
 ```
