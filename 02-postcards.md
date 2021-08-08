@@ -54,7 +54,6 @@ postcards::create_postcard(template = "trestles")
 postcards::create_postcard(template = "onofre")
 ```
 
-
 **(opción 2) Desde github**
 
 * Creen un nuevo repositorio, público y **sin** archivo README en https://github.com/new llamado "usuario.github.io" con su **nombre exacto** en github
@@ -175,7 +174,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-08 20:58:05 UTC"
+## [1] "2021-08-08 21:00:25 UTC"
 ```
 
 ```r
@@ -184,7 +183,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.426   0.131   0.437
+##   0.438   0.139   0.449
 ```
 
 ```r
