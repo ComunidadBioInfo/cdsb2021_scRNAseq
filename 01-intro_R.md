@@ -1,3 +1,7 @@
+# Inauguración CDSB2021
+
+<script async class="speakerdeck-embed" data-id="2183a59718804e359fedef8de75606d2" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+
 # Introducción a R y RStudio
 
 Instructor: [Leonardo Collado Torres](https://comunidadbioinfo.github.io/es/authors/lcollado/)
@@ -214,7 +218,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-08 21:00:18 UTC"
+## [1] "2021-08-08 23:20:40 UTC"
 ```
 
 ```r
@@ -223,7 +227,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.457   0.121   0.477
+##   0.482   0.147   0.521
 ```
 
 ```r

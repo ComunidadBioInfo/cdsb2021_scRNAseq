@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 Identificación de genes marcadores | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor</title>
-  <meta name="description" content="11 Identificación de genes marcadores | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
+  <title>1 Inauguración CDSB2021 | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor</title>
+  <meta name="description" content="1 Inauguración CDSB2021 | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11 Identificación de genes marcadores | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
+  <meta property="og:title" content="1 Inauguración CDSB2021 | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ComunidadBioInfo/cdsb2021_scRNAseq" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 Identificación de genes marcadores | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
+  <meta name="twitter:title" content="1 Inauguración CDSB2021 | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="icon_32.png" type="image/x-icon" />
-<link rel="prev" href="clustering.html"/>
-<link rel="next" href="anotación-de-clusters-de-células.html"/>
+<link rel="prev" href="index.html"/>
+<link rel="next" href="introducción-a-r-y-rstudio.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -364,72 +364,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="identificación-de-genes-marcadores" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Identificación de genes marcadores</h1>
-<p>TODO</p>
-<div id="detalles-de-la-sesión-de-r-9" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="identificación-de-genes-marcadores.html#cb273-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb273-2"><a href="identificación-de-genes-marcadores.html#cb273-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-08 23:35:06 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="identificación-de-genes-marcadores.html#cb275-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
-<pre><code>##    user  system elapsed 
-##   0.456   0.105   0.437</code></pre>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="identificación-de-genes-marcadores.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb277-2"><a href="identificación-de-genes-marcadores.html#cb277-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
-<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
-##  setting  value                       
-##  version  R version 4.1.0 (2021-05-18)
-##  os       Ubuntu 20.04.2 LTS          
-##  system   x86_64, linux-gnu           
-##  ui       X11                         
-##  language (EN)                        
-##  collate  en_US.UTF-8                 
-##  ctype    en_US.UTF-8                 
-##  tz       UTC                         
-##  date     2021-08-08                  
-## 
-## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
-##  package     * version date       lib source        
-##  bookdown      0.22    2021-04-22 [1] RSPM (R 4.1.0)
-##  bslib         0.2.5.1 2021-05-18 [1] RSPM (R 4.1.0)
-##  cli           3.0.1   2021-07-17 [2] RSPM (R 4.1.0)
-##  digest        0.6.27  2020-10-24 [2] RSPM (R 4.1.0)
-##  evaluate      0.14    2019-05-28 [2] RSPM (R 4.1.0)
-##  htmltools     0.5.1.1 2021-01-22 [1] RSPM (R 4.1.0)
-##  jquerylib     0.1.4   2021-04-26 [1] RSPM (R 4.1.0)
-##  jsonlite      1.7.2   2020-12-09 [2] RSPM (R 4.1.0)
-##  knitr         1.33    2021-04-24 [2] RSPM (R 4.1.0)
-##  magrittr      2.0.1   2020-11-17 [2] RSPM (R 4.1.0)
-##  R6            2.5.0   2020-10-28 [2] RSPM (R 4.1.0)
-##  rlang         0.4.11  2021-04-30 [2] RSPM (R 4.1.0)
-##  rmarkdown     2.9     2021-06-15 [1] RSPM (R 4.1.0)
-##  sass          0.4.0   2021-05-12 [1] RSPM (R 4.1.0)
-##  sessioninfo   1.1.1   2018-11-05 [2] RSPM (R 4.1.0)
-##  stringi       1.7.3   2021-07-16 [2] RSPM (R 4.1.0)
-##  stringr       1.4.0   2019-02-10 [2] RSPM (R 4.1.0)
-##  withr         2.4.2   2021-04-18 [2] RSPM (R 4.1.0)
-##  xfun          0.24    2021-06-15 [2] RSPM (R 4.1.0)
-## 
-## [1] /__w/_temp/Library
-## [2] /usr/local/lib/R/site-library
-## [3] /usr/local/lib/R/library</code></pre>
-</div>
-<div id="patrocinadores-10" class="section level2 unnumbered">
-<h2>Patrocinadores</h2>
-<p>Agradecemos a nuestros patrocinadores:</p>
-<p><a href="https://comunidadbioinfo.github.io/es/post/cs_and_s_event_fund_award/#.YJH-wbVKj8A"><img src="https://comunidadbioinfo.github.io/post/2021-01-27-cs_and_s_event_fund_award/spanish_cs_and_s_award.jpeg" width="400px" align="center"/></a></p>
-<p><a href="https://www.r-consortium.org/"><img src="https://www.r-consortium.org/wp-content/uploads/sites/13/2016/09/RConsortium_Horizontal_Pantone.png" width="400px" align="center"/></a></p>
-
-</div>
+<div id="inauguración-cdsb2021" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Inauguración CDSB2021</h1>
+<script async class="speakerdeck-embed" data-id="2183a59718804e359fedef8de75606d2" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="clustering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="anotación-de-clusters-de-células.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introducción-a-r-y-rstudio.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

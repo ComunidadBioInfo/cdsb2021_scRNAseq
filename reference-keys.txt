@@ -1,3 +1,4 @@
+inauguración-cdsb2021
 introducción-a-r-y-rstudio
 r
 github
@@ -5,6 +6,13 @@ rstudio
 material-del-curso
 detalles-de-la-sesión-de-r
 ejercicio-usando-usethis-here-y-postcards
+here
+usethis
+vinculando-rstudio-con-git-y-github
+prerrequisitos
+creando-token-de-acceso-personal-pat
+inicializar-repositorio-de-git-y-github
+probar-otros-comandos-de-gert
 ejercicio-postcards
 crear-el-repositorio
 modificar-y-subir-a-github-nuestro-postcard
