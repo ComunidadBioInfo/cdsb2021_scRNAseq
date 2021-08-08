@@ -161,7 +161,7 @@ _Consulta el calendario de este curso en: <http://bit.ly/calendarcdsb2021>._
 | **Día 1: Agosto 9, 2021**  |     |      |      |
 | 08:00-09:00 | (opcional) Ayuda con instalación de paquetes de R | |
 | 09:00-09:30 | Inauguración EBM2021  | [Julio Collado Vides](https://www.ccg.unam.mx/pedro-julio-collado-vides/), [Christian Sohlenkamp](https://www.ccg.unam.mx/christian-sohlenkamp/), [Irma Martínez Flores](https://www.ccg.unam.mx/irma-martinez-flores/), [Shirley Alquicira Hernández](https://www.ccg.unam.mx/shirley-alquicira-hernandez/)  |
-| 09:30-10:00 | [Bienvenida a la CDSB y revisión del código de conducta](https://speakerdeck.com/lcolladotor/) | [Leonardo Collado-Torres](http://comunidadbioinfo.github.io/authors/lcollado/) |
+| 09:30-10:00 | [Bienvenida a la CDSB y revisión del código de conducta](https://speakerdeck.com/lcolladotor/cdsb2021) | [Leonardo Collado-Torres](http://comunidadbioinfo.github.io/authors/lcollado/) |
 | 10:00-11:00 | Introducción a R y RStudio | [Leonardo Collado-Torres](http://comunidadbioinfo.github.io/authors/lcollado/) |
 | 11:00-11:30 | Descanso | |
 | 11:30-14:00 | Ejercicio usando `usethis`, `here` y `postcards` | [Citlali Gil Aguillon](https://twitter.com/argininaa) y [Elisa Márquez Zavala](https://twitter.com/naielisha) |
