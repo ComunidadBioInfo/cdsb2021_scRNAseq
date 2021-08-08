@@ -167,7 +167,9 @@ BiocManager::install(
         "pryr",
         "sessioninfo",
         "scPipe",
-        "Seurat"
+        "Seurat",
+        "dplyr",
+        "patchwork"
     )
 )
 ```
@@ -252,45 +254,12 @@ Agradecemos a nuestros patrocinadores:
 
 ## Información sesión de R{-}
 
-Details on the R version used for making this book. The source code is available at [`lcolladotor/rnaseq_LCG-UNAM_2021`](https://github.com/lcolladotor/rnaseq_LCG-UNAM_2021).
-
-```{r session_packages, eval = TRUE, message = FALSE}
-library("SingleCellExperiment")
-library("usethis")
-library("here")
-library("scran")
-library("scater")
-library("scRNAseq")
-library("org.Mm.eg.db")
-library("AnnotationHub")
-library("ExperimentHub")
-library("BiocFileCache")
-library("DropletUtils")
-library("EnsDb.Hsapiens.v86")
-library("TENxPBMCData")
-library("BiocSingular")
-library("batchelor")
-library("uwot")
-library("Rtsne")
-library("pheatmap")
-library("fossil")
-library("ggplot2")
-library("cowplot")
-library("RColorBrewer")
-library("plotly")
-library("iSEE")
-library("pryr")
-library("sessioninfo")
-library("scPipe")
-library("PCAtools")
-library("bluster")
-```
+Detalles de la sesión de R usada para crear este libro. El código fuente está disponible vía [`ComunidadBioInfo/cdsb2021_scRNAseq`](https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq).
 
 ```{r session_info}
-## Reproducibility information
 options(width = 120)
-session_info()
-proc.time()
+pkgs <- installed.packages()[, "Package"]
+sessioninfo::session_info(pkgs, include_base = TRUE)
 ```
 
 Fecha de la última actualización de esta página: `r Sys.time()`.
