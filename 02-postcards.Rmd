@@ -1,5 +1,184 @@
 # Ejercicio usando `usethis`, `here` y `postcards`
 
+Instructoras: [Elisa Márquez Zavala](https://twitter.com/naielisha), [Citlali Gil Aguillon](http://twitter.com/argininaa)
+
+Contenido adaptado del [Curso de RNASeq](https://lcolladotor.github.io/rnaseq_LCG-UNAM_2021/index.html) de [Leonardo Collado Torres](https://github.com/lcolladotor)
+
+## here
+
+Este paquete es bastante útil 
+
+El directorio que toma como base será en el que nos encontremos al momento de cargar el paquete  `here`, heuristicamente busca la raíz del proyecto y se posiciona en él.
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+#se descargó previamente, así que solo se carga
+library("here") # busca la raiz del proyecto en el que se encuentre
+```
+
+En ciertas ocasiones puede haber algun error, ya que puede chocar con otros paquetes (como `plyr`). para evitar esto podemos usar `here::here` (que básicamente aclara que la función solicitada es del paquete `here`)
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+here::here()
+```
+
+Podemos checar en qué directorio nos encontramos con `getwd()`, si no es el que deseamos podemos cambiarlo con `setwd()`
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+getwd()# regresa la path en donde nos encontramos
+setwd("direccion/deseada")# nos lleva a la path indicada
+```
+
+Pero con `here` podemos no especificar la path 
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+getwd()# para checar en donde nos encontramos
+here::here() # para checar dónde te encuentras
+
+#nos movemos al subdirectorio R
+setwd(here::here("R")) #podemos cambiar de directorio, aun así `here está en la raíz
+```
+
+A continuación ofrecemos algunos ejemplos de cómo podría emplearse `here::here`
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# como ejemplo: vamos a guardar datos en archivo y cargarlos
+a <- 1
+c <- 23
+save(a, c, file = here::here("datos-prueba.RData"))
+# rm(a,c)
+load(here::here("datos-prueba.RData"))
+
+#creamos un directorio
+dir.create(here::here("subdirectorio"), showWarnings = FALSE)
+#podemos crear un archivo, indicando el subdirectorio, (en este caso el primer argumento)
+file.create(here::here("subdirectorio","nombrearchivo"))
+#abrimos el nuevo archivo creado
+file.show(here::here("subdirectorio", "nombrearchivo")) #podemos editarlo!!
+
+# por ejemplo si quisieramos ver nuestros archivos del directorio
+list.files(here::here(), recursive=TRUE)
+
+```
+
+## usethis
+`usethis` puede ser más amigable, por ejemplo para la creación de nuevos archivos .R es capaz de agruparlos en la carpeta R (dando un orden al proyecto)
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+usethis::use_r("notas-prueba.R") # no importando en qué path estemos
+```
+
+En el siguiente ejercicio veremos algunos usos de `usethis`
+
+
+
+## Vinculando RStudio con Git y GitHub 
+
+
+Ahora vamos a vincular nuestro proyecto de Rstudio con Github, esto es muy util para tener un control de nuestros archivos, poder compartirlos o usar el de otrxs
+
+### Prerrequisitos
+
+  Debemos tener una cuenta de Github. Si no tienes este es el momento para crear una cuenta!
+
+  - https://docs.github.com/es/github/getting-started-with-github/signing-up-for-github/signing-up-for-a-new-github-account
+
+  También debemos instalar `git` en nuestras computadoras ya que el paquete `gitcreds` lo requiere
+
+- https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+
+Y la instalación de los siguientes paquetes:
+  
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# paquetes que vamos a requerir
+install.packages("gitcreds","gert", "gh")
+
+library("gitcreds", "gert", "gh") 
+
+```
+
+
+### Creando token de acceso personal (PAT)
+
+Para conectar nuestro repositorio de Rstudio con Github solicitamos un token, esto para que github otorgue permiso a nuestra computadora
+
+Emplearemos el siguiente bloque de código para solicitar dicho token (elige un nombre significativo)
+
+>Otra manera de solicitar el token es ingresando a https://github.com/settings/tokens, esta opción no dará una recomendación de los parámetros a seleccionar
+
+>El parámetro de expiración del token puede cambiarse para que no expire (por seguridad no lo recomienda Github), de otra manera considera su tiempo de vigencia
+
+Una vez generado el token debes guardarlo, pues no volverá a aparecer.
+
+>Siempre puedes volver a generar uno nuevo (no olvides borrar el token anterior)
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# Para iniciar conexión con GitHub
+usethis::create_github_token() # redirige a github donde eligiras nombre especifico del token
+# copia el token para después ingresarlo con gitcreds_set()
+gitcreds::gitcreds_set() #aquí colocas el token (NO tu contraseña de github!!!)
+```
+
+El siguiente paso será configurar nuestro usuario de github en el archivo `.gitconfig`
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# Configurar usuario de gitHub
+usethis::edit_git_config() # que abre el archivo .gitconfig
+# colocaremos nombre y correo de cuenta de github. SOLO borrar los # y respetar los demas espacios
+# [user]
+#   name = N O M B R E 
+#   email = correodeGithub
+```
+
+### Inicializar repositorio de Git y Github
+Ahora vamos a inicializar el repositorio en Git (de manera local en tu computadora) y enseguida solicitamos que se conecte con los servidores de Github
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# inicializar el repositorio de Git
+usethis::use_git() #
+
+# conectar tu repositorio local de Git con los servidores de GitHub
+usethis::use_github()
+
+```
+
+>Git es el software mientras que GitHub es la plataforma web (basada en Git) que permite la colaboración
+
+
+**LISTO!!**
+
+>Comando útil para checar configuración
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+gh::gh_whoami() #para checar cómo quedó la configuración
+```
+
+### Probar otros comandos de `gert`
+
+Una vez que ya vinculamos nuestro repositorio con github podemos seguir actualizandolo. Vamos a checar brevemente algunos de los comandos que son útiles para ello:
+
+Checaremos `git_add`, `git_commit`, `git_log` y `git_push`
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# escribimos un nuevo archivo e indicamos dónde lo queremos
+writeLines("hola", "R/prueba.R")
+# también podemos hacerlo así
+usethis::use_r("archivo-prueba-github.R") # añade archivo al directorio R del proyecto actual
+
+# Por ejemplo podríamos probar añadir algo nuevo
+gert::git_add("R/archivo-prueba-github.R")
+
+# añadimos commit de lo que se hizo
+gert::git_commit("se subio archivo prueba")
+
+# nos da info de los commits 
+gert::git_log() 
+
+# sube tus cambios del repo local a los de github
+gert::git_push() # COMANDO IMPORTANTE 
+
+```
+
+_Puede ser más amigable usar el recuadro de Git que aparece en RStudio para hacer todo lo anterior!_
+
+
 ## Ejercicio postcards
 * Similar a https://pages.github.com/
 * `postcards` tiene 4 templados de páginas web https://github.com/seankross/postcards
