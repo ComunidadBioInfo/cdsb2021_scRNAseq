@@ -15,8 +15,6 @@ RoxygenNote: 7.1.1
 URL: https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq
 BugReports: https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq/issues
 Imports:
-    bookdown,
-    BiocStyle,
     sessioninfo,
     SingleCellExperiment,
     usethis,
@@ -48,4 +46,7 @@ Imports:
     Seurat,
     dplyr,
     patchwork
+Suggests:
+    bookdown,
+    BiocStyle
 VignetteBuilder: knitr
