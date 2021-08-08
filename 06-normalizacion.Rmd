@@ -255,16 +255,16 @@ Una vez calculados los factores de normalización con `computeSumFactors()`, pod
 
 Estos valores resultantes son valores de expresión normalizados transformados en escala logarítmica.
 
-```{r}
+```{r all_code4, cache=TRUE, dependson='all_code3'}
 # Normalization
 # set.seed(100)
 # clust.zeisel <- quickCluster(sce.zeisel) 
 # sce.zeisel <- computeSumFactors(sce.zeisel, cluster=clust.zeisel, min.mean=0.1)
 
 # Log transformation
-sce.zeisel <- logNormCounts(sce.zeisel)
+sce.zeisel <- scater::logNormCounts(sce.zeisel)
 assayNames(sce.zeisel)
-sce.zeisel <- runPCA(sce.zeisel)
+
 ```
 
 ### Ejercicio: Transformación logatítmica
@@ -298,7 +298,7 @@ La normalización de Seurat con `NormalizeData()` (tomado de [aquí](https://git
 3. Sumar 1 y tomar el logaritmo natural.
 
 ```{r message=FALSE, warning=FALSE}
-library(Seurat)
+library('Seurat')
 # Create a Seurat obj
 sce <- sce.zeisel
 sce <- removeAltExps(sce)
@@ -514,6 +514,7 @@ Por que `log(0) = -Inf` y produce error más adelante.
 Funciones interesantes para después de normalizar
 
 ```{r}
+# sce.zeisel <- runPCA(sce.zeisel)
 # plotPCA(sce.zeisel, colour_by = "level1class")
 # plotRLE(sce.zeisel, exprs_values = "logcounts", colour_by = "level1class")
 ```
