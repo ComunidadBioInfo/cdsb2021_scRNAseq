@@ -26,7 +26,7 @@ usethis::create_project("Su_Usuario.github.io")
 Nuevo proyecto :
 
 ```{r echo=FALSE, fig.cap="git user", fig.width = "40%"}
-knitr::include_graphics("img_postcard/proyecto_github_user.PNG")
+knitr::include_graphics("img_postcard/proyecto_github_user.png")
 ```
 
 ```{r postcards_git, eval = FALSE}
@@ -39,7 +39,7 @@ usethis::use_git()
 Nuevo botón
 
 ```{r echo=FALSE, fig.cap="button_git", fig.width = "40%"}
-knitr::include_graphics("img_postcard/activa_boton_git.PNG")
+knitr::include_graphics("img_postcard/activa_boton_git.png")
 ```
 
 ```{r postcards_github, eval = FALSE}
@@ -84,13 +84,13 @@ usethis::use_git()
 Nuevo botón: 
 
 ```{r echo=FALSE, fig.cap="button_git", fig.width = "40%"}
-knitr::include_graphics("img_postcard/activa_boton_git.PNG")
+knitr::include_graphics("img_postcard/activa_boton_git.png")
 ```
 
 * Ahora que tienen el botón Git, hagan click y en la esquina derecha habrá un símbolo con dos  rectángulos morados y un rombo blanco, denle click.
 
 ```{r echo=FALSE, fig.cap="button_branch", fig.width = "40%"}
-knitr::include_graphics("img_postcard/branch.PNG")
+knitr::include_graphics("img_postcard/branch.png")
 ```
 
 * Ahora el botón *Add Remote* y ahí podrán nombrar este acceso remoto como gusten, y agregar la URL de su repositorio en github.
@@ -118,7 +118,7 @@ Ya que hayan creado con cualquiera de las 2 opciones anteriores pueden continuar
 * Para guardar los archivos nuevos, incluyendo `index.html`, debemos hacer un `commit`. Podemos hacerlo con el nuevo botón de git, primero seleccionando los archivos: 
 
 ```{r echo=FALSE, fig.cap="add_file", fig.width = "40%"}
-knitr::include_graphics("img_postcard/add_stag.PNG")
+knitr::include_graphics("img_postcard/add_stag.png")
 ```
 
 Cuando hayamos seleccionado **todos** los archivos, veremos que la columna Status cambia a una "A" de agregado o added y podemos darle al botón `Commit` justo arriba de Status. Esto abrirá una nueva pestaña donde podremos poner un mensaje sobre nuestro `commit` y después darle al botón `Commit`.
@@ -158,7 +158,7 @@ knitr::include_graphics("img_postcard/yaml_awesome.png")
   Se ve así:
   
 ```{r echo=FALSE, fig.cap="fawesome", fig.width = "40%"}
-knitr::include_graphics("img_postcard/awesome.PNG")
+knitr::include_graphics("img_postcard/awesome.png")
 ```
 
 * 
