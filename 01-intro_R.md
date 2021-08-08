@@ -21,10 +21,13 @@ Instructor: [Leonardo Collado Torres](https://comunidadbioinfo.github.io/es/auth
   - https://twitter.com/lcolladotor
   - https://www.youtube.com/c/LeonardoColladoTorres/playlists
   - LIBD rstats club https://docs.google.com/spreadsheets/d/1is8dZSd0FZ9Qi1Zvq1uRhm-P1McnJRd_zxdAfCRoMfA/edit?usp=sharing
-  - https://twitter.com/CDSBMexico y https://twitter.com/LIBDrstats
-  - https://twitter.com/Bioconductor
+  - https://twitter.com/CDSBMexico, https://twitter.com/LIBDrstats, https://twitter.com/Bioconductor
+  - https://comunidadbioinfo.github.io/
+  - YouTube CDSB: https://www.youtube.com/channel/UCHCdYfAXVzJIUkMoMSGiZMw
 
 <img src="https://raw.githubusercontent.com/lcolladotor/rnaseq_LCG-UNAM_2021/master/icon_192.png">
+
+<blockquote class="twitter-tweet"><p lang="es" dir="ltr">Thank you <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw">@Bioconductor</a> for welcoming me &amp; providing me a foundation &amp; platform for my career<br><br>Gracias BioC por darme una oportunidad y plataforma para desarrollar mi carrera<br><br>Time to pass it on/Toca enseñar y crecer la bola de nieve ❄️ <a href="https://twitter.com/CDSBMexico?ref_src=twsrc%5Etfw">@CDSBMexico</a> 🇲🇽<a href="https://twitter.com/hashtag/BioC2021?src=hash&amp;ref_src=twsrc%5Etfw">#BioC2021</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/rstatsES?src=hash&amp;ref_src=twsrc%5Etfw">#rstatsES</a> <a href="https://t.co/8cDXP4Pf2W">https://t.co/8cDXP4Pf2W</a> <a href="https://t.co/rpQgH8UsWW">pic.twitter.com/rpQgH8UsWW</a></p>&mdash; 🇲🇽 Leonardo Collado-Torres (@lcolladotor) <a href="https://twitter.com/lcolladotor/status/1423385604314865664?ref_src=twsrc%5Etfw">August 5, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## GitHub
 
@@ -210,7 +213,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-08 19:45:54 UTC"
+## [1] "2021-08-08 20:17:01 UTC"
 ```
 
 ```r
@@ -219,7 +222,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.514   0.113   0.505
+##   0.543   0.106   0.519
 ```
 
 ```r

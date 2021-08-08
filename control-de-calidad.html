@@ -187,8 +187,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.6" data-path="control-de-calidad.html"><a href="control-de-calidad.html#datos-de-grun-et-al"><i class="fa fa-check"></i><b>5.6</b> Datos de Grun et al</a></li>
 <li class="chapter" data-level="5.7" data-path="control-de-calidad.html"><a href="control-de-calidad.html#gráficas-de-qc-extra"><i class="fa fa-check"></i><b>5.7</b> Gráficas de QC extra</a></li>
 <li class="chapter" data-level="5.8" data-path="control-de-calidad.html"><a href="control-de-calidad.html#ejercicio-ercc-grun-et-al"><i class="fa fa-check"></i><b>5.8</b> Ejercicio: ERCC Grun et al</a></li>
-<li class="chapter" data-level="5.9" data-path="control-de-calidad.html"><a href="control-de-calidad.html#identificando-droplets-con-datos-de-pbmc"><i class="fa fa-check"></i><b>5.9</b> Identificando droplets con datos de PBMC</a></li>
-<li class="chapter" data-level="5.10" data-path="control-de-calidad.html"><a href="control-de-calidad.html#ejercicio-detección-de-droplets"><i class="fa fa-check"></i><b>5.10</b> Ejercicio: detección de droplets</a></li>
+<li class="chapter" data-level="5.9" data-path="control-de-calidad.html"><a href="control-de-calidad.html#identificando-droplets-vacíos-con-datos-de-pbmc"><i class="fa fa-check"></i><b>5.9</b> Identificando droplets vacíos con datos de PBMC</a></li>
+<li class="chapter" data-level="5.10" data-path="control-de-calidad.html"><a href="control-de-calidad.html#ejercicio-detección-de-droplets-vacíos"><i class="fa fa-check"></i><b>5.10</b> Ejercicio: detección de droplets vacíos</a></li>
 <li class="chapter" data-level="5.11" data-path="control-de-calidad.html"><a href="control-de-calidad.html#filtrado-de-expresión-mitocondrial-adicional"><i class="fa fa-check"></i><b>5.11</b> Filtrado de expresión mitocondrial adicional</a></li>
 <li class="chapter" data-level="5.12" data-path="control-de-calidad.html"><a href="control-de-calidad.html#ejercicio-avanzado"><i class="fa fa-check"></i><b>5.12</b> Ejercicio avanzado</a></li>
 <li class="chapter" data-level="5.13" data-path="control-de-calidad.html"><a href="control-de-calidad.html#discusión-conviene-eliminar-datos"><i class="fa fa-check"></i><b>5.13</b> Discusión ¿Conviene eliminar datos?</a>
@@ -682,8 +682,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>¿Qué variable tiene valores de D10, D17, D2, D3 y D7?</li>
 </ul>
 </div>
-<div id="identificando-droplets-con-datos-de-pbmc" class="section level2" number="5.9">
-<h2><span class="header-section-number">5.9</span> Identificando droplets con datos de PBMC</h2>
+<div id="identificando-droplets-vacíos-con-datos-de-pbmc" class="section level2" number="5.9">
+<h2><span class="header-section-number">5.9</span> Identificando droplets vacíos con datos de PBMC</h2>
+<div class="figure">
+<img src="https://cdn.10xgenomics.com/image/upload/dpr_2.0,e_sharpen,f_auto,q_auto/v1607106030/Reagent_delivery_system.png" alt="" />
+<p class="caption">Descripción gráfica la tecnología <em>Next GEM</em> de 10x Genomics. Fuente: <a href="https://www.10xgenomics.com/technology">10x Genomics</a>.</p>
+</div>
+<div class="figure">
+<img src="img/emptyDrops_Fig2.png" alt="Opciones algorítmicas para detecar los droplets vacíos. Fuente: [Lun et al, _Genome Biology_, 2019](https://doi.org/10.1186/s13059-019-1662-y)." width="483" />
+<p class="caption">
+Opciones algorítmicas para detecar los droplets vacíos. Fuente: <a href="https://doi.org/10.1186/s13059-019-1662-y">Lun et al, <em>Genome Biology</em>, 2019</a>.
+</p>
+</div>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="control-de-calidad.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Descarguemos los datos</span></span>
 <span id="cb114-2"><a href="control-de-calidad.html#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;BiocFileCache&#39;</span>)</span>
 <span id="cb114-3"><a href="control-de-calidad.html#cb114-3" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
@@ -732,7 +742,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb118-12"><a href="control-de-calidad.html#cb118-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex =</span> <span class="fl">1.2</span></span>
 <span id="cb118-13"><a href="control-de-calidad.html#cb118-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="05-control_calidad_files/figure-html/pbmc_qc-1.png" width="672" />
-Encontremos los <em>droplets</em> usando <code>emptyDrops()</code>.</p>
+Encontremos los <em>droplets</em> vacíos usando <code>emptyDrops()</code>.</p>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="control-de-calidad.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Usemos DropletUtils para encontrar los droplets</span></span>
 <span id="cb119-2"><a href="control-de-calidad.html#cb119-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
 <span id="cb119-3"><a href="control-de-calidad.html#cb119-3" aria-hidden="true" tabindex="-1"></a>e.out <span class="ot">&lt;-</span> <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc))</span>
@@ -757,8 +767,8 @@ Encontremos los <em>droplets</em> usando <code>emptyDrops()</code>.</p>
 <span id="cb121-14"><a href="control-de-calidad.html#cb121-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;grey80&quot;</span>)</span></code></pre></div>
 <p><img src="05-control_calidad_files/figure-html/emptyDrops-1.png" width="672" /></p>
 </div>
-<div id="ejercicio-detección-de-droplets" class="section level2" number="5.10">
-<h2><span class="header-section-number">5.10</span> Ejercicio: detección de droplets</h2>
+<div id="ejercicio-detección-de-droplets-vacíos" class="section level2" number="5.10">
+<h2><span class="header-section-number">5.10</span> Ejercicio: detección de droplets vacíos</h2>
 <ul>
 <li>¿Por qué <code>emptyDrops()</code> regresa valores <code>NA</code>? <a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></li>
 <li>¿Los valores p son iguales entre <code>e.out</code> y <code>all.out</code>? <a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a></li>
@@ -785,10 +795,10 @@ Encontremos los <em>droplets</em> usando <code>emptyDrops()</code>.</p>
 </div>
 <div id="ejercicio-avanzado" class="section level2" number="5.12">
 <h2><span class="header-section-number">5.12</span> Ejercicio avanzado</h2>
-<p>Volvamos a crear <code>sce.pbmc</code> para poder usar <code>plotColData()</code> y visualizar la relación entre <code>total</code> y los niveles de expresión mitocondrial (en porcentaje) separando lo que pensamos que son droplets y las células de acuerdo a los resultados que ya calculamos de <code>emptyDrops()</code>. El resultado final se verá como en la siguiente imagen.</p>
+<p>Volvamos a crear <code>sce.pbmc</code> para poder usar <code>plotColData()</code> y visualizar la relación entre <code>total</code> y los niveles de expresión mitocondrial (en porcentaje) separando lo que pensamos que son droplets vacíos y las células de acuerdo a los resultados que ya calculamos de <code>emptyDrops()</code>. El resultado final se verá como en la siguiente imagen.</p>
 <p><img src="05-control_calidad_files/figure-html/pbmc_combined-1.png" width="672" /></p>
 <ul>
-<li>No podemos usar nuestro objeto <code>sce.pbmc</code> porque ya eliminamos los droplets al correr <code>sce.pbmc &lt;- sce.pbmc[, which(e.out$FDR &lt;= 0.001)]</code>. Por eso tendremos que volver a usar <code>sce.pbmc &lt;- read10xCounts(fname, col.names = TRUE)</code>.</li>
+<li>No podemos usar nuestro objeto <code>sce.pbmc</code> porque ya eliminamos los droplets vacíos al correr <code>sce.pbmc &lt;- sce.pbmc[, which(e.out$FDR &lt;= 0.001)]</code>. Por eso tendremos que volver a usar <code>sce.pbmc &lt;- read10xCounts(fname, col.names = TRUE)</code>.</li>
 <li>Una vez que hayamos vuelto a hacer <code>sce.pbmc</code>, tenemos que guardar en ese objeto los resultados de <code>emptyDrops()</code>. Por ejemplo, con <code>sce.pbmc$is_cell &lt;- e.out$FDR &lt;= 0.001</code>.</li>
 <li>Como <code>e.out$FDR</code> tiene muchos <code>NA</code>, nos conviene filtrar esos datos.</li>
 <li>Tendremos que volver a correr <code>addPerCellQC()</code> y guardar los resultados en nuestro objeto <code>sce.pbmc</code>.</li>
@@ -824,10 +834,10 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 <h2><span class="header-section-number">5.14</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="control-de-calidad.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb124-2"><a href="control-de-calidad.html#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-08 19:50:16 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-08 20:21:36 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="control-de-calidad.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 221.538   5.581 259.684</code></pre>
+## 234.987   6.415 272.676</code></pre>
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="control-de-calidad.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb128-2"><a href="control-de-calidad.html#cb128-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
