@@ -297,7 +297,7 @@ La normalización de Seurat con `NormalizeData()` (tomado de [aquí](https://git
 
 3. Sumar 1 y tomar el logaritmo natural.
 
-```{r message=FALSE, warning=FALSE}
+```{r all_code3, cache=TRUE, dependson='all_code4', message=FALSE, warning=FALSE}
 library('Seurat')
 # Create a Seurat obj
 sce <- sce.zeisel
