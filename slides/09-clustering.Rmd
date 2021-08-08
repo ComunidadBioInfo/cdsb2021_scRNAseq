@@ -23,8 +23,8 @@ options(htmltools.dir.version = FALSE)
 ```{r xaringan-themer, include=FALSE}
 library(xaringanthemer)
 solarized_dark(
-  code_font_family = "Fira Code",
-  code_font_url    = "https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css"
+    code_font_family = "Fira Code",
+    code_font_url    = "https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css"
 )
 ```
 
@@ -87,14 +87,16 @@ Plantilla desarrollada por: "[Leonardo Collado-Torres](http://lcolladotor.github
 ```{r, warning=FALSE, message=FALSE}
 library(BiocFileCache)
 bfc <- BiocFileCache()
-raw.path <- bfcrpath(bfc, file.path("http://cf.10xgenomics.com/samples",
-  "cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz"))
-untar(raw.path, exdir=file.path(tempdir(), "pbmc4k"))
+raw.path <- bfcrpath(bfc, file.path(
+    "http://cf.10xgenomics.com/samples",
+    "cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz"
+))
+untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
 
 library(DropletUtils)
 library(Matrix)
 fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
-sce.pbmc <- read10xCounts(fname, col.names=TRUE)
+sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 ```
 
 Dataset de células mononucleares de sangre periférica humana (PBMC) de 10X Genomics
@@ -111,15 +113,18 @@ Descripción [aquí](https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-ge
 # gene-annotation
 library(scater)
 rownames(sce.pbmc) <- uniquifyFeatureNames(
-  rowData(sce.pbmc)$ID, rowData(sce.pbmc)$Symbol)
+    rowData(sce.pbmc)$ID, rowData(sce.pbmc)$Symbol
+)
 library(EnsDb.Hsapiens.v86)
-location <- mapIds(EnsDb.Hsapiens.v86, keys=rowData(sce.pbmc)$ID, 
-  column="SEQNAME", keytype="GENEID")
+location <- mapIds(EnsDb.Hsapiens.v86,
+    keys = rowData(sce.pbmc)$ID,
+    column = "SEQNAME", keytype = "GENEID"
+)
 
 # cell-detection
 set.seed(100)
 e.out <- emptyDrops(counts(sce.pbmc))
-sce.pbmc <- sce.pbmc[,which(e.out$FDR <= 0.001)]
+sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 ```
 
 ---
@@ -128,17 +133,19 @@ sce.pbmc <- sce.pbmc[,which(e.out$FDR <= 0.001)]
 
 ```{r, warning=FALSE, message=FALSE}
 # quality-control
-stats <- perCellQCMetrics(sce.pbmc, 
-  subsets=list(Mito=which(location=="MT")))
-high.mito <- isOutlier(stats$subsets_Mito_percent, 
-  type="higher")
-sce.pbmc <- sce.pbmc[,!high.mito]
+stats <- perCellQCMetrics(sce.pbmc,
+    subsets = list(Mito = which(location == "MT"))
+)
+high.mito <- isOutlier(stats$subsets_Mito_percent,
+    type = "higher"
+)
+sce.pbmc <- sce.pbmc[, !high.mito]
 
 # normalization
 library(scran)
 set.seed(1000)
 clusters <- quickCluster(sce.pbmc)
-sce.pbmc <- computeSumFactors(sce.pbmc, cluster=clusters)
+sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 ```
 
@@ -150,7 +157,7 @@ sce.pbmc <- logNormCounts(sce.pbmc)
 # variance modelling
 set.seed(1001)
 dec.pbmc <- modelGeneVarByPoisson(sce.pbmc)
-top.pbmc <- getTopHVGs(dec.pbmc, prop=0.1)
+top.pbmc <- getTopHVGs(dec.pbmc, prop = 0.1)
 ```
 
 ---
@@ -160,14 +167,16 @@ top.pbmc <- getTopHVGs(dec.pbmc, prop=0.1)
 ```{r, warning=FALSE, message=FALSE}
 # dimensionality-reduction
 set.seed(10000)
-sce.pbmc <- denoisePCA(sce.pbmc, subset.row=top.pbmc, 
-  technical=dec.pbmc)
+sce.pbmc <- denoisePCA(sce.pbmc,
+    subset.row = top.pbmc,
+    technical = dec.pbmc
+)
 
 set.seed(100000)
-sce.pbmc <- runTSNE(sce.pbmc, dimred="PCA")
+sce.pbmc <- runTSNE(sce.pbmc, dimred = "PCA")
 
 set.seed(1000000)
-sce.pbmc <- runUMAP(sce.pbmc, dimred="PCA")
+sce.pbmc <- runUMAP(sce.pbmc, dimred = "PCA")
 ```
 
 ---
@@ -357,7 +366,7 @@ Después de la construcción del grafo, no se almacena información adicional m�
 ```{r, warning=FALSE, message=FALSE}
 library(scran)
 # Build graph using k = 10 nearest neighbours in PCA-space
-g <- buildSNNGraph(sce.pbmc, k=10, use.dimred = "PCA")
+g <- buildSNNGraph(sce.pbmc, k = 10, use.dimred = "PCA")
 # Identify communities using the Walktrap method
 clust <- igraph::cluster_walktrap(g)$membership
 ```
@@ -370,7 +379,7 @@ clust <- igraph::cluster_walktrap(g)$membership
 # Visualise clusters on t-SNE plot
 library(scater)
 sce.pbmc$cluster <- factor(clust)
-plotReducedDim(sce.pbmc, "TSNE", colour_by="cluster")
+plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster")
 ```
 
 **¿Qué pasa si utilizas una k más grande o más pequeña?**
@@ -400,10 +409,10 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by="cluster")
 ```{r, warning=FALSE, message=FALSE , fig.dim = c(6, 4)}
 # Jaccard-based weights followed by Louvain clustering
 # aka 'Seurat-style' clustering
-g <- buildSNNGraph(sce.pbmc, k=10, use.dimred = "PCA", type = "jaccard")
+g <- buildSNNGraph(sce.pbmc, k = 10, use.dimred = "PCA", type = "jaccard")
 clust2 <- igraph::cluster_louvain(g)$membership
 sce.pbmc$cluster2 <- factor(clust2)
-plotReducedDim(sce.pbmc, "TSNE", colour_by="cluster2")
+plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
 ```
 ---
 
@@ -441,7 +450,7 @@ Nosotros computaremos un **score de modularidad** para cada cluster (usando las 
 
 ```{r, warning=FALSE, message=FALSE}
 library(bluster)
-ratio <- pairwiseModularity(g, clust, as.ratio=TRUE)
+ratio <- pairwiseModularity(g, clust, as.ratio = TRUE)
 dim(ratio)
 ```
 
@@ -449,9 +458,11 @@ dim(ratio)
 
 ```{r, warning=FALSE, message=FALSE, fig.dim = c(6, 4)}
 library(pheatmap)
-pheatmap(log2(ratio+1), cluster_rows=FALSE,
-  cluster_cols=FALSE,
-  color=colorRampPalette(c("white", "blue"))(100))
+pheatmap(log2(ratio + 1),
+    cluster_rows = FALSE,
+    cluster_cols = FALSE,
+    color = colorRampPalette(c("white", "blue"))(100)
+)
 ```
 
 Un dataset que contiene clusters bien separados debería contener la mayoría del peso total observado en las entradas diagonales, *i.e* la mayoría de las aristas ocurren entre células del mismo cluster
@@ -498,14 +509,16 @@ Uno puede hacer un proceso de **bootstrap** para evaluar la estabilidad de un al
 
 ```{r, warning=FALSE, message=FALSE}
 myClusterFUN <- function(x) {
-  g <- buildSNNGraph(x, use.dimred="PCA", type="jaccard")
-  igraph::cluster_louvain(g)$membership
+    g <- buildSNNGraph(x, use.dimred = "PCA", type = "jaccard")
+    igraph::cluster_louvain(g)$membership
 }
 
 originals <- myClusterFUN(sce.pbmc)
 set.seed(0010010100)
-coassign <- bootstrapStability(sce.pbmc, FUN=myClusterFUN,
-  clusters=originals)
+coassign <- bootstrapStability(sce.pbmc,
+    FUN = myClusterFUN,
+    clusters = originals
+)
 ```
 
 **Coasignación** es la probabilidad de que células elegidas al azar del cluster X y Y sean asignadas al mismo cluster en la réplica del proceso de bootstrap
@@ -515,8 +528,10 @@ coassign <- bootstrapStability(sce.pbmc, FUN=myClusterFUN,
 # Evaluando estabilidad de los clusters
 
 ```{r, warning=FALSE, message=FALSE , fig.dim = c(6, 4)}
-pheatmap(coassign, cluster_row=FALSE, cluster_col=FALSE,
-  color=rev(viridis::magma(100)))
+pheatmap(coassign,
+    cluster_row = FALSE, cluster_col = FALSE,
+    color = rev(viridis::magma(100))
+)
 ```
 
 ---
@@ -547,11 +562,13 @@ pheatmap(coassign, cluster_row=FALSE, cluster_col=FALSE,
 # Subclustering
 
 ```{r, warning=FALSE, message=FALSE , fig.dim = c(6, 4)}
-g.full <- buildSNNGraph(sce.pbmc, use.dimred="PCA")
+g.full <- buildSNNGraph(sce.pbmc, use.dimred = "PCA")
 clust.full <- igraph::cluster_walktrap(g.full)$membership
 sce.pbmc$clust.full <- factor(clust.full)
-plotExpression(sce.pbmc, features=c("CD3E", "CCR7", "CD69", "CD44"),
- x="clust.full", colour_by="clust.full")
+plotExpression(sce.pbmc,
+    features = c("CD3E", "CCR7", "CD69", "CD44"),
+    x = "clust.full", colour_by = "clust.full"
+)
 ```
 
 *CD3E, CCR7, CD69, y CD44 son marcadores de células T de memoria*. Dentro de las  células T de memoria, ¿dónde están las subpoblaciones CD4+ y CD8+?
@@ -560,15 +577,17 @@ plotExpression(sce.pbmc, features=c("CD3E", "CCR7", "CD69", "CD44"),
 
 # Subclustering
 ```{r, warning=FALSE, message=FALSE}
-# Repeating modelling and PCA on the subset of cells we have 
+# Repeating modelling and PCA on the subset of cells we have
 # identified as memory T-cells (cluster 6).
 memory <- 6
-sce.memory <- sce.pbmc[,clust.full==memory]
+sce.memory <- sce.pbmc[, clust.full == memory]
 dec.memory <- modelGeneVar(sce.memory)
-sce.memory <- denoisePCA(sce.memory, technical=dec.memory,
-  subset.row=getTopHVGs(dec.memory, prop=0.1))
+sce.memory <- denoisePCA(sce.memory,
+    technical = dec.memory,
+    subset.row = getTopHVGs(dec.memory, prop = 0.1)
+)
 # Repeating clustering on the subset.
-g.memory <- buildSNNGraph(sce.memory, use.dimred="PCA")
+g.memory <- buildSNNGraph(sce.memory, use.dimred = "PCA")
 clust.memory <- igraph::cluster_walktrap(g.memory)$membership
 sce.memory$clust.memory <- factor(clust.memory)
 ```
@@ -577,8 +596,10 @@ sce.memory$clust.memory <- factor(clust.memory)
 
 # Subclustering
 ```{r, warning=FALSE, message=FALSE, fig.dim = c(6, 4)}
-plotExpression(sce.memory, features=c("CD8A", "CD4"),
-  x="clust.memory")
+plotExpression(sce.memory,
+    features = c("CD8A", "CD4"),
+    x = "clust.memory"
+)
 ```
 
 Expresión de CD4 es bajo, por lo tanto, su cambio es modesto, pero la interpretación es clara

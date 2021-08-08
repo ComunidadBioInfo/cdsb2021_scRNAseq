@@ -1,8 +1,8 @@
-## ----install, eval = FALSE------------------------------------------------------------------------------------------------------------------------------------------
+## ----install, eval = FALSE-------------------------------------------------------------------------------------------
 ## ## Para instalar paquetes
 ## if (!requireNamespace("remotes", quietly = TRUE)) {
-##       install.packages("remotes")
-##   }
+##     install.packages("remotes")
+## }
 ## 
 ## ## Para instalar paquetes de Bioconductor
 ## remotes::install_cran("BiocManager")
@@ -38,12 +38,13 @@
 ##         "iSEE",
 ##         "pryr",
 ##         "sessioninfo",
-##         "scPipe"
+##         "scPipe",
+##         "Seurat"
 ##     )
 ## )
 
 
-## ----session_packages, eval = TRUE, message = FALSE-----------------------------------------------------------------------------------------------------------------
+## ----session_packages, eval = TRUE, message = FALSE------------------------------------------------------------------
 library("SingleCellExperiment")
 library("usethis")
 library("here")
@@ -71,9 +72,11 @@ library("iSEE")
 library("pryr")
 library("sessioninfo")
 library("scPipe")
+library("PCAtools")
+library("bluster")
 
 
-## ----session_info---------------------------------------------------------------------------------------------------------------------------------------------------
+## ----session_info----------------------------------------------------------------------------------------------------
 ## Reproducibility information
 options(width = 120)
 session_info()

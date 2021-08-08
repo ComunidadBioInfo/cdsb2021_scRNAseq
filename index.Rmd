@@ -129,8 +129,8 @@ Más específicamente, computadora con al menos 8 GB de memoria RAM, aplicación
 ```{r install, eval = FALSE}
 ## Para instalar paquetes
 if (!requireNamespace("remotes", quietly = TRUE)) {
-      install.packages("remotes")
-  }
+    install.packages("remotes")
+}
 
 ## Para instalar paquetes de Bioconductor
 remotes::install_cran("BiocManager")
