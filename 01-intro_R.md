@@ -24,6 +24,7 @@ Instructor: [Leonardo Collado Torres](https://comunidadbioinfo.github.io/es/auth
   - https://twitter.com/CDSBMexico, https://twitter.com/LIBDrstats, https://twitter.com/Bioconductor
   - https://comunidadbioinfo.github.io/
   - YouTube CDSB: https://www.youtube.com/channel/UCHCdYfAXVzJIUkMoMSGiZMw
+  - _Orchestrating Spatially Resolved Transcriptomics Analysis with Bioconductor_ https://lmweber.org/OSTA-book/
 
 <img src="https://raw.githubusercontent.com/lcolladotor/rnaseq_LCG-UNAM_2021/master/icon_192.png">
 
@@ -213,7 +214,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-08 20:17:01 UTC"
+## [1] "2021-08-08 20:24:12 UTC"
 ```
 
 ```r
@@ -222,7 +223,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.543   0.106   0.519
+##   0.442   0.103   0.425
 ```
 
 ```r
