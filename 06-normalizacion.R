@@ -1,14 +1,14 @@
-## ----echo=FALSE, fig.cap="Figura tomada de [1]"------------------------------------------------------
+## ----echo=FALSE, fig.cap="Figura tomada de [1]"-------------------------------------------------------
 knitr::include_graphics("https://scrnaseq-course.cog.sanger.ac.uk/website/figures/RNA-Seq_workflow-5.pdf.jpg")
 
 
-## ----message=FALSE, warning=FALSE--------------------------------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------------------------------
 library("scRNAseq")
 sce.zeisel <- ZeiselBrainData(ensembl = TRUE)
 sce.zeisel
 
 
-## ----message=FALSE, warning=FALSE, include=FALSE-----------------------------------------------------
+## ----message=FALSE, warning=FALSE, include=FALSE------------------------------------------------------
 # Control de calidad
 library("scater")
 
@@ -25,7 +25,7 @@ colSums(as.data.frame(qc))
 sce.zeisel <- sce.zeisel[, !qc$discard]
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 # Estimar tamaños de librerías
 lib.sf.zeisel <- librarySizeFactors(sce.zeisel)
 # Examina la distribución de los tamaños de librerías
@@ -34,11 +34,11 @@ summary(lib.sf.zeisel)
 hist(log10(lib.sf.zeisel), xlab = "Log10[Library Size factor]", col = "grey80")
 
 
-## ----echo=FALSE, fig.cap="Figura tomada de [2]", fig.height=5----------------------------------------
+## ----echo=FALSE, fig.cap="Figura tomada de [2]", fig.height=5-----------------------------------------
 knitr::include_graphics("https://hbctraining.github.io/DGE_workshop/img/normalization_methods_composition.png")
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 # Normalización por decircunvolución (deconvolution)
 library("scran")
 # Pre-clustering
@@ -66,11 +66,11 @@ plot(lib.sf.zeisel,
 abline(a = 0, b = 1, col = "red")
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 summary(deconv.sf.zeisel)
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 50 - 10
 1100 - 1000
 
@@ -78,7 +78,7 @@ log(50) - log(10)
 log(1100) - log(1000)
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 # Normalization
 # set.seed(100)
 # clust.zeisel <- quickCluster(sce.zeisel)
@@ -89,7 +89,7 @@ sce.zeisel <- scater::logNormCounts(sce.zeisel)
 assayNames(sce.zeisel)
 
 
-## ---- message=FALSE, warning=FALSE-------------------------------------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------------------------------
 library("Seurat")
 # Create a Seurat obj
 sce <- sce.zeisel
@@ -100,7 +100,12 @@ seurat.zeisel
 # Normalize using Seurat function
 seurat.zeisel <- NormalizeData(seurat.zeisel, normalization.method = "LogNormalize")
 # Compare Total counts per cell after normalization
-ls.seurat <- colSums(seurat.zeisel[["originalexp"]]@data)
+ls.seurat <- colSums(seurat.zeisel[[SingleCellExperiment::mainExpName(x = sce)]]@data)
+## Relacionado a
+## https://github.com/satijalab/seurat/blob/9b3892961c9e1bf418af3bbb1bc79950adb481d7/R/objects.R#L1041-L1046
+## donde podemos ver como Seurat convierte el objeto de SingleCellExperiment
+## a un objeto de Seurat
+
 summary(ls.seurat)
 hist(ls.seurat)
 
@@ -119,23 +124,23 @@ ls.log <- colSums(logcounts(sce.zeisel))
 plot(ls.seurat, ls.log)
 
 
-## ----echo=FALSE, fig.cap="Figura tomada de [2]", fig.height=5----------------------------------------
+## ----echo=FALSE, fig.cap="Figura tomada de [2]", fig.height=5-----------------------------------------
 knitr::include_graphics("https://hbctraining.github.io/DGE_workshop/img/normalization_methods_depth.png")
 
 
-## ----echo=FALSE, fig.cap="Figura tomada de [2]", fig.height=5----------------------------------------
+## ----echo=FALSE, fig.cap="Figura tomada de [2]", fig.height=5-----------------------------------------
 knitr::include_graphics("https://hbctraining.github.io/DGE_workshop/img/normalization_methods_length.png")
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 length(is.mito)
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 colSums(as.data.frame(qc))
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 # Plots
 colData(unfiltered) <- cbind(colData(unfiltered), stats)
 unfiltered$discard <- qc$discard
@@ -157,17 +162,17 @@ gridExtra::grid.arrange(
 )
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 ls.zeisel <- colSums(counts(sce.zeisel))
 summary(ls.zeisel)
 hist(log10(ls.zeisel), xlab = "Log10[Library size]", col = "grey80")
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 identical(lib.sf.zeisel, ls.zeisel)
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 # Checamos proporcionalidad
 plot(
     ls.zeisel,
@@ -179,29 +184,29 @@ plot(
 )
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 ## Ahora asegurate que su media sea 1 (unity mean)
 lib_size_factors <- ls.zeisel / mean(ls.zeisel)
 summary(lib_size_factors)
 identical(lib_size_factors, lib.sf.zeisel)
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 levels(clust.zeisel)
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 cells_cluster <- sort(table(clust.zeisel))
 cells_cluster
 barplot(cells_cluster)
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 set.seed(100)
 sort(table(quickCluster(sce.zeisel, min.size = 200)))
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 plot(lib.sf.zeisel,
     deconv.sf.zeisel,
     xlab = "Library size factor",
@@ -215,13 +220,13 @@ abline(a = -.2, b = 0.95, col = "red")
 abline(a = 0.08, b = 1, col = "red")
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 # sce.zeisel <- runPCA(sce.zeisel)
 # plotPCA(sce.zeisel, colour_by = "level1class")
 # plotRLE(sce.zeisel, exprs_values = "logcounts", colour_by = "level1class")
 
 
-## ----------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------
 ## Información de la sesión de R
 Sys.time()
 proc.time()

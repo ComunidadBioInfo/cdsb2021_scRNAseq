@@ -304,7 +304,7 @@ seurat.zeisel
 seurat.zeisel <- NormalizeData(seurat.zeisel, normalization.method = "LogNormalize")
 # Compare Total counts per cell after normalization
 ls.seurat <- colSums(seurat.zeisel[[SingleCellExperiment::mainExpName(x = sce)]]@data)
-## Relacionado a 
+## Relacionado a
 ## https://github.com/satijalab/seurat/blob/9b3892961c9e1bf418af3bbb1bc79950adb481d7/R/objects.R#L1041-L1046
 ## donde podemos ver como Seurat convierte el objeto de SingleCellExperiment
 ## a un objeto de Seurat
