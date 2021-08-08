@@ -1,4 +1,8 @@
 introducción-a-r-y-rstudio
+r
+github
+rstudio
+material-del-curso
 ejercicio-usando-usethis-here-y-postcards
 introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca
 estructura-e-importe-de-datos
