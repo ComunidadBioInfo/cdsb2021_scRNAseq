@@ -10,7 +10,7 @@ Instructora: [Ana Beatriz Villaseñor Altamirano](https://comunidadbioinfo.githu
 
 ## Motivación
 
-Al igual que otras tecnologías, sigle-cell RNA-seq (scRNA-seq) tiene errores sistemáticos y es importante conocerlos. 
+Al igual que otras tecnologías, single-cell RNA-seq (scRNA-seq) tiene errores sistemáticos y es importante conocerlos. 
 
 Dentro de los más comunes se encuentran la captura de cDNA y la amplificación de PCR que se lleva acabo por célula. Tener poco material de inicio dificulta lograr una preparación de libreria consistente dando lugar a errores sistemáticos. 
 
@@ -19,7 +19,7 @@ Dentro de los más comunes se encuentran la captura de cDNA y la amplificación 
 knitr::include_graphics("https://scrnaseq-course.cog.sanger.ac.uk/website/figures/RNA-Seq_workflow-5.pdf.jpg")
 ```
 
-La **normalización** tiene como objetivo remover estás diffencias sistemáticas para que no interfieran cuando comparamos los periles de expresión entre células.
+La **normalización** tiene como objetivo remover estás diferencias sistemáticas para que no interfieran cuando comparamos los perfiles de expresión entre células.
 
 Al normalizar los datos, las diferencias observadas entre poblaciones célulares o condiciones son debido a la biología y no por factores técnicos. 
 
@@ -37,7 +37,7 @@ Al normalizar los datos, las diferencias observadas entre poblaciones célulares
 
 Usaremos el dataset de [**Zeisel**](https://bioconductor.org/books/release/OSCA/zeisel-mouse-brain-strt-seq.html).
 
-- Tipos ceulares en cerebro de ratón (oligodendrocitos, microglias, neuronas, etc.)
+- Tipos celulares en cerebro de ratón (oligodendrocitos, microglias, neuronas, etc.)
 
 - Procesado con STRT-seq (similar a CEL-seq), un sistema de microfluio. 
 
@@ -166,7 +166,7 @@ Supongamos que un gen X (o grupo de genes) se expresa en mayor cantidad en la c�
 knitr::include_graphics("https://hbctraining.github.io/DGE_workshop/img/normalization_methods_composition.png")
 ```
 
-Este problema ha sido estudiado en bulk RNA-seq, `DESeq2::estimateSizeFactorsFromMatrix()` y `edgeR::calcNormFactors()`, contemplan este sesgo. Se assume que la mayoría de genes no estarán DE entre las muestras (en nuestro caso céluas) y cualquier diferencia entre los genes non-DE representa un sesgo el cual se remueve (calculando un factor de normalización). 
+Este problema ha sido estudiado en bulk RNA-seq, `DESeq2::estimateSizeFactorsFromMatrix()` y `edgeR::calcNormFactors()`, contemplan este sesgo. Se assume que la mayoría de genes no estarán DE entre las muestras (en nuestro caso células) y cualquier diferencia entre los genes non-DE representa un sesgo el cual se remueve (calculando un factor de normalización). 
 
 Sin embargo, single-cell RNA-seq tiene muchas cuentas bajas y ceros debido a limitaciones en la tecnología y no necesariamente indica ausencia de expresión. 
 
@@ -217,7 +217,7 @@ abline(a=0, b=1, col="red")
 
 ### Puntos finales
 
-La normalización por decircunvolución (deconvolution) mejora los resultados para análsis posteriores de una manera más precisa que los métodos para bulk RNA-seq.
+La normalización por decircunvolución (deconvolution) mejora los resultados para análisis posteriores de una manera más precisa que los métodos para bulk RNA-seq.
 
 `scran` algunas veces alcula factores negativos o ceros lo cual altera la matrix de expresión normalizada. ¡Checa los factores que calculas!
 
