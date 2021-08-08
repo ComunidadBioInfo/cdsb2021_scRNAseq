@@ -223,6 +223,14 @@ plotColData(
     facet_grid( ~ donor)
 
 
+## ----echo=FALSE, fig.cap="Descripción gráfica la tecnología _Next GEM_ de 10x Genomics. Fuente: [10x Genomics](https://www.10xgenomics.com/technology)."----
+knitr::include_graphics("https://cdn.10xgenomics.com/image/upload/dpr_2.0,e_sharpen,f_auto,q_auto/v1607106030/Reagent_delivery_system.png")
+
+
+## ----echo=FALSE, fig.cap="Opciones algorítmicas para detecar los droplets vacíos. Fuente: [Lun et al, _Genome Biology_, 2019](https://doi.org/10.1186/s13059-019-1662-y)."----
+knitr::include_graphics("img/emptyDrops_Fig2.png")
+
+
 ## ----pbmc_qc----------------------------------------------------------------------------------
 ## Descarguemos los datos
 library('BiocFileCache')
@@ -335,7 +343,7 @@ plotColData(
     x = "total",
     y = "subsets_MT_percent",
     colour_by = "discard_mito"
-) + facet_grid(~ ifelse(sce.pbmc$is_cell, "Célula", "Droplet"))
+) + facet_grid(~ ifelse(sce.pbmc$is_cell, "Célula", "Droplet vacío"))
 
 
 ## ----filtrar_o_no-----------------------------------------------------------------------------
