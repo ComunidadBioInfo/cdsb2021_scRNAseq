@@ -106,7 +106,7 @@ class: inverse center middle
 
 # Dataset ilustrativo: PBMC4k 10X sin filtrar
 
-```{r dataset, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(BiocFileCache)
 bfc <- BiocFileCache()
 raw.path <- bfcrpath(bfc, file.path(
@@ -120,7 +120,7 @@ untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
 
 # Dataset ilustrativo: PBMC4k 10X sin filtrar
 
-```{r matrix, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(DropletUtils)
 library(Matrix)
 fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
@@ -137,7 +137,7 @@ Descripción [aquí](https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-ge
 
 # Dataset ilustrativo: PBMC4k 10X sin filtrar
 
-```{r annotation, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE}
 # gene-annotation
 library(scater)
 rownames(sce.pbmc) <- uniquifyFeatureNames(
@@ -160,7 +160,7 @@ sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 
 # Dataset ilustrativo: PBMC4k 10X sin filtrar
 
-```{r quality, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE}
 # quality-control
 stats <- perCellQCMetrics(sce.pbmc,
     subsets = list(Mito = which(location == "MT"))
@@ -210,7 +210,7 @@ El enfoque más simple para cuantificar la variación _per-feature_ es simplemen
 
 # Varianza de los _log-counts_
 
-````{r varianza, warning=FALSE, message=FALSE}
+````{r, warning=FALSE, message=FALSE}
 library(scran)
 dec.pbmc <- modelGeneVar(sce.pbmc)
 ```
@@ -224,7 +224,7 @@ dec.pbmc <- modelGeneVar(sce.pbmc)
 
 # Varianza de los _log-counts_
 
-```{r fit, warning=FALSE, message=FALSE, fig.show="hide"}
+```{r, warning=FALSE, message=FALSE, fig.show="hide"}
 # Visualizing the fit
 fit.pbmc <- metadata(dec.pbmc)
 plot(fit.pbmc$mean, fit.pbmc$var, xlab="Mean of log-expression",
@@ -236,7 +236,7 @@ curve(fit.pbmc$trend(x), col="dodgerblue", add=TRUE, lwd=2)
 
 # Varianza de los _log-counts_
 
-```{r fit2, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Visualizing the fit
 fit.pbmc <- metadata(dec.pbmc)
 plot(fit.pbmc$mean, fit.pbmc$var, xlab="Mean of log-expression",
@@ -248,7 +248,7 @@ curve(fit.pbmc$trend(x), col="dodgerblue", add=TRUE, lwd=2)
 
 # Varianza de los _log-counts_
 
-```{r ordering, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE}
 # Ordering by largest 'biological' variation to 
 # identify most interesting genes
 dec.pbmc[order(dec.pbmc$bio, decreasing=TRUE),]
@@ -268,7 +268,7 @@ El coeficiente de variación de las cuentas al cuadrado (CV<sup>2</sup>) es una 
 
 # Coeficiente de variación
 
-```{r coeficiente, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE}
 dec.cv2.pbmc <- modelGeneCV2(sce.pbmc)
 ```
 
@@ -281,7 +281,7 @@ dec.cv2.pbmc <- modelGeneCV2(sce.pbmc)
 
 # Coeficiente de variación
 
-```{r visualizingfit, warning=FALSE, message=FALSE, fig.show="hide"}
+```{r, warning=FALSE, message=FALSE, fig.show="hide"}
 # Visualizing the fit
 fit.cv2.pbmc <- metadata(dec.cv2.pbmc)
 plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2, 
@@ -294,7 +294,7 @@ curve(fit.cv2.pbmc$trend(x), col="dodgerblue",
 
 # Coeficiente de variación
 
-```{r visualizingfit2, warning=FALSE, message=FALSE, echo = FALSE}
+```{r, warning=FALSE, message=FALSE, echo = FALSE}
 # Visualizing the fit
 fit.cv2.pbmc <- metadata(dec.cv2.pbmc)
 plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2, 
@@ -307,7 +307,7 @@ curve(fit.cv2.pbmc$trend(x), col="dodgerblue",
 
 # Coeficiente de variación
 
-```{r order, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE}
 # Ordering by largest CV2 to identify most interesting genes
 dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
   decreasing=TRUE),]
