@@ -142,12 +142,12 @@ BiocManager::version()
 
 ```{r auto_deps, echo = FALSE}
 cat(paste0(
-    'BiocManager::install("',
+    'BiocManager::install(c("',
     paste(
         sort(remotes::local_package_deps()),
         collapse = '", "'
     ),
-    '")'
+    '"))'
 ))
 ```
 
