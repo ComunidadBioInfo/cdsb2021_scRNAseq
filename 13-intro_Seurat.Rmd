@@ -1,6 +1,24 @@
 # Introducción a Seurat
 
-TODO
+Instructor: [Kevin E. Meza-Landeros](https://twitter.com/KevsGenomic)
+
+## Diapositivas
+
+Contenido: [aquí](https://docs.google.com/presentation/d/18ZCddwDD9lY8j4gmt1fO-Xqa8qJwCh_Zu_kXSjluW1Q/edit?usp=sharing)
+Aprende mas sobre Seurat: [aquí](https://satijalab.org/seurat/)
+
+## Una perspectiva Diferente 
+
+Seurat es un paquete R diseñado para control de calidad, análisis y exploración de datos de secuencia de ARN de una sola célula. Seurat tiene como objetivo permitir a los usuarios identificar e interpretar fuentes de heterogeneidad a partir de mediciones transcriptómicas unicelulares e integrar diversos tipos de datos unicelulares. 
+
+Seurat es desarrollado y mantenido por el laboratorio de [Satija](https://satijalab.org/seurat/authors.html) y se publica bajo la Licencia Pública GNU (GPL 3.0).
+
+En este tutorial se ve como procesar los datos de scRNAseq con un nuevo paquete. Los pasos a realizar son en esencia los mismos
+El paquete mas adecuado y que deberás utilizar dependerá mayoritariamente de tus datos y el procesamiento que se adecúe a estos. Además... siempre es bueno diversos puntos de vista sobre las cosas, no es así?
+
+## Kick-start
+
+
 
 ## Detalles de la sesión de R
 
