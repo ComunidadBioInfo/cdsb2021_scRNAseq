@@ -4,21 +4,60 @@ Instructor: [Kevin E. Meza-Landeros](https://twitter.com/KevsGenomic)
 
 ## Diapositivas
 
-Contenido: [aquí](https://docs.google.com/presentation/d/18ZCddwDD9lY8j4gmt1fO-Xqa8qJwCh_Zu_kXSjluW1Q/edit?usp=sharing)
-Aprende mas sobre Seurat: [aquí](https://satijalab.org/seurat/)
+Presentación: [aquí](https://docs.google.com/presentation/d/18ZCddwDD9lY8j4gmt1fO-Xqa8qJwCh_Zu_kXSjluW1Q/edit?usp=sharing) 
 
-## Una perspectiva Diferente 
+## Una perspectiva diferente 
 
 Seurat es un paquete R diseñado para control de calidad, análisis y exploración de datos de secuencia de ARN de una sola célula. Seurat tiene como objetivo permitir a los usuarios identificar e interpretar fuentes de heterogeneidad a partir de mediciones transcriptómicas unicelulares e integrar diversos tipos de datos unicelulares. 
 
 Seurat es desarrollado y mantenido por el laboratorio de [Satija](https://satijalab.org/seurat/authors.html) y se publica bajo la Licencia Pública GNU (GPL 3.0).
 
-En este tutorial se ve como procesar los datos de scRNAseq con un nuevo paquete. Los pasos a realizar son en esencia los mismos
-El paquete mas adecuado y que deberás utilizar dependerá mayoritariamente de tus datos y el procesamiento que se adecúe a estos. Además... siempre es bueno diversos puntos de vista sobre las cosas, no es así?
+En este tutorial se ve como procesar los datos de scRNAseq con un nuevo paquete. Los pasos a realizar son en esencia los mismos que ya revisamos con el tutorial de la OSCA de RStudio.  
+No olvides nunca que el paquete mas adecuado y que deberás utilizar dependerá mayoritariamente de tus datos y el procesamiento que se adecúe a estos.  
+Además... siempre es bueno diversos puntos de vista sobre las cosas, no es así?
+
+Aprende mas sobre Seurat: [aquí](https://satijalab.org/seurat/)
 
 ## Kick-start
 
+En este tutorial partimos a partir de que ya se tienen los archivos FASTQ resultados de secuenciación.  
+- ¿Con qué datos estoy trabajando?  
+Peripheral Blood Mononuclear Cells (PBMC) disponibles gratuitamente de 10X Genomics. Son en total 2,700 céluas únicas secuenciadas con Illumina NextSeq 500.
+Puedes descargar los datos de [aqui](https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz) (7.3MB).  
+Descarga el archivo comprimido y procede a descomprimirlo. Se creara el siguiente directorio *filtered_gene_bc_matrices/hg19/*, aquí estarán los archivos que necesitaremos.
 
+Este tutorial solo es la punta del **iceberg** de lo que se puede hacer con la paquetera de Seurat. Para comenzar a sumergirte en este mundo no dudes en visitar la página oficial mantenida por Satija Lab [Vignettes](https://satijalab.org/seurat/articles/get_started.html)
+
+A continuación estableceremos nuestros directorio de trabajo y leeremos los datos anteriores.  
+La función Read10X () lee en la salida de cellranger de 10X (de donde se obtuvieron los FASTQs), devolviendo una matriz de recuento única identificada molecularmente (UMI). Los valores en esta matriz representan el número de moléculas para cada característica (es decir, gen; fila) que se detectan en cada celda (columna).
+
+```{r, warning=FALSE, message=FALSE}
+library(dplyr)
+library(Seurat)
+library(patchwork)
+# Load the PBMC dataset
+proydir <- "/mnt/BioAdHoc/Groups/vd-vijay/kmlanderos/CDSB/clustering/"
+pbmc.data <- Read10X(data.dir = paste0(proydir,"data/filtered_gene_bc_matrices/hg19/"))
+# Initialize the Seurat object with the raw (non-normalized data).
+pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 3, min.features = 200)
+pbmc
+```
+Veamos la estructura del Objeto de Seurat
+```{r, warning=FALSE, message=FALSE}
+str(pbmc)
+```
+
+- ¿Cómo se ven los datos en una matriz de recuento?
+Examinemos algunos genes en las primeras treinta células. El . los valores en la matriz representan ceros (no se detectan moléculas). Dado que la mayoría de los valores en una matriz scRNA-seq son 0, Seurat utiliza una representación de matriz dispersa (*sparse matrix*) siempre que sea posible. Esto da como resultado un ahorro significativo de memoria y velocidad. EN ESTE CASO UNA MATRIZ NO DISPERSA OCUPA 27 VECES MAS ESPACIO!
+
+```{r, warning=FALSE, message=FALSE}
+pbmc.data[c("CD3D", "TCL1A", "MS4A1"), 1:30]
+dense.size <- object.size(as.matrix(pbmc.data))
+dense.size
+sparse.size <- object.size(pbmc.data)
+sparse.size
+dense.size/sparse.size
+```
 
 ## Detalles de la sesión de R
 
