@@ -24,7 +24,7 @@ Instructor: [Leonardo Collado Torres](https://comunidadbioinfo.github.io/es/auth
   - https://twitter.com/CDSBMexico y https://twitter.com/LIBDrstats
   - https://twitter.com/Bioconductor
 
-<img src="https://raw.githubusercontent.com/ComunidadBioInfo/cdsb2021_scRNAseq/master/icon_192.png">
+<img src="https://raw.githubusercontent.com/lcolladotor/rnaseq_LCG-UNAM_2021/master/icon_192.png">
 
 ## GitHub
 
