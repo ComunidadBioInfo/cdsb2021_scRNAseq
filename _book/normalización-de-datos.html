@@ -152,6 +152,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1" data-path="introducción-a-r-y-rstudio.html"><a href="introducción-a-r-y-rstudio.html"><i class="fa fa-check"></i><b>1</b> Introducción a R y RStudio</a>
 <ul>
+<li class="chapter" data-level="1.1" data-path="introducción-a-r-y-rstudio.html"><a href="introducción-a-r-y-rstudio.html#r"><i class="fa fa-check"></i><b>1.1</b> R</a></li>
+<li class="chapter" data-level="1.2" data-path="introducción-a-r-y-rstudio.html"><a href="introducción-a-r-y-rstudio.html#github"><i class="fa fa-check"></i><b>1.2</b> GitHub</a></li>
+<li class="chapter" data-level="1.3" data-path="introducción-a-r-y-rstudio.html"><a href="introducción-a-r-y-rstudio.html#rstudio"><i class="fa fa-check"></i><b>1.3</b> RStudio</a></li>
+<li class="chapter" data-level="1.4" data-path="introducción-a-r-y-rstudio.html"><a href="introducción-a-r-y-rstudio.html#material-del-curso"><i class="fa fa-check"></i><b>1.4</b> Material del curso</a></li>
 <li class="chapter" data-level="" data-path="introducción-a-r-y-rstudio.html"><a href="introducción-a-r-y-rstudio.html#patrocinadores-1"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="ejercicio-usando-usethis-here-y-postcards.html"><a href="ejercicio-usando-usethis-here-y-postcards.html"><i class="fa fa-check"></i><b>2</b> Ejercicio usando <code>usethis</code>, <code>here</code> y <code>postcards</code></a>
@@ -290,6 +294,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#patrocinadores-12"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html"><i class="fa fa-check"></i><b>13</b> Introducción a Seurat</a>
+<ul>
+<li class="chapter" data-level="" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#patrocinadores-13"><i class="fa fa-check"></i>Patrocinadores</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -347,9 +355,9 @@ Figure 6.1: Figura tomada de [1]
 <li><p>3005 células y 18441 genes</p></li>
 <li><p>Contiene UMIs</p></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="normalización-de-datos.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;scRNAseq&#39;</span>)</span>
-<span id="cb1-2"><a href="normalización-de-datos.html#cb1-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">ZeiselBrainData</span>(<span class="at">ensembl =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-3"><a href="normalización-de-datos.html#cb1-3" aria-hidden="true" tabindex="-1"></a>sce.zeisel</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="normalización-de-datos.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;scRNAseq&#39;</span>)</span>
+<span id="cb15-2"><a href="normalización-de-datos.html#cb15-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">ZeiselBrainData</span>(<span class="at">ensembl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-3"><a href="normalización-de-datos.html#cb15-3" aria-hidden="true" tabindex="-1"></a>sce.zeisel</span></code></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 18441 3005 
 ## metadata(0):
@@ -392,14 +400,14 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 <p>Y se define de tal manera que el promedio de <em>Library Size factor</em> en todas las células es igual a 1.</p>
 <p><span class="math display">\[ mean(Library Size factor) = 1 \]</span></p>
 <p>Lo que nos permite que los valores normalizados están en la misma escala y pueden ser útiles para la interpretación.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="normalización-de-datos.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimar tamaños de librerías</span></span>
-<span id="cb3-2"><a href="normalización-de-datos.html#cb3-2" aria-hidden="true" tabindex="-1"></a>lib.sf.zeisel <span class="ot">&lt;-</span> <span class="fu">librarySizeFactors</span>(sce.zeisel)</span>
-<span id="cb3-3"><a href="normalización-de-datos.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Examina la distribución de los tamaños de librerías</span></span>
-<span id="cb3-4"><a href="normalización-de-datos.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># que acabamos de estimar</span></span>
-<span id="cb3-5"><a href="normalización-de-datos.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lib.sf.zeisel)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="normalización-de-datos.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimar tamaños de librerías</span></span>
+<span id="cb17-2"><a href="normalización-de-datos.html#cb17-2" aria-hidden="true" tabindex="-1"></a>lib.sf.zeisel <span class="ot">&lt;-</span> <span class="fu">librarySizeFactors</span>(sce.zeisel)</span>
+<span id="cb17-3"><a href="normalización-de-datos.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Examina la distribución de los tamaños de librerías</span></span>
+<span id="cb17-4"><a href="normalización-de-datos.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># que acabamos de estimar</span></span>
+<span id="cb17-5"><a href="normalización-de-datos.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lib.sf.zeisel)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.1754  0.5682  0.8669  1.0000  1.2758  4.0651</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="normalización-de-datos.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log10</span>(lib.sf.zeisel), <span class="at">xlab =</span> <span class="st">&quot;Log10[Library Size factor]&quot;</span>, <span class="at">col =</span> <span class="st">&quot;grey80&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="normalización-de-datos.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log10</span>(lib.sf.zeisel), <span class="at">xlab =</span> <span class="st">&quot;Log10[Library Size factor]&quot;</span>, <span class="at">col =</span> <span class="st">&quot;grey80&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/all_code2-1.png" width="672" /></p>
 </div>
 <div id="ejercicio-library-size" class="section level3" number="6.4.2">
@@ -436,30 +444,30 @@ Figure 6.2: Figura tomada de [2]
 <p>Sin embargo, single-cell RNA-seq tiene muchas cuentas bajas y ceros debido a limitaciones en la tecnología y no necesariamente indica ausencia de expresión.</p>
 <p>El método de <code>scran</code> resuelve este problema juntando las cuentas de varias células (pool) para incrementar el tamaño de las cuentas y obtener un factor de estimación que remueva el sesgo de composición de manera más precisa.</p>
 <p>Este factor calculado con las cuentas pool se les regresa individualmente a cada célula mediante decircunvolución (deconvolution). Utilizando este factor se normalizan los datos con <code>scran::calculateSumFactors()</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="normalización-de-datos.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalización por decircunvolución (deconvolution)</span></span>
-<span id="cb6-2"><a href="normalización-de-datos.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;scran&#39;</span>)</span>
-<span id="cb6-3"><a href="normalización-de-datos.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pre-clustering</span></span>
-<span id="cb6-4"><a href="normalización-de-datos.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb6-5"><a href="normalización-de-datos.html#cb6-5" aria-hidden="true" tabindex="-1"></a>clust.zeisel <span class="ot">&lt;-</span> <span class="fu">quickCluster</span>(sce.zeisel)</span>
-<span id="cb6-6"><a href="normalización-de-datos.html#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="normalización-de-datos.html#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcula factores de tamaño para la decircunvolución (deconvolution)</span></span>
-<span id="cb6-8"><a href="normalización-de-datos.html#cb6-8" aria-hidden="true" tabindex="-1"></a>deconv.sf.zeisel <span class="ot">&lt;-</span></span>
-<span id="cb6-9"><a href="normalización-de-datos.html#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">calculateSumFactors</span>(sce.zeisel, <span class="at">clusters =</span> clust.zeisel, <span class="at">min.mean =</span> <span class="fl">0.1</span>)</span>
-<span id="cb6-10"><a href="normalización-de-datos.html#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Examina la distribución de los factores de tamaño</span></span>
-<span id="cb6-11"><a href="normalización-de-datos.html#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(deconv.sf.zeisel)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="normalización-de-datos.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalización por decircunvolución (deconvolution)</span></span>
+<span id="cb20-2"><a href="normalización-de-datos.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;scran&#39;</span>)</span>
+<span id="cb20-3"><a href="normalización-de-datos.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pre-clustering</span></span>
+<span id="cb20-4"><a href="normalización-de-datos.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb20-5"><a href="normalización-de-datos.html#cb20-5" aria-hidden="true" tabindex="-1"></a>clust.zeisel <span class="ot">&lt;-</span> <span class="fu">quickCluster</span>(sce.zeisel)</span>
+<span id="cb20-6"><a href="normalización-de-datos.html#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="normalización-de-datos.html#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcula factores de tamaño para la decircunvolución (deconvolution)</span></span>
+<span id="cb20-8"><a href="normalización-de-datos.html#cb20-8" aria-hidden="true" tabindex="-1"></a>deconv.sf.zeisel <span class="ot">&lt;-</span></span>
+<span id="cb20-9"><a href="normalización-de-datos.html#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">calculateSumFactors</span>(sce.zeisel, <span class="at">clusters =</span> clust.zeisel, <span class="at">min.mean =</span> <span class="fl">0.1</span>)</span>
+<span id="cb20-10"><a href="normalización-de-datos.html#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Examina la distribución de los factores de tamaño</span></span>
+<span id="cb20-11"><a href="normalización-de-datos.html#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(deconv.sf.zeisel)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.1282  0.4859  0.8248  1.0000  1.3194  4.6521</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="normalización-de-datos.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log10</span>(deconv.sf.zeisel), <span class="at">xlab =</span> <span class="st">&quot;Log10[Deconvolution size factor]&quot;</span>,</span>
-<span id="cb8-2"><a href="normalización-de-datos.html#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;grey80&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="normalización-de-datos.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log10</span>(deconv.sf.zeisel), <span class="at">xlab =</span> <span class="st">&quot;Log10[Deconvolution size factor]&quot;</span>,</span>
+<span id="cb22-2"><a href="normalización-de-datos.html#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;grey80&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/all_code3-1.png" width="672" /></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="normalización-de-datos.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lib.sf.zeisel, </span>
-<span id="cb9-2"><a href="normalización-de-datos.html#cb9-2" aria-hidden="true" tabindex="-1"></a>     deconv.sf.zeisel, </span>
-<span id="cb9-3"><a href="normalización-de-datos.html#cb9-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Library size factor&quot;</span>,</span>
-<span id="cb9-4"><a href="normalización-de-datos.html#cb9-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Deconvolution size factor&quot;</span>, </span>
-<span id="cb9-5"><a href="normalización-de-datos.html#cb9-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">log=</span><span class="st">&#39;xy&#39;</span>, </span>
-<span id="cb9-6"><a href="normalización-de-datos.html#cb9-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch=</span><span class="dv">16</span></span>
-<span id="cb9-7"><a href="normalización-de-datos.html#cb9-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb9-8"><a href="normalización-de-datos.html#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="normalización-de-datos.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lib.sf.zeisel, </span>
+<span id="cb23-2"><a href="normalización-de-datos.html#cb23-2" aria-hidden="true" tabindex="-1"></a>     deconv.sf.zeisel, </span>
+<span id="cb23-3"><a href="normalización-de-datos.html#cb23-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Library size factor&quot;</span>,</span>
+<span id="cb23-4"><a href="normalización-de-datos.html#cb23-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Deconvolution size factor&quot;</span>, </span>
+<span id="cb23-5"><a href="normalización-de-datos.html#cb23-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">log=</span><span class="st">&#39;xy&#39;</span>, </span>
+<span id="cb23-6"><a href="normalización-de-datos.html#cb23-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch=</span><span class="dv">16</span></span>
+<span id="cb23-7"><a href="normalización-de-datos.html#cb23-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-8"><a href="normalización-de-datos.html#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/all_code3-2.png" width="672" /></p>
 <div id="ejercicios-deconvolution" class="section level3" number="6.5.1">
 <h3><span class="header-section-number">6.5.1</span> Ejercicios: deconvolution</h3>
@@ -474,7 +482,7 @@ Figure 6.2: Figura tomada de [2]
 <h3><span class="header-section-number">6.5.2</span> Puntos finales</h3>
 <p>La normalización por decircunvolución (deconvolution) mejora los resultados para análsis posteriores de una manera más precisa que los métodos para bulk RNA-seq.</p>
 <p><code>scran</code> algunas veces alcula factores negativos o ceros lo cual altera la matrix de expresión normalizada. ¡Checa los factores que calculas!</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="normalización-de-datos.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(deconv.sf.zeisel)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="normalización-de-datos.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(deconv.sf.zeisel)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.1282  0.4859  0.8248  1.0000  1.3194  4.6521</code></pre>
 <p>Si obtienes factores negativos intenta variar el número de clusters, checa si incrementar el número de células por cluster te dan factores positivos.</p>
@@ -489,26 +497,25 @@ Figure 6.2: Figura tomada de [2]
 <li><p><em>Gen X</em>: el promedio de expresión en el tipo celular A: 50 y B: 10</p></li>
 <li><p><em>Gen Y</em>: el promedio de expresión en el tipo celular A: 1100 y B: 1000</p></li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="normalización-de-datos.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dv">50-10</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="normalización-de-datos.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dv">50-10</span></span></code></pre></div>
 <pre><code>## [1] 40</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="normalización-de-datos.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1100-1000</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="normalización-de-datos.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1100-1000</span></span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="normalización-de-datos.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">50</span>)<span class="sc">-</span><span class="fu">log</span>(<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="normalización-de-datos.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">50</span>)<span class="sc">-</span><span class="fu">log</span>(<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1] 1.609438</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="normalización-de-datos.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">1100</span>)<span class="sc">-</span><span class="fu">log</span>(<span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="normalización-de-datos.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">1100</span>)<span class="sc">-</span><span class="fu">log</span>(<span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>## [1] 0.09531018</code></pre>
 <p>Una vez calculados los factores de normalización con <code>computeSumFactors()</code>, podemos calular las cuentas en escala logaritmica usando <code>logNormCounts()</code>.</p>
 <p>Estos valores resultantes son valores de expresión normalizados transformados en escala logarítmica.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="normalización-de-datos.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalization</span></span>
-<span id="cb20-2"><a href="normalización-de-datos.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># set.seed(100)</span></span>
-<span id="cb20-3"><a href="normalización-de-datos.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># clust.zeisel &lt;- quickCluster(sce.zeisel) </span></span>
-<span id="cb20-4"><a href="normalización-de-datos.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># sce.zeisel &lt;- computeSumFactors(sce.zeisel, cluster=clust.zeisel, min.mean=0.1)</span></span>
-<span id="cb20-5"><a href="normalización-de-datos.html#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="normalización-de-datos.html#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Log transformation</span></span>
-<span id="cb20-7"><a href="normalización-de-datos.html#cb20-7" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.zeisel)</span>
-<span id="cb20-8"><a href="normalización-de-datos.html#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">assayNames</span>(sce.zeisel)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="normalización-de-datos.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalization</span></span>
+<span id="cb34-2"><a href="normalización-de-datos.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># set.seed(100)</span></span>
+<span id="cb34-3"><a href="normalización-de-datos.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># clust.zeisel &lt;- quickCluster(sce.zeisel) </span></span>
+<span id="cb34-4"><a href="normalización-de-datos.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># sce.zeisel &lt;- computeSumFactors(sce.zeisel, cluster=clust.zeisel, min.mean=0.1)</span></span>
+<span id="cb34-5"><a href="normalización-de-datos.html#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="normalización-de-datos.html#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Log transformation</span></span>
+<span id="cb34-7"><a href="normalización-de-datos.html#cb34-7" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> scater<span class="sc">::</span><span class="fu">logNormCounts</span>(sce.zeisel)</span>
+<span id="cb34-8"><a href="normalización-de-datos.html#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="fu">assayNames</span>(sce.zeisel)</span></code></pre></div>
 <pre><code>## [1] &quot;counts&quot;    &quot;logcounts&quot;</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="normalización-de-datos.html#cb22-1" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runPCA</span>(sce.zeisel)</span></code></pre></div>
 </div>
 <div id="ejercicio-transformación-logatítmica" class="section level3" number="6.6.2">
 <h3><span class="header-section-number">6.6.2</span> Ejercicio: Transformación logatítmica</h3>
@@ -522,62 +529,53 @@ Figure 6.2: Figura tomada de [2]
 </div>
 <div id="otras-normalizaciones" class="section level2" number="6.7">
 <h2><span class="header-section-number">6.7</span> Otras normalizaciones</h2>
-<p>Te invitamos a leer más sobre otras formas de normalizar, un gran summary lo puedes encontrar en el curso del <a href="https://www.singlecellcourse.org/basic-quality-control-qc-and-exploration-of-scrna-seq-datasets.html#normalization-theory">Sanger Institute</a>.</p>
-<p>Si estas interesad@ en diferencias en el contenido total de RNA en cada célula checa la <strong>Normalización por </strong>. La cual asume que los <em>spike-ins</em> fueron añadidos en un nivel constante en cada célula.</p>
+<p>Te invitamos a leer más sobre otras formas de normalizar, un lugar para empezar lo puedes encontrar en el curso del <a href="https://www.singlecellcourse.org/basic-quality-control-qc-and-exploration-of-scrna-seq-datasets.html#normalization-theory">Sanger Institute</a>.</p>
+<p>Si estas interesad@ en diferencias en el contenido total de RNA en cada célula checa la normalización por <em>spike-ins</em>. La cual asume que los <em>spike-ins</em> fueron añadidos en un nivel constante en cada célula.</p>
 <p>Si tienes resultados donde el <em>library size</em> está asociado a tus datos a pesar de haber normalizado checa la opción de <code>downsample=TRUE</code> dentro de la función de <code>logNormCounts()</code>.</p>
 <div id="seurat" class="section level3" number="6.7.1">
 <h3><span class="header-section-number">6.7.1</span> Seurat</h3>
 <p>La normalización de Seurat con <code>NormalizeData()</code> (tomado de <a href="https://github.com/satijalab/seurat/issues/3630">aquí</a>):</p>
 <ol style="list-style-type: decimal">
-<li><p>Divida cada célula por el número total de moléculas medidas en la célula. - ¿Será <em>library size</em>?</p></li>
-<li><p>Multiplique ese número por un <em>scaling factor</em> (e.j. 10000)</p></li>
-<li><p>Suma 1 y toma el logaritmo natural.</p></li>
+<li><p>Dividir cada célula por el número total de moléculas medidas en la célula. - ¿Será <em>library size</em>?</p></li>
+<li><p>Multiplicar ese número por un <em>scaling factor</em> (e.j. 10000)</p></li>
+<li><p>Sumar 1 y tomar el logaritmo natural.</p></li>
 </ol>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="normalización-de-datos.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Seurat)</span></code></pre></div>
-<pre><code>## Registered S3 method overwritten by &#39;spatstat.geom&#39;:
-##   method     from
-##   print.boxx cli</code></pre>
-<pre><code>## Attaching SeuratObject</code></pre>
-<pre><code>## 
-## Attaching package: &#39;Seurat&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:SummarizedExperiment&#39;:
-## 
-##     Assays</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="normalización-de-datos.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Seurat obj</span></span>
-<span id="cb28-2"><a href="normalización-de-datos.html#cb28-2" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> sce.zeisel</span>
-<span id="cb28-3"><a href="normalización-de-datos.html#cb28-3" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">removeAltExps</span>(sce)</span>
-<span id="cb28-4"><a href="normalización-de-datos.html#cb28-4" aria-hidden="true" tabindex="-1"></a>seurat.zeisel <span class="ot">&lt;-</span> <span class="fu">as.Seurat</span>(sce,<span class="at">counts =</span> <span class="st">&quot;counts&quot;</span>, <span class="at">data =</span> <span class="cn">NULL</span>)</span></code></pre></div>
-<pre><code>## Warning: Keys should be one or more alphanumeric characters followed by an
-## underscore, setting key from PC to PC_</code></pre>
-<pre><code>## Warning: All keys should be one or more alphanumeric characters followed by an
-## underscore &#39;_&#39;, setting key to PC_</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="normalización-de-datos.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize using Seurat function</span></span>
-<span id="cb31-2"><a href="normalización-de-datos.html#cb31-2" aria-hidden="true" tabindex="-1"></a>seurat.zeisel <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(seurat.zeisel,<span class="at">normalization.method =</span> <span class="st">&quot;LogNormalize&quot;</span>)</span>
-<span id="cb31-3"><a href="normalización-de-datos.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare Total counts per cell after normalization</span></span>
-<span id="cb31-4"><a href="normalización-de-datos.html#cb31-4" aria-hidden="true" tabindex="-1"></a>ls.seurat <span class="ot">&lt;-</span> <span class="fu">colSums</span>(seurat.zeisel[[<span class="st">&quot;originalexp&quot;</span>]]<span class="sc">@</span>data)</span>
-<span id="cb31-5"><a href="normalización-de-datos.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ls.seurat)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="normalización-de-datos.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;Seurat&#39;</span>)</span>
+<span id="cb36-2"><a href="normalización-de-datos.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Seurat obj</span></span>
+<span id="cb36-3"><a href="normalización-de-datos.html#cb36-3" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> sce.zeisel</span>
+<span id="cb36-4"><a href="normalización-de-datos.html#cb36-4" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">removeAltExps</span>(sce)</span>
+<span id="cb36-5"><a href="normalización-de-datos.html#cb36-5" aria-hidden="true" tabindex="-1"></a>seurat.zeisel <span class="ot">&lt;-</span> <span class="fu">as.Seurat</span>(sce,<span class="at">counts =</span> <span class="st">&quot;counts&quot;</span>, <span class="at">data =</span> <span class="cn">NULL</span>)</span>
+<span id="cb36-6"><a href="normalización-de-datos.html#cb36-6" aria-hidden="true" tabindex="-1"></a>seurat.zeisel</span></code></pre></div>
+<pre><code>## An object of class Seurat 
+## 18441 features across 2815 samples within 1 assay 
+## Active assay: originalexp (18441 features, 0 variable features)</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="normalización-de-datos.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize using Seurat function</span></span>
+<span id="cb38-2"><a href="normalización-de-datos.html#cb38-2" aria-hidden="true" tabindex="-1"></a>seurat.zeisel <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(seurat.zeisel,<span class="at">normalization.method =</span> <span class="st">&quot;LogNormalize&quot;</span>)</span>
+<span id="cb38-3"><a href="normalización-de-datos.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare Total counts per cell after normalization</span></span>
+<span id="cb38-4"><a href="normalización-de-datos.html#cb38-4" aria-hidden="true" tabindex="-1"></a>ls.seurat <span class="ot">&lt;-</span> <span class="fu">colSums</span>(seurat.zeisel[[<span class="st">&quot;originalexp&quot;</span>]]<span class="sc">@</span>data)</span>
+<span id="cb38-5"><a href="normalización-de-datos.html#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ls.seurat)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    1460    2942    3693    3534    4097    4778</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="normalización-de-datos.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ls.seurat)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="normalización-de-datos.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trying to replicate it</span></span>
-<span id="cb34-2"><a href="normalización-de-datos.html#cb34-2" aria-hidden="true" tabindex="-1"></a>ls.zeisel <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">counts</span>(sce.zeisel))</span>
-<span id="cb34-3"><a href="normalización-de-datos.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ls.zeisel)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="normalización-de-datos.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ls.seurat)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="normalización-de-datos.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trying to replicate it</span></span>
+<span id="cb41-2"><a href="normalización-de-datos.html#cb41-2" aria-hidden="true" tabindex="-1"></a>ls.zeisel <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">counts</span>(sce.zeisel))</span>
+<span id="cb41-3"><a href="normalización-de-datos.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ls.zeisel)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    2623    8497   12964   14955   19080   60792</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="normalización-de-datos.html#cb36-1" aria-hidden="true" tabindex="-1"></a>step1 <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">counts</span>(sce.zeisel))<span class="sc">/</span>ls.zeisel <span class="co"># matrix(2,2,2,2) /c(1,2)</span></span>
-<span id="cb36-2"><a href="normalización-de-datos.html#cb36-2" aria-hidden="true" tabindex="-1"></a>step2 <span class="ot">&lt;-</span> step1 <span class="sc">*</span> <span class="dv">10000</span></span>
-<span id="cb36-3"><a href="normalización-de-datos.html#cb36-3" aria-hidden="true" tabindex="-1"></a>step3 <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">log1p</span>(step2))</span>
-<span id="cb36-4"><a href="normalización-de-datos.html#cb36-4" aria-hidden="true" tabindex="-1"></a>ls.steps <span class="ot">&lt;-</span> <span class="fu">colSums</span>(step3)</span>
-<span id="cb36-5"><a href="normalización-de-datos.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ls.steps)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="normalización-de-datos.html#cb43-1" aria-hidden="true" tabindex="-1"></a>step1 <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">counts</span>(sce.zeisel))<span class="sc">/</span>ls.zeisel <span class="co"># matrix(2,2,2,2) /c(1,2)</span></span>
+<span id="cb43-2"><a href="normalización-de-datos.html#cb43-2" aria-hidden="true" tabindex="-1"></a>step2 <span class="ot">&lt;-</span> step1 <span class="sc">*</span> <span class="dv">10000</span></span>
+<span id="cb43-3"><a href="normalización-de-datos.html#cb43-3" aria-hidden="true" tabindex="-1"></a>step3 <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">log1p</span>(step2))</span>
+<span id="cb43-4"><a href="normalización-de-datos.html#cb43-4" aria-hidden="true" tabindex="-1"></a>ls.steps <span class="ot">&lt;-</span> <span class="fu">colSums</span>(step3)</span>
+<span id="cb43-5"><a href="normalización-de-datos.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ls.steps)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    1460    2942    3693    3534    4097    4778</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="normalización-de-datos.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls.seurat,ls.steps)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="normalización-de-datos.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare with deconv normalization</span></span>
-<span id="cb39-2"><a href="normalización-de-datos.html#cb39-2" aria-hidden="true" tabindex="-1"></a>ls.log <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">logcounts</span>(sce.zeisel))</span>
-<span id="cb39-3"><a href="normalización-de-datos.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls.seurat, ls.log)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-7-3.png" width="672" /></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="normalización-de-datos.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls.seurat,ls.steps)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="normalización-de-datos.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare with deconv normalization</span></span>
+<span id="cb46-2"><a href="normalización-de-datos.html#cb46-2" aria-hidden="true" tabindex="-1"></a>ls.log <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">logcounts</span>(sce.zeisel))</span>
+<span id="cb46-3"><a href="normalización-de-datos.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls.seurat, ls.log)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-3.png" width="672" /></p>
 <p>Nota: <a href="https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html">scanpy</a> ocupa un factor de normalización igual que Seurat.</p>
 </div>
 </div>
@@ -593,7 +591,7 @@ Figure 6.2: Figura tomada de [2]
 <ul>
 <li>Profundidad de secuenciación: Es necesario contemplarlo para comparar entre muestras, en este caso células.</li>
 </ul>
-<div class="figure"><span id="fig:unnamed-chunk-8"></span>
+<div class="figure"><span id="fig:unnamed-chunk-7"></span>
 <img src="https://hbctraining.github.io/DGE_workshop/img/normalization_methods_depth.png" alt="Figura tomada de [2]"  />
 <p class="caption">
 Figure 6.3: Figura tomada de [2]
@@ -602,7 +600,7 @@ Figure 6.3: Figura tomada de [2]
 <ul>
 <li>Longitud del gen: Es necesario contemplarlo para comparar entre genes.</li>
 </ul>
-<div class="figure"><span id="fig:unnamed-chunk-9"></span>
+<div class="figure"><span id="fig:unnamed-chunk-8"></span>
 <img src="https://hbctraining.github.io/DGE_workshop/img/normalization_methods_length.png" alt="Figura tomada de [2]"  />
 <p class="caption">
 Figure 6.4: Figura tomada de [2]
@@ -622,35 +620,35 @@ Figure 6.4: Figura tomada de [2]
 <ul>
 <li>¿Cuántos genes son mitocondriales? (recuerdas <code>is.mito</code>)</li>
 </ul>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="normalización-de-datos.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(is.mito)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="normalización-de-datos.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(is.mito)</span></code></pre></div>
 <pre><code>## [1] 34</code></pre>
 <ul>
 <li>¿Cuántos genes tienen: bajas cuentas de librería, bajos features, alto porcentaje de expresión de ERCC, alto porcentaje de genes MT? ¿Cuántas células descartamos? (TIP: <code>perCellQCMetrics</code> y <code>quickPerCellQC</code>)</li>
 </ul>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="normalización-de-datos.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">as.data.frame</span>(qc))</span></code></pre></div>
-<pre><code>##              low_lib_size            low_n_features high_altexps_ERCC_percent 
-##                         0                         3                        66 
-##   high_subsets_Mt_percent                   discard 
-##                       128                       190</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="normalización-de-datos.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">as.data.frame</span>(qc))</span></code></pre></div>
+<pre><code>##              low_lib_size            low_n_features high_altexps_ERCC_percent   high_subsets_Mt_percent 
+##                         0                         3                        66                       128 
+##                   discard 
+##                       190</code></pre>
 <ul>
 <li>Gráfica los resultados</li>
 </ul>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="normalización-de-datos.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plots</span></span>
-<span id="cb44-2"><a href="normalización-de-datos.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(unfiltered) <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">colData</span>(unfiltered), stats)</span>
-<span id="cb44-3"><a href="normalización-de-datos.html#cb44-3" aria-hidden="true" tabindex="-1"></a>unfiltered<span class="sc">$</span>discard <span class="ot">&lt;-</span> qc<span class="sc">$</span>discard</span>
-<span id="cb44-4"><a href="normalización-de-datos.html#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-5"><a href="normalización-de-datos.html#cb44-5" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(</span>
-<span id="cb44-6"><a href="normalización-de-datos.html#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plotColData</span>(unfiltered, <span class="at">y=</span><span class="st">&quot;sum&quot;</span>, <span class="at">colour_by=</span><span class="st">&quot;discard&quot;</span>) <span class="sc">+</span></span>
-<span id="cb44-7"><a href="normalización-de-datos.html#cb44-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_y_log10</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Cuentas Totales&quot;</span>),</span>
-<span id="cb44-8"><a href="normalización-de-datos.html#cb44-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plotColData</span>(unfiltered, <span class="at">y=</span><span class="st">&quot;detected&quot;</span>, <span class="at">colour_by=</span><span class="st">&quot;discard&quot;</span>) <span class="sc">+</span></span>
-<span id="cb44-9"><a href="normalización-de-datos.html#cb44-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_y_log10</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Features (genes) detectados&quot;</span>),</span>
-<span id="cb44-10"><a href="normalización-de-datos.html#cb44-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plotColData</span>(unfiltered, <span class="at">y=</span><span class="st">&quot;altexps_ERCC_percent&quot;</span>,</span>
-<span id="cb44-11"><a href="normalización-de-datos.html#cb44-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">colour_by=</span><span class="st">&quot;discard&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;ERCC %&quot;</span>),</span>
-<span id="cb44-12"><a href="normalización-de-datos.html#cb44-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plotColData</span>(unfiltered, <span class="at">y=</span><span class="st">&quot;subsets_Mt_percent&quot;</span>,</span>
-<span id="cb44-13"><a href="normalización-de-datos.html#cb44-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">colour_by=</span><span class="st">&quot;discard&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Mito %&quot;</span>),</span>
-<span id="cb44-14"><a href="normalización-de-datos.html#cb44-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">ncol=</span><span class="dv">2</span></span>
-<span id="cb44-15"><a href="normalización-de-datos.html#cb44-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="normalización-de-datos.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plots</span></span>
+<span id="cb51-2"><a href="normalización-de-datos.html#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(unfiltered) <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">colData</span>(unfiltered), stats)</span>
+<span id="cb51-3"><a href="normalización-de-datos.html#cb51-3" aria-hidden="true" tabindex="-1"></a>unfiltered<span class="sc">$</span>discard <span class="ot">&lt;-</span> qc<span class="sc">$</span>discard</span>
+<span id="cb51-4"><a href="normalización-de-datos.html#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="normalización-de-datos.html#cb51-5" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(</span>
+<span id="cb51-6"><a href="normalización-de-datos.html#cb51-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plotColData</span>(unfiltered, <span class="at">y=</span><span class="st">&quot;sum&quot;</span>, <span class="at">colour_by=</span><span class="st">&quot;discard&quot;</span>) <span class="sc">+</span></span>
+<span id="cb51-7"><a href="normalización-de-datos.html#cb51-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_y_log10</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Cuentas Totales&quot;</span>),</span>
+<span id="cb51-8"><a href="normalización-de-datos.html#cb51-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plotColData</span>(unfiltered, <span class="at">y=</span><span class="st">&quot;detected&quot;</span>, <span class="at">colour_by=</span><span class="st">&quot;discard&quot;</span>) <span class="sc">+</span></span>
+<span id="cb51-9"><a href="normalización-de-datos.html#cb51-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_y_log10</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Features (genes) detectados&quot;</span>),</span>
+<span id="cb51-10"><a href="normalización-de-datos.html#cb51-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plotColData</span>(unfiltered, <span class="at">y=</span><span class="st">&quot;altexps_ERCC_percent&quot;</span>,</span>
+<span id="cb51-11"><a href="normalización-de-datos.html#cb51-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">colour_by=</span><span class="st">&quot;discard&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;ERCC %&quot;</span>),</span>
+<span id="cb51-12"><a href="normalización-de-datos.html#cb51-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plotColData</span>(unfiltered, <span class="at">y=</span><span class="st">&quot;subsets_Mt_percent&quot;</span>,</span>
+<span id="cb51-13"><a href="normalización-de-datos.html#cb51-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">colour_by=</span><span class="st">&quot;discard&quot;</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Mito %&quot;</span>),</span>
+<span id="cb51-14"><a href="normalización-de-datos.html#cb51-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">ncol=</span><span class="dv">2</span></span>
+<span id="cb51-15"><a href="normalización-de-datos.html#cb51-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 <div id="ejercicio-library-size-1" class="section level3" number="6.8.3">
 <h3><span class="header-section-number">6.8.3</span> Ejercicio: <em>library Size</em></h3>
@@ -658,39 +656,39 @@ Figure 6.4: Figura tomada de [2]
 <li><p>Revisa los detalles (<strong>Details</strong>) en <code>?scater::librarySizeFactors</code></p></li>
 <li><p>Calcula <em>library size</em> <code>ls.zeisel</code></p></li>
 </ul>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="normalización-de-datos.html#cb45-1" aria-hidden="true" tabindex="-1"></a>ls.zeisel <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">counts</span>(sce.zeisel))</span>
-<span id="cb45-2"><a href="normalización-de-datos.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ls.zeisel)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="normalización-de-datos.html#cb52-1" aria-hidden="true" tabindex="-1"></a>ls.zeisel <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">counts</span>(sce.zeisel))</span>
+<span id="cb52-2"><a href="normalización-de-datos.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ls.zeisel)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    2623    8497   12964   14955   19080   60792</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="normalización-de-datos.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log10</span>(ls.zeisel), <span class="at">xlab =</span> <span class="st">&quot;Log10[Library size]&quot;</span>, <span class="at">col =</span> <span class="st">&quot;grey80&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="normalización-de-datos.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log10</span>(ls.zeisel), <span class="at">xlab =</span> <span class="st">&quot;Log10[Library size]&quot;</span>, <span class="at">col =</span> <span class="st">&quot;grey80&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <ul>
 <li>¿Son idénticos <code>ls.zeisel</code> y <code>lib.sf.zeisel</code>?</li>
 </ul>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="normalización-de-datos.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(lib.sf.zeisel, ls.zeisel)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="normalización-de-datos.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(lib.sf.zeisel, ls.zeisel)</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <ul>
 <li>¿Son proporcionales?</li>
 </ul>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="normalización-de-datos.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Checamos proporcionalidad </span></span>
-<span id="cb50-2"><a href="normalización-de-datos.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb50-3"><a href="normalización-de-datos.html#cb50-3" aria-hidden="true" tabindex="-1"></a>    ls.zeisel,</span>
-<span id="cb50-4"><a href="normalización-de-datos.html#cb50-4" aria-hidden="true" tabindex="-1"></a>    lib.sf.zeisel,</span>
-<span id="cb50-5"><a href="normalización-de-datos.html#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="st">&quot;xy&quot;</span>,</span>
-<span id="cb50-6"><a href="normalización-de-datos.html#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;Proporcionalidad&quot;</span>,</span>
-<span id="cb50-7"><a href="normalización-de-datos.html#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Library size&quot;</span>,</span>
-<span id="cb50-8"><a href="normalización-de-datos.html#cb50-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot; Library size factor&quot;</span></span>
-<span id="cb50-9"><a href="normalización-de-datos.html#cb50-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="normalización-de-datos.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Checamos proporcionalidad </span></span>
+<span id="cb57-2"><a href="normalización-de-datos.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb57-3"><a href="normalización-de-datos.html#cb57-3" aria-hidden="true" tabindex="-1"></a>    ls.zeisel,</span>
+<span id="cb57-4"><a href="normalización-de-datos.html#cb57-4" aria-hidden="true" tabindex="-1"></a>    lib.sf.zeisel,</span>
+<span id="cb57-5"><a href="normalización-de-datos.html#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="st">&quot;xy&quot;</span>,</span>
+<span id="cb57-6"><a href="normalización-de-datos.html#cb57-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;Proporcionalidad&quot;</span>,</span>
+<span id="cb57-7"><a href="normalización-de-datos.html#cb57-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Library size&quot;</span>,</span>
+<span id="cb57-8"><a href="normalización-de-datos.html#cb57-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot; Library size factor&quot;</span></span>
+<span id="cb57-9"><a href="normalización-de-datos.html#cb57-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <ul>
 <li>Calcula <code>lib.sf.zeisel</code> de forma manual. TIP: Checa el <a href="https://github.com/LTLA/scuttle/blob/master/R/librarySizeFactors.R">código fuente</a></li>
 </ul>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="normalización-de-datos.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Ahora asegurate que su media sea 1 (unity mean)</span></span>
-<span id="cb51-2"><a href="normalización-de-datos.html#cb51-2" aria-hidden="true" tabindex="-1"></a>lib_size_factors <span class="ot">&lt;-</span> ls.zeisel<span class="sc">/</span><span class="fu">mean</span>(ls.zeisel)</span>
-<span id="cb51-3"><a href="normalización-de-datos.html#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lib_size_factors)</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="normalización-de-datos.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Ahora asegurate que su media sea 1 (unity mean)</span></span>
+<span id="cb58-2"><a href="normalización-de-datos.html#cb58-2" aria-hidden="true" tabindex="-1"></a>lib_size_factors <span class="ot">&lt;-</span> ls.zeisel<span class="sc">/</span><span class="fu">mean</span>(ls.zeisel)</span>
+<span id="cb58-3"><a href="normalización-de-datos.html#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lib_size_factors)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.1754  0.5682  0.8669  1.0000  1.2758  4.0651</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="normalización-de-datos.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(lib_size_factors, lib.sf.zeisel)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="normalización-de-datos.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(lib_size_factors, lib.sf.zeisel)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 <div id="ejercicios-deconvolution-1" class="section level3" number="6.8.4">
@@ -698,41 +696,41 @@ Figure 6.4: Figura tomada de [2]
 <ul>
 <li>¿Cúantos clusters rápidos obtuvimos?</li>
 </ul>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="normalización-de-datos.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(clust.zeisel)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="normalización-de-datos.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(clust.zeisel)</span></code></pre></div>
 <pre><code>##  [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot;</code></pre>
 <ul>
 <li>¿Cúantas células por cluster obtuvimos?</li>
 </ul>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="normalización-de-datos.html#cb57-1" aria-hidden="true" tabindex="-1"></a>cells_cluster <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">table</span>(clust.zeisel))</span>
-<span id="cb57-2"><a href="normalización-de-datos.html#cb57-2" aria-hidden="true" tabindex="-1"></a>cells_cluster</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="normalización-de-datos.html#cb64-1" aria-hidden="true" tabindex="-1"></a>cells_cluster <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">table</span>(clust.zeisel))</span>
+<span id="cb64-2"><a href="normalización-de-datos.html#cb64-2" aria-hidden="true" tabindex="-1"></a>cells_cluster</span></code></pre></div>
 <pre><code>## clust.zeisel
 ##  12   7   4   6  10   1   3  11   2   8   5   9 
 ## 113 123 140 224 231 243 252 259 281 300 324 325</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="normalización-de-datos.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(cells_cluster)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="normalización-de-datos.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(cells_cluster)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <ul>
 <li>¿Cúantos clusters rápidos obtendríamos si cambiamos el tamaño mínimo a 200? Usa 100 como la semilla (seed).</li>
 </ul>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="normalización-de-datos.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb60-2"><a href="normalización-de-datos.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">quickCluster</span>(sce.zeisel, <span class="at">min.size =</span> <span class="dv">200</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="normalización-de-datos.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb67-2"><a href="normalización-de-datos.html#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">quickCluster</span>(sce.zeisel, <span class="at">min.size =</span> <span class="dv">200</span>)))</span></code></pre></div>
 <pre><code>## 
 ##   5   9   6   1   3  10   2   4   8   7 
 ## 224 231 236 243 252 259 281 324 325 440</code></pre>
 <ul>
 <li>¿Cúantas líneas ves en la gráfica?</li>
 </ul>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="normalización-de-datos.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lib.sf.zeisel, </span>
-<span id="cb62-2"><a href="normalización-de-datos.html#cb62-2" aria-hidden="true" tabindex="-1"></a>     deconv.sf.zeisel, </span>
-<span id="cb62-3"><a href="normalización-de-datos.html#cb62-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Library size factor&quot;</span>,</span>
-<span id="cb62-4"><a href="normalización-de-datos.html#cb62-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Deconvolution size factor&quot;</span>, </span>
-<span id="cb62-5"><a href="normalización-de-datos.html#cb62-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">log=</span><span class="st">&#39;xy&#39;</span>, </span>
-<span id="cb62-6"><a href="normalización-de-datos.html#cb62-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch=</span><span class="dv">16</span>,</span>
-<span id="cb62-7"><a href="normalización-de-datos.html#cb62-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="fu">as.integer</span>(<span class="fu">factor</span>(sce.zeisel<span class="sc">$</span>level1class))</span>
-<span id="cb62-8"><a href="normalización-de-datos.html#cb62-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb62-9"><a href="normalización-de-datos.html#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
-<span id="cb62-10"><a href="normalización-de-datos.html#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="sc">-</span>.<span class="dv">2</span>, <span class="at">b=</span><span class="fl">0.95</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
-<span id="cb62-11"><a href="normalización-de-datos.html#cb62-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="fl">0.08</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="normalización-de-datos.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lib.sf.zeisel, </span>
+<span id="cb69-2"><a href="normalización-de-datos.html#cb69-2" aria-hidden="true" tabindex="-1"></a>     deconv.sf.zeisel, </span>
+<span id="cb69-3"><a href="normalización-de-datos.html#cb69-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Library size factor&quot;</span>,</span>
+<span id="cb69-4"><a href="normalización-de-datos.html#cb69-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Deconvolution size factor&quot;</span>, </span>
+<span id="cb69-5"><a href="normalización-de-datos.html#cb69-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">log=</span><span class="st">&#39;xy&#39;</span>, </span>
+<span id="cb69-6"><a href="normalización-de-datos.html#cb69-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch=</span><span class="dv">16</span>,</span>
+<span id="cb69-7"><a href="normalización-de-datos.html#cb69-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="fu">as.integer</span>(<span class="fu">factor</span>(sce.zeisel<span class="sc">$</span>level1class))</span>
+<span id="cb69-8"><a href="normalización-de-datos.html#cb69-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb69-9"><a href="normalización-de-datos.html#cb69-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb69-10"><a href="normalización-de-datos.html#cb69-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="sc">-</span>.<span class="dv">2</span>, <span class="at">b=</span><span class="fl">0.95</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb69-11"><a href="normalización-de-datos.html#cb69-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="fl">0.08</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 <div id="ejercicio-transformación-logatítmica-1" class="section level3" number="6.8.5">
 <h3><span class="header-section-number">6.8.5</span> Ejercicio: Transformación logatítmica</h3>
@@ -753,8 +751,9 @@ Figure 6.4: Figura tomada de [2]
 </ul>
 <p><a href="https://bioconductor.org/books/release/OSCA/normalization.html#downsampling-and-log-transforming">OSCA: Downsampling</a>. Para cuando existe un efecto en los valores que se asocia a la <em>library size</em> a pesar de haber nomalizado.</p>
 <p>Funciones interesantes para después de normalizar</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="normalización-de-datos.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotPCA(sce.zeisel, colour_by = &quot;level1class&quot;)</span></span>
-<span id="cb63-2"><a href="normalización-de-datos.html#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plotRLE(sce.zeisel, exprs_values = &quot;logcounts&quot;, colour_by = &quot;level1class&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="normalización-de-datos.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sce.zeisel &lt;- runPCA(sce.zeisel)</span></span>
+<span id="cb70-2"><a href="normalización-de-datos.html#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plotPCA(sce.zeisel, colour_by = &quot;level1class&quot;)</span></span>
+<span id="cb70-3"><a href="normalización-de-datos.html#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plotRLE(sce.zeisel, exprs_values = &quot;logcounts&quot;, colour_by = &quot;level1class&quot;)</span></span></code></pre></div>
 </div>
 </div>
 <div id="adicionales" class="section level2" number="6.9">
@@ -769,8 +768,8 @@ Figure 6.4: Figura tomada de [2]
 </div>
 <div id="detalles-de-la-sesión-de-r" class="section level2" number="6.11">
 <h2><span class="header-section-number">6.11</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="normalización-de-datos.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb64-2"><a href="normalización-de-datos.html#cb64-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="normalización-de-datos.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb71-2"><a href="normalización-de-datos.html#cb71-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.0.2 (2020-06-22)
@@ -940,6 +939,7 @@ Figure 6.4: Figura tomada de [2]
 ##  Rcpp                     1.0.7     2021-07-07 [1] CRAN (R 4.0.2)                     
 ##  RcppAnnoy                0.0.19    2021-07-30 [1] CRAN (R 4.0.2)                     
 ##  RCurl                    1.98-1.3  2021-03-16 [1] CRAN (R 4.0.2)                     
+##  remotes                  2.4.0     2021-06-02 [1] CRAN (R 4.0.2)                     
 ##  reshape                  0.8.8     2018-10-23 [1] CRAN (R 4.0.0)                     
 ##  reshape2                 1.4.4     2020-04-09 [1] CRAN (R 4.0.0)                     
 ##  ResidualMatrix           1.0.0     2020-10-27 [1] Bioconductor                       
