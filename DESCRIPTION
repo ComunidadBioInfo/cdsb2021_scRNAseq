@@ -47,6 +47,8 @@ Imports:
     dplyr,
     patchwork
 Suggests:
+    BiocStyle,
+    biocthis,
     bookdown,
-    BiocStyle
+    styler
 VignetteBuilder: knitr
