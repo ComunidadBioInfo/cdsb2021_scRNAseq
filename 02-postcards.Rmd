@@ -11,7 +11,7 @@ Este paquete es bastante útil
 El directorio que toma como base será en el que nos encontremos al momento de cargar el paquete  `here`, heuristicamente busca la raíz del proyecto y se posiciona en él.
 
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
-#se descargó previamente, así que solo se carga
+# se descargó previamente, así que solo se carga
 library("here") # busca la raiz del proyecto en el que se encuentre
 ```
 
@@ -23,18 +23,18 @@ here::here()
 
 Podemos checar en qué directorio nos encontramos con `getwd()`, si no es el que deseamos podemos cambiarlo con `setwd()`
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
-getwd()# regresa la path en donde nos encontramos
-setwd("direccion/deseada")# nos lleva a la path indicada
+getwd() # regresa la path en donde nos encontramos
+setwd("direccion/deseada") # nos lleva a la path indicada
 ```
 
 Pero con `here` podemos no especificar la path 
 
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
-getwd()# para checar en donde nos encontramos
+getwd() # para checar en donde nos encontramos
 here::here() # para checar dónde te encuentras
 
-#nos movemos al subdirectorio R
-setwd(here::here("R")) #podemos cambiar de directorio, aun así `here está en la raíz
+# nos movemos al subdirectorio R
+setwd(here::here("R")) # podemos cambiar de directorio, aun así `here está en la raíz
 ```
 
 A continuación ofrecemos algunos ejemplos de cómo podría emplearse `here::here`
@@ -47,16 +47,15 @@ save(a, c, file = here::here("datos-prueba.RData"))
 # rm(a,c)
 load(here::here("datos-prueba.RData"))
 
-#creamos un directorio
+# creamos un directorio
 dir.create(here::here("subdirectorio"), showWarnings = FALSE)
-#podemos crear un archivo, indicando el subdirectorio, (en este caso el primer argumento)
-file.create(here::here("subdirectorio","nombrearchivo"))
-#abrimos el nuevo archivo creado
-file.show(here::here("subdirectorio", "nombrearchivo")) #podemos editarlo!!
+# podemos crear un archivo, indicando el subdirectorio, (en este caso el primer argumento)
+file.create(here::here("subdirectorio", "nombrearchivo"))
+# abrimos el nuevo archivo creado
+file.show(here::here("subdirectorio", "nombrearchivo")) # podemos editarlo!!
 
 # por ejemplo si quisieramos ver nuestros archivos del directorio
-list.files(here::here(), recursive=TRUE)
-
+list.files(here::here(), recursive = TRUE)
 ```
 
 ## usethis
@@ -89,10 +88,9 @@ Y la instalación de los siguientes paquetes:
   
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
 # paquetes que vamos a requerir
-install.packages("gitcreds","gert", "gh")
+install.packages("gitcreds", "gert", "gh")
 
-library("gitcreds", "gert", "gh") 
-
+library("gitcreds", "gert", "gh")
 ```
 
 
@@ -114,7 +112,7 @@ Una vez generado el token debes guardarlo, pues no volverá a aparecer.
 # Para iniciar conexión con GitHub
 usethis::create_github_token() # redirige a github donde eligiras nombre especifico del token
 # copia el token para después ingresarlo con gitcreds_set()
-gitcreds::gitcreds_set() #aquí colocas el token (NO tu contraseña de github!!!)
+gitcreds::gitcreds_set() # aquí colocas el token (NO tu contraseña de github!!!)
 ```
 
 El siguiente paso será configurar nuestro usuario de github en el archivo `.gitconfig`
@@ -124,7 +122,7 @@ El siguiente paso será configurar nuestro usuario de github en el archivo `.git
 usethis::edit_git_config() # que abre el archivo .gitconfig
 # colocaremos nombre y correo de cuenta de github. SOLO borrar los # y respetar los demas espacios
 # [user]
-#   name = N O M B R E 
+#   name = N O M B R E
 #   email = correodeGithub
 ```
 
@@ -137,7 +135,6 @@ usethis::use_git() #
 
 # conectar tu repositorio local de Git con los servidores de GitHub
 usethis::use_github()
-
 ```
 
 >Git es el software mientras que GitHub es la plataforma web (basada en Git) que permite la colaboración
@@ -148,7 +145,7 @@ usethis::use_github()
 >Comando útil para checar configuración
 
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
-gh::gh_whoami() #para checar cómo quedó la configuración
+gh::gh_whoami() # para checar cómo quedó la configuración
 ```
 
 ### Probar otros comandos de `gert`
@@ -168,12 +165,11 @@ gert::git_add("R/archivo-prueba-github.R")
 # añadimos commit de lo que se hizo
 gert::git_commit("se subio archivo prueba")
 
-# nos da info de los commits 
-gert::git_log() 
+# nos da info de los commits
+gert::git_log()
 
 # sube tus cambios del repo local a los de github
-gert::git_push() # COMANDO IMPORTANTE 
-
+gert::git_push() # COMANDO IMPORTANTE
 ```
 
 _Puede ser más amigable usar el recuadro de Git que aparece en RStudio para hacer todo lo anterior!_
@@ -314,7 +310,7 @@ Otra manera de hacer es vía línea de comandos, primero pueden agregar los arch
 
 ```{r postcards_pull, eval = FALSE}
 ## Guardamos los archivos nuevos con el commit
-gert::git_commit_all('mensaje sobre el commit')
+gert::git_commit_all("mensaje sobre el commit")
 
 ## Subimos los archivos a github
 gert::git_push
