@@ -32,31 +32,31 @@ A continuación estableceremos nuestros directorio de trabajo y leeremos los dat
 La función Read10X () lee en la salida de cellranger de 10X (de donde se obtuvieron los FASTQs), devolviendo una matriz de recuento única identificada molecularmente (UMI). Los valores en esta matriz representan el número de moléculas para cada característica (es decir, gen; fila) que se detectan en cada celda (columna).
 
 ```{r, warning=FALSE, message=FALSE}
-library(dplyr)
-library(Seurat)
-library(patchwork)
+#library(dplyr)
+#library(Seurat)
+#library(patchwork)
 # Load the PBMC dataset
-proydir <- "/mnt/BioAdHoc/Groups/vd-vijay/kmlanderos/CDSB/clustering/"
-pbmc.data <- Read10X(data.dir = paste0(proydir, "data/filtered_gene_bc_matrices/hg19/"))
+#proydir <- "/mnt/BioAdHoc/Groups/vd-vijay/kmlanderos/CDSB/clustering/"
+#pbmc.data <- Read10X(data.dir = paste0(proydir, "data/filtered_gene_bc_matrices/hg19/"))
 # Initialize the Seurat object with the raw (non-normalized data).
-pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 3, min.features = 200)
-pbmc
+#pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 3, min.features = 200)
+#pbmc
 ```
 Veamos la estructura del Objeto de Seurat
 ```{r, warning=FALSE, message=FALSE}
-str(pbmc)
+#str(pbmc)
 ```
 
 - ¿Cómo se ven los datos en una matriz de recuento?
 Examinemos algunos genes en las primeras treinta células. El . los valores en la matriz representan ceros (no se detectan moléculas). Dado que la mayoría de los valores en una matriz scRNA-seq son 0, Seurat utiliza una representación de matriz dispersa (*sparse matrix*) siempre que sea posible. Esto da como resultado un ahorro significativo de memoria y velocidad. EN ESTE CASO UNA MATRIZ NO DISPERSA OCUPA 27 VECES MAS ESPACIO!
 
 ```{r, warning=FALSE, message=FALSE}
-pbmc.data[c("CD3D", "TCL1A", "MS4A1"), 1:30]
-dense.size <- object.size(as.matrix(pbmc.data))
-dense.size
-sparse.size <- object.size(pbmc.data)
-sparse.size
-dense.size / sparse.size
+#pbmc.data[c("CD3D", "TCL1A", "MS4A1"), 1:30]
+#dense.size <- object.size(as.matrix(pbmc.data))
+#dense.size
+#sparse.size <- object.size(pbmc.data)
+#sparse.size
+#dense.size / sparse.size
 ```
 
 ## Detalles de la sesión de R
