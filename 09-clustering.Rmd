@@ -431,6 +431,13 @@ El proceso de **subclustering** podría mejorar la resolución dentro de cluster
 </p>
 </div>
 
+## Detalles de la sesión de R
+
+```{r}
+options(width = 120)
+sessioninfo::session_info()
+```
+
 ## Patrocinadores {-}
 
 Agradecemos a nuestros patrocinadores:

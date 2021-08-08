@@ -191,6 +191,14 @@ git2r::clone(
 )
 ```
 
+## Detalles de la sesión de R
+
+```{r}
+options(width = 120)
+sessioninfo::session_info()
+```
+
+
 ## Patrocinadores {-}
 
 Agradecemos a nuestros patrocinadores:
