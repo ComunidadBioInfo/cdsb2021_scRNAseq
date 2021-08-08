@@ -47,7 +47,7 @@ Usaremos el dataset de [**Zeisel**](https://bioconductor.org/books/release/OSCA/
 
 
 ```{r message=FALSE, warning=FALSE}
-library('scRNAseq')
+library("scRNAseq")
 sce.zeisel <- ZeiselBrainData(ensembl = TRUE)
 sce.zeisel
 ```
@@ -63,7 +63,7 @@ sce.zeisel
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 # Control de calidad
-library('scater')
+library("scater")
 
 unfiltered <- sce.zeisel
 
@@ -71,11 +71,11 @@ is.mito <- which(rowData(sce.zeisel)$featureType == "mito")
 stats <- perCellQCMetrics(sce.zeisel, subsets = list(Mt = is.mito))
 qc <-
     quickPerCellQC(stats,
-        percent_subsets = c("altexps_ERCC_percent", "subsets_Mt_percent"))
+        percent_subsets = c("altexps_ERCC_percent", "subsets_Mt_percent")
+    )
 
 colSums(as.data.frame(qc))
 sce.zeisel <- sce.zeisel[, !qc$discard]
-
 ```
 
 
@@ -177,7 +177,7 @@ Este factor calculado con las cuentas pool se les regresa individualmente a cada
 
 ```{r}
 # Normalización por decircunvolución (deconvolution)
-library('scran')
+library("scran")
 # Pre-clustering
 set.seed(100)
 clust.zeisel <- quickCluster(sce.zeisel)
@@ -187,19 +187,20 @@ deconv.sf.zeisel <-
     calculateSumFactors(sce.zeisel, clusters = clust.zeisel, min.mean = 0.1)
 # Examina la distribución de los factores de tamaño
 summary(deconv.sf.zeisel)
-hist(log10(deconv.sf.zeisel), xlab = "Log10[Deconvolution size factor]",
-    col = "grey80")
+hist(log10(deconv.sf.zeisel),
+    xlab = "Log10[Deconvolution size factor]",
+    col = "grey80"
+)
 
 
-plot(lib.sf.zeisel, 
-     deconv.sf.zeisel, 
-     xlab="Library size factor",
-     ylab="Deconvolution size factor", 
-     log='xy', 
-     pch=16
-    )
-abline(a=0, b=1, col="red")
-
+plot(lib.sf.zeisel,
+    deconv.sf.zeisel,
+    xlab = "Library size factor",
+    ylab = "Deconvolution size factor",
+    log = "xy",
+    pch = 16
+)
+abline(a = 0, b = 1, col = "red")
 ```
 
 
@@ -238,11 +239,11 @@ Si obtienes factores negativos intenta variar el número de clusters, checa si i
 - *Gen Y*: el promedio de expresión en el tipo celular A: 1100 y B: 1000
 
 ```{r}
-50-10
-1100-1000
+50 - 10
+1100 - 1000
 
-log(50)-log(10)
-log(1100)-log(1000)
+log(50) - log(10)
+log(1100) - log(1000)
 ```
 
 
@@ -253,13 +254,12 @@ Estos valores resultantes son valores de expresión normalizados transformados e
 ```{r}
 # Normalization
 # set.seed(100)
-# clust.zeisel <- quickCluster(sce.zeisel) 
+# clust.zeisel <- quickCluster(sce.zeisel)
 # sce.zeisel <- computeSumFactors(sce.zeisel, cluster=clust.zeisel, min.mean=0.1)
 
 # Log transformation
 sce.zeisel <- scater::logNormCounts(sce.zeisel)
 assayNames(sce.zeisel)
-
 ```
 
 ### Ejercicio: Transformación logatítmica
@@ -293,15 +293,15 @@ La normalización de Seurat con `NormalizeData()` (tomado de [aquí](https://git
 3. Sumar 1 y tomar el logaritmo natural.
 
 ```{r, message=FALSE, warning=FALSE}
-library('Seurat')
+library("Seurat")
 # Create a Seurat obj
 sce <- sce.zeisel
 sce <- removeAltExps(sce)
-seurat.zeisel <- as.Seurat(sce,counts = "counts", data = NULL)
+seurat.zeisel <- as.Seurat(sce, counts = "counts", data = NULL)
 seurat.zeisel
 
 # Normalize using Seurat function
-seurat.zeisel <- NormalizeData(seurat.zeisel,normalization.method = "LogNormalize")
+seurat.zeisel <- NormalizeData(seurat.zeisel, normalization.method = "LogNormalize")
 # Compare Total counts per cell after normalization
 ls.seurat <- colSums(seurat.zeisel[["originalexp"]]@data)
 summary(ls.seurat)
@@ -310,17 +310,16 @@ hist(ls.seurat)
 # Trying to replicate it
 ls.zeisel <- colSums(counts(sce.zeisel))
 summary(ls.zeisel)
-step1 <- t(counts(sce.zeisel))/ls.zeisel # matrix(2,2,2,2) /c(1,2)
+step1 <- t(counts(sce.zeisel)) / ls.zeisel # matrix(2,2,2,2) /c(1,2)
 step2 <- step1 * 10000
 step3 <- t(log1p(step2))
 ls.steps <- colSums(step3)
 summary(ls.steps)
-plot(ls.seurat,ls.steps)
+plot(ls.seurat, ls.steps)
 
 # Compare with deconv normalization
 ls.log <- colSums(logcounts(sce.zeisel))
 plot(ls.seurat, ls.log)
-
 ```
 
 Nota: [scanpy](https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html) ocupa un factor de normalización igual que Seurat.
@@ -385,17 +384,20 @@ colData(unfiltered) <- cbind(colData(unfiltered), stats)
 unfiltered$discard <- qc$discard
 
 gridExtra::grid.arrange(
-    plotColData(unfiltered, y="sum", colour_by="discard") +
+    plotColData(unfiltered, y = "sum", colour_by = "discard") +
         scale_y_log10() + ggtitle("Cuentas Totales"),
-    plotColData(unfiltered, y="detected", colour_by="discard") +
+    plotColData(unfiltered, y = "detected", colour_by = "discard") +
         scale_y_log10() + ggtitle("Features (genes) detectados"),
-    plotColData(unfiltered, y="altexps_ERCC_percent",
-        colour_by="discard") + ggtitle("ERCC %"),
-    plotColData(unfiltered, y="subsets_Mt_percent",
-        colour_by="discard") + ggtitle("Mito %"),
-    ncol=2
+    plotColData(unfiltered,
+        y = "altexps_ERCC_percent",
+        colour_by = "discard"
+    ) + ggtitle("ERCC %"),
+    plotColData(unfiltered,
+        y = "subsets_Mt_percent",
+        colour_by = "discard"
+    ) + ggtitle("Mito %"),
+    ncol = 2
 )
-
 ```
 
 
@@ -422,7 +424,7 @@ identical(lib.sf.zeisel, ls.zeisel)
 * ¿Son proporcionales?
 
 ```{r}
-# Checamos proporcionalidad 
+# Checamos proporcionalidad
 plot(
     ls.zeisel,
     lib.sf.zeisel,
@@ -438,7 +440,7 @@ plot(
 
 ```{r}
 ## Ahora asegurate que su media sea 1 (unity mean)
-lib_size_factors <- ls.zeisel/mean(ls.zeisel)
+lib_size_factors <- ls.zeisel / mean(ls.zeisel)
 summary(lib_size_factors)
 identical(lib_size_factors, lib.sf.zeisel)
 ```
@@ -474,18 +476,17 @@ sort(table(quickCluster(sce.zeisel, min.size = 200)))
 * ¿Cúantas líneas ves en la gráfica?
 
 ```{r}
-plot(lib.sf.zeisel, 
-     deconv.sf.zeisel, 
-     xlab="Library size factor",
-     ylab="Deconvolution size factor", 
-     log='xy', 
-     pch=16,
-     col=as.integer(factor(sce.zeisel$level1class))
-    )
-abline(a=0, b=1, col="red")
-abline(a=-.2, b=0.95, col="red")
-abline(a=0.08, b=1, col="red")
-
+plot(lib.sf.zeisel,
+    deconv.sf.zeisel,
+    xlab = "Library size factor",
+    ylab = "Deconvolution size factor",
+    log = "xy",
+    pch = 16,
+    col = as.integer(factor(sce.zeisel$level1class))
+)
+abline(a = 0, b = 1, col = "red")
+abline(a = -.2, b = 0.95, col = "red")
+abline(a = 0.08, b = 1, col = "red")
 ```
 
 ### Ejercicio: Transformación logatítmica
