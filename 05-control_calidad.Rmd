@@ -273,7 +273,17 @@ plotColData(
 * ¿Existe la variable `discard` en `colData()`?
 * ¿Qué variable tiene valores de D10, D17, D2, D3 y D7?
 
-## Identificando droplets con datos de PBMC
+## Identificando droplets vacíos con datos de PBMC
+
+
+```{r echo=FALSE, fig.cap="Descripción gráfica la tecnología _Next GEM_ de 10x Genomics. Fuente: [10x Genomics](https://www.10xgenomics.com/technology)."}
+knitr::include_graphics("https://cdn.10xgenomics.com/image/upload/dpr_2.0,e_sharpen,f_auto,q_auto/v1607106030/Reagent_delivery_system.png")
+```
+
+```{r echo=FALSE, fig.cap="Opciones algorítmicas para detecar los droplets vacíos. Fuente: [Lun et al, _Genome Biology_, 2019](https://doi.org/10.1186/s13059-019-1662-y)."}
+knitr::include_graphics("img/emptyDrops_Fig2.png")
+```
+
 
 ```{r pbmc_qc}
 ## Descarguemos los datos
@@ -321,7 +331,7 @@ legend(
     cex = 1.2
 )
 ```
-Encontremos los _droplets_ usando `emptyDrops()`.
+Encontremos los _droplets_ vacíos usando `emptyDrops()`.
 
 ```{r emptyDrops}
 ## Usemos DropletUtils para encontrar los droplets
@@ -346,7 +356,7 @@ hist(all.out$PValue[all.out$Total <= limit &
     col = "grey80")
 ```
 
-## Ejercicio: detección de droplets
+## Ejercicio: detección de droplets vacíos
 
 * ¿Por qué `emptyDrops()` regresa valores `NA`? ^[Debajo de `lower` son considerados _droplets_ vacíos. Solo se usan para la correción estadística de pruebas múltiples.]
 * ¿Los valores p son iguales entre `e.out` y `all.out`? ^[No, debido a los `NA`s.]
@@ -374,7 +384,7 @@ abline(h = attr(discard.mito, "thresholds")["higher"], col = "red")
 
 ## Ejercicio avanzado
 
-Volvamos a crear `sce.pbmc` para poder usar `plotColData()` y visualizar la relación entre `total` y los niveles de expresión mitocondrial (en porcentaje) separando lo que pensamos que son droplets y las células de acuerdo a los resultados que ya calculamos de `emptyDrops()`. El resultado final se verá como en la siguiente imagen.
+Volvamos a crear `sce.pbmc` para poder usar `plotColData()` y visualizar la relación entre `total` y los niveles de expresión mitocondrial (en porcentaje) separando lo que pensamos que son droplets vacíos y las células de acuerdo a los resultados que ya calculamos de `emptyDrops()`. El resultado final se verá como en la siguiente imagen.
 
 ```{r pbmc_combined, echo = FALSE}
 ## Leer los datos crudos de nuevo
@@ -402,10 +412,10 @@ plotColData(
     x = "total",
     y = "subsets_MT_percent",
     colour_by = "discard_mito"
-) + facet_grid(~ ifelse(sce.pbmc$is_cell, "Célula", "Droplet"))
+) + facet_grid(~ ifelse(sce.pbmc$is_cell, "Célula", "Droplet vacío"))
 ```
 
-* No podemos usar nuestro objeto `sce.pbmc` porque ya eliminamos los droplets al correr `sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]`. Por eso tendremos que volver a usar `sce.pbmc <- read10xCounts(fname, col.names = TRUE)`.
+* No podemos usar nuestro objeto `sce.pbmc` porque ya eliminamos los droplets vacíos al correr `sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]`. Por eso tendremos que volver a usar `sce.pbmc <- read10xCounts(fname, col.names = TRUE)`.
 * Una vez que hayamos vuelto a hacer `sce.pbmc`, tenemos que guardar en ese objeto los resultados de `emptyDrops()`. Por ejemplo, con `sce.pbmc$is_cell <- e.out$FDR <= 0.001`.
 * Como `e.out$FDR` tiene muchos `NA`, nos conviene filtrar esos datos.
 * Tendremos que volver a correr `addPerCellQC()` y guardar los resultados en nuestro objeto `sce.pbmc`.
