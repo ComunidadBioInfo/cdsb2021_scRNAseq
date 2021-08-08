@@ -21,6 +21,7 @@ Aprende mas sobre Seurat: [aquí](https://satijalab.org/seurat/)
 ## Kick-start
 
 En este tutorial partimos a partir de que ya se tienen los archivos FASTQ resultados de secuenciación.  
+
 - ¿Con qué datos estoy trabajando?  
 Peripheral Blood Mononuclear Cells (PBMC) disponibles gratuitamente de 10X Genomics. Son en total 2,700 céluas únicas secuenciadas con Illumina NextSeq 500.
 Puedes descargar los datos de [aqui](https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz) (7.3MB).  
@@ -47,8 +48,9 @@ Veamos la estructura del Objeto de Seurat
 #str(pbmc)
 ```
 
-- ¿Cómo se ven los datos en una matriz de recuento?
-Examinemos algunos genes en las primeras treinta células. El . los valores en la matriz representan ceros (no se detectan moléculas). Dado que la mayoría de los valores en una matriz scRNA-seq son 0, Seurat utiliza una representación de matriz dispersa (*sparse matrix*) siempre que sea posible. Esto da como resultado un ahorro significativo de memoria y velocidad. EN ESTE CASO UNA MATRIZ NO DISPERSA OCUPA 27 VECES MAS ESPACIO!
+- ¿Cómo se ven los datos en una matriz de recuento?  
+Examinemos algunos genes en las primeras treinta células. El . los valores en la matriz representan ceros (no se detectan moléculas). Dado que la mayoría de los valores en una matriz scRNA-seq son 0, Seurat utiliza una representación de matriz dispersa (*sparse matrix*) siempre que sea posible. Esto da como resultado un ahorro significativo de memoria y velocidad.  
+EN ESTE CASO UNA MATRIZ NO DISPERSA OCUPA 27 VECES MAS ESPACIO!
 
 ```{r, warning=FALSE, message=FALSE}
 #pbmc.data[c("CD3D", "TCL1A", "MS4A1"), 1:30]
@@ -57,6 +59,76 @@ Examinemos algunos genes en las primeras treinta células. El . los valores en l
 #sparse.size <- object.size(pbmc.data)
 #sparse.size
 #dense.size / sparse.size
+```
+## Quality Control
+
+Algunas métricas de control de calidad comúnmente utilizadas por la comunidad incluyen:
+
+- El número de genes únicos detectados en cada célula.
+    - Las células de baja calidad o las gotitas vacías suelen tener muy pocos genes.
+    - Los dobletes o multipletes celulares pueden exhibir un recuento de genes aberrantemente alto
+- De manera similar, el número total de moléculas detectadas dentro de una célula (se correlaciona fuertemente con genes únicos)
+- El porcentaje de lecturas que se asignan al genoma mitocondrial
+    - Las células de baja calidad / moribundas a menudo exhiben una extensa contaminación mitocondrial
+    - Calculamos métricas de control de calidad mitocondrial con la función PercentageFeatureSet (), que calcula el porcentaje de recuentos que se originan a partir de un conjunto de características.
+
+El operador [[puede agregar columnas a los metadatos del objeto. Este es un gran lugar para almacenar estadísticas de control de calidad. Entonces calculamos y añadimos la cantidad de lecturas que corresponden al genoma mitocondrial.
+
+```{r, warning=FALSE, message=FALSE}
+#pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^MT-")
+```
+Visualizamos las métricas de control de calidad mencionadas anteriormente como un diagrama de violín. Ademas vemos la correlacion entre el numero de moleculaas de RNA detectadas en cada clula con el número de genes únicos y con el porcentaje de lecturas que corresponden a mtADN.
+
+```{r, warning=FALSE, message=FALSE}
+#pdf(paste0(proydir,"plots/QC_metrics.pdf"))
+#plot <- VlnPlot(pbmc, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+#print(plot)
+
+#plot1 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "percent.mt")
+#plot2 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+#print(plot1 + plot2)
+#dev.off()
+```
+Finalmente filtramos aquellas células que se salen de los estndares de cada uno de los parámetros.
+
+```{r, warning=FALSE, message=FALSE}
+#Filter
+#pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
+```
+- Dónde se almacenan la métricas de QC en Seurat?
+Estan almacenadas en la seccion de **meta-data** del objeto Seurat
+
+```{r, warning=FALSE, message=FALSE}
+#head(pbmc@meta.data, 5)
+```
+
+## Normalización
+
+De forma predeterminada, se emplea un método de normalización de escala global "LogNormalize" que normaliza las medidas de expresión de características para cada celda por la expresión total, multiplica esto por un factor de escala (10.000 por defecto) y transforma el resultado en logaritmos. Los valores normalizados se almacenan en pbmc [["RNA"]] @ data 
+
+```{r}
+#pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
+```
+
+## Detección de Genes (caractersticas) Altamente Variables
+
+A continuación, calculamos un subconjunto de características que exhiben una alta variación de celda a celda en el conjunto de datos (es decir, están altamente expresadas en algunas células y poco expresadas en otras). El equipo de Seurat y otros equipos han descubierto que centrarse en estos genes en el análisis posterior ayuda a resaltar la señal biológica en conjuntos de datos unicelulares.
+
+Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola celda, y se implementa en la función *FindVariableFeatures()*. De forma predeterminada, devolvemos 2000 características por conjunto de datos. Estos se utilizarán en análisis posteriores, como PCA. 
+
+```{r}
+#pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
+
+# Identify the 10 most highly variable genes
+#top10 <- head(VariableFeatures(pbmc), 10)
+#top10
+
+# plot variable features with and without labels
+#pdf(paste0(proydir,"plots/VariableFeatures.pdf"))
+#plot1 <- VariableFeaturePlot(pbmc)
+#plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
+#print(plot1 + plot2)
+#dev.off()
 ```
 
 ## Detalles de la sesión de R
