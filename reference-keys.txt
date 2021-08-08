@@ -119,4 +119,7 @@ detalles-de-la-sesión-de-r-10
 análisis-de-expresión-diferencial
 detalles-de-la-sesión-de-r-11
 introducción-a-seurat
+diapositivas
+una-perspectiva-diferente
+kick-start
 detalles-de-la-sesión-de-r-12

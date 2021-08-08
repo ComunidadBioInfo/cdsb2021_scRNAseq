@@ -326,7 +326,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="13" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html"><i class="fa fa-check"></i><b>13</b> Introducción a Seurat</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detalles-de-la-sesión-de-r-12"><i class="fa fa-check"></i><b>13.1</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="13.1" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#diapositivas"><i class="fa fa-check"></i><b>13.1</b> Diapositivas</a></li>
+<li class="chapter" data-level="13.2" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#una-perspectiva-diferente"><i class="fa fa-check"></i><b>13.2</b> Una perspectiva Diferente</a></li>
+<li class="chapter" data-level="13.3" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#kick-start"><i class="fa fa-check"></i><b>13.3</b> Kick-start</a></li>
+<li class="chapter" data-level="13.4" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detalles-de-la-sesión-de-r-12"><i class="fa fa-check"></i><b>13.4</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#patrocinadores-13"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 </ul>
@@ -348,15 +351,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="introducción-a-seurat" class="section level1" number="13">
 <h1><span class="header-section-number">13</span> Introducción a Seurat</h1>
-<p>TODO</p>
-<div id="detalles-de-la-sesión-de-r-12" class="section level2" number="13.1">
-<h2><span class="header-section-number">13.1</span> Detalles de la sesión de R</h2>
+<p>Instructor: <a href="https://twitter.com/KevsGenomic">Kevin E. Meza-Landeros</a></p>
+<div id="diapositivas" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Diapositivas</h2>
+<p>Contenido: <a href="https://docs.google.com/presentation/d/18ZCddwDD9lY8j4gmt1fO-Xqa8qJwCh_Zu_kXSjluW1Q/edit?usp=sharing">aquí</a>
+Aprende mas sobre Seurat: <a href="https://satijalab.org/seurat/">aquí</a></p>
+</div>
+<div id="una-perspectiva-diferente" class="section level2" number="13.2">
+<h2><span class="header-section-number">13.2</span> Una perspectiva Diferente</h2>
+<p>Seurat es un paquete R diseñado para control de calidad, análisis y exploración de datos de secuencia de ARN de una sola célula. Seurat tiene como objetivo permitir a los usuarios identificar e interpretar fuentes de heterogeneidad a partir de mediciones transcriptómicas unicelulares e integrar diversos tipos de datos unicelulares.</p>
+<p>Seurat es desarrollado y mantenido por el laboratorio de <a href="https://satijalab.org/seurat/authors.html">Satija</a> y se publica bajo la Licencia Pública GNU (GPL 3.0).</p>
+<p>En este tutorial se ve como procesar los datos de scRNAseq con un nuevo paquete. Los pasos a realizar son en esencia los mismos
+El paquete mas adecuado y que deberás utilizar dependerá mayoritariamente de tus datos y el procesamiento que se adecúe a estos. Además… siempre es bueno diversos puntos de vista sobre las cosas, no es así?</p>
+</div>
+<div id="kick-start" class="section level2" number="13.3">
+<h2><span class="header-section-number">13.3</span> Kick-start</h2>
+</div>
+<div id="detalles-de-la-sesión-de-r-12" class="section level2" number="13.4">
+<h2><span class="header-section-number">13.4</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="introducción-a-seurat.html#cb271-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb271-2"><a href="introducción-a-seurat.html#cb271-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-08 20:37:12 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-08 20:53:09 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="introducción-a-seurat.html#cb273-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.400   0.117   0.391</code></pre>
+##   0.453   0.130   0.460</code></pre>
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="introducción-a-seurat.html#cb275-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb275-2"><a href="introducción-a-seurat.html#cb275-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
