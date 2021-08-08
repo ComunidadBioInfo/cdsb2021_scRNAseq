@@ -1,5 +1,7 @@
 # Introducción a R y RStudio
 
+Instructor: [Leonardo Collado Torres](https://comunidadbioinfo.github.io/es/authors/lcollado/)
+
 ## R
 
 * R: es gratis, de acceso libre, utilizado para muchos campos de trabajo, fuerte en la bioinformática a través de Bioconductor
@@ -22,7 +24,7 @@
   - https://twitter.com/CDSBMexico y https://twitter.com/LIBDrstats
   - https://twitter.com/Bioconductor
 
-<img src="icon_192.png">
+<img src="https://raw.githubusercontent.com/ComunidadBioInfo/cdsb2021_scRNAseq/master/icon_192.png">
 
 ## GitHub
 
@@ -31,7 +33,7 @@
   - https://github.com/ComunidadBioInfo/cdsb2020/blob/master/presentaciones_flujos-de-trabajo/Introduccion-al-flujo-de-trabajo-orientado-a-proyectos.pdf
 * Puedes tener páginas web estáticas
   - https://pages.github.com/
-  - https://github.com/lcolladotor/rnaseq_LCG-UNAM_2021. En especial https://github.com/lcolladotor/rnaseq_LCG-UNAM_2021/tree/gh-pages se convierte en http://lcolladotor.github.io/rnaseq_LCG-UNAM_2021/
+  - https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq/. En especial https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq/tree/gh-pages se convierte en https://comunidadbioinfo.github.io/cdsb2021_scRNAseq/
   - Página personal: https://github.com/lcolladotor/lcolladotor.github.com se convierte en http://lcolladotor.github.io/. Está todo hecho con https://github.com/lcolladotor/lcolladotorsource
 * Tip: usen el mismo nombre de usuario en GitHub, Twitter, Gmail, etc. 
   - How to be a Modern Scientist: https://lcolladotor.github.io/bioc_team_ds/how-to-be-a-modern-scientist.html
@@ -53,6 +55,7 @@ rsthemes::install_rsthemes(include_base16 = TRUE)
   
 ```{r r_profile, eval = FALSE}
 usethis::edit_r_profile()
+
 ## From https://www.garrickadenbuie.com/project/rsthemes/
 if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
     # Set preferred themes if not handled elsewhere..
@@ -82,11 +85,11 @@ options(repos = c(CRAN = "https://cloud.r-project.org"))
 
 
 ```{r proj, eval = FALSE}
-usethis::create_project("~/rnaseq_2021_notas")
+usethis::create_project("~/Desktop/cdsb2021_scRNAseq_notas")
 ```
 
 ```{r create_setup, eval = FALSE}
-## Start a setup file
+## Inicien un archivo para sus notas
 usethis::use_r("01-notas.R")
 ```
 
@@ -100,13 +103,17 @@ usethis::use_r("01-visualizar-mtcars.R")
 con el siguiente contenido:
 
 ```{r vis_mtcars, eval = FALSE}
+## Cargar paquetes que usaremos en este código
 library("sessioninfo")
 library("here")
 library("ggplot2")
+
 ## Hello world
 print("Soy Leo")
+
 ## Crear directorio para las figuras
 dir.create(here::here("figuras"), showWarnings = FALSE)
+
 ## Hacer una imagen de ejemplo
 pdf(here::here("figuras", "mtcars_gear_vs_mpg.pdf"),
     useDingbats = FALSE
@@ -114,6 +121,7 @@ pdf(here::here("figuras", "mtcars_gear_vs_mpg.pdf"),
 ggplot(mtcars, aes(group = gear, y = mpg)) +
     geom_boxplot()
 dev.off()
+
 ## Para reproducir mi código
 options(width = 120)
 sessioninfo::session_info()
@@ -127,25 +135,11 @@ sessioninfo::session_info()
 usethis::create_github_token() ## Abrirá una página web, escoje un nombre único
 ## y luego da click en el botón verde al final. Después copia el token
 ## (son 40 caracteres)
+
 gitcreds::gitcreds_set() ## Ojo, copia el token, no tu password de git!
 ## Si no, terminaras en la situación descrita en
 ## https://github.com/r-lib/usethis/issues/1347
 ```
-
-
-En el servidor de [RStudio de la LCG-UNAM](http://132.248.220.108:8787/) no funciona bien `gitcreds::gitcreds_set()` así que tenemos que editar el archivo `.Renviron` donde nuestro token no se guarda de forma privada, y por lo cual hoy en día no es lo que recomienda [Jenny Bryan](https://twitter.com/JennyBryan). Pero es lo que funciona en este caso tal como lo hablamos con el autor de [`gitcreds` vía GitHub](https://github.com/r-lib/gitcreds/issues/29). Usando el siguiente comando podemos abrir el archivo `.Renviron`.
-
-```{r edit_r_envir, eval = FALSE}
-usethis::edit_r_environ()
-```
-
-Después guarden su token de GitHub usando la siguiente sintáxis (ojo con la línea en blanco al final, las mayúsculas al inicio, y el que no hay espacios antes y después del `=`).
-
-```
-GITHUB_PAT=TU_CLAVE_DE_40_LETRAS
-```
-
-Después de guardar el `.Renviron`, vayan a `Session` hasta arriba y reinicien la sesión de R para que se cargue el `.Renviron` antes de continuar.
 
 ```{r use_git_cont, eval = FALSE}
 ## Configura tu usuario de GitHub
@@ -153,28 +147,30 @@ usethis::edit_git_config()
 # [user]
 # 	name = Leonardo Collado Torres
 # 	email = lcolladotor@gmail.com
+
 ## Para inicializar el repositorio de Git
 usethis::use_git()
+
 ## Para conectar tu repositorio local de Git con los servidores de GitHub
 usethis::use_github()
 ```
 
-Resultado ejemplo: https://github.com/lcolladotor/rnaseq_2021_notas. El que hice en vivo está disponible vía https://github.com/lcolladotor/rnaseq_2021_notas_en_vivo.
+Resultado ejemplo: https://github.com/lcolladotor/cdsb2021_scRNAseq_notas. El que hice en vivo está disponible vía https://github.com/lcolladotor/cdsb2021_scRNAseq_notas_en_vivo (o https://github.com/lcolladotor/rnaseq_2021_notas_en_vivo para un ejemplo de febrero 2021).
 
-Una vez que termines, agrega la liga al repositorio con tus notas del curso en el [Google Sheet](https://docs.google.com/spreadsheets/d/1sOBAnPkN_mP_Tq6-a8TyO7T4ii_hRPLFlKXj4qJdfUs/edit?usp=sharing) del curso. (De ser necesario, pide permisos para editar el archivo.)
+Una vez que termines, agrega la liga al repositorio con tus notas del curso en el [Google Sheet](https://docs.google.com/spreadsheets/d/13xHCfRb3vATXCFxS1prIA5cYgHNFnzI0GLlcIjtenyw/edit?usp=sharing) del curso. (De ser necesario, pide permisos para editar el archivo.)
 
 ## Material del curso
 
-* Pueden descargar la versión estática con `usethis::use_course('lcolladotor/rnaseq_LCG-UNAM_2021')`
-* Pueden verlo en línea a través de  [**lcolladotor.github.io/rnaseq_LCG-UNAM_2021**](http://lcolladotor.github.io/rnaseq_LCG-UNAM_2021)
+* Pueden descargar la versión estática con `usethis::use_course('ComunidadBioInfo/cdsb2021_scRNAseq')`
+* Pueden verlo en línea a través de  [**ComunidadBioInfo.github.io/cdsb2021_scRNAseq**](http://ComunidadBioInfo.github.io/cdsb2021_scRNAseq)
 * Pueden **clonarlo** desde GitHub de tal forma que podrán actualizarlo fácilmente usando *git pull*
 
 ```{bash clone_course, eval = FALSE}
-git clone https://github.com/lcolladotor/rnaseq_LCG-UNAM_2021.git
+git clone https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq.git
 ## Si tienen su SSH key configurarda pueden usar
 ## Info sobre SSH keys de GitHub: 
 ## https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-git clone git@github.com:lcolladotor/rnaseq_LCG-UNAM_2021.git
+git clone git@github.com:ComunidadBioInfo/cdsb2021_scRNAseq.git
 ```
 
 O desde R con:
@@ -183,14 +179,15 @@ O desde R con:
 ## Opción más nueva:
 library("gert")
 repo <- git_clone(
-    "https://github.com/lcolladotor/rnaseq_LCG-UNAM_2021",
-    "~/rnaseq_LCG-UNAM_2021"
+    "https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq",
+    "~/Desktop/cdsb2021_scRNAseq"
 )
 setwd(repo)
+
 ## Otra opción:
 git2r::clone(
-    "https://github.com/lcolladotor/rnaseq_LCG-UNAM_2021",
-    "~/rnaseq_LCG-UNAM_20210"
+    "https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq",
+    "~/Desktop/cdsb2021_scRNAseq"
 )
 ```
 
