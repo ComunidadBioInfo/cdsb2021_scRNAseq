@@ -25,7 +25,7 @@ usethis::create_project("Su_Usuario.github.io")
 
 Nuevo proyecto :
 
-```{r echo=FALSE, fig.cap="git user", fig.width = "40%"}
+```{r echo=FALSE, fig.cap="git user", out.width = "40%"}
 knitr::include_graphics("img_postcard/proyecto_github_user.png")
 ```
 
@@ -38,7 +38,7 @@ usethis::use_git()
 
 Nuevo botón
 
-```{r echo=FALSE, fig.cap="button_git", fig.width = "40%"}
+```{r echo=FALSE, fig.cap="button_git", out.width = "40%"}
 knitr::include_graphics("img_postcard/activa_boton_git.png")
 ```
 
@@ -83,13 +83,13 @@ usethis::use_git()
   
 Nuevo botón: 
 
-```{r echo=FALSE, fig.cap="button_git", fig.width = "40%"}
+```{r echo=FALSE, fig.cap="button_git", out.width = "40%"}
 knitr::include_graphics("img_postcard/activa_boton_git.png")
 ```
 
 * Ahora que tienen el botón Git, hagan click y en la esquina derecha habrá un símbolo con dos  rectángulos morados y un rombo blanco, denle click.
 
-```{r echo=FALSE, fig.cap="button_branch", fig.width = "40%"}
+```{r echo=FALSE, fig.cap="button_branch", out.width = "40%"}
 knitr::include_graphics("img_postcard/branch.png")
 ```
 
@@ -117,13 +117,13 @@ Ya que hayan creado con cualquiera de las 2 opciones anteriores pueden continuar
 **(opción 1) Botón de Git**
 * Para guardar los archivos nuevos, incluyendo `index.html`, debemos hacer un `commit`. Podemos hacerlo con el nuevo botón de git, primero seleccionando los archivos: 
 
-```{r echo=FALSE, fig.cap="add_file", fig.width = "40%"}
+```{r echo=FALSE, fig.cap="add_file", out.width = "40%"}
 knitr::include_graphics("img_postcard/add_stag.png")
 ```
 
 Cuando hayamos seleccionado **todos** los archivos, veremos que la columna Status cambia a una "A" de agregado o added y podemos darle al botón `Commit` justo arriba de Status. Esto abrirá una nueva pestaña donde podremos poner un mensaje sobre nuestro `commit` y después darle al botón `Commit`.
 
-```{r echo=FALSE, fig.cap="button_git", fig.width = "80%"}
+```{r echo=FALSE, fig.cap="button_git", out.width = "80%"}
 knitr::include_graphics("img_postcard/commit_message.png")
 ```
 
@@ -151,13 +151,13 @@ gert::git_push
 
 ```
 
-```{r echo=FALSE, fig.cap="y_fawesome", fig.width = "40%"}
+```{r echo=FALSE, fig.cap="y_fawesome", out.width = "40%"}
 knitr::include_graphics("img_postcard/yaml_awesome.png")
 ```
 
   Se ve así:
   
-```{r echo=FALSE, fig.cap="fawesome", fig.width = "40%"}
+```{r echo=FALSE, fig.cap="fawesome", out.width = "40%"}
 knitr::include_graphics("img_postcard/awesome.png")
 ```
 
@@ -172,7 +172,7 @@ knitr::include_graphics("img_postcard/awesome.png")
 
 ```
 
-```{r echo=FALSE, fig.cap="tfawesome", fig.width = "40%"}
+```{r echo=FALSE, fig.cap="tfawesome", out.width = "40%"}
 knitr::include_graphics("img_postcard/text_awesome.png")
 ```
 
