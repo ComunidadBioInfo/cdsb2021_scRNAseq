@@ -166,7 +166,8 @@ BiocManager::install(
         "iSEE",
         "pryr",
         "sessioninfo",
-        "scPipe"
+        "scPipe",
+        "Seurat"
     )
 )
 ```
@@ -219,7 +220,8 @@ _Consulta el calendario de este curso en: <http://bit.ly/calendarcdsb2021>._
 | 09:00-10:30 | Anotación de clusters de células | [Yalbi Balderas](https://twitter.com/yalbi_ibm) |
 | 10:30-11:00 | Evaluación del taller | [Irma Martínez Flores](https://www.ccg.unam.mx/irma-martinez-flores/) y [Shirley Alquicira Hernández](https://www.ccg.unam.mx/shirley-alquicira-hernandez/) |
 | 11:00-11:30 | Descanso | |
-| 11:30-14:00 | Análisis de expresión diferencial | [Leonardo Collado-Torres](http://comunidadbioinfo.github.io/authors/lcollado/) |
+| 11:30-12:30 | Análisis de expresión diferencial | [Leonardo Collado-Torres](http://comunidadbioinfo.github.io/authors/lcollado/) |
+| 12:30-14:00 | Introducción a `Seurat` | [Kevin Emmanuel Meza Landeros](https://twitter.com/KevsGenomic) |
 | 14:00-15:30 | Descanso: comida | |
 | 15:30-17:00 | Plática científica y sesión de preguntas | [Ricardo Ramirez Flores](https://twitter.com/roramirezf94) |
 | 17:00-17:30 | Clausura y recordatorio de la CDSB |      |

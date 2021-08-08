@@ -44,5 +44,6 @@ Imports:
     pryr,
     scPipe,
     PCAtools,
-    bluster
+    bluster,
+    Seurat
 VignetteBuilder: knitr
