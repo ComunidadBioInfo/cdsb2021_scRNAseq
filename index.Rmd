@@ -138,41 +138,18 @@ BiocManager::version()
 # El anterior comando debe mostrar que estás usando la versión 3.13
 
 ## Instala los paquetes de R que necesitamos
-BiocManager::install(
-    c(
-        "SingleCellExperiment",
-        "usethis",
-        "here",
-        "scran",
-        "scater",
-        "scRNAseq",
-        "org.Mm.eg.db",
-        "AnnotationHub",
-        "ExperimentHub",
-        "BiocFileCache",
-        "DropletUtils",
-        "EnsDb.Hsapiens.v86",
-        "TENxPBMCData",
-        "BiocSingular",
-        "batchelor",
-        "uwot",
-        "Rtsne",
-        "pheatmap",
-        "fossil",
-        "ggplot2",
-        "cowplot",
-        "RColorBrewer",
-        "plotly",
-        "iSEE",
-        "pryr",
-        "sessioninfo",
-        "scPipe",
-        "Seurat",
-        "dplyr",
-        "patchwork"
-    )
-)
 ```
+
+```{r auto_deps, echo = FALSE}
+cat(paste0(
+  'BiocManager::install("',
+  paste(
+    sort(remotes::local_package_deps()), collapse = '", "'
+  ),
+  '")'
+))
+```
+
 
 ## Horario {-}
 
