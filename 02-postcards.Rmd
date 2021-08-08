@@ -50,7 +50,6 @@ postcards::create_postcard(template = "trestles")
 postcards::create_postcard(template = "onofre")
 ```
 
-
 **(opción 2) Desde github**
 
 * Creen un nuevo repositorio, público y **sin** archivo README en https://github.com/new llamado "usuario.github.io" con su **nombre exacto** en github
