@@ -161,7 +161,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="ejercicio-usando-usethis-here-y-postcards.html"><a href="ejercicio-usando-usethis-here-y-postcards.html"><i class="fa fa-check"></i><b>2</b> Ejercicio usando <code>usethis</code>, <code>here</code> y <code>postcards</code></a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="ejercicio-usando-usethis-here-y-postcards.html"><a href="ejercicio-usando-usethis-here-y-postcards.html#detalles-de-la-sesión-de-r-1"><i class="fa fa-check"></i><b>2.1</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="2.1" data-path="ejercicio-usando-usethis-here-y-postcards.html"><a href="ejercicio-usando-usethis-here-y-postcards.html#ejercicio-postcards"><i class="fa fa-check"></i><b>2.1</b> Ejercicio postcards</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="ejercicio-usando-usethis-here-y-postcards.html"><a href="ejercicio-usando-usethis-here-y-postcards.html#crear-el-repositorio"><i class="fa fa-check"></i><b>2.1.1</b> Crear el repositorio</a></li>
+<li class="chapter" data-level="2.1.2" data-path="ejercicio-usando-usethis-here-y-postcards.html"><a href="ejercicio-usando-usethis-here-y-postcards.html#modificar-y-subir-a-github-nuestro-postcard"><i class="fa fa-check"></i><b>2.1.2</b> Modificar y subir a github nuestro postcard</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="ejercicio-usando-usethis-here-y-postcards.html"><a href="ejercicio-usando-usethis-here-y-postcards.html#detalles-de-la-sesión-de-r-1"><i class="fa fa-check"></i><b>2.2</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="ejercicio-usando-usethis-here-y-postcards.html"><a href="ejercicio-usando-usethis-here-y-postcards.html#patrocinadores-2"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html"><i class="fa fa-check"></i><b>3</b> Introducción a RNA-seq de célula única (scRNA-seq) con Bioconductor y al libro de OSCA</a>
@@ -354,14 +359,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>TODO</p>
 <div id="detalles-de-la-sesión-de-r-2" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb27-2"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-08 20:37:50 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb35-2"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-08 20:58:05 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.422   0.147   0.448</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb31-2"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb31-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+##   0.402   0.113   0.388</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb39-2"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb39-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)

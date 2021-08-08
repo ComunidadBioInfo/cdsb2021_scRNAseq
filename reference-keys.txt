@@ -5,6 +5,9 @@ rstudio
 material-del-curso
 detalles-de-la-sesión-de-r
 ejercicio-usando-usethis-here-y-postcards
+ejercicio-postcards
+crear-el-repositorio
+modificar-y-subir-a-github-nuestro-postcard
 detalles-de-la-sesión-de-r-1
 introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca
 detalles-de-la-sesión-de-r-2
