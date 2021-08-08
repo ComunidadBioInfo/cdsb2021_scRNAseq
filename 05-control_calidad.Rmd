@@ -2,11 +2,21 @@
 
 Instructor: [Leonardo Collado Torres](https://comunidadbioinfo.github.io/es/authors/lcollado/)
 
+```{r cargar_paquetes, message = FALSE}
+## Paquetes de este capítulo
+library("scRNAseq") ## para descargar datos de ejemplo
+library("AnnotationHub") ## para obtener información de genes
+library("scater") ## para gráficas y control de calidad
+library("BiocFileCache") ## para descargar datos
+library('DropletUtils') ## para detectar droplets
+library('Matrix') ## para leer datos en formatos comprimidos
+```
+
 ## Diapositivas de Peter Hickey
 
 Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1pIiA7fZd1GBxaKQpzT2sPn7C6fIZxEJ8NI4p3UtoIOo/edit#slide=id.p)
 
-## Ejercicio 1
+## Ejercicio: entendiendo addPerCellQC
 
 ```{r datos_ejercicio_1}
 ## Datos
@@ -57,6 +67,25 @@ plotColData(sce.416b,
     facet_wrap( ~ phenotype)
 ```
 
+### Ejercicio: gráficas QC ERCC
+
+Adapta el código de las gráficas anteriores para otra variable de control de calidad. Por ejemplo, escribe el código para reproducir las siguientes gráficas.
+
+```{r qc_altexps_ERCC_percent, echo = FALSE}
+plotColData(sce.416b, x = "block", y = "altexps_ERCC_percent")
+plotColData(sce.416b,
+    x = "block",
+    y = "altexps_ERCC_percent",
+    other_fields = "phenotype") +
+    facet_wrap( ~ phenotype)
+```
+
+* Basado en las gráficas encuentra la variable de `colData(sce.416b)` que contiene la información que queremos gráficar.
+* ¡No hay que reemplazar todo lo que diga `phenotype`
+* Tengo cuidado con las transformaciones de valores en el eje Y. No aplican para todo tipo de datos.
+
+## Eliminar células de baja calidad
+
 ```{r valores_qc}
 # Valores de límite ejemplo
 qc.lib <- sce.416b$sum < 100000
@@ -74,6 +103,8 @@ DataFrame(
     MitoProp = sum(qc.mito),
     Total = sum(discard)
 )
+
+## Usando isOutlier() para determinar los valores de corte
 qc.lib2 <- isOutlier(sce.416b$sum, log = TRUE, type = "lower")
 qc.nexprs2 <- isOutlier(sce.416b$detected, log = TRUE,
     type = "lower")
@@ -104,7 +135,11 @@ plotColData(sce.416b,
     other_fields = "phenotype") +
     scale_y_log10() +
     facet_wrap( ~ phenotype)
+
+## Determino el bloque (batch) de muestras
 batch <- paste0(sce.416b$phenotype, "-", sce.416b$block)
+
+## Versión de isOutlier() que toma en cuenta los bloques de muestras
 qc.lib3 <- isOutlier(sce.416b$sum,
     log = TRUE,
     type = "lower",
@@ -136,7 +171,7 @@ DataFrame(
 )
 ```
 
-## Ejercicio 2: control de calidad
+## Ejercicio: filtrado de células
 
 * ¿Fue necesario `qc.lib` para crear `discard`? ^[Sí, usando `table(qc.lib , qc.spike)` y `table(qc.lib , qc.mito)`.]
 * ¿Cúal filtro fue más estricto? ¿`discard` o `discard2`? ^[`discard` de `table(discard, discard2)`]
@@ -144,11 +179,21 @@ DataFrame(
 
 ## Datos de Grun et al
 
+¿Qué patrón revela esta gráfica?
 
-```{r grun_qc}
+```{r grun_problema}
 sce.grun <- GrunPancreasData()
 sce.grun <- addPerCellQC(sce.grun)
+
+## ¿Qué patrón revela esta gráfica?
 plotColData(sce.grun, x = "donor", y = "altexps_ERCC_percent")
+```
+
+¿Cúal de las siguientes gráficas identifica mejor las células de baja calidad?
+
+```{r grun_isOutlier}
+## isOutlier() puede ayudarnos cuando un grupo de muestras
+## tuvo más problemas que el resto
 discard.ercc <- isOutlier(sce.grun$altexps_ERCC_percent,
     type = "higher",
     batch = sce.grun$donor)
@@ -158,19 +203,29 @@ discard.ercc2 <- isOutlier(
     batch = sce.grun$donor,
     subset = sce.grun$donor %in% c("D17", "D2", "D7")
 )
+
+## isOutlier() tomando en cuenta el batch
 plotColData(
     sce.grun,
     x = "donor",
     y = "altexps_ERCC_percent",
     colour_by = data.frame(discard = discard.ercc)
 )
+
+## isOutlier() tomando en cuenta batch y muestras que fallaron
 plotColData(
     sce.grun,
     x = "donor",
     y = "altexps_ERCC_percent",
     colour_by = data.frame(discard = discard.ercc2)
 )
+```
 
+## Gráficas de QC extra
+
+Otras gráficas que podemos hacer.
+
+```{r 416b_qc_extra}
 # Agregamos información sobre que células
 # tienen valores extremos
 sce.416b$discard <- discard2
@@ -198,9 +253,30 @@ plotColData(
     facet_grid(block ~ phenotype)
 ```
 
-## Datos de PBMC
+## Ejercicio: ERCC Grun et al
+
+Adapta el código de `sce.416b` para los datos de Grun et al y reproduce la imagen siguiente.
+
+```{r grun_qc_extra, echo = FALSE}
+sce.grun$discard <- discard.ercc2
+plotColData(
+    sce.grun,
+    x = "altexps_ERCC_detected",
+    y = "altexps_ERCC_sum",
+    colour_by = "discard",
+    other_fields = c("donor")
+) +
+    facet_grid( ~ donor)
+```
+
+* Fíjate en que variables de `colData()` estamos graficando.
+* ¿Existe la variable `discard` en `colData()`?
+* ¿Qué variable tiene valores de D10, D17, D2, D3 y D7?
+
+## Identificando droplets con datos de PBMC
 
 ```{r pbmc_qc}
+## Descarguemos los datos
 library('BiocFileCache')
 bfc <- BiocFileCache()
 raw.path <-
@@ -212,6 +288,8 @@ raw.path <-
         )
     )
 untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
+
+## Leamos los datos en R
 library('DropletUtils')
 library('Matrix')
 fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
@@ -242,6 +320,11 @@ legend(
     lty = 2,
     cex = 1.2
 )
+```
+Encontremos los _droplets_ usando `emptyDrops()`.
+
+```{r emptyDrops}
+## Usemos DropletUtils para encontrar los droplets
 set.seed(100)
 e.out <- emptyDrops(counts(sce.pbmc))
 
@@ -261,6 +344,19 @@ hist(all.out$PValue[all.out$Total <= limit &
     xlab = "P-value",
     main = "",
     col = "grey80")
+```
+
+## Ejercicio: detección de droplets
+
+* ¿Por qué `emptyDrops()` regresa valores `NA`? ^[Debajo de `lower` son considerados _droplets_ vacíos. Solo se usan para la correción estadística de pruebas múltiples.]
+* ¿Los valores p son iguales entre `e.out` y `all.out`? ^[No, debido a los `NA`s.]
+* ¿Son iguales si obtienes el subconjunto de valores que no son `NA`? ^[Sí: `identical(e.out$PValue[!is.na(e.out$FDR)], all.out$PValue[!is.na(e.out$FDR)])`.]
+
+## Filtrado de expresión mitocondrial adicional
+
+Después de filtar los droplets, el filtrado por expresión mitocondrial nos va a ayudar a eliminar células de baja calidad.
+
+```{r pbmc_chrMT_ayuda}
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 is.mito <- grep("^MT-", rowData(sce.pbmc)$Symbol)
 sce.pmbc <- addPerCellQC(sce.pbmc, subsets = list(MT = is.mito))
@@ -276,16 +372,49 @@ plot(
 abline(h = attr(discard.mito, "thresholds")["higher"], col = "red")
 ```
 
-## Ejercicio 3: detección de droplets
+## Ejercicio avanzado
 
-* ¿Por qué `emptyDrops()` regresa valores `NA`? ^[Debajo de `lower` son considerados _droplets_ vacíos. Solo se usan para la correción estadística de pruebas múltiples.]
-* ¿Los valores p son iguales entre `e.out` y `all.out`? ^[No, debido a los `NA`s.]
-* ¿Son iguales si obtienes el subconjunto de valores que no son `NA`? ^[Sí: `identical(e.out$PValue[!is.na(e.out$FDR)], all.out$PValue[!is.na(e.out$FDR)])`.]
+Volvamos a crear `sce.pbmc` para poder usar `plotColData()` y visualizar la relación entre `total` y los niveles de expresión mitocondrial (en porcentaje) separando lo que pensamos que son droplets y las células de acuerdo a los resultados que ya calculamos de `emptyDrops()`. El resultado final se verá como en la siguiente imagen.
 
-## ¿Conviene eliminar datos?
+```{r pbmc_combined, echo = FALSE}
+## Leer los datos crudos de nuevo
+sce.pbmc <- read10xCounts(fname, col.names = TRUE)
+
+## Almacenar si es o no es célula
+sce.pbmc$is_cell <- e.out$FDR <= 0.001
+
+## Filtar los casos para los cuales no tuvimos pruebas estadísticas
+sce.pbmc <- sce.pbmc[, which(!is.na(sce.pbmc$is_cell))]
+
+## Identicar chr mitocondrial
+is.mito <- grep("^MT-", rowData(sce.pbmc)$Symbol)
+
+## Calcular medidas de QC
+sce.pbmc <- addPerCellQC(sce.pbmc, subsets = list(MT = is.mito))
+
+## Almacenar cuales hay que descartar por MT
+sce.pbmc$discard_mito <-
+    isOutlier(sce.pbmc$subsets_MT_percent, type = "higher")
+
+## Visualizar resultados
+plotColData(
+    sce.pbmc,
+    x = "total",
+    y = "subsets_MT_percent",
+    colour_by = "discard_mito"
+) + facet_grid(~ ifelse(sce.pbmc$is_cell, "Célula", "Droplet"))
+```
+
+* No podemos usar nuestro objeto `sce.pbmc` porque ya eliminamos los droplets al correr `sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]`. Por eso tendremos que volver a usar `sce.pbmc <- read10xCounts(fname, col.names = TRUE)`.
+* Una vez que hayamos vuelto a hacer `sce.pbmc`, tenemos que guardar en ese objeto los resultados de `emptyDrops()`. Por ejemplo, con `sce.pbmc$is_cell <- e.out$FDR <= 0.001`.
+* Como `e.out$FDR` tiene muchos `NA`, nos conviene filtrar esos datos.
+* Tendremos que volver a correr `addPerCellQC()` y guardar los resultados en nuestro objeto `sce.pbmc`.
+* Al final usaremos `plotColData()` junto con `facet_grid(~ sce.pbmc$is_cell)`.
+
+## Discusión ¿Conviene eliminar datos?
 
 
-```{r}
+```{r filtrar_o_no}
 # Eliminemos las células de calidad baja
 # al quedarnos con las columnas del objeto sce que NO
 # queremos descartar (eso hace el !)
@@ -299,6 +428,14 @@ marked$discard <- discard2
 
 * ¿Cúal de estos objetos es más grande? ^[`marked` es más grande que `filtered`]
 * ¿Cúal prefieres usar? ^[Yo prefiero usar `marked` si tengo suficiente memoria para usarlo.]
+
+### Un nuevo paquete: ExperimentSubset
+
+En [BioC2021](https://bioc2021.bioconductor.org/) presentaron [`ExperimentSubset`](http://bioconductor.org/packages/ExperimentSubset/) que provee otro camino para resolver este dilema.
+
+```{r echo=FALSE, fig.cap="Descripción gráfica de `ExperimentSubset`. Fuente: [vignette `ExperimentSubset`](http://bioconductor.org/packages/release/bioc/vignettes/ExperimentSubset/inst/doc/ExperimentSubset.html)."}
+knitr::include_graphics("img/ExperimentSubset.png")
+```
 
 ## Detalles de la sesión de R
 
