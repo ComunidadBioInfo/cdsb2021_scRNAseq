@@ -25,6 +25,8 @@ Imports:
     EnsDb.Hsapiens.v86,
     ExperimentHub,
     fossil,
+    gert,
+    gh,
     here,
     iSEE,
     kableExtra,
