@@ -1,22 +1,22 @@
-## ----cargar_paquetes, message = FALSE---------------------------------------------------------
+## ----cargar_paquetes, message = FALSE--------------------------------------------------------
 ## Paquetes de este capítulo
 library("scRNAseq") ## para descargar datos de ejemplo
 library("AnnotationHub") ## para obtener información de genes
 library("scater") ## para gráficas y control de calidad
 library("BiocFileCache") ## para descargar datos
-library('DropletUtils') ## para detectar droplets
-library('Matrix') ## para leer datos en formatos comprimidos
+library("DropletUtils") ## para detectar droplets
+library("Matrix") ## para leer datos en formatos comprimidos
 
 
-## ----datos_ejercicio_1------------------------------------------------------------------------
+## ----datos_ejercicio_1-----------------------------------------------------------------------
 ## Datos
-library('scRNAseq')
+library("scRNAseq")
 sce.416b <- LunSpikeInData(which = "416b")
 sce.416b$block <- factor(sce.416b$block)
 
 # Descarga los archivos de anotación de la base de datos de Ensembl
 # correspondientes usando los recursos disponibles vía AnnotationHub
-library('AnnotationHub')
+library("AnnotationHub")
 ah <- AnnotationHub()
 query(ah, c("Mus musculus", "Ensembl", "v97"))
 # Obtén la posición del cromosoma para cada gen
@@ -30,37 +30,40 @@ location <- mapIds(
 
 # Identifica los genes mitocondriales
 is.mito <- which(location == "MT")
-library('scater')
+library("scater")
 sce.416b <- addPerCellQC(sce.416b,
-    subsets = list(Mito = is.mito))
+    subsets = list(Mito = is.mito)
+)
 ## Si quieres guarda los resultados de addPerCellQC() para responder
 ## las preguntas del ejercicio. Eventualmente si necesitaremos los
 ## resultados de addPerCellQC() para las secciones posteriores a este
 ## ejercicio.
 
 
-## ----visualizar_qc----------------------------------------------------------------------------
+## ----visualizar_qc---------------------------------------------------------------------------
 plotColData(sce.416b, x = "block", y = "detected")
 plotColData(sce.416b, x = "block", y = "detected") +
     scale_y_log10()
 plotColData(sce.416b,
     x = "block",
     y = "detected",
-    other_fields = "phenotype") +
+    other_fields = "phenotype"
+) +
     scale_y_log10() +
-    facet_wrap( ~ phenotype)
+    facet_wrap(~phenotype)
 
 
-## ----qc_altexps_ERCC_percent, echo = FALSE----------------------------------------------------
+## ----qc_altexps_ERCC_percent, echo = FALSE---------------------------------------------------
 plotColData(sce.416b, x = "block", y = "altexps_ERCC_percent")
 plotColData(sce.416b,
     x = "block",
     y = "altexps_ERCC_percent",
-    other_fields = "phenotype") +
-    facet_wrap( ~ phenotype)
+    other_fields = "phenotype"
+) +
+    facet_wrap(~phenotype)
 
 
-## ----valores_qc-------------------------------------------------------------------------------
+## ----valores_qc------------------------------------------------------------------------------
 # Valores de límite ejemplo
 qc.lib <- sce.416b$sum < 100000
 qc.nexprs <- sce.416b$detected < 5000
@@ -80,12 +83,16 @@ DataFrame(
 
 ## Usando isOutlier() para determinar los valores de corte
 qc.lib2 <- isOutlier(sce.416b$sum, log = TRUE, type = "lower")
-qc.nexprs2 <- isOutlier(sce.416b$detected, log = TRUE,
-    type = "lower")
+qc.nexprs2 <- isOutlier(sce.416b$detected,
+    log = TRUE,
+    type = "lower"
+)
 qc.spike2 <- isOutlier(sce.416b$altexps_ERCC_percent,
-    type = "higher")
+    type = "higher"
+)
 qc.mito2 <- isOutlier(sce.416b$subsets_Mito_percent,
-    type = "higher")
+    type = "higher"
+)
 discard2 <- qc.lib2 | qc.nexprs2 | qc.spike2 | qc.mito2
 
 # Extraemos los límites de valores (thresholds)
@@ -106,9 +113,10 @@ DataFrame(
 plotColData(sce.416b,
     x = "block",
     y = "detected",
-    other_fields = "phenotype") +
+    other_fields = "phenotype"
+) +
     scale_y_log10() +
-    facet_wrap( ~ phenotype)
+    facet_wrap(~phenotype)
 
 ## Determino el bloque (batch) de muestras
 batch <- paste0(sce.416b$phenotype, "-", sce.416b$block)
@@ -117,17 +125,21 @@ batch <- paste0(sce.416b$phenotype, "-", sce.416b$block)
 qc.lib3 <- isOutlier(sce.416b$sum,
     log = TRUE,
     type = "lower",
-    batch = batch)
+    batch = batch
+)
 qc.nexprs3 <- isOutlier(sce.416b$detected,
     log = TRUE,
     type = "lower",
-    batch = batch)
+    batch = batch
+)
 qc.spike3 <- isOutlier(sce.416b$altexps_ERCC_percent,
     type = "higher",
-    batch = batch)
+    batch = batch
+)
 qc.mito3 <- isOutlier(sce.416b$subsets_Mito_percent,
     type = "higher",
-    batch = batch)
+    batch = batch
+)
 discard3 <- qc.lib3 | qc.nexprs3 | qc.spike3 | qc.mito3
 
 # Extraemos los límites de valores (thresholds)
@@ -145,7 +157,7 @@ DataFrame(
 )
 
 
-## ----grun_problema----------------------------------------------------------------------------
+## ----grun_problema---------------------------------------------------------------------------
 sce.grun <- GrunPancreasData()
 sce.grun <- addPerCellQC(sce.grun)
 
@@ -153,12 +165,13 @@ sce.grun <- addPerCellQC(sce.grun)
 plotColData(sce.grun, x = "donor", y = "altexps_ERCC_percent")
 
 
-## ----grun_isOutlier---------------------------------------------------------------------------
+## ----grun_isOutlier--------------------------------------------------------------------------
 ## isOutlier() puede ayudarnos cuando un grupo de muestras
 ## tuvo más problemas que el resto
 discard.ercc <- isOutlier(sce.grun$altexps_ERCC_percent,
     type = "higher",
-    batch = sce.grun$donor)
+    batch = sce.grun$donor
+)
 discard.ercc2 <- isOutlier(
     sce.grun$altexps_ERCC_percent,
     type = "higher",
@@ -183,7 +196,7 @@ plotColData(
 )
 
 
-## ----416b_qc_extra----------------------------------------------------------------------------
+## ----qc_extra_416b---------------------------------------------------------------------------
 # Agregamos información sobre que células
 # tienen valores extremos
 sce.416b$discard <- discard2
@@ -197,7 +210,7 @@ plotColData(
     colour_by = "discard",
     other_fields = "phenotype"
 ) +
-    facet_wrap( ~ phenotype) +
+    facet_wrap(~phenotype) +
     scale_y_log10()
 
 # Otra gráfica de diagnóstico útil
@@ -211,7 +224,7 @@ plotColData(
     facet_grid(block ~ phenotype)
 
 
-## ----grun_qc_extra, echo = FALSE--------------------------------------------------------------
+## ----qc_extra_grun, echo = FALSE-------------------------------------------------------------
 sce.grun$discard <- discard.ercc2
 plotColData(
     sce.grun,
@@ -220,7 +233,7 @@ plotColData(
     colour_by = "discard",
     other_fields = c("donor")
 ) +
-    facet_grid( ~ donor)
+    facet_grid(~donor)
 
 
 ## ----echo=FALSE, fig.cap="Descripción gráfica la tecnología _Next GEM_ de 10x Genomics. Fuente: [10x Genomics](https://www.10xgenomics.com/technology)."----
@@ -231,9 +244,9 @@ knitr::include_graphics("https://cdn.10xgenomics.com/image/upload/dpr_2.0,e_shar
 knitr::include_graphics("img/emptyDrops_Fig2.png")
 
 
-## ----pbmc_qc----------------------------------------------------------------------------------
+## ----pbmc_qc---------------------------------------------------------------------------------
 ## Descarguemos los datos
-library('BiocFileCache')
+library("BiocFileCache")
 bfc <- BiocFileCache()
 raw.path <-
     bfcrpath(
@@ -246,8 +259,8 @@ raw.path <-
 untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
 
 ## Leamos los datos en R
-library('DropletUtils')
-library('Matrix')
+library("DropletUtils")
+library("Matrix")
 fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
 sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 bcrank <- barcodeRanks(counts(sce.pbmc))
@@ -263,12 +276,16 @@ plot(
     ylab = "Total UMI count",
     cex.lab = 1.2
 )
-abline(h = metadata(bcrank)$inflection,
+abline(
+    h = metadata(bcrank)$inflection,
     col = "darkgreen",
-    lty = 2)
-abline(h = metadata(bcrank)$knee,
+    lty = 2
+)
+abline(
+    h = metadata(bcrank)$knee,
     col = "dodgerblue",
-    lty = 2)
+    lty = 2
+)
 legend(
     "bottomleft",
     legend = c("Inflection", "Knee"),
@@ -278,7 +295,7 @@ legend(
 )
 
 
-## ----emptyDrops-------------------------------------------------------------------------------
+## ----emptyDrops------------------------------------------------------------------------------
 ## Usemos DropletUtils para encontrar los droplets
 set.seed(100)
 e.out <- emptyDrops(counts(sce.pbmc))
@@ -295,13 +312,14 @@ all.out <-
 # con un número total de cuentas menor a "lower" no son
 # de origen ambiental.
 hist(all.out$PValue[all.out$Total <= limit &
-        all.out$Total > 0],
-    xlab = "P-value",
-    main = "",
-    col = "grey80")
+    all.out$Total > 0],
+xlab = "P-value",
+main = "",
+col = "grey80"
+)
 
 
-## ----pbmc_chrMT_ayuda-------------------------------------------------------------------------
+## ----pbmc_chrMT_ayuda------------------------------------------------------------------------
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 is.mito <- grep("^MT-", rowData(sce.pbmc)$Symbol)
 sce.pmbc <- addPerCellQC(sce.pbmc, subsets = list(MT = is.mito))
@@ -317,7 +335,7 @@ plot(
 abline(h = attr(discard.mito, "thresholds")["higher"], col = "red")
 
 
-## ----pbmc_combined, echo = FALSE--------------------------------------------------------------
+## ----pbmc_combined, echo = FALSE-------------------------------------------------------------
 ## Leer los datos crudos de nuevo
 sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 
@@ -346,11 +364,11 @@ plotColData(
 ) + facet_grid(~ ifelse(sce.pbmc$is_cell, "Célula", "Droplet vacío"))
 
 
-## ----filtrar_o_no-----------------------------------------------------------------------------
+## ----filtrar_o_no----------------------------------------------------------------------------
 # Eliminemos las células de calidad baja
 # al quedarnos con las columnas del objeto sce que NO
 # queremos descartar (eso hace el !)
-filtered <- sce.416b[,!discard2]
+filtered <- sce.416b[, !discard2]
 # Alternativamente, podemos marcar
 # las células de baja calidad
 marked <- sce.416b
@@ -361,7 +379,7 @@ marked$discard <- discard2
 knitr::include_graphics("img/ExperimentSubset.png")
 
 
-## ---------------------------------------------------------------------------------------------
+## --------------------------------------------------------------------------------------------
 ## Información de la sesión de R
 Sys.time()
 proc.time()

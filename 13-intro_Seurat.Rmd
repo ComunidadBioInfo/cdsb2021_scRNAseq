@@ -40,13 +40,8 @@ library(Seurat)
 library(patchwork)
 ```
 
-```{r, echo = FALSE}
-## Correr el resto del código?
-evaluar_seurat <- FALSE
-```
 
-
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 # Load the PBMC dataset
 proydir <- "/mnt/BioAdHoc/Groups/vd-vijay/kmlanderos/CDSB/clustering/"
 pbmc.data <- Read10X(data.dir = paste0(proydir, "data/filtered_gene_bc_matrices/hg19/"))
@@ -57,7 +52,7 @@ pbmc
 
 Veamos la estructura del Objeto de Seurat
 
-```{r, warning=FALSE, message=FALSE, eval = evaluar_seurat}
+```{r, warning=FALSE, message=FALSE, eval = FALSE}
 str(pbmc)
 ```
 
@@ -65,7 +60,7 @@ str(pbmc)
 Examinemos algunos genes en las primeras treinta células. El . los valores en la matriz representan ceros (no se detectan moléculas). Dado que la mayoría de los valores en una matriz scRNA-seq son 0, Seurat utiliza una representación de matriz dispersa (*sparse matrix*) siempre que sea posible. Esto da como resultado un ahorro significativo de memoria y velocidad.  
 EN ESTE CASO UNA MATRIZ NO DISPERSA OCUPA 27 VECES MAS ESPACIO!
 
-```{r, warning=FALSE, message=FALSE, eval = evaluar_seurat}
+```{r, warning=FALSE, message=FALSE, eval = FALSE}
 pbmc.data[c("CD3D", "TCL1A", "MS4A1"), 1:30]
 dense.size <- object.size(as.matrix(pbmc.data))
 dense.size
@@ -87,12 +82,12 @@ Algunas métricas de control de calidad comúnmente utilizadas por la comunidad 
 
 El operador [[puede agregar columnas a los metadatos del objeto. Este es un gran lugar para almacenar estadísticas de control de calidad. Entonces calculamos y añadimos la cantidad de lecturas que corresponden al genoma mitocondrial.
 
-```{r, warning=FALSE, message=FALSE, eval = evaluar_seurat}
+```{r, warning=FALSE, message=FALSE, eval = FALSE}
 pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^MT-")
 ```
 Visualizamos las métricas de control de calidad mencionadas anteriormente como un diagrama de violín. Ademas vemos la correlacion entre el numero de moleculaas de RNA detectadas en cada clula con el número de genes únicos y con el porcentaje de lecturas que corresponden a mtADN.
 
-```{r, warning=FALSE, message=FALSE, eval = evaluar_seurat}
+```{r, warning=FALSE, message=FALSE, eval = FALSE}
 plot <- VlnPlot(pbmc, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 print(plot)
 
@@ -102,14 +97,14 @@ print(plot1 + plot2)
 ```
 Finalmente filtramos aquellas células que se salen de los estndares de cada uno de los parámetros.
 
-```{r, warning=FALSE, message=FALSE, eval = evaluar_seurat}
+```{r, warning=FALSE, message=FALSE, eval = FALSE}
 # Filter
 pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
 ```
 - Dónde se almacenan la métricas de QC en Seurat?
 Estan almacenadas en la seccion de **meta-data** del objeto Seurat
 
-```{r, warning=FALSE, message=FALSE, eval = evaluar_seurat}
+```{r, warning=FALSE, message=FALSE, eval = FALSE}
 head(pbmc@meta.data, 5)
 ```
 
@@ -117,7 +112,7 @@ head(pbmc@meta.data, 5)
 
 De forma predeterminada, se emplea un método de normalización de escala global **"LogNormalize"** que normaliza las medidas de expresión de características para cada celda por la expresión total, multiplica esto por un factor de escala (10.000 por defecto) y transforma el resultado en logaritmos. Los valores normalizados se almacenan en pbmc [["RNA"]] @ data 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
 ```
 
@@ -127,7 +122,7 @@ A continuación, calculamos un subconjunto de **características que exhiben una
 
 Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola celda, y se implementa en la función *FindVariableFeatures()*. De forma predeterminada, **devolvemos 2000 características por conjunto de datos** (aunque se puede modificar). Estos se utilizarán en análisis posteriores, como PCA. 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
 
 # Identify the 10 most highly variable genes
@@ -147,16 +142,16 @@ A continuación, aplicamos una transformación lineal ("escalado") que es un pas
      - Este paso otorga el mismo peso en los análisis posteriores, de modo que los genes altamente expresados no dominen
 Los resultados de esto se almacenan en pbmc [["RNA"]] @ scale.data
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 all.genes <- rownames(pbmc)
-pbmc <- ScaleData (pbmc, features = all.genes)
+pbmc <- ScaleData(pbmc, features = all.genes)
 ```
 
 ## Reducción dimensional lineal
 
 A continuación, realizamos PCA sobre los datos escalados. De forma predeterminada, solo las características variables determinadas previamente se utilizan como entrada, pero se pueden definir mediante el argumento de características si desea elegir un subconjunto diferente. 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
 ```
 
@@ -164,7 +159,7 @@ Seurat proporciona varias formas útiles de visualizar tanto las celdas como las
 
 Puedes examinar y visualice los resultados de PCA de diferentes formas 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 print(pbmc[["pca"]], dims = 1:5, nfeatures = 5)
 
 p1 <- VizDimLoadings(pbmc, dims = 1:2, reduction = "pca")
@@ -175,7 +170,7 @@ print(p2)
 
 En particular, *DimHeatmap()* permite una fácil exploración de las fuentes primarias de heterogeneidad en un conjunto de datos y puede ser útil cuando se intenta decidir qué PC incluir para análisis posteriores posteriores. Tanto las celdas como las características se ordenan de acuerdo con sus puntajes de PCA. Establecer celdas en un número traza las celdas "extremas" en ambos extremos del espectro, lo que acelera drásticamente el trazado de grandes conjuntos de datos. Aunque claramente es un análisis supervisado, consideramos que esta es una herramienta valiosa para explorar conjuntos de características correlacionadas. 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 p3 <- DimHeatmap(pbmc, dims = 1, cells = 500, balanced = TRUE)
 p4 <- DimHeatmap(pbmc, dims = 1:15, cells = 500, balanced = TRUE)
 print(p3)
@@ -188,7 +183,7 @@ Para superar el extenso ruido técnico en cualquier característica única para 
 
 En Macosko et al, implementamos una prueba de remuestreo inspirada en el **procedimiento JackStraw**. Permutamos aleatoriamente un subconjunto de los datos (1% por defecto) y volvemos a ejecutar PCA, construyendo una "distribución nula" de puntuaciones de características, y repetimos este procedimiento. Identificamos PC "importantes" como aquellas que tienen un gran enriquecimiento de características de bajo valor p. 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 # NOTE: This process can take a long time for big datasets, comment out for expediency. More
 # approximate techniques such as those implemented in ElbowPlot() can be used to reduce
 # computation time
@@ -198,13 +193,13 @@ pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
 
 La función **JackStrawPlot()** proporciona una herramienta de visualización para comparar la distribución de los valores p para cada PC con una distribución uniforme (línea discontinua). Las PC "significativas" mostrarán un gran enriquecimiento de funciones con valores p bajos (curva sólida por encima de la línea discontinua). En este caso, parece que hay una fuerte caída en la importancia después de los primeros 10-12 PCs. 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 p1 <- JackStrawPlot(pbmc, dims = 1:15)
 ```
 
 Un método heurístico alternativo genera un **"diagrama de codo (Elbow Plot)"**: una clasificación de componentes principales basada en el porcentaje de varianza explicada por cada uno (función ElbowPlot ()). En este ejemplo, podemos observar un "codo" alrededor de PC9-10, lo que sugiere que la mayor parte de la señal verdadera se captura en las primeras 10 PC. 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 p2 <- ElbowPlot(pbmc)
 print(p1)
 print(p2)
@@ -212,7 +207,7 @@ print(p2)
 
 ## Clustering 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 pbmc <- FindNeighbors(pbmc, dims = 1:10)
 pbmc <- FindClusters(pbmc, resolution = 0.5)
 ```
@@ -221,7 +216,7 @@ pbmc <- FindClusters(pbmc, resolution = 0.5)
 
 Seurat ofrece varias técnicas de reducción dimensional no lineal, como **tSNE** y **UMAP**, para visualizar y explorar estos conjuntos de datos. El objetivo de estos algoritmos es aprender la variedad subyacente de los datos para colocar celdas similares juntas en un espacio de baja dimensión. Las celdas dentro de los grupos basados en gráficos determinados anteriormente deben ubicarse conjuntamente en estos gráficos de reducción de dimensión. Como entrada para UMAP y tSNE, sugerimos usar las mismas PC como entrada para el análisis de agrupamiento. 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 # If you haven't installed UMAP, you can do so via reticulate::py_install(packages = 'umap-learn')
 pbmc <- RunUMAP(pbmc, dims = 1:10)
 
@@ -233,7 +228,7 @@ print(plot)
 
 Puede guardar el objeto en este punto para que se pueda volver a cargar fácilmente sin tener que volver a ejecutar los pasos computacionalmente intensivos realizados anteriormente o compartir fácilmente con los colaboradores. 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 saveRDS(pbmc, file = "output/pbmc_tutorial.rds")
 ```
 
@@ -243,7 +238,7 @@ Seurat puede ayudarlo a encontrar marcadores que definan clústeres mediante exp
 
 El argumento min.pct requiere que se detecte una característica en un porcentaje mínimo en cualquiera de los dos grupos de celdas, y el argumento thresh.test requiere que una característica se exprese diferencialmente (en promedio) en alguna cantidad entre los dos grupos. Puede establecer ambos en 0, pero con un aumento dramático en el tiempo, ya que esto probará una gran cantidad de características que probablemente no sean altamente discriminatorias. Como otra opción para acelerar estos cálculos, se puede configurar el número máximo de celdas por identificador. Esto reducirá la resolución de cada clase de identidad para que no tenga más celdas que las que se establezcan. Si bien generalmente habrá una pérdida de potencia, los aumentos de velocidad pueden ser significativos y es probable que las características expresadas de manera más diferencial aún se eleven a la cima. 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 # find all markers of cluster 2
 cluster2.markers <- FindMarkers(pbmc, ident.1 = 2, min.pct = 0.25)
 head(cluster2.markers, n = 5)
@@ -256,32 +251,34 @@ head(cluster5.markers, n = 5)
 # ones
 pbmc.markers <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
 pbmc.markers %>%
-   group_by(cluster) %>%
-   top_n(n = 2, wt = avg_log2FC)
+    group_by(cluster) %>%
+    top_n(n = 2, wt = avg_log2FC)
 ```
 
 Seurat tiene **varias pruebas de expresión diferencial** que se pueden configurar con el parámetro test.use (consulte nuestra viñeta DE para obtener más detalles). Por ejemplo, la **prueba ROC** devuelve el "poder de clasificación" para cualquier marcador individual (que varía de 0 - aleatorio a 1 - perfecto) .
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 cluster0.markers <- FindMarkers(pbmc, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
 ```
 
 Se incluyen varias herramientas para visualizar la expresión de los marcadores. VlnPlot () (muestra distribuciones de probabilidad de expresión entre clústeres) y FeaturePlot () (visualiza la expresión de características en un gráfico tSNE o PCA) son nuestras visualizaciones más utilizadas. También sugerimos explorar RidgePlot (), CellScatter () y DotPlot () como métodos adicionales para ver su conjunto de datos. 
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 p1 <- VlnPlot(pbmc, features = c("MS4A1", "CD79A"))
 
 ## you can plot raw counts as well
 p2 <- VlnPlot(pbmc, features = c("NKG7", "PF4"), slot = "counts", log = TRUE)
 
-p3 <- FeaturePlot(pbmc, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "FCGR3A", "LYZ", "PPBP",
-   "CD8A"))
+p3 <- FeaturePlot(pbmc, features = c(
+    "MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "FCGR3A", "LYZ", "PPBP",
+    "CD8A"
+))
 
 # DoHeatmap() generates an expression heatmap for given cells and features. In this case, we are plotting the top 20 markers (or all markers if less than 20) for each cluster.
 
 pbmc.markers %>%
-   group_by(cluster) %>%
-   top_n(n = 10, wt = avg_log2FC) -> top10
+    group_by(cluster) %>%
+    top_n(n = 10, wt = avg_log2FC) -> top10
 p4 <- DoHeatmap(pbmc, features = top10$gene) + NoLegend()
 print(p1)
 print(p2)
@@ -293,9 +290,11 @@ print(p4)
 
 Podemos usar marcadores canónicos para hacer coincidir fácilmente la agrupación imparcial con los tipos de células conocidos.
 
-```{r, eval = evaluar_seurat}
-new.cluster.ids <- c("Naive CD4 T", "CD14+ Mono", "Memory CD4 T", "B", "CD8 T", "FCGR3A+ Mono",
-   "NK", "DC", "Platelet")
+```{r, eval = FALSE}
+new.cluster.ids <- c(
+    "Naive CD4 T", "CD14+ Mono", "Memory CD4 T", "B", "CD8 T", "FCGR3A+ Mono",
+    "NK", "DC", "Platelet"
+)
 names(new.cluster.ids) <- levels(pbmc)
 pbmc <- RenameIdents(pbmc, new.cluster.ids)
 
@@ -305,7 +304,7 @@ print(p1)
 
 ## Guardar Resultados
 
-```{r, eval = evaluar_seurat}
+```{r, eval = FALSE}
 saveRDS(pbmc, file = "output/pbmc3k_final.rds")
 ```
 
