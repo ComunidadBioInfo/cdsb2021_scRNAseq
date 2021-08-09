@@ -1,4 +1,4 @@
-## ----install_rsthemes, eval = FALSE-----------------------------------------------------------
+## ----install_rsthemes, eval = FALSE-------------------------------------------------------------------------
 ## remotes::install_github(c(
 ##     "gadenbuie/rsthemes"
 ## ))
@@ -6,7 +6,7 @@
 ## rsthemes::install_rsthemes(include_base16 = TRUE)
 
 
-## ----r_profile, eval = FALSE------------------------------------------------------------------
+## ----r_profile, eval = FALSE--------------------------------------------------------------------------------
 ## usethis::edit_r_profile()
 ## 
 ## ## From https://www.garrickadenbuie.com/project/rsthemes/
@@ -30,21 +30,21 @@
 ## options(repos = c(CRAN = "https://cloud.r-project.org"))
 
 
-## ----proj, eval = FALSE-----------------------------------------------------------------------
+## ----proj, eval = FALSE-------------------------------------------------------------------------------------
 ## usethis::create_project("~/Desktop/cdsb2021_scRNAseq_notas")
 
 
-## ----create_setup, eval = FALSE---------------------------------------------------------------
+## ----create_setup, eval = FALSE-----------------------------------------------------------------------------
 ## ## Inicien un archivo para sus notas
 ## usethis::use_r("01-notas.R")
 
 
-## ----create_01-visualizar-mtcars, eval = FALSE------------------------------------------------
+## ----create_01-visualizar-mtcars, eval = FALSE--------------------------------------------------------------
 ## ## Creemos el archivo R/01-visualizar-mtcars.R
 ## usethis::use_r("01-visualizar-mtcars.R")
 
 
-## ----vis_mtcars, eval = FALSE-----------------------------------------------------------------
+## ----vis_mtcars, eval = FALSE-------------------------------------------------------------------------------
 ## ## Cargar paquetes que usaremos en este código
 ## library("sessioninfo")
 ## library("here")
@@ -69,7 +69,7 @@
 ## sessioninfo::session_info()
 
 
-## ----use_git_init, eval = FALSE---------------------------------------------------------------
+## ----use_git_init, eval = FALSE-----------------------------------------------------------------------------
 ## ## Para poder conectar tu compu con GitHub
 ## usethis::create_github_token() ## Abrirá una página web, escoje un nombre único
 ## ## y luego da click en el botón verde al final. Después copia el token
@@ -80,7 +80,7 @@
 ## ## https://github.com/r-lib/usethis/issues/1347
 
 
-## ----use_git_cont, eval = FALSE---------------------------------------------------------------
+## ----use_git_cont, eval = FALSE-----------------------------------------------------------------------------
 ## ## Configura tu usuario de GitHub
 ## usethis::edit_git_config()
 ## # [user]
@@ -105,7 +105,7 @@
 ## git clone git@github.com:ComunidadBioInfo/cdsb2021_scRNAseq.git
 
 
-## ----clone_repo, eval = FALSE-----------------------------------------------------------------
+## ----clone_repo, eval = FALSE-------------------------------------------------------------------------------
 ## ## Opción más nueva:
 ## library("gert")
 ## repo <- git_clone(
@@ -121,7 +121,7 @@
 ## )
 
 
-## ---------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------
 ## Información de la sesión de R
 Sys.time()
 proc.time()
