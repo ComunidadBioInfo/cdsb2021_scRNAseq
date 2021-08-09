@@ -110,7 +110,7 @@ De forma predeterminada, se emplea un método de normalización de escala global
 #pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
 ```
 
-## Detección de Genes (caractersticas) Altamente Variables
+## Detección de genes (caractersticas) altamente variables
 
 A continuación, calculamos un subconjunto de características que exhiben una alta variación de celda a celda en el conjunto de datos (es decir, están altamente expresadas en algunas células y poco expresadas en otras). El equipo de Seurat y otros equipos han descubierto que centrarse en estos genes en el análisis posterior ayuda a resaltar la señal biológica en conjuntos de datos unicelulares.
 
@@ -129,6 +129,52 @@ Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versio
 #plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
 #print(plot1 + plot2)
 #dev.off()
+```
+## Scalar los datos
+
+A continuación, aplicamos una transformación lineal ("escalado") que es un paso de preprocesamiento estándar antes de las técnicas de reducción dimensional como PCA. La función *ScaleData()*:
+- Cambia la expresión de cada gen, de modo que la expresión media en las células sea 0
+- Escala la expresión de cada gen, de modo que la varianza entre las células sea 1
+     - Este paso otorga el mismo peso en los análisis posteriores, de modo que los genes altamente expresados no dominen
+Los resultados de esto se almacenan en pbmc [["RNA"]] @ scale.data
+
+```{r}
+#all.genes <- nombres de filas (pbmc)
+#pbmc <- ScaleData (pbmc, features = all.genes) 
+```
+all.genes <- nombres de filas (pbmc)
+pbmc <- ScaleData (pbmc, features = all.genes) 
+
+## Reducción dimensional lineal
+
+A continuación, realizamos PCA sobre los datos escalados. De forma predeterminada, solo las características variables determinadas previamente se utilizan como entrada, pero se pueden definir mediante el argumento de características si desea elegir un subconjunto diferente. 
+
+```{r}
+#pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+```
+
+Seurat proporciona varias formas útiles de visualizar tanto las celdas como las características que definen el PCA, incluidas *VizDimReduction()*, *DimPlot()* y *DimHeatmap()* 
+
+Puedes examinar y visualice los resultados de PCA de diferentes formas 
+
+```{r}
+#print(pbmc[["pca"]], dims = 1:5, nfeatures = 5)
+
+#pdf(paste0(proydir,"plots/LinearDimensionalReduction.pdf"))
+#p1 <- VizDimLoadings(pbmc, dims = 1:2, reduction = "pca")
+#p2 <- DimPlot(pbmc, reduction = "pca")
+#print(p1)
+#print(p2)
+```
+
+En particular, *DimHeatmap()* permite una fácil exploración de las fuentes primarias de heterogeneidad en un conjunto de datos y puede ser útil cuando se intenta decidir qué PC incluir para análisis posteriores posteriores. Tanto las celdas como las características se ordenan de acuerdo con sus puntajes de PCA. Establecer celdas en un número traza las celdas "extremas" en ambos extremos del espectro, lo que acelera drásticamente el trazado de grandes conjuntos de datos. Aunque claramente es un análisis supervisado, consideramos que esta es una herramienta valiosa para explorar conjuntos de características correlacionadas. 
+
+```{r}
+p3 <- DimHeatmap(pbmc, dims = 1, cells = 500, balanced = TRUE)
+p4 <- DimHeatmap(pbmc, dims = 1:15, cells = 500, balanced = TRUE)
+print(p3)
+print(p4)
+dev.off()
 ```
 
 ## Detalles de la sesión de R
