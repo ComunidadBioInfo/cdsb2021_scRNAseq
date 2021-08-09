@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Anotación de clústers de células</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Yalbi I. Balderas-Martínez" />
+    <meta name="date" content="2021-08-09" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <strong>Anotación de clústers de células</strong>
+## <strong>Bioconductor</strong> para datos transcriptómicos de célula única (<strong>scRNA-seq</strong>) – <strong>CDSB2021</strong>
+### Yalbi I. Balderas-Martínez
+### 2021-08-09
+
+---
+
+
+
+
+
+class: inverse
+
+.center[
+
+&lt;a href="https://osca.bioconductor.org/"&gt;&lt;img src="https://raw.githubusercontent.com/Bioconductor/OrchestratingSingleCellAnalysis-release/master/images/cover.png" style="width: 30%"/&gt;&lt;/a&gt;
+
+&lt;a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"&gt;&lt;img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /&gt;&lt;/a&gt;&lt;br /&gt;This work is licensed under a &lt;a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"&gt;Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License&lt;/a&gt;.
+
+
+]
+
+.footnote[Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2021')` o revísalos en línea via [**comunidadbioinfo.github.io/cdsb2021**](http://comunidadbioinfo.github.io/cdsb2021).]
+
+&lt;style type="text/css"&gt;
+/* From https://github.com/yihui/xaringan/issues/147  */
+.scroll-output {
+  height: 80%;
+  overflow-y: scroll;
+}
+/* https://stackoverflow.com/questions/50919104/horizontally-scrollable-output-on-xaringan-slides */
+pre {
+  max-width: 100%;
+  overflow-x: scroll;
+}
+/* From https://github.com/yihui/xaringan/wiki/Font-Size */
+.tiny{
+  font-size: 40%
+}
+/* From https://github.com/yihui/xaringan/wiki/Title-slide */
+.title-slide {
+  background-image: url(https://raw.githubusercontent.com/Bioconductor/OrchestratingSingleCellAnalysis/master/images/Workflow.png);
+  background-size: 33%;
+  background-position: 0% 100%
+}
+&lt;/style&gt;
+
+---
+
+# Diapositivas de Peter Hickey
+
+Ver las diapositivas originales [aquí](https://docs.google.com/presentation/d/1CW-7FjL34kIKVEoZ2L_RVdXoEKQVzRbEuFUDVGJqnXI/edit)
+
+Plantilla desarrollada por: [Leonardo Collado-Torres](http://lcolladotor.github.io/)
+
+---
+
+class: inverse center middle
+
+# Motivación
+
+---
+
+# Motivación
+
+## Ahora estamos a punto de obtener la interpretación biológica de los resultados 
+### Esto es la tarea más retadora en los análisis de datos scRNA-seq
+
+---
+
+# Motivación
+
+* 👉 La obtención de clústeres es más o menos directa
+* 🤔 ¿Cuál es el estado biológico que está representado por cada uno de los clústeres?
+
+* 👉 Necesitamos hacer un puente entre el _gap_ del dataset actual y el conocimiento biológico a priori (no siempre está disponible en una forma consistente y cualitativa)
+
+* 🤔 ¿Qué es un tipo celular?
+* 🔬 "Lo sabré cuando lo vea"
+* 💻 "No"
+
+---
+
+# Motivación
+
+Aplicaremos varios métodos computacionales que explotan la información _a priori_ para asignar el significado a un dataset no caracterizado de scRNA-seq.
+
+Algunas fuentes de información _a priori_
+- Conjuntos de genes curados (e.g. Gene Ontology)
+- Perfiles de expresión de bases de datos publicadas de referencia
+- Los datos raros que tú hayas escondido en tu cerebro
+- Google
+
+---
+
+class: inverse center middle
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+
+```r
+library(BiocFileCache)
+bfc &lt;- BiocFileCache()
+raw.path &lt;- bfcrpath(bfc, file.path(
+    "http://cf.10xgenomics.com/samples",
+    "cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz"
+))
+untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
+```
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+
+```r
+library(DropletUtils)
+library(Matrix)
+fname &lt;- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
+sce.pbmc &lt;- read10xCounts(fname, col.names = TRUE)
+```
+
+Dataset "Células mononucleares humanas de sangre periférica" de 10X Genomics
+
+Descripción [aquí](https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-genomics.html)
+
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+
+```r
+# gene-annotation
+library(scater)
+rownames(sce.pbmc) &lt;- uniquifyFeatureNames(
+    rowData(sce.pbmc)$ID, rowData(sce.pbmc)$Symbol
+)
+library(EnsDb.Hsapiens.v86)
+location &lt;- mapIds(EnsDb.Hsapiens.v86,
+    keys = rowData(sce.pbmc)$ID,
+    column = "SEQNAME", keytype = "GENEID"
+)
+# cell-detection
+set.seed(100)
+e.out &lt;- emptyDrops(counts(sce.pbmc))
+sce.pbmc &lt;- sce.pbmc[, which(e.out$FDR &lt;= 0.001)]
+```
+
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+
+```r
+# quality-control
+stats &lt;- perCellQCMetrics(sce.pbmc, 
+  subsets=list(Mito=which(location=="MT")))
+high.mito &lt;- isOutlier(stats$subsets_Mito_percent, 
+                       type="higher")
+sce.pbmc &lt;- sce.pbmc[,!high.mito]
+
+# normalization
+library(scran)
+set.seed(1000)
+clusters &lt;- quickCluster(sce.pbmc)
+sce.pbmc &lt;- computeSumFactors(sce.pbmc, cluster=clusters)
+sce.pbmc &lt;- logNormCounts(sce.pbmc)
+```
+
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+
+```r
+# variance modelling
+set.seed(1001)
+dec.pbmc &lt;- modelGeneVarByPoisson(sce.pbmc)
+top.pbmc &lt;- getTopHVGs(dec.pbmc, prop = 0.1)
+```
+
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+
+```r
+# dimensionality-reduction
+set.seed(10000)
+sce.pbmc &lt;- denoisePCA(sce.pbmc, subset.row=top.pbmc, 
+  technical=dec.pbmc)
+
+set.seed(100000)
+sce.pbmc &lt;- runTSNE(sce.pbmc, dimred="PCA")
+
+set.seed(1000000)
+sce.pbmc &lt;- runUMAP(sce.pbmc, dimred="PCA")
+```
+
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+
+```r
+# clustering
+g &lt;- buildSNNGraph(sce.pbmc, k=10, use.dimred="PCA")
+clust &lt;- igraph::cluster_walktrap(g)$membership
+sce.pbmc$cluster &lt;- factor(clust)
+```
+
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+class: inverse center middle
+
+# Asignando las etiquetas celulares a partir de los datos de referencia
+
+---
+
+# Overview
+
+* 👉 Un enfoque directo es comparar los perfiles de expresión single-cell con datasets previamente anotados
+* 👉 Las etiquetas pueden entonces ser asignadas a cada célula en nuestro dataset no caracterizado de prueba basado en la muestra de referencia más similar, por dar alguna definición de "similar"
+
+---
+
+# Overview
+
+* 👉 Cualquier dataset de expresión génica etiquetado (microarreglos, RNA-seq bulk, scRNA-seq) puede ser usado como una referencia
+* ⚠️ Sin embargo, su confiabilidad depende enormemente en la calidad de los datos originales y la experiencia de los autores originales quienes asignaron las etiquetas en primer lugar
+
+---
+
+# Overview
+
+* 👉 Asignar las etiquetas a un dataset de "prueba" a partir de un dataset de "entrenamiento" (referencia), es un problema estándar en estadística / _machine learning_
+* 👉 Usaremos el método [SingleR (Aran et al. 2019)](https://bioconductor.org/packages/release/bioc/html/SingleR.html)
+
+---
+
+# SingleR
+
+* 🤓 Asigna las etiquetas a las células basado en las muestras de referencia con las correlaciones de rangos más altas de Spearman
+* 🤓 Para reducir el ruido, identifica genes marcadores entre pares de etiquetas (en la referencia) y calcula la correlación usando solamente esos marcadores 
+* 🤓 Hace algún tipo de tuneado fino, repitiendo las correlaciones solamente con los genes marcadores de las etiquetas con el mejor score, ayudando a resolver cualquier ambigüedad entre esas etiquetas al eliminar el ruido a partir de marcadores irrelevantes para otras etiquetas
+
+---
+
+# SingleR incluye varias referencias
+
+[Ver referencias](https://bioconductor.org/packages/3.11/bioc/vignettes/SingleR/inst/doc/SingleR.html#5_available_references)
+
+```r
+# Human
+# SingleR::BlueprintEncodeData()
+# SingleR::DatabaseImmuneCellExpressionData()
+# SingleR::HumanPrimaryCellAtlasData()
+# SingleR::MonacoImmuneData()
+# SingleR::NovershternHematopoieticData()
+
+# Mice
+# SingleR::ImmGenData()
+#SingleR::MouseRNASeqData()
+```
+
+---
+
+# Usando las referencias
+
+
+```r
+# if needed install celldex
+# create directory? y
+library(SingleR)
+ref &lt;- BlueprintEncodeData()
+```
+
+❓ ¿Qué tipos celulares están disponibles en este dataset de referencia? 
+
+---
+
+# Usando las referencias integradas
+
+
+```r
+pred &lt;- SingleR(test=sce.pbmc, ref=ref,
+  labels=ref$label.main)
+```
+
+* ❓ ¿Qué etiquetas han sido asignadas a los datos single-cell?
+* ❓ ¿Cómo usaríamos las etiquetas "finas" con SingleR?
+
+---
+
+# Usando las referencias integradas
+
+
+```r
+plotScoreHeatmap(pred)
+```
+
+* 👉 Inspeccionamos los resultados usando un heatmap de los scores por célula y por etiqueta
+* 👉 Idealmente, cada célula debería exhibir un score alto en una etiqueta relativa a todas las otras
+* 👉 Los scores se muestran antes de cualquier tuneado fino y son normalizadas a [0, 1] dentro de cada célula
+
+---
+
+![](11-anotacion_clusters_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+---
+
+# Podado de etiquetas (Label pruning)
+
+
+```r
+total_pruned &lt;- sum(is.na(pred$pruned.labels))
+plotScoreHeatmap(pred, show.pruned=TRUE)
+```
+
+* 👉 SingleR intentará podar aquellas asignaciones de baja calidad marcándolas como NA
+* 🤓 El podado se hace calculando la diferencia del score de la etiqueta asignada a partir del score de la mediana dentro de cada célula y entonces podando las células con un valor pequeño de esta diferencia
+
+---
+
+![](11-anotacion_clusters_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+
+---
+
+# Podado de etiquetas (Label pruning)
+
+
+```r
+plotScoreDistribution(pred)
+```
+
+👉 Distribución de las diferencias del score de la etiqueta asignada a partir del score de la mediana dentro de cada célula
+
+---
+
+![](11-anotacion_clusters_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+---
+
+# Identificando los genes con anotación dirigida
+
+* 🤔 ¿Por qué las células en este clúster se etiquetan como el tipo celular X?
+* 👉 Examina la expresión de los genes marcadores para cada etiqueta en el dataset de prueba
+* 👉 Si una célula en el dataset de prueba está asignado con confianza a una etiqueta en particular, uno esperaría que tenga una fuerte expresión de los marcadores de esa etiqueta (al menos sobreexpresión con respecto a las células asignadas a otras etiquetas)
+
+---
+
+# Identificando los genes con anotación dirigida
+
+
+```r
+# install gmp, ClusterR, mbkmeans dependencies if needed 
+library(clusterExperiment)
+sce.pbmc$labels &lt;- pred$labels
+all.markers &lt;- metadata(pred)$de.genes
+lab &lt;- "B-cells"
+# Get top-10 marker genes for B-cells compared to each other cell
+# type
+top.markers &lt;- Reduce(union, sapply(all.markers[[lab]], head, 10))
+
+#plotHeatmap(sce.pbmc, order_columns_by="labels",
+#  features=top.markers, center=TRUE, zlim=c(-3, 3), main=lab)
+```
+
+❓ Toma otro tipo celular e identifica los genes que dirigen la anotación
+
+---
+
+# Comparando las etiquetas con los clústeres
+
+
+```r
+tab &lt;- table(Assigned=pred$pruned.labels, Cluster=sce.pbmc$cluster)
+
+library(pheatmap)
+# Proportion of cells in each cluster assigned to each label
+pheatmap(prop.table(tab, margin=2), 
+  color=colorRampPalette(c("white", "blue"))(101))
+```
+
+```r
+# (log-)number of cells in each cluster assigned to each label
+# Adding a pseudo-count of 10 to avoid strong color jumps with just
+# 1 cell.
+pheatmap(log2(tab+10), 
+  color=colorRampPalette(c("white", "blue"))(101))
+```
+
+---
+
+![](11-anotacion_clusters_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+
+---
+
+![](11-anotacion_clusters_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+
+---
+
+# Voilà
+
+
+```r
+plotTSNE(sce.pbmc, colour_by="labels", text_by="labels")
+```
+
+![](11-anotacion_clusters_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+
+---
+
+# Resumen de la anotación basada en una referencia (e.g., SingleR)
+
+* ➕ Se centra en aspectos de los datos que se sabe son interesantes, simplifica el proceso de la interpretación biológica 
+* ➖ Está restringido por la diversidad y la resolución de las etiquetas disponibles en el dataset de referencia
+* 👉 Se pueden suplir referencias personalizadas a SingleR
+
+---
+
+class: inverse center middle
+
+# Asignando las etiquetas de tipos celulares a partir de marcadores
+
+---
+
+# Asignando las etiquetas de tipos celulares a partir de marcadores
+
+* 🤔 ¿Cómo podemos hacer uso de nuestros genes marcadores agrupados?
+* 🥉 Revisarlos en hojas de cálculo 
+* 🥈 Observar heatmaps
+* 🥇 Realizar un gene set enrichment analysis
+
+---
+
+# Gene set enrichment analysis
+
+* 👉 Identifica las rutas y procesos que están (relativamente) activos en cada clúster basado en la sobreexpresión de los genes asociados en comparación con otros clústeres
+* ➕ Un método confiable para determinar si las rutas están sobre- o sub- expresadas entre clúesteres 
+* ➕ Existen un montón de herramientas para gene set enrichment analysis
+* ➖ Todas las conclusiones son relativas a otros clústeres, haciéndolo más difícil para determinar la identidad celular si alguno no está presente en el mismo estudio [más info](https://osca.bioconductor.org/cell-type-annotation.html#assigning-cluster-labels-from-markers)
+
+---
+
+class: inverse center middle
+
+# Calculando las actividades de los conjuntos de genes
+
+---
+
+# Calculando las actividades de los conjuntos de genes
+
+* 👉 Calcular el promedio de la expresión en log en todos los genes, en un conjunto de genes para cada célula y examinar los clústeres con valores altos (_gene set activities_)
+* 👉 Se necesita proveer de conjuntos de genes 
+* ➖ No todos los genes en el conjunto pueden exhibir el mismo patrón de diferencia y los genes no-DE añadirán ruido, "diluyendo" la fuerza de cualquiera de las diferencias comparadas a un análisis que se centra directamente en genes DE 
+* 👉 Es más una visualización útil que la base para cualquier análisis estadístico real [más info](https://osca.bioconductor.org/cell-type-annotation.html#computing-gene-set-activities)
+
+---
+
+class: inverse center middle
+
+# Resumen y recomendaciones
+
+---
+
+# Resumen y recomendaciones
+
+* 👉 La anotación de tipos celulares "automática", como SingleR, es mejor cuando funciona (i.e. cuando hay un dataset de referencia apropiado)
+* 👉 Usualmente necesitaremos usar un método manual, como aquellos basados en agrupar los genes marcadores  (e.g., gene set enrichment analysis)
+* 👉 La anotación del tipo celular ofrecerá una reconsideración inmediata de los parámetros del agrupamiento y/o algunos retoques manuales a los clústeres 
+
+---
+
+La presentación fue hecha con el paquete de R [**xaringan**](https://github.com/yihui/xaringan) y configurada con [**xaringanthemer**](https://github.com/gadenbuie/xaringanthemer).
+
+Este curso está basado en el libro [**Orchestrating Single Cell Analysis with Bioconductor**](https://osca.bioconductor.org/) de [Aaron Lun](https://www.linkedin.com/in/aaron-lun-869b5894/), [Robert Amezquita](https://robertamezquita.github.io/), [Stephanie Hicks](https://www.stephaniehicks.com/) y [Raphael Gottardo](http://rglab.org), además del [**curso de scRNA-seq para WEHI**](https://drive.google.com/drive/folders/1cn5d-Ey7-kkMiex8-74qxvxtCQT6o72h) creado por [Peter Hickey](https://www.peterhickey.org/).
+
+Puedes encontrar los archivos para este taller en  [comunidadbioinfo/cdsb2021](https://github.com/comunidadbioinfo/cdsb2021). 
+
+Instructora: [**Yalbi I. Balderas-Martínez**](http://Yalbibalderas.github.io/).
+
+.footnote[Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2021')` o revísalos en línea vía [**comunidadbioinfo.github.io/cdsb2021**](http://comunidadbioinfo.github.io/cdsb2021).]
+
+---
+
+# Detalles de la sesión de R
+
+
+.scroll-output[
+.tiny[
+
+
+```r
+options(width = 120)
+sessioninfo::session_info()
+```
+
+```
+## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 4.0.5 (2021-03-31)
+##  os       Ubuntu 20.10                
+##  system   x86_64, linux-gnu           
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Etc/UTC                     
+##  date     2021-08-09                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+##  package                * version  date       lib source        
+##  ade4                     1.7-17   2021-06-17 [2] CRAN (R 4.0.5)
+##  annotate                 1.68.0   2020-10-27 [1] Bioconductor  
+##  AnnotationDbi          * 1.52.0   2020-10-27 [1] Bioconductor  
+##  AnnotationFilter       * 1.14.0   2020-10-27 [2] Bioconductor  
+##  AnnotationHub            2.22.1   2021-04-16 [2] Bioconductor  
+##  ape                      5.5      2021-04-25 [2] CRAN (R 4.0.5)
+##  askpass                  1.1      2019-01-13 [3] CRAN (R 4.0.1)
+##  assertthat               0.2.1    2019-03-21 [3] CRAN (R 4.0.1)
+##  beachmat                 2.6.4    2020-12-20 [2] Bioconductor  
+##  beeswarm                 0.4.0    2021-06-01 [2] CRAN (R 4.0.5)
+##  Biobase                * 2.50.0   2020-10-27 [1] Bioconductor  
+##  BiocFileCache          * 1.14.0   2020-10-27 [1] Bioconductor  
+##  BiocGenerics           * 0.36.0   2020-10-27 [1] Bioconductor  
+##  BiocManager              1.30.12  2021-03-28 [1] CRAN (R 4.0.5)
+##  BiocNeighbors            1.8.2    2020-12-07 [2] Bioconductor  
+##  BiocParallel             1.24.1   2020-11-06 [1] Bioconductor  
+##  BiocSingular             1.6.0    2020-10-27 [2] Bioconductor  
+##  BiocVersion              3.12.0   2020-04-27 [1] Bioconductor  
+##  biomaRt                  2.46.3   2021-02-09 [1] Bioconductor  
+##  Biostrings               2.58.0   2020-10-27 [1] Bioconductor  
+##  bit                      4.0.4    2020-08-04 [1] CRAN (R 4.0.5)
+##  bit64                    4.0.5    2020-08-30 [1] CRAN (R 4.0.5)
+##  bitops                   1.0-6    2013-08-17 [1] CRAN (R 4.0.5)
+##  blob                     1.2.2    2021-07-23 [3] CRAN (R 4.0.5)
+##  bluster                  1.0.0    2020-10-27 [2] Bioconductor  
+##  bslib                    0.2.5.1  2021-05-18 [3] CRAN (R 4.0.5)
+##  cachem                   1.0.4    2021-02-13 [1] CRAN (R 4.0.5)
+##  celldex                * 1.0.0    2020-10-29 [2] Bioconductor  
+##  cli                      3.0.1    2021-07-17 [3] CRAN (R 4.0.5)
+##  cluster                  2.1.2    2021-04-17 [4] CRAN (R 4.0.5)
+##  clusterExperiment      * 2.10.1   2021-02-09 [2] Bioconductor  
+##  codetools                0.2-18   2020-11-04 [4] CRAN (R 4.0.5)
+##  colorspace               2.0-2    2021-06-24 [2] CRAN (R 4.0.5)
+##  cowplot                  1.1.1    2020-12-30 [1] CRAN (R 4.0.5)
+##  crayon                   1.4.1    2021-02-08 [3] CRAN (R 4.0.5)
+##  curl                     4.3.2    2021-06-23 [3] CRAN (R 4.0.5)
+##  DBI                      1.1.1    2021-01-15 [3] CRAN (R 4.0.5)
+##  dbplyr                 * 2.1.1    2021-04-06 [3] CRAN (R 4.0.5)
+##  DelayedArray             0.16.3   2021-03-24 [1] Bioconductor  
+##  DelayedMatrixStats       1.12.3   2021-02-03 [2] Bioconductor  
+##  digest                   0.6.27   2020-10-24 [3] CRAN (R 4.0.5)
+##  doParallel               1.0.16   2020-10-16 [1] CRAN (R 4.0.5)
+##  dplyr                    1.0.7    2021-06-18 [2] CRAN (R 4.0.5)
+##  dqrng                    0.3.0    2021-05-01 [2] CRAN (R 4.0.5)
+##  DropletUtils           * 1.10.3   2021-02-02 [2] Bioconductor  
+##  edgeR                    3.32.1   2021-01-14 [2] Bioconductor  
+##  ellipsis                 0.3.2    2021-04-29 [3] CRAN (R 4.0.5)
+##  EnsDb.Hsapiens.v86     * 2.99.0   2021-08-08 [2] Bioconductor  
+##  ensembldb              * 2.14.1   2021-04-19 [2] Bioconductor  
+##  evaluate                 0.14     2019-05-28 [3] CRAN (R 4.0.1)
+##  ExperimentHub            1.16.1   2021-04-16 [2] Bioconductor  
+##  fansi                    0.5.0    2021-05-25 [2] CRAN (R 4.0.5)
+##  farver                   2.1.0    2021-02-28 [3] CRAN (R 4.0.5)
+##  fastmap                  1.1.0    2021-01-25 [3] CRAN (R 4.0.5)
+##  FNN                      1.1.3    2019-02-15 [2] CRAN (R 4.0.5)
+##  foreach                  1.5.1    2020-10-15 [1] CRAN (R 4.0.5)
+##  genefilter               1.72.1   2021-01-21 [1] Bioconductor  
+##  generics                 0.1.0    2020-10-31 [3] CRAN (R 4.0.5)
+##  GenomeInfoDb           * 1.26.4   2021-03-10 [1] Bioconductor  
+##  GenomeInfoDbData         1.2.4    2021-04-05 [1] Bioconductor  
+##  GenomicAlignments        1.26.0   2020-10-27 [1] Bioconductor  
+##  GenomicFeatures        * 1.42.3   2021-04-01 [1] Bioconductor  
+##  GenomicRanges          * 1.42.0   2020-10-27 [1] Bioconductor  
+##  ggbeeswarm               0.6.0    2017-08-07 [2] CRAN (R 4.0.5)
+##  ggplot2                * 3.3.3    2020-12-30 [1] CRAN (R 4.0.5)
+##  glue                     1.4.2    2020-08-27 [3] CRAN (R 4.0.5)
+##  gridBase                 0.4-7    2014-02-24 [2] CRAN (R 4.0.5)
+##  gridExtra                2.3      2017-09-09 [3] CRAN (R 4.0.1)
+##  gtable                   0.3.0    2019-03-25 [3] CRAN (R 4.0.1)
+##  HDF5Array                1.18.1   2021-02-04 [2] Bioconductor  
+##  highr                    0.9      2021-04-16 [3] CRAN (R 4.0.5)
+##  hms                      1.1.0    2021-05-17 [3] CRAN (R 4.0.5)
+##  howmany                  0.3-1    2012-06-01 [2] CRAN (R 4.0.5)
+##  htmltools                0.5.1.1  2021-01-22 [3] CRAN (R 4.0.5)
+##  httpuv                   1.6.1    2021-05-07 [3] CRAN (R 4.0.5)
+##  httr                     1.4.2    2020-07-20 [3] CRAN (R 4.0.5)
+##  igraph                   1.2.6    2020-10-06 [2] CRAN (R 4.0.5)
+##  interactiveDisplayBase   1.28.0   2020-10-27 [2] Bioconductor  
+##  IRanges                * 2.24.1   2020-12-12 [1] Bioconductor  
+##  irlba                    2.3.3    2019-02-05 [1] CRAN (R 4.0.5)
+##  iterators                1.0.13   2020-10-15 [1] CRAN (R 4.0.5)
+##  jquerylib                0.1.4    2021-04-26 [3] CRAN (R 4.0.5)
+##  jsonlite                 1.7.2    2020-12-09 [3] CRAN (R 4.0.5)
+##  kernlab                  0.9-29   2019-11-12 [2] CRAN (R 4.0.5)
+##  knitr                    1.33     2021-04-24 [2] CRAN (R 4.0.5)
+##  labeling                 0.4.2    2020-10-20 [3] CRAN (R 4.0.5)
+##  later                    1.2.0    2021-04-23 [3] CRAN (R 4.0.5)
+##  lattice                  0.20-44  2021-05-02 [4] CRAN (R 4.0.5)
+##  lazyeval                 0.2.2    2019-03-15 [2] CRAN (R 4.0.5)
+##  lifecycle                1.0.0    2021-02-15 [3] CRAN (R 4.0.5)
+##  limma                    3.46.0   2020-10-27 [1] Bioconductor  
+##  locfdr                   1.1-8    2015-07-15 [2] CRAN (R 4.0.5)
+##  locfit                   1.5-9.4  2020-03-25 [1] CRAN (R 4.0.5)
+##  magrittr                 2.0.1    2020-11-17 [3] CRAN (R 4.0.5)
+##  MASS                     7.3-54   2021-05-03 [4] CRAN (R 4.0.5)
+##  Matrix                 * 1.3-4    2021-06-01 [4] CRAN (R 4.0.5)
+##  MatrixGenerics         * 1.2.1    2021-01-30 [1] Bioconductor  
+##  matrixStats            * 0.58.0   2021-01-29 [1] CRAN (R 4.0.5)
+##  memoise                  2.0.0    2021-01-26 [1] CRAN (R 4.0.5)
+##  mime                     0.11     2021-06-23 [3] CRAN (R 4.0.5)
+##  munsell                  0.5.0    2018-06-12 [3] CRAN (R 4.0.1)
+##  nlme                     3.1-152  2021-02-04 [4] CRAN (R 4.0.5)
+##  NMF                      0.23.0   2020-08-01 [2] CRAN (R 4.0.5)
+##  openssl                  1.4.4    2021-04-30 [3] CRAN (R 4.0.5)
+##  pheatmap               * 1.0.12   2019-01-04 [1] CRAN (R 4.0.5)
+##  phylobase                0.8.10   2020-03-01 [2] CRAN (R 4.0.5)
+##  pillar                   1.6.2    2021-07-29 [3] CRAN (R 4.0.5)
+##  pkgconfig                2.0.3    2019-09-22 [3] CRAN (R 4.0.1)
+##  pkgmaker                 0.32.2   2020-10-20 [2] CRAN (R 4.0.5)
+##  plyr                     1.8.6    2020-03-03 [3] CRAN (R 4.0.1)
+##  prettyunits              1.1.1    2020-01-24 [3] CRAN (R 4.0.1)
+##  progress                 1.2.2    2019-05-16 [3] CRAN (R 4.0.1)
+##  promises                 1.2.0.1  2021-02-11 [3] CRAN (R 4.0.5)
+##  ProtGenerics             1.22.0   2020-10-27 [2] Bioconductor  
+##  purrr                    0.3.4    2020-04-17 [3] CRAN (R 4.0.1)
+##  R.methodsS3              1.8.1    2020-08-26 [1] CRAN (R 4.0.5)
+##  R.oo                     1.24.0   2020-08-26 [1] CRAN (R 4.0.5)
+##  R.utils                  2.10.1   2020-08-26 [1] CRAN (R 4.0.5)
+##  R6                       2.5.0    2020-10-28 [3] CRAN (R 4.0.5)
+##  rappdirs                 0.3.3    2021-01-31 [1] CRAN (R 4.0.5)
+##  RColorBrewer             1.1-2    2014-12-07 [1] CRAN (R 4.0.5)
+##  Rcpp                     1.0.7    2021-07-07 [3] CRAN (R 4.0.5)
+##  RCurl                    1.98-1.3 2021-03-16 [1] CRAN (R 4.0.5)
+##  registry                 0.5-1    2019-03-05 [2] CRAN (R 4.0.5)
+##  reshape2                 1.4.4    2020-04-09 [3] CRAN (R 4.0.1)
+##  rhdf5                    2.34.0   2020-10-27 [2] Bioconductor  
+##  rhdf5filters             1.2.1    2021-05-03 [2] Bioconductor  
+##  Rhdf5lib                 1.12.1   2021-01-26 [2] Bioconductor  
+##  rlang                    0.4.10   2020-12-30 [1] CRAN (R 4.0.5)
+##  rmarkdown                2.10     2021-08-06 [2] CRAN (R 4.0.5)
+##  rncl                     0.8.4    2020-02-10 [2] CRAN (R 4.0.5)
+##  RNeXML                   2.4.5    2020-06-18 [2] CRAN (R 4.0.5)
+##  rngtools                 1.5      2020-01-23 [2] CRAN (R 4.0.5)
+##  Rsamtools                2.6.0    2020-10-27 [1] Bioconductor  
+##  RSpectra                 0.16-0   2019-12-01 [2] CRAN (R 4.0.5)
+##  RSQLite                  2.2.5    2021-03-27 [1] CRAN (R 4.0.5)
+##  rstudioapi               0.13     2020-11-12 [3] CRAN (R 4.0.5)
+##  rsvd                     1.0.5    2021-04-16 [2] CRAN (R 4.0.5)
+##  rtracklayer              1.50.0   2020-10-27 [1] Bioconductor  
+##  Rtsne                    0.15     2018-11-10 [2] CRAN (R 4.0.5)
+##  S4Vectors              * 0.28.1   2020-12-09 [1] Bioconductor  
+##  sass                     0.4.0    2021-05-12 [3] CRAN (R 4.0.5)
+##  scales                   1.1.1    2020-05-11 [3] CRAN (R 4.0.1)
+##  scater                 * 1.18.6   2021-02-26 [2] Bioconductor  
+##  scran                  * 1.18.7   2021-04-16 [2] Bioconductor  
+##  scuttle                  1.0.4    2020-12-17 [2] Bioconductor  
+##  sessioninfo              1.1.1    2018-11-05 [2] CRAN (R 4.0.5)
+##  shiny                    1.6.0    2021-01-25 [3] CRAN (R 4.0.5)
+##  SingleCellExperiment   * 1.12.0   2020-10-27 [2] Bioconductor  
+##  SingleR                * 1.4.1    2021-02-02 [2] Bioconductor  
+##  softImpute               1.4-1    2021-05-09 [2] CRAN (R 4.0.5)
+##  sparseMatrixStats        1.2.1    2021-02-02 [2] Bioconductor  
+##  statmod                  1.4.35   2020-10-19 [1] CRAN (R 4.0.5)
+##  stringi                  1.7.3    2021-07-16 [3] CRAN (R 4.0.5)
+##  stringr                  1.4.0    2019-02-10 [3] CRAN (R 4.0.1)
+##  SummarizedExperiment   * 1.20.0   2020-10-27 [1] Bioconductor  
+##  survival                 3.2-11   2021-04-26 [4] CRAN (R 4.0.5)
+##  tibble                   3.1.3    2021-07-23 [3] CRAN (R 4.0.5)
+##  tidyr                    1.1.3    2021-03-03 [3] CRAN (R 4.0.5)
+##  tidyselect               1.1.1    2021-04-30 [3] CRAN (R 4.0.5)
+##  utf8                     1.2.2    2021-07-24 [3] CRAN (R 4.0.5)
+##  uuid                     0.1-4    2020-02-26 [3] CRAN (R 4.0.5)
+##  uwot                     0.1.10   2020-12-15 [2] CRAN (R 4.0.5)
+##  vctrs                    0.3.8    2021-04-29 [3] CRAN (R 4.0.5)
+##  vipor                    0.4.5    2017-03-22 [2] CRAN (R 4.0.5)
+##  viridis                  0.5.1    2018-03-29 [1] CRAN (R 4.0.5)
+##  viridisLite              0.4.0    2021-04-13 [3] CRAN (R 4.0.5)
+##  whisker                  0.4      2019-08-28 [3] CRAN (R 4.0.1)
+##  withr                    2.4.2    2021-04-18 [3] CRAN (R 4.0.5)
+##  xaringan                 0.22     2021-06-23 [1] CRAN (R 4.0.5)
+##  xaringanthemer         * 0.4.0    2021-06-24 [2] CRAN (R 4.0.5)
+##  xfun                     0.25     2021-08-06 [3] CRAN (R 4.0.5)
+##  XML                      3.99-0.6 2021-03-16 [1] CRAN (R 4.0.5)
+##  xml2                     1.3.2    2020-04-23 [3] CRAN (R 4.0.1)
+##  xtable                   1.8-4    2019-04-21 [3] CRAN (R 4.0.1)
+##  XVector                  0.30.0   2020-10-27 [1] Bioconductor  
+##  yaml                     2.2.1    2020-02-01 [3] CRAN (R 4.0.1)
+##  zinbwave                 1.12.0   2020-10-27 [2] Bioconductor  
+##  zlibbioc                 1.36.0   2020-10-27 [1] Bioconductor  
+## 
+## [1] /home/yalbi/R/x86_64-pc-linux-gnu-library/4.0
+## [2] /usr/local/lib/R/site-library
+## [3] /usr/lib/R/site-library
+## [4] /usr/lib/R/library
+```
+
+]]
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
