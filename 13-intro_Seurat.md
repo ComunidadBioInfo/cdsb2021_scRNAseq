@@ -12,7 +12,7 @@ Presentación: [aquí](https://docs.google.com/presentation/d/18ZCddwDD9lY8j4gmt
 
 Seurat es desarrollado y mantenido por el laboratorio de [Satija](https://satijalab.org/seurat/authors.html) y se publica bajo la Licencia Pública GNU (GPL 3.0).
 
-En este tutorial se ve como procesar los datos de scRNAseq con un nuevo paquete. Los pasos a realizar son en esencia los mismos que ya revisamos con el tutorial de la OSCA de RStudio.  
+En este tutorial se ve como procesar los datos de **scRNAseq** con un nuevo paquete. Los pasos a realizar son en esencia los mismos que ya revisamos con el tutorial de la OSCA de RStudio.  
 No olvides nunca que el paquete mas adecuado y que deberás utilizar dependerá mayoritariamente de tus datos y el procesamiento que se adecúe a estos.  
 
 **Además... siempre es bueno diversos puntos de vista sobre las cosas, ¿no es así?**
@@ -28,12 +28,12 @@ En este tutorial partimos a partir de que ya se tienen los archivos FASTQ result
 Peripheral Blood Mononuclear Cells **(PBMC)** disponibles gratuitamente de **10X Genomics**. Son en total 2,700 céluas únicas secuenciadas con **Illumina NextSeq 500**.
 
 Puedes descargar los datos de [aquí](https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz) (7.3MB).  
-Descarga el archivo comprimido y procede a descomprimirlo. Se creara el siguiente directorio *filtered_gene_bc_matrices/hg19/*, aquí estarán los archivos que necesitaremos. A continuación lo haremos con código de R.
+Descarga el archivo comprimido y procede a descomprimirlo. Se creara el siguiente directorio *filtered_gene_bc_matrices/hg19/*, aquí estarán los archivos que necesitaremos. A continuación lo haremos con código de **R**.
 
 Este tutorial solo es la punta del *iceberg* de lo que se puede hacer con la paquetera de Seurat. Para comenzar a sumergirte en este mundo no dudes en visitar la página oficial mantenida por Satija Lab [Vignettes](https://satijalab.org/seurat/articles/get_started.html)
 
 A continuación estableceremos nuestros directorio de trabajo y leeremos los datos anteriores.  
-La función Read10X() lee en la salida de cellranger de 10X (de donde se obtuvieron los FASTQs), devolviendo una matriz de recuento única identificada molecularmente (UMI). Los valores en esta matriz representan el número de moléculas para cada característica (es decir, gen; fila) que se detectan en cada celda (columna).
+La función Read10X() lee en la salida de cellranger de 10X (de donde se obtuvieron los FASTQs), devolviendo una matriz de recuento única identificada molecularmente (UMI). Los valores en esta matriz representan el número de moléculas para cada característica (es decir, gen; fila) que se detectan en cada célula (columna).
 
 
 ```r
@@ -142,7 +142,7 @@ str(pbmc)
 
 - ¿Cómo se ven los datos en una matriz de recuento? 
 
-Examinemos algunos genes en las primeras treinta células. Los valores en la matriz representan ceros (no se detectan moléculas). Dado que la mayoría de los valores en una matriz scRNA-seq son 0, Seurat utiliza una representación de matriz dispersa (*sparse matrix*) siempre que sea posible. Esto da como resultado un ahorro significativo de memoria y velocidad.  
+Examinemos algunos genes en las primeras treinta células. Los valores en la matriz representan ceros (no se detectan moléculas). Dado que la mayoría de los valores en una matriz scRNA-seq son 0, Seurat utiliza una representación de **matriz dispersa (*sparse matrix*)** siempre que sea posible. Esto da como resultado un ahorro significativo de memoria y velocidad.  
 
 
 ```r
@@ -189,11 +189,11 @@ dense.size / sparse.size
 
 Algunas métricas de control de calidad comúnmente utilizadas por la comunidad incluyen:
 
-- El número de genes únicos detectados en cada célula.
+- El número de **genes únicos** detectados en cada célula.
     - Las células de baja calidad o las gotitas vacías suelen tener muy pocos genes.
     - Los dobletes o multipletes celulares pueden exhibir un recuento de genes aberrantemente alto
-- De manera similar, el número total de moléculas detectadas dentro de una célula (se correlaciona fuertemente con genes únicos)
-- El porcentaje de lecturas que se asignan al genoma mitocondrial
+- De manera similar, el **número total de moléculas** detectadas dentro de una célula (se correlaciona fuertemente con genes únicos).
+- El porcentaje de **lecturas que se asignan al genoma mitocondrial**.
     - Las células de baja calidad / moribundas a menudo exhiben una extensa contaminación mitocondrial
     - Calculamos métricas de control de calidad mitocondrial con la función `PercentageFeatureSet()`, que calcula el porcentaje de recuentos que se originan a partir de un conjunto de características.
 
@@ -230,7 +230,7 @@ pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent
 ```
 
 - ¿Dónde se almacenan la métricas de QC en Seurat?
-  - Están almacenadas en la seccion de **meta-data** del objeto Seurat.
+Están almacenadas en la seccion de **meta-data** del objeto Seurat.
 
 
 ```r
@@ -248,7 +248,7 @@ head(pbmc@meta.data, 5)
 
 ## Normalización
 
-De forma predeterminada, se emplea un método de normalización de escala global **"LogNormalize"** que normaliza las medidas de expresión de características para cada celda por la expresión total, multiplica esto por un factor de escala (10.000 por defecto) y transforma el resultado en logaritmos. Los valores normalizados se almacenan en pbmc `[["RNA"]]@data`.
+De forma predeterminada, se emplea un método de normalización de escala global **"LogNormalize"** que normaliza las medidas de expresión de características para cada célula por la expresión total, multiplica esto por un factor de escala (10.000 por defecto) y transforma el resultado en logaritmos. Los valores normalizados se almacenan en pbmc `[["RNA"]]@data`.
 
 
 ```r
@@ -259,7 +259,7 @@ pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor 
 
 A continuación, calculamos un subconjunto de **características que exhiben una alta variación de célula a célula en el conjunto de datos** (es decir, están altamente expresadas en algunas células y poco expresadas en otras). El equipo de Seurat y otros equipos han descubierto que centrarse en estos genes en el análisis posterior ayuda a resaltar la señal biológica en conjuntos de datos unicelulares.
 
-Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola celda, y se implementa en la función `FindVariableFeatures()`. De forma predeterminada, **devolvemos 2000 características por conjunto de datos** (aunque se puede modificar). Estos se utilizarán en análisis posteriores, como PCA. 
+Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola célula, y se implementa en la función `FindVariableFeatures()`. De forma predeterminada, **devolvemos 2000 características por conjunto de datos** (aunque se puede modificar). Estos se utilizarán en análisis posteriores, como PCA. 
 
 
 ```r
@@ -311,8 +311,8 @@ plot1 + plot2
 
 A continuación, aplicamos una transformación lineal ("escalado") que es un paso de preprocesamiento estándar antes de las técnicas de reducción dimensional como PCA. La función `ScaleData()`:
 
-- Cambia la expresión de cada gen, de modo que la expresión media en las células sea 0
-- Escala la expresión de cada gen, de modo que la varianza entre las células sea 1
+- Cambia la expresión de cada gen, de modo que **la expresión media en las células sea 0**
+- Escala la expresión de cada gen, de modo que **la varianza entre las células sea 1**
      - Este paso otorga el mismo peso en los análisis posteriores, de modo que los genes altamente expresados no dominen
      
 Los resultados de esto se almacenan en pbmc `[["RNA"]]@scale.data`.
@@ -329,7 +329,7 @@ pbmc <- ScaleData(pbmc, features = all.genes)
 
 ## Reducción dimensional lineal
 
-A continuación, realizamos PCA sobre los datos escalados. De forma predeterminada, solo las características variables determinadas previamente se utilizan como entrada, pero se pueden definir mediante el argumento de características si desea elegir un subconjunto diferente. 
+A continuación, realizamos **PCA** sobre los datos escalados. De forma predeterminada, solo las características variables determinadas previamente se utilizan como entrada, pero se pueden definir mediante el argumento de características si desea elegir un subconjunto diferente. 
 
 
 ```r
@@ -354,27 +354,27 @@ pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
 ## PC_ 3 
 ## Positive:  HLA-DQA1, CD79A, CD79B, HLA-DQB1, HLA-DPB1, HLA-DPA1, CD74, MS4A1, HLA-DRB1, HLA-DRA 
 ## 	   HLA-DRB5, HLA-DQA2, TCL1A, LINC00926, HLA-DMB, HLA-DMA, CD37, HVCN1, FCRLA, IRF8 
-## 	   PLAC8, BLNK, MALAT1, SMIM14, PLD4, LAT2, IGLL5, P2RX5, SWAP70, FCGR2B 
+## 	   PLAC8, BLNK, MALAT1, SMIM14, PLD4, P2RX5, IGLL5, LAT2, SWAP70, FCGR2B 
 ## Negative:  PPBP, PF4, SDPR, SPARC, GNG11, NRGN, GP9, RGS18, TUBB1, CLU 
 ## 	   HIST1H2AC, AP001189.4, ITGA2B, CD9, TMEM40, PTCRA, CA2, ACRBP, MMD, TREML1 
 ## 	   NGFRAP1, F13A1, SEPT5, RUFY1, TSC22D1, MPP1, CMTM5, RP11-367G6.3, MYL9, GP1BA 
 ## PC_ 4 
-## Positive:  HLA-DQA1, CD79B, CD79A, MS4A1, HLA-DQB1, CD74, HLA-DPB1, HIST1H2AC, PF4, TCL1A 
-## 	   SDPR, HLA-DPA1, HLA-DRB1, HLA-DQA2, HLA-DRA, PPBP, LINC00926, GNG11, HLA-DRB5, SPARC 
-## 	   GP9, AP001189.4, CA2, PTCRA, CD9, NRGN, RGS18, GZMB, CLU, TUBB1 
+## Positive:  HLA-DQA1, CD79B, CD79A, MS4A1, HLA-DQB1, CD74, HIST1H2AC, HLA-DPB1, PF4, SDPR 
+## 	   TCL1A, HLA-DRB1, HLA-DPA1, HLA-DQA2, PPBP, HLA-DRA, LINC00926, GNG11, SPARC, HLA-DRB5 
+## 	   GP9, AP001189.4, CA2, PTCRA, CD9, NRGN, RGS18, CLU, TUBB1, GZMB 
 ## Negative:  VIM, IL7R, S100A6, IL32, S100A8, S100A4, GIMAP7, S100A10, S100A9, MAL 
 ## 	   AQP3, CD2, CD14, FYB, LGALS2, GIMAP4, ANXA1, CD27, FCN1, RBP7 
 ## 	   LYZ, S100A11, GIMAP5, MS4A6A, S100A12, FOLR3, TRABD2A, AIF1, IL8, IFI6 
 ## PC_ 5 
 ## Positive:  GZMB, NKG7, S100A8, FGFBP2, GNLY, CCL4, CST7, PRF1, GZMA, SPON2 
-## 	   GZMH, S100A9, LGALS2, CCL3, CTSW, XCL2, CD14, CLIC3, S100A12, CCL5 
-## 	   RBP7, MS4A6A, GSTP1, FOLR3, IGFBP7, TYROBP, TTC38, AKR1C3, XCL1, HOPX 
+## 	   GZMH, S100A9, LGALS2, CCL3, CTSW, XCL2, CD14, CLIC3, S100A12, RBP7 
+## 	   CCL5, MS4A6A, GSTP1, FOLR3, IGFBP7, TYROBP, TTC38, AKR1C3, XCL1, HOPX 
 ## Negative:  LTB, IL7R, CKB, VIM, MS4A7, AQP3, CYTIP, RP11-290F20.3, SIGLEC10, HMOX1 
-## 	   PTGES3, LILRB2, MAL, CD27, HN1, CD2, GDI2, ANXA5, CORO1B, TUBA1B 
+## 	   LILRB2, PTGES3, MAL, CD27, HN1, CD2, GDI2, CORO1B, ANXA5, TUBA1B 
 ## 	   FAM110A, ATP1A1, TRADD, PPA1, CCDC109B, ABRACL, CTD-2006K23.1, WARS, VMO1, FYB
 ```
 
-Seurat proporciona varias formas útiles de visualizar tanto las celdas como las características que definen el PCA, incluidas `VizDimReduction()`, `DimPlot()` y `DimHeatmap()`.
+Seurat proporciona varias formas útiles de visualizar tanto las células como las características que definen el PCA, incluidas `VizDimReduction()`, `DimPlot()` y `DimHeatmap()`.
 
 Puedes examinar y visualizar los resultados de PCA de diferentes formas. 
 
@@ -413,7 +413,7 @@ DimPlot(pbmc, reduction = "pca")
 
 <img src="13-intro_Seurat_files/figure-html/unnamed-chunk-13-2.png" width="672" />
 
-En particular, `DimHeatmap()` permite una fácil exploración de las fuentes primarias de heterogeneidad en un conjunto de datos y puede ser útil cuando se intenta decidir qué PC incluir para análisis posteriores posteriores. Tanto las celdas como las características se ordenan de acuerdo con sus puntajes de PCA. Establecer celdas en un número traza las celdas "extremas" en ambos extremos del espectro, lo que acelera drásticamente el trazado de grandes conjuntos de datos. Aunque claramente es un análisis supervisado, consideramos que esta es una herramienta valiosa para explorar conjuntos de características correlacionadas. 
+En particular, `DimHeatmap()` permite una fácil exploración de las fuentes primarias de heterogeneidad en un conjunto de datos y puede ser útil cuando se intenta decidir qué PC incluir para análisis posteriores posteriores. Tanto las células como las características se ordenan de acuerdo con sus puntajes de PCA. Establecer `cells` en un número traza las células "extremas" en ambos extremos del espectro, lo que acelera drásticamente el trazado de grandes conjuntos de datos. Aunque claramente es un análisis supervisado, consideramos que esta es una herramienta valiosa para explorar conjuntos de características correlacionadas. 
 
 
 ```r
@@ -443,7 +443,7 @@ pbmc <- JackStraw(pbmc, num.replicate = 100)
 pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
 ```
 
-La función `JackStrawPlot()` proporciona una herramienta de visualización para comparar la distribución de los valores p para cada PC con una distribución uniforme (línea discontinua). Las PC "significativas" mostrarán un gran enriquecimiento de funciones con valores p bajos (curva sólida por encima de la línea discontinua). En este caso, parece que hay una fuerte caída en la importancia después de los primeros 10-12 PCs. 
+La función `JackStrawPlot()` proporciona una herramienta de visualización para comparar la distribución de los *p-values* para cada PC con una distribución uniforme (línea discontinua). Las PC "significativas" mostrarán un gran enriquecimiento de funciones con valores p bajos (curva sólida por encima de la línea discontinua). En este caso, parece que hay una fuerte caída en la importancia después de los primeros 10-12 PCs. 
 
 
 ```r
@@ -451,7 +451,7 @@ JackStrawPlot(pbmc, dims = 1:15)
 ```
 
 ```
-## Warning: Removed 23504 rows containing missing values (geom_point).
+## Warning: Removed 23510 rows containing missing values (geom_point).
 ```
 
 <img src="13-intro_Seurat_files/figure-html/unnamed-chunk-16-1.png" width="672" />
@@ -488,17 +488,17 @@ pbmc <- FindClusters(pbmc, resolution = 0.5)
 ## Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
 ## 
 ## Number of nodes: 2638
-## Number of edges: 95965
+## Number of edges: 95927
 ## 
 ## Running Louvain algorithm...
-## Maximum modularity in 10 random starts: 0.8723
+## Maximum modularity in 10 random starts: 0.8728
 ## Number of communities: 9
 ## Elapsed time: 0 seconds
 ```
 
 ## Reducción dimensional no lineal (UMAP/tSNE)
 
-Seurat ofrece varias técnicas de reducción dimensional no lineal, como **tSNE** y **UMAP**, para visualizar y explorar estos conjuntos de datos. El objetivo de estos algoritmos es aprender la variedad subyacente de los datos para colocar celdas similares juntas en un espacio de baja dimensión. Las celdas dentro de los grupos basados en gráficos determinados anteriormente deben ubicarse conjuntamente en estos gráficos de reducción de dimensión. Como entrada para UMAP y tSNE, sugerimos usar las mismas PC como entrada para el análisis de agrupamiento. 
+Seurat ofrece varias técnicas de reducción dimensional no lineal, como **tSNE** y **UMAP**, para visualizar y explorar estos conjuntos de datos. El objetivo de estos algoritmos es aprender la variedad subyacente de los datos para colocar células similares juntas en un espacio de baja dimensión. Las células dentro de los grupos basados en gráficos determinados anteriormente deben ubicarse conjuntamente en estos gráficos de reducción de dimensión. Como entrada para UMAP y tSNE, sugerimos usar las mismas PC como entrada para el análisis de agrupamiento. 
 
 
 ```r
@@ -513,19 +513,19 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 ```
 
 ```
-## 22:51:30 UMAP embedding parameters a = 0.9922 b = 1.112
+## 23:03:34 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ```
-## 22:51:30 Read 2638 rows and found 10 numeric columns
+## 23:03:34 Read 2638 rows and found 10 numeric columns
 ```
 
 ```
-## 22:51:30 Using Annoy for neighbor search, n_neighbors = 30
+## 23:03:34 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ```
-## 22:51:30 Building Annoy index with metric = cosine, n_trees = 50
+## 23:03:34 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ```
@@ -538,13 +538,13 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 
 ```
 ## **************************************************|
-## 22:51:30 Writing NN index file to temp file /tmp/RtmpvuzMd9/file7553fe7d8f8
-## 22:51:30 Searching Annoy index using 1 thread, search_k = 3000
-## 22:51:31 Annoy recall = 100%
-## 22:51:31 Commencing smooth kNN distance calibration using 1 thread
-## 22:51:32 Initializing from normalized Laplacian + noise
-## 22:51:32 Commencing optimization for 500 epochs, with 105124 positive edges
-## 22:51:35 Optimization finished
+## 23:03:34 Writing NN index file to temp file /tmp/Rtmpqpp5qc/file7561c4f68ef
+## 23:03:34 Searching Annoy index using 1 thread, search_k = 3000
+## 23:03:35 Annoy recall = 100%
+## 23:03:35 Commencing smooth kNN distance calibration using 1 thread
+## 23:03:36 Initializing from normalized Laplacian + noise
+## 23:03:36 Commencing optimization for 500 epochs, with 105140 positive edges
+## 23:03:39 Optimization finished
 ```
 
 ```r
@@ -566,9 +566,11 @@ if (interactive()) {
 
 ## Caracteristicas diferencialmente expresadas (biomarcadores de los clusters)
 
-Seurat puede ayudarlo a encontrar marcadores que definan clústeres mediante expresión diferencial. De forma predeterminada, identifica **marcadores positivos y negativos de un solo grupo (especificado en ident.1), en comparación con todas las demás células**. `FindAllMarkers()` automatiza este proceso para todos los clústeres, pero **también se pueden comparar grupos de clústeres entre sí o contra todas las celdas**.
+Seurat puede ayudarlo a encontrar marcadores que definan clústeres mediante expresión diferencial. De forma predeterminada, identifica **marcadores positivos y negativos de un solo grupo (especificado en ident.1), en comparación con todas las demás células**. `FindAllMarkers()` automatiza este proceso para todos los clústeres, pero **también se pueden comparar grupos de clústeres entre sí o contra todas las células**.
 
-El argumento min.pct requiere que se detecte una característica en un porcentaje mínimo en cualquiera de los dos grupos de celdas, y el argumento `thresh.test` requiere que una característica se exprese diferencialmente (en promedio) en alguna cantidad entre los dos grupos. Puede establecer ambos en 0, pero con un aumento dramático en el tiempo, ya que esto probará una gran cantidad de características que probablemente no sean altamente discriminatorias. Como otra opción para acelerar estos cálculos, se puede configurar el número máximo de celdas por identificador. Esto reducirá la resolución de cada clase de identidad para que no tenga más celdas que las que se establezcan. Si bien generalmente habrá una pérdida de potencia, los aumentos de velocidad pueden ser significativos y es probable que las características expresadas de manera más diferencial aún se eleven a la cima. 
+El argumento min.pct requiere que se detecte una característica en un porcentaje mínimo en cualquiera de los dos grupos de células, y el argumento `thresh.test` requiere que una característica se exprese diferencialmente (en promedio) en alguna cantidad entre los dos grupos. Puede establecer ambos en 0, pero con un aumento dramático en el tiempo, ya que esto probará una gran cantidad de características que probablemente no sean altamente discriminatorias.  
+- ¿Demasiado lento?  
+Como otra opción para acelerar estos cálculos, se puede configurar el número máximo de células por identificador. Esto reducirá la resolución de cada clase de identidad para que no tenga más células que las que se establezcan. Si bien generalmente habrá una pérdida de potencia, los aumentos de velocidad pueden ser significativos y es probable que las características expresadas de manera más diferencial aún se eleven a la cima. 
 
 
 ```r
@@ -579,11 +581,11 @@ head(cluster2.markers, n = 5)
 
 ```
 ##             p_val avg_log2FC pct.1 pct.2    p_val_adj
-## IL32 2.593535e-91  1.2154360 0.949 0.466 3.556774e-87
-## LTB  7.994465e-87  1.2828597 0.981 0.644 1.096361e-82
-## CD3D 3.922451e-70  0.9359210 0.922 0.433 5.379250e-66
-## IL7R 1.130870e-66  1.1776027 0.748 0.327 1.550876e-62
-## LDHB 4.082189e-65  0.8837324 0.953 0.614 5.598314e-61
+## IL32 2.892340e-90  1.2013522 0.947 0.465 3.966555e-86
+## LTB  1.060121e-86  1.2695776 0.981 0.643 1.453850e-82
+## CD3D 8.794641e-71  0.9389621 0.922 0.432 1.206097e-66
+## IL7R 3.516098e-68  1.1873213 0.750 0.326 4.821977e-64
+## LDHB 1.642480e-67  0.8969774 0.954 0.614 2.252497e-63
 ```
 
 ```r
@@ -594,11 +596,11 @@ head(cluster5.markers, n = 5)
 
 ```
 ##                       p_val avg_log2FC pct.1 pct.2     p_val_adj
-## FCGR3A        2.150929e-209   4.267579 0.975 0.039 2.949784e-205
-## IFITM3        6.103366e-199   3.877105 0.975 0.048 8.370156e-195
-## CFD           8.891428e-198   3.411039 0.938 0.037 1.219370e-193
-## CD68          2.374425e-194   3.014535 0.926 0.035 3.256286e-190
-## RP11-290F20.3 9.308287e-191   2.722684 0.840 0.016 1.276538e-186
+## FCGR3A        8.246578e-205   4.261495 0.975 0.040 1.130936e-200
+## IFITM3        1.677613e-195   3.879339 0.975 0.049 2.300678e-191
+## CFD           2.401156e-193   3.405492 0.938 0.038 3.292945e-189
+## CD68          2.900384e-191   3.020484 0.926 0.035 3.977587e-187
+## RP11-290F20.3 2.513244e-186   2.720057 0.840 0.017 3.446663e-182
 ```
 
 ```r
@@ -660,24 +662,24 @@ pbmc.markers %>%
 ## # Groups:   cluster [9]
 ##        p_val avg_log2FC pct.1 pct.2 p_val_adj cluster gene    
 ##        <dbl>      <dbl> <dbl> <dbl>     <dbl> <fct>   <chr>   
-##  1 1.74e-109       1.07 0.897 0.593 2.39e-105 0       LDHB    
-##  2 1.17e- 83       1.33 0.435 0.108 1.60e- 79 0       CCR7    
+##  1 3.75e-112       1.09 0.912 0.592 5.14e-108 0       LDHB    
+##  2 9.57e- 88       1.36 0.447 0.108 1.31e- 83 0       CCR7    
 ##  3 0               5.57 0.996 0.215 0         1       S100A9  
 ##  4 0               5.48 0.975 0.121 0         1       S100A8  
-##  5 7.99e- 87       1.28 0.981 0.644 1.10e- 82 2       LTB     
-##  6 2.61e- 59       1.24 0.424 0.111 3.58e- 55 2       AQP3    
+##  5 1.06e- 86       1.27 0.981 0.643 1.45e- 82 2       LTB     
+##  6 2.97e- 58       1.23 0.42  0.111 4.07e- 54 2       AQP3    
 ##  7 0               4.31 0.936 0.041 0         3       CD79A   
 ##  8 9.48e-271       3.59 0.622 0.022 1.30e-266 3       TCL1A   
-##  9 1.17e-178       2.97 0.957 0.241 1.60e-174 4       CCL5    
-## 10 4.93e-169       3.01 0.595 0.056 6.76e-165 4       GZMK    
+##  9 5.61e-202       3.10 0.983 0.234 7.70e-198 4       CCL5    
+## 10 7.25e-165       3.00 0.577 0.055 9.95e-161 4       GZMK    
 ## 11 3.51e-184       3.31 0.975 0.134 4.82e-180 5       FCGR3A  
 ## 12 2.03e-125       3.09 1     0.315 2.78e-121 5       LST1    
-## 13 1.05e-265       4.89 0.986 0.071 1.44e-261 6       GZMB    
-## 14 6.82e-175       4.92 0.958 0.135 9.36e-171 6       GNLY    
+## 13 7.95e-269       4.83 0.961 0.068 1.09e-264 6       GZMB    
+## 14 3.13e-191       5.32 0.961 0.131 4.30e-187 6       GNLY    
 ## 15 1.48e-220       3.87 0.812 0.011 2.03e-216 7       FCER1A  
 ## 16 1.67e- 21       2.87 1     0.513 2.28e- 17 7       HLA-DPB1
-## 17 7.73e-200       7.24 1     0.01  1.06e-195 8       PF4     
-## 18 3.68e-110       8.58 1     0.024 5.05e-106 8       PPBP
+## 17 9.25e-186       7.29 1     0.011 1.27e-181 8       PF4     
+## 18 1.92e-102       8.59 1     0.024 2.63e- 98 8       PPBP
 ```
 
 Seurat tiene **varias pruebas de expresión diferencial** que se pueden configurar con el parámetro test.use (consulte nuestra viñeta DE para obtener más detalles). Por ejemplo, la **prueba ROC** devuelve el "poder de clasificación" para cualquier marcador individual (que varía de 0 - aleatorio a 1 - perfecto) .
@@ -759,7 +761,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 22:52:11 UTC"
+## [1] "2021-08-09 23:04:12 UTC"
 ```
 
 ```r
@@ -768,7 +770,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 159.032  12.152 116.821
+## 213.939  11.190 140.911
 ```
 
 ```r
