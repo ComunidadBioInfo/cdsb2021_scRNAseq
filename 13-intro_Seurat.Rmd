@@ -213,7 +213,7 @@ Un método heurístico alternativo genera un **"diagrama de codo (Elbow Plot)"**
 #pbmc <- FindClusters(pbmc, resolution = 0.5)
 ```
 
-## Non-linear dimensional reduction (UMAP/tSNE)
+## Reducción dimensional no lineal (UMAP/tSNE)
 
 Seurat ofrece varias técnicas de reducción dimensional no lineal, como **tSNE** y **UMAP**, para visualizar y explorar estos conjuntos de datos. El objetivo de estos algoritmos es aprender la variedad subyacente de los datos para colocar celdas similares juntas en un espacio de baja dimensión. Las celdas dentro de los grupos basados en gráficos determinados anteriormente deben ubicarse conjuntamente en estos gráficos de reducción de dimensión. Como entrada para UMAP y tSNE, sugerimos usar las mismas PC como entrada para el análisis de agrupamiento. 
 
@@ -235,7 +235,81 @@ Puede guardar el objeto en este punto para que se pueda volver a cargar fácilme
 #saveRDS(pbmc, file = paste0(proydir,"output/pbmc_tutorial.rds"))
 ```
 
+## Caracteristicas diferencialmente expresadas (biomarcadores de los clusters)
 
+Seurat puede ayudarlo a encontrar marcadores que definan clústeres mediante expresión diferencial. De forma predeterminada, identifica **marcadores positivos y negativos de un solo grupo (especificado en ident.1), en comparación con todas las demás células**. FindAllMarkers () automatiza este proceso para todos los clústeres, pero **también se pueden comparar grupos de clústeres entre sí o contra todas las celdas**.
+
+El argumento min.pct requiere que se detecte una característica en un porcentaje mínimo en cualquiera de los dos grupos de celdas, y el argumento thresh.test requiere que una característica se exprese diferencialmente (en promedio) en alguna cantidad entre los dos grupos. Puede establecer ambos en 0, pero con un aumento dramático en el tiempo, ya que esto probará una gran cantidad de características que probablemente no sean altamente discriminatorias. Como otra opción para acelerar estos cálculos, se puede configurar el número máximo de celdas por identificador. Esto reducirá la resolución de cada clase de identidad para que no tenga más celdas que las que se establezcan. Si bien generalmente habrá una pérdida de potencia, los aumentos de velocidad pueden ser significativos y es probable que las características expresadas de manera más diferencial aún se eleven a la cima. 
+
+```{r}
+# find all markers of cluster 2
+#cluster2.markers <- FindMarkers(pbmc, ident.1 = 2, min.pct = 0.25)
+#head(cluster2.markers, n = 5)
+
+# find all markers distinguishing cluster 5 from clusters 0 and 3
+#cluster5.markers <- FindMarkers(pbmc, ident.1 = 5, ident.2 = c(0, 3), min.pct = 0.25)
+#head(cluster5.markers, n = 5)
+
+# find markers for every cluster compared to all remaining cells, report only the positive
+# ones
+#pbmc.markers <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+#pbmc.markers %>%
+#    group_by(cluster) %>%
+#    top_n(n = 2, wt = avg_log2FC)
+```
+
+Seurat tiene **varias pruebas de expresión diferencial** que se pueden configurar con el parámetro test.use (consulte nuestra viñeta DE para obtener más detalles). Por ejemplo, la **prueba ROC** devuelve el "poder de clasificación" para cualquier marcador individual (que varía de 0 - aleatorio a 1 - perfecto) .
+
+```{r}
+cluster0.markers <- FindMarkers(pbmc, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
+```
+
+Se incluyen varias herramientas para visualizar la expresión de los marcadores. VlnPlot () (muestra distribuciones de probabilidad de expresión entre clústeres) y FeaturePlot () (visualiza la expresión de características en un gráfico tSNE o PCA) son nuestras visualizaciones más utilizadas. También sugerimos explorar RidgePlot (), CellScatter () y DotPlot () como métodos adicionales para ver su conjunto de datos. 
+
+```{r}
+#pdf(paste0(proydir,"plots/GeneExpression.pdf"))
+#p1 <- VlnPlot(pbmc, features = c("MS4A1", "CD79A"))
+
+## you can plot raw counts as well
+#p2 <- VlnPlot(pbmc, features = c("NKG7", "PF4"), slot = "counts", log = TRUE)
+
+#p3 <- FeaturePlot(pbmc, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "FCGR3A", "LYZ", "PPBP",
+    "CD8A"))
+
+#DoHeatmap() generates an expression heatmap for given cells and features. In this case, we are plotting the top 20 markers (or all markers if less than 20) for each cluster.
+
+#pbmc.markers %>%
+#    group_by(cluster) %>%
+#    top_n(n = 10, wt = avg_log2FC) -> top10
+#p4 <- DoHeatmap(pbmc, features = top10$gene) + NoLegend()
+#print(p1)
+#print(p2)
+#print(p3)
+#print(p4)
+#dev.off()
+```
+
+## Assigning cell type identity to clusters
+
+Podemos usar marcadores canónicos para hacer coincidir fácilmente la agrupación imparcial con los tipos de células conocidos.
+
+```{r}
+#new.cluster.ids <- c("Naive CD4 T", "CD14+ Mono", "Memory CD4 T", "B", "CD8 T", "FCGR3A+ Mono",
+#    "NK", "DC", "Platelet")
+#names(new.cluster.ids) <- levels(pbmc)
+#pbmc <- RenameIdents(pbmc, new.cluster.ids)
+
+#pdf(paste0(proydir,"plots/ClusteredCells_wIdentity.pdf"))
+#p1 <- DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+#print(p1)
+#dev.off()
+```
+
+## Guardar Resultados
+
+```{r}
+saveRDS(pbmc, file = paste0(proydir,"output/pbmc3k_final.rds"))
+```
 
 ## Detalles de la sesión de R
 
