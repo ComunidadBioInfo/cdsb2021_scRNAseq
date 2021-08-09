@@ -45,7 +45,7 @@
 
 ## ---- eval=FALSE, warning=FALSE, message=FALSE------------------------------------------
 ## # paquetes que vamos a requerir
-## install.packages("gitcreds", "gert", "gh")
+## install.packages(c("gitcreds", "gert", "gh"))
 ## 
 ## library("gitcreds")
 ## library("gert")
