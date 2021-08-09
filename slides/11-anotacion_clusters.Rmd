@@ -83,7 +83,7 @@ class: inverse center middle
 # Motivación
 
 ## Ahora estamos a punto de obtener la interpretación biológica de los resultados 
-### Esto es la tarea más retadora en los análisis de datos scRNA-seq
+### Esta es la tarea más retadora en los análisis de datos scRNA-seq
 
 ---
 
