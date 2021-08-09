@@ -94,7 +94,7 @@ Y la instalación de los siguientes paquetes:
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
 # paquetes que vamos a requerir
 install.packages(c("gitcreds", "gert", "gh"))
-#cargarlos de manera separada
+# cargarlos de manera separada
 library("gitcreds")
 library("gert")
 library("gh")
@@ -163,7 +163,7 @@ Una vez que ya vinculamos nuestro repositorio con github podemos seguir actualiz
 Checaremos `git_add`, `git_commit`, `git_log` y `git_push`
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
 # escribimos un nuevo archivo, volvemos a usar here::here para especificar path
-writeLines("hola", here::here("R","prueba-here.R"))
+writeLines("hola", here::here("R", "prueba-here.R"))
 # otra manera es usar use_r
 usethis::use_r("archivo-prueba-github.R") # añade archivo al directorio R del proyecto actual
 
