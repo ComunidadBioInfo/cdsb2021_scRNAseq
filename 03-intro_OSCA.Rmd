@@ -163,7 +163,7 @@ Sin embargo, estas listas no son muy amigables si queremos explorar por lo que p
   
 ## Introducción a RNA-seq de célula única (scRNA-seq) con Bioconductor y al libro de OSCA  
 
-[link a diapositivas](https://github.com/ComunidadBioInfo)
+[link a diapositivas](https://docs.google.com/presentation/d/1Jr_CtxAX4MviZF6Hb4taPOPWQl1HZW942M_pH51B4Vg/edit?usp=sharing)
 
 
 ## Detalles de la sesión de R
