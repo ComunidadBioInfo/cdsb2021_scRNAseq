@@ -388,7 +388,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 17:58:00 UTC"
+## [1] "2021-08-09 18:37:18 UTC"
 ```
 
 ```r
@@ -397,7 +397,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.555   0.141   0.583
+##   0.588   0.141   0.602
 ```
 
 ```r
@@ -433,13 +433,13 @@ sessioninfo::session_info()
 ##  magrittr      2.0.1   2020-11-17 [2] RSPM (R 4.1.0)
 ##  R6            2.5.0   2020-10-28 [2] RSPM (R 4.1.0)
 ##  rlang         0.4.11  2021-04-30 [2] RSPM (R 4.1.0)
-##  rmarkdown     2.9     2021-06-15 [1] RSPM (R 4.1.0)
+##  rmarkdown     2.10    2021-08-06 [1] RSPM (R 4.1.0)
 ##  sass          0.4.0   2021-05-12 [1] RSPM (R 4.1.0)
 ##  sessioninfo   1.1.1   2018-11-05 [2] RSPM (R 4.1.0)
 ##  stringi       1.7.3   2021-07-16 [2] RSPM (R 4.1.0)
 ##  stringr       1.4.0   2019-02-10 [2] RSPM (R 4.1.0)
 ##  withr         2.4.2   2021-04-18 [2] RSPM (R 4.1.0)
-##  xfun          0.24    2021-06-15 [2] RSPM (R 4.1.0)
+##  xfun          0.25    2021-08-06 [2] RSPM (R 4.1.0)
 ## 
 ## [1] /__w/_temp/Library
 ## [2] /usr/local/lib/R/site-library

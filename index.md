@@ -144,7 +144,7 @@ BiocManager::version()
 
 
 ```
-## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "cowplot", "dplyr", "DropletUtils", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "pryr", "RColorBrewer", "rsthemes", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "suncalc", "TENxPBMCData", "usethis", "uwot"))
+## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "cowplot", "dplyr", "DropletUtils", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "postcards", "pryr", "RColorBrewer", "rsthemes", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "suncalc", "TENxPBMCData", "usethis", "uwot"))
 ```
 
 
@@ -457,6 +457,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  plyr                     1.8.6      2020-03-03 [1] RSPM (R 4.1.0)
 ##  png                      0.1-7      2013-12-03 [1] RSPM (R 4.1.0)
 ##  polyclip                 1.10-0     2019-03-14 [1] RSPM (R 4.1.0)
+##  postcards                0.2.2      2021-07-31 [1] RSPM (R 4.1.0)
 ##  praise                   1.0.0      2015-08-11 [2] RSPM (R 4.1.0)
 ##  prettyunits              1.1.1      2020-01-24 [2] RSPM (R 4.1.0)
 ##  processx                 3.5.2      2021-04-30 [2] RSPM (R 4.1.0)
@@ -497,7 +498,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  rintrojs                 0.3.0      2021-06-06 [1] RSPM (R 4.1.0)
 ##  rjson                    0.2.20     2018-06-08 [1] RSPM (R 4.1.0)
 ##  rlang                    0.4.11     2021-04-30 [2] RSPM (R 4.1.0)
-##  rmarkdown                2.9        2021-06-15 [1] RSPM (R 4.1.0)
+##  rmarkdown                2.10       2021-08-06 [1] RSPM (R 4.1.0)
 ##  robustbase               0.93-8     2021-06-02 [1] RSPM (R 4.1.0)
 ##  ROCR                     1.0-11     2020-05-02 [1] RSPM (R 4.1.0)
 ##  roxygen2                 7.1.1      2020-06-27 [2] RSPM (R 4.1.0)
@@ -580,7 +581,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  webshot                  0.5.2      2019-11-22 [1] RSPM (R 4.1.0)
 ##  whisker                  0.4        2019-08-28 [2] RSPM (R 4.1.0)
 ##  withr                    2.4.2      2021-04-18 [2] RSPM (R 4.1.0)
-##  xfun                     0.24       2021-06-15 [2] RSPM (R 4.1.0)
+##  xfun                     0.25       2021-08-06 [2] RSPM (R 4.1.0)
 ##  XML                      3.99-0.6   2021-03-16 [1] RSPM (R 4.1.0)
 ##  xml2                     1.3.2      2020-04-23 [2] RSPM (R 4.1.0)
 ##  xopen                    1.0.0      2018-09-17 [2] RSPM (R 4.1.0)
@@ -596,7 +597,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-09 17:57:59.
+Fecha de la última actualización de esta página: 2021-08-09 18:37:17.
 
 ## Licencia  {-}
 

@@ -556,7 +556,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 18:20:03 UTC"
+## [1] "2021-08-09 18:59:26 UTC"
 ```
 
 ```r
@@ -565,7 +565,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 345.398   5.167 347.428
+## 367.911   4.887 369.606
 ```
 
 ```r
@@ -693,7 +693,7 @@ sessioninfo::session_info()
 ##  Rhdf5lib               1.14.2   2021-07-06 [1] Bioconductor  
 ##  rjson                  0.2.20   2018-06-08 [1] RSPM (R 4.1.0)
 ##  rlang                  0.4.11   2021-04-30 [2] RSPM (R 4.1.0)
-##  rmarkdown              2.9      2021-06-15 [1] RSPM (R 4.1.0)
+##  rmarkdown              2.10     2021-08-06 [1] RSPM (R 4.1.0)
 ##  Rsamtools              2.8.0    2021-05-19 [1] Bioconductor  
 ##  RSpectra               0.16-0   2019-12-01 [1] RSPM (R 4.1.0)
 ##  RSQLite                2.2.7    2021-04-22 [1] RSPM (R 4.1.0)
@@ -728,7 +728,7 @@ sessioninfo::session_info()
 ##  viridisLite            0.4.0    2021-04-13 [1] RSPM (R 4.1.0)
 ##  webshot                0.5.2    2019-11-22 [1] RSPM (R 4.1.0)
 ##  withr                  2.4.2    2021-04-18 [2] RSPM (R 4.1.0)
-##  xfun                   0.24     2021-06-15 [2] RSPM (R 4.1.0)
+##  xfun                   0.25     2021-08-06 [2] RSPM (R 4.1.0)
 ##  XML                    3.99-0.6 2021-03-16 [1] RSPM (R 4.1.0)
 ##  xml2                   1.3.2    2020-04-23 [2] RSPM (R 4.1.0)
 ##  XVector                0.32.0   2021-05-19 [1] Bioconductor  
