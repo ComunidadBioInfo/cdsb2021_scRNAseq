@@ -1,6 +1,444 @@
 # Anotación de clusters de células
 
-TODO
+# Diapositivas de Peter Hickey
+
+Ver las diapositivas originales [aquí](https://docs.google.com/presentation/d/1CW-7FjL34kIKVEoZ2L_RVdXoEKQVzRbEuFUDVGJqnXI/edit)
+
+Plantilla desarrollada por: [Leonardo Collado-Torres](http://lcolladotor.github.io/)
+
+---
+
+class: inverse center middle
+
+# Motivación
+
+---
+
+# Motivación
+
+## Ahora estamos a punto de obtener la interpretación biológica de los resultados 
+### Esta es la tarea más retadora en los análisis de datos scRNA-seq
+
+---
+
+# Motivación
+
+* 👉 La obtención de clústeres es más o menos directa
+* 🤔 ¿Cuál es el estado biológico que está representado por cada uno de los clústeres?
+
+* 👉 Necesitamos hacer un puente entre el _gap_ del dataset actual y el conocimiento biológico a priori (no siempre está disponible en una forma consistente y cualitativa)
+
+* 🤔 ¿Qué es un tipo celular?
+* 🔬 "Lo sabré cuando lo vea"
+* 💻 "No"
+
+---
+
+# Motivación
+
+Aplicaremos varios métodos computacionales que explotan la información _a priori_ para asignar el significado a un dataset no caracterizado de scRNA-seq.
+
+Algunas fuentes de información _a priori_
+- Conjuntos de genes curados (e.g. Gene Ontology)
+- Perfiles de expresión de bases de datos publicadas de referencia
+- Los datos raros que tú hayas escondido en tu cerebro
+- Google
+
+---
+
+class: inverse center middle
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+```{r, warning=FALSE, message=FALSE}
+library(BiocFileCache)
+bfc <- BiocFileCache()
+raw.path <- bfcrpath(bfc, file.path(
+    "http://cf.10xgenomics.com/samples",
+    "cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz"
+))
+untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
+```
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+```{r, warning=FALSE, message=FALSE}
+library(DropletUtils)
+library(Matrix)
+fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
+sce.pbmc <- read10xCounts(fname, col.names = TRUE)
+```
+
+Dataset "Células mononucleares humanas de sangre periférica" de 10X Genomics
+
+Descripción [aquí](https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-genomics.html)
+
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+```{r, warning=FALSE, message=FALSE}
+# gene-annotation
+library(scater)
+rownames(sce.pbmc) <- uniquifyFeatureNames(
+    rowData(sce.pbmc)$ID, rowData(sce.pbmc)$Symbol
+)
+library(EnsDb.Hsapiens.v86)
+location <- mapIds(EnsDb.Hsapiens.v86,
+    keys = rowData(sce.pbmc)$ID,
+    column = "SEQNAME", keytype = "GENEID"
+)
+# cell-detection
+set.seed(100)
+e.out <- emptyDrops(counts(sce.pbmc))
+sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
+```
+
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+```{r, warning=FALSE, message=FALSE}
+# quality-control
+stats <- perCellQCMetrics(sce.pbmc,
+    subsets = list(Mito = which(location == "MT"))
+)
+high.mito <- isOutlier(stats$subsets_Mito_percent,
+    type = "higher"
+)
+sce.pbmc <- sce.pbmc[, !high.mito]
+
+# normalization
+library(scran)
+set.seed(1000)
+clusters <- quickCluster(sce.pbmc)
+sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
+sce.pbmc <- logNormCounts(sce.pbmc)
+```
+
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+```{r, warning=FALSE, message=FALSE}
+# variance modelling
+set.seed(1001)
+dec.pbmc <- modelGeneVarByPoisson(sce.pbmc)
+top.pbmc <- getTopHVGs(dec.pbmc, prop = 0.1)
+```
+
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+```{r, warning=FALSE, message=FALSE}
+# dimensionality-reduction
+set.seed(10000)
+sce.pbmc <- denoisePCA(sce.pbmc,
+    subset.row = top.pbmc,
+    technical = dec.pbmc
+)
+
+set.seed(100000)
+sce.pbmc <- runTSNE(sce.pbmc, dimred = "PCA")
+
+set.seed(1000000)
+sce.pbmc <- runUMAP(sce.pbmc, dimred = "PCA")
+```
+
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+```{r, warning=FALSE, message=FALSE}
+# clustering
+g <- buildSNNGraph(sce.pbmc, k = 10, use.dimred = "PCA")
+clust <- igraph::cluster_walktrap(g)$membership
+sce.pbmc$cluster <- factor(clust)
+```
+
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+class: inverse center middle
+
+# Asignando las etiquetas celulares a partir de los datos de referencia
+
+---
+
+# Overview
+
+* 👉 Un enfoque directo es comparar los perfiles de expresión single-cell con datasets previamente anotados
+* 👉 Las etiquetas pueden entonces ser asignadas a cada célula en nuestro dataset no caracterizado de prueba basado en la muestra de referencia más similar, por dar alguna definición de "similar"
+
+---
+
+# Overview
+
+* 👉 Cualquier dataset de expresión génica etiquetado (microarreglos, RNA-seq bulk, scRNA-seq) puede ser usado como una referencia
+* ⚠️ Sin embargo, su confiabilidad depende enormemente en la calidad de los datos originales y la experiencia de los autores originales quienes asignaron las etiquetas en primer lugar
+
+---
+
+# Overview
+
+* 👉 Asignar las etiquetas a un dataset de "prueba" a partir de un dataset de "entrenamiento" (referencia), es un problema estándar en estadística / _machine learning_
+* 👉 Usaremos el método [SingleR (Aran et al. 2019)](https://bioconductor.org/packages/release/bioc/html/SingleR.html)
+
+---
+
+# SingleR
+
+* 🤓 Asigna las etiquetas a las células basado en las muestras de referencia con las correlaciones de rangos más altas de Spearman
+* 🤓 Para reducir el ruido, identifica genes marcadores entre pares de etiquetas (en la referencia) y calcula la correlación usando solamente esos marcadores 
+* 🤓 Hace algún tipo de tuneado fino, repitiendo las correlaciones solamente con los genes marcadores de las etiquetas con el mejor score, ayudando a resolver cualquier ambigüedad entre esas etiquetas al eliminar el ruido a partir de marcadores irrelevantes para otras etiquetas
+
+---
+
+# SingleR incluye varias referencias
+
+[Ver referencias](https://bioconductor.org/packages/3.11/bioc/vignettes/SingleR/inst/doc/SingleR.html#5_available_references)
+```{r, warning=FALSE, message=FALSE}
+# Human
+# SingleR::BlueprintEncodeData()
+# SingleR::DatabaseImmuneCellExpressionData()
+# SingleR::HumanPrimaryCellAtlasData()
+# SingleR::MonacoImmuneData()
+# SingleR::NovershternHematopoieticData()
+
+# Mice
+# SingleR::ImmGenData()
+# SingleR::MouseRNASeqData()
+```
+
+---
+
+# Usando las referencias
+
+```{r, warning=FALSE, message=FALSE}
+# if needed install celldex
+# create directory? y
+library(SingleR)
+ref <- BlueprintEncodeData()
+```
+
+❓ ¿Qué tipos celulares están disponibles en este dataset de referencia? 
+
+---
+
+# Usando las referencias integradas
+
+```{r, warning=FALSE, message=FALSE}
+pred <- SingleR(
+    test = sce.pbmc, ref = ref,
+    labels = ref$label.main
+)
+```
+
+* ❓ ¿Qué etiquetas han sido asignadas a los datos single-cell?
+* ❓ ¿Cómo usaríamos las etiquetas "finas" con SingleR?
+
+---
+
+# Usando las referencias integradas
+
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
+plotScoreHeatmap(pred)
+```
+
+* 👉 Inspeccionamos los resultados usando un heatmap de los scores por célula y por etiqueta
+* 👉 Idealmente, cada célula debería exhibir un score alto en una etiqueta relativa a todas las otras
+* 👉 Los scores se muestran antes de cualquier tuneado fino y son normalizadas a [0, 1] dentro de cada célula
+
+---
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plotScoreHeatmap(pred)
+```
+
+---
+
+# Podado de etiquetas (Label pruning)
+
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
+total_pruned <- sum(is.na(pred$pruned.labels))
+plotScoreHeatmap(pred, show.pruned = TRUE)
+```
+
+* 👉 SingleR intentará podar aquellas asignaciones de baja calidad marcándolas como NA
+* 🤓 El podado se hace calculando la diferencia del score de la etiqueta asignada a partir del score de la mediana dentro de cada célula y entonces podando las células con un valor pequeño de esta diferencia
+
+---
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plotScoreHeatmap(pred, show.pruned = TRUE)
+```
+
+---
+
+# Podado de etiquetas (Label pruning)
+
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
+plotScoreDistribution(pred)
+```
+
+👉 Distribución de las diferencias del score de la etiqueta asignada a partir del score de la mediana dentro de cada célula
+
+---
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plotScoreDistribution(pred)
+```
+
+---
+
+# Identificando los genes con anotación dirigida
+
+* 🤔 ¿Por qué las células en este clúster se etiquetan como el tipo celular X?
+* 👉 Examina la expresión de los genes marcadores para cada etiqueta en el dataset de prueba
+* 👉 Si una célula en el dataset de prueba está asignado con confianza a una etiqueta en particular, uno esperaría que tenga una fuerte expresión de los marcadores de esa etiqueta (al menos sobreexpresión con respecto a las células asignadas a otras etiquetas)
+
+---
+
+# Identificando los genes con anotación dirigida
+
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
+# install gmp, ClusterR, mbkmeans dependencies if needed
+library(clusterExperiment)
+sce.pbmc$labels <- pred$labels
+all.markers <- metadata(pred)$de.genes
+lab <- "B-cells"
+# Get top-10 marker genes for B-cells compared to each other cell
+# type
+top.markers <- Reduce(union, sapply(all.markers[[lab]], head, 10))
+
+# plotHeatmap(sce.pbmc, order_columns_by="labels",
+#  features=top.markers, center=TRUE, zlim=c(-3, 3), main=lab)
+```
+
+❓ Toma otro tipo celular e identifica los genes que dirigen la anotación
+
+---
+
+# Comparando las etiquetas con los clústeres
+
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
+tab <- table(Assigned = pred$pruned.labels, Cluster = sce.pbmc$cluster)
+
+library(pheatmap)
+# Proportion of cells in each cluster assigned to each label
+pheatmap(prop.table(tab, margin = 2),
+    color = colorRampPalette(c("white", "blue"))(101)
+)
+# (log-)number of cells in each cluster assigned to each label
+# Adding a pseudo-count of 10 to avoid strong color jumps with just
+# 1 cell.
+pheatmap(log2(tab + 10),
+    color = colorRampPalette(c("white", "blue"))(101)
+)
+```
+
+---
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+pheatmap(prop.table(tab, margin = 2),
+    color = colorRampPalette(c("white", "blue"))(101)
+)
+```
+
+---
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+pheatmap(log2(tab + 10),
+    color = colorRampPalette(c("white", "blue"))(101)
+)
+```
+
+---
+
+# Voilà
+
+```{r, warning=FALSE, message=FALSE}
+plotTSNE(sce.pbmc, colour_by = "labels", text_by = "labels")
+```
+
+---
+
+# Resumen de la anotación basada en una referencia (e.g., SingleR)
+
+* ➕ Se centra en aspectos de los datos que se sabe son interesantes, simplifica el proceso de la interpretación biológica 
+* ➖ Está restringido por la diversidad y la resolución de las etiquetas disponibles en el dataset de referencia
+* 👉 Se pueden suplir referencias personalizadas a SingleR
+
+---
+
+class: inverse center middle
+
+# Asignando las etiquetas de tipos celulares a partir de marcadores
+
+---
+
+# Asignando las etiquetas de tipos celulares a partir de marcadores
+
+* 🤔 ¿Cómo podemos hacer uso de nuestros genes marcadores agrupados?
+* 🥉 Revisarlos en hojas de cálculo 
+* 🥈 Observar heatmaps
+* 🥇 Realizar un gene set enrichment analysis
+
+---
+
+# Gene set enrichment analysis
+
+* 👉 Identifica las rutas y procesos que están (relativamente) activos en cada clúster basado en la sobreexpresión de los genes asociados en comparación con otros clústeres
+* ➕ Un método confiable para determinar si las rutas están sobre- o sub- expresadas entre clúesteres 
+* ➕ Existen un montón de herramientas para gene set enrichment analysis
+* ➖ Todas las conclusiones son relativas a otros clústeres, haciéndolo más difícil para determinar la identidad celular si alguno no está presente en el mismo estudio [más info](https://osca.bioconductor.org/cell-type-annotation.html#assigning-cluster-labels-from-markers)
+
+---
+
+class: inverse center middle
+
+# Calculando las actividades de los conjuntos de genes
+
+---
+
+# Calculando las actividades de los conjuntos de genes
+
+* 👉 Calcular el promedio de la expresión en log en todos los genes, en un conjunto de genes para cada célula y examinar los clústeres con valores altos (_gene set activities_)
+* 👉 Se necesita proveer de conjuntos de genes 
+* ➖ No todos los genes en el conjunto pueden exhibir el mismo patrón de diferencia y los genes no-DE añadirán ruido, "diluyendo" la fuerza de cualquiera de las diferencias comparadas a un análisis que se centra directamente en genes DE 
+* 👉 Es más una visualización útil que la base para cualquier análisis estadístico real [más info](https://osca.bioconductor.org/cell-type-annotation.html#computing-gene-set-activities)
+
+---
+
+class: inverse center middle
+
+# Resumen y recomendaciones
+
+---
+
+# Resumen y recomendaciones
+
+* 👉 La anotación de tipos celulares "automática", como SingleR, es mejor cuando funciona (i.e. cuando hay un dataset de referencia apropiado)
+* 👉 Usualmente necesitaremos usar un método manual, como aquellos basados en agrupar los genes marcadores  (e.g., gene set enrichment analysis)
+* 👉 La anotación del tipo celular ofrecerá una reconsideración inmediata de los parámetros del agrupamiento y/o algunos retoques manuales a los clústeres 
 
 ## Detalles de la sesión de R
 
