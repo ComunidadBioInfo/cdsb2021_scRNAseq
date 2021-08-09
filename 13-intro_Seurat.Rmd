@@ -261,7 +261,7 @@ El argumento min.pct requiere que se detecte una característica en un porcentaj
 Seurat tiene **varias pruebas de expresión diferencial** que se pueden configurar con el parámetro test.use (consulte nuestra viñeta DE para obtener más detalles). Por ejemplo, la **prueba ROC** devuelve el "poder de clasificación" para cualquier marcador individual (que varía de 0 - aleatorio a 1 - perfecto) .
 
 ```{r}
-cluster0.markers <- FindMarkers(pbmc, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
+# cluster0.markers <- FindMarkers(pbmc, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
 ```
 
 Se incluyen varias herramientas para visualizar la expresión de los marcadores. VlnPlot () (muestra distribuciones de probabilidad de expresión entre clústeres) y FeaturePlot () (visualiza la expresión de características en un gráfico tSNE o PCA) son nuestras visualizaciones más utilizadas. También sugerimos explorar RidgePlot (), CellScatter () y DotPlot () como métodos adicionales para ver su conjunto de datos. 
@@ -274,7 +274,7 @@ Se incluyen varias herramientas para visualizar la expresión de los marcadores.
 #p2 <- VlnPlot(pbmc, features = c("NKG7", "PF4"), slot = "counts", log = TRUE)
 
 #p3 <- FeaturePlot(pbmc, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "FCGR3A", "LYZ", "PPBP",
-    "CD8A"))
+#    "CD8A"))
 
 #DoHeatmap() generates an expression heatmap for given cells and features. In this case, we are plotting the top 20 markers (or all markers if less than 20) for each cluster.
 
