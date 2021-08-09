@@ -257,9 +257,13 @@ lab <- "B-cells"
 # type
 top.markers <- Reduce(union, sapply(all.markers[[lab]], head, 10))
 
-# plotHeatmap(sce.pbmc, order_columns_by="labels",
-#  features=top.markers, center=TRUE, zlim=c(-3, 3), main=lab)
+scater::plotHeatmap(sce.pbmc,
+    order_columns_by = "labels",
+    features = top.markers, center = TRUE, zlim = c(-3, 3), main = lab
+)
 ```
+
+<img src="11-anotacion_clusters_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
 ❓ Toma otro tipo celular e identifica los genes que dirigen la anotación
 
@@ -346,7 +350,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 23:01:50 UTC"
+## [1] "2021-08-09 23:19:19 UTC"
 ```
 
 ```r
@@ -355,7 +359,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 183.128   3.795 184.988
+## 226.060   4.888 230.840
 ```
 
 ```r
