@@ -113,6 +113,12 @@ sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 ```
 
+### Preguntas de repaso
+
+* ¿Cómo determinamos cuales eran los genes mitocondriales? ^[Usando Ensembl v86 para humano]
+* ¿Cómo decidimos filtrar las células? ^[Usamos los resultados de `emptyDrops()` con un límite de 0.1% FDR y el filtro de 3 desviaciones sobre la mediana (MAD) en la expresión mitocondrial.]
+* ¿Puedes explicar como normalizamos los datos? ^[Encontramos unos clusters rápidos para las célulasy usamos esa información para calcular los factores de tamaño.]
+
 ## Cuantificando la varianza por gen
 
 
@@ -166,6 +172,14 @@ curve(fit.pbmc$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
 
 <img src="07-seleccion_genes_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
+#### Ejercicios
+
+* ¿Qué tipo de objeto nos regresó `modelGeneVar()`? ^[Es un `DFrame`]
+* ¿`dec.pbmc` es una tabla? ¿O contiene mayor información? ^[No, contiene más información dentro de `metadata(dec.pbmc)`]
+* ¿Qué tipo de objeto es `fit.pbmc` y que objetos con nombres contiene? ^[`class(metadata(dec.pbmc))` y `sapply(metadata(dec.pbmc), class)`]
+* ¿Qué tipo de objeto es `fit.pbmc$trend`? ^[Una función]
+* ¿Donde podemos encontrar más detalles de esta función? ^[Checa `?fitTrendVar` y si quieres también checa el código fuente (para mí es muy útil este paso) https://github.com/MarioniLab/scran/blob/master/R/fitTrendVar.R]
+
 
 ### Ordenando genes interesantes
 
@@ -180,11 +194,11 @@ dec.pbmc[order(dec.pbmc$bio, decreasing = TRUE), ]
 ## DataFrame with 33694 rows and 6 columns
 ##              mean     total      tech       bio      p.value          FDR
 ##         <numeric> <numeric> <numeric> <numeric>    <numeric>    <numeric>
-## LYZ       1.95605   5.05854  0.835343   4.22320 1.10535e-270 2.17412e-266
-## S100A9    1.93416   4.53551  0.835439   3.70007 2.71038e-208 7.61579e-205
-## S100A8    1.69961   4.41084  0.824342   3.58650 4.31574e-201 9.43181e-198
-## HLA-DRA   2.09785   3.75174  0.831239   2.92050 5.93943e-132 4.86761e-129
-## CD74      2.90176   3.36879  0.793188   2.57560 4.83932e-113 2.50486e-110
+## LYZ       1.95605   5.05854  0.835343   4.22320 1.10538e-270 2.17417e-266
+## S100A9    1.93416   4.53551  0.835439   3.70007 2.71043e-208 7.61593e-205
+## S100A8    1.69961   4.41084  0.824342   3.58650 4.31581e-201 9.43197e-198
+## HLA-DRA   2.09785   3.75174  0.831239   2.92050 5.93950e-132 4.86767e-129
+## CD74      2.90176   3.36879  0.793188   2.57560 4.83937e-113 2.50488e-110
 ## ...           ...       ...       ...       ...          ...          ...
 ## TMSB4X    6.08142  0.441718  0.679215 -0.237497     0.992447            1
 ## PTMA      3.82978  0.486454  0.731275 -0.244821     0.990002            1
@@ -273,7 +287,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 22:17:42 UTC"
+## [1] "2021-08-09 22:33:55 UTC"
 ```
 
 ```r
@@ -282,7 +296,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 126.739   3.218 128.331
+## 106.351   3.073 108.177
 ```
 
 ```r

@@ -84,12 +84,14 @@ dataset-ilustrativo-pbmc4k-10x-sin-filtrar
 descargar-datos
 anotación
 control-de-calidad-1
+preguntas-de-repaso
 cuantificando-la-varianza-por-gen
 varianza-de-los-log-counts
 enfoque-simple
 un-enfoque-más-sofisticado
 supuestos
 visualizando-la-media-y-varianza
+ejercicios
 ordenando-genes-interesantes
 coeficiente-de-variación-de-las-cuentas
 coeficiente-de-variación

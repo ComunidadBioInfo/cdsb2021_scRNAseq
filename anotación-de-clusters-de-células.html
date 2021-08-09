@@ -286,6 +286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.1" data-path="selección-de-genes.html"><a href="selección-de-genes.html#descargar-datos"><i class="fa fa-check"></i><b>7.4.1</b> Descargar datos</a></li>
 <li class="chapter" data-level="7.4.2" data-path="selección-de-genes.html"><a href="selección-de-genes.html#anotación"><i class="fa fa-check"></i><b>7.4.2</b> Anotación</a></li>
 <li class="chapter" data-level="7.4.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#control-de-calidad-1"><i class="fa fa-check"></i><b>7.4.3</b> Control de calidad</a></li>
+<li class="chapter" data-level="7.4.4" data-path="selección-de-genes.html"><a href="selección-de-genes.html#preguntas-de-repaso"><i class="fa fa-check"></i><b>7.4.4</b> Preguntas de repaso</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="selección-de-genes.html"><a href="selección-de-genes.html#cuantificando-la-varianza-por-gen"><i class="fa fa-check"></i><b>7.5</b> Cuantificando la varianza por gen</a>
 <ul>
@@ -552,7 +553,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb312-12"><a href="anotación-de-clusters-de-células.html#cb312-12" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k/raw_gene_bc_matrices/GRCh38&quot;</span>)</span>
 <span id="cb312-13"><a href="anotación-de-clusters-de-células.html#cb312-13" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">read10xCounts</span>(fname, <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Dataset “Células mononucleares humanas de sangre periférica” de 10X Genomics</p>
-<p>Descripción <a href="https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-genomics.html">aquí</a> <a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a></p>
+<p>Descripción <a href="https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-genomics.html">aquí</a> <a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a></p>
 <div id="anotación-2" class="section level3" number="11.3.1">
 <h3><span class="header-section-number">11.3.1</span> Anotación</h3>
 <div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="anotación-de-clusters-de-células.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Anotación de los genes</span></span>
@@ -782,10 +783,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">11.9</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="anotación-de-clusters-de-células.html#cb327-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb327-2"><a href="anotación-de-clusters-de-células.html#cb327-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-09 22:34:27 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-09 22:50:13 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="anotación-de-clusters-de-células.html#cb329-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 179.279   4.329 182.671</code></pre>
+## 188.703   4.568 193.751</code></pre>
 <div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="anotación-de-clusters-de-células.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb331-2"><a href="anotación-de-clusters-de-células.html#cb331-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -999,8 +1000,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="footnotes">
 <hr />
-<ol start="13">
-<li id="fn13"><p>Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017).<a href="anotación-de-clusters-de-células.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<ol start="21">
+<li id="fn21"><p>Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017).<a href="anotación-de-clusters-de-células.html#fnref21" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

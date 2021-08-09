@@ -286,6 +286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.1" data-path="selección-de-genes.html"><a href="selección-de-genes.html#descargar-datos"><i class="fa fa-check"></i><b>7.4.1</b> Descargar datos</a></li>
 <li class="chapter" data-level="7.4.2" data-path="selección-de-genes.html"><a href="selección-de-genes.html#anotación"><i class="fa fa-check"></i><b>7.4.2</b> Anotación</a></li>
 <li class="chapter" data-level="7.4.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#control-de-calidad-1"><i class="fa fa-check"></i><b>7.4.3</b> Control de calidad</a></li>
+<li class="chapter" data-level="7.4.4" data-path="selección-de-genes.html"><a href="selección-de-genes.html#preguntas-de-repaso"><i class="fa fa-check"></i><b>7.4.4</b> Preguntas de repaso</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="selección-de-genes.html"><a href="selección-de-genes.html#cuantificando-la-varianza-por-gen"><i class="fa fa-check"></i><b>7.5</b> Cuantificando la varianza por gen</a>
 <ul>
@@ -604,6 +605,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb220-14"><a href="selección-de-genes.html#cb220-14" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">computeSumFactors</span>(sce.pbmc, <span class="at">cluster =</span> clusters)</span>
 <span id="cb220-15"><a href="selección-de-genes.html#cb220-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.pbmc)</span></code></pre></div>
 </div>
+<div id="preguntas-de-repaso" class="section level3" number="7.4.4">
+<h3><span class="header-section-number">7.4.4</span> Preguntas de repaso</h3>
+<ul>
+<li>¿Cómo determinamos cuales eran los genes mitocondriales? <a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a></li>
+<li>¿Cómo decidimos filtrar las células? <a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a></li>
+<li>¿Puedes explicar como normalizamos los datos? <a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a></li>
+</ul>
+</div>
 </div>
 <div id="cuantificando-la-varianza-por-gen" class="section level2" number="7.5">
 <h2><span class="header-section-number">7.5</span> Cuantificando la varianza por gen</h2>
@@ -653,6 +662,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb222-6"><a href="selección-de-genes.html#cb222-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb222-7"><a href="selección-de-genes.html#cb222-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(fit.pbmc<span class="sc">$</span><span class="fu">trend</span>(x), <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="07-seleccion_genes_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div id="ejercicios" class="section level4" number="7.5.5.1">
+<h4><span class="header-section-number">7.5.5.1</span> Ejercicios</h4>
+<ul>
+<li>¿Qué tipo de objeto nos regresó <code>modelGeneVar()</code>? <a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a></li>
+<li>¿<code>dec.pbmc</code> es una tabla? ¿O contiene mayor información? <a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a></li>
+<li>¿Qué tipo de objeto es <code>fit.pbmc</code> y que objetos con nombres contiene? <a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a></li>
+<li>¿Qué tipo de objeto es <code>fit.pbmc$trend</code>? <a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a></li>
+<li>¿Donde podemos encontrar más detalles de esta función? <a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a></li>
+</ul>
+</div>
 </div>
 <div id="ordenando-genes-interesantes" class="section level3" number="7.5.6">
 <h3><span class="header-section-number">7.5.6</span> Ordenando genes interesantes</h3>
@@ -662,11 +681,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## DataFrame with 33694 rows and 6 columns
 ##              mean     total      tech       bio      p.value          FDR
 ##         &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;    &lt;numeric&gt;    &lt;numeric&gt;
-## LYZ       1.95605   5.05854  0.835343   4.22320 1.10535e-270 2.17412e-266
-## S100A9    1.93416   4.53551  0.835439   3.70007 2.71038e-208 7.61579e-205
-## S100A8    1.69961   4.41084  0.824342   3.58650 4.31574e-201 9.43181e-198
-## HLA-DRA   2.09785   3.75174  0.831239   2.92050 5.93943e-132 4.86761e-129
-## CD74      2.90176   3.36879  0.793188   2.57560 4.83932e-113 2.50486e-110
+## LYZ       1.95605   5.05854  0.835343   4.22320 1.10538e-270 2.17417e-266
+## S100A9    1.93416   4.53551  0.835439   3.70007 2.71043e-208 7.61593e-205
+## S100A8    1.69961   4.41084  0.824342   3.58650 4.31581e-201 9.43197e-198
+## HLA-DRA   2.09785   3.75174  0.831239   2.92050 5.93950e-132 4.86767e-129
+## CD74      2.90176   3.36879  0.793188   2.57560 4.83937e-113 2.50488e-110
 ## ...           ...       ...       ...       ...          ...          ...
 ## TMSB4X    6.08142  0.441718  0.679215 -0.237497     0.992447            1
 ## PTMA      3.82978  0.486454  0.731275 -0.244821     0.990002            1
@@ -738,10 +757,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">7.8</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="selección-de-genes.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb228-2"><a href="selección-de-genes.html#cb228-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-09 22:17:42 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-09 22:33:55 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="selección-de-genes.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 126.739   3.218 128.331</code></pre>
+## 106.351   3.073 108.177</code></pre>
 <div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="selección-de-genes.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb232-2"><a href="selección-de-genes.html#cb232-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -906,6 +925,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <ol start="11">
 <li id="fn11"><p>Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017).<a href="selección-de-genes.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>Usando Ensembl v86 para humano<a href="selección-de-genes.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p>Usamos los resultados de <code>emptyDrops()</code> con un límite de 0.1% FDR y el filtro de 3 desviaciones sobre la mediana (MAD) en la expresión mitocondrial.<a href="selección-de-genes.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p>Encontramos unos clusters rápidos para las célulasy usamos esa información para calcular los factores de tamaño.<a href="selección-de-genes.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>Es un <code>DFrame</code><a href="selección-de-genes.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>No, contiene más información dentro de <code>metadata(dec.pbmc)</code><a href="selección-de-genes.html#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn17"><p><code>class(metadata(dec.pbmc))</code> y <code>sapply(metadata(dec.pbmc), class)</code><a href="selección-de-genes.html#fnref17" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p>Una función<a href="selección-de-genes.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn19"><p>Checa <code>?fitTrendVar</code> y si quieres también checa el código fuente (para mí es muy útil este paso) <a href="https://github.com/MarioniLab/scran/blob/master/R/fitTrendVar.R" class="uri">https://github.com/MarioniLab/scran/blob/master/R/fitTrendVar.R</a><a href="selección-de-genes.html#fnref19" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
