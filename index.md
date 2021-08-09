@@ -203,6 +203,13 @@ _Consulta el calendario de este curso en: <http://bit.ly/calendarcdsb2021>._
 | 17:00-17:30 | Clausura y recordatorio de la CDSB |      |
 | 17:30-18:00 | (opcional) Interactúa con lxs instructores y ayudantes | |
 
+## Música para ejercicios {-}
+
+Aquí están las listas de canciones por si desean escuchar algo de música mientras realizan ejercicios
+
+* [iTunes](https://music.apple.com/mx/playlist/cdsb2021/pl.u-d2b05dVTMjkvpg2?l=en)
+* [Spotify](https://open.spotify.com/playlist/0OuvqM69DKFK3QPbHIy2kc?si=373e4941aef0457d)
+
 ## Materiales {-}
 
 Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2021_scRNAseq')` o revisalos en línea vía [**comunidadbioinfo.github.io/cdsb2021_scRNAseq**](http://comunidadbioinfo.github.io/cdsb2021_scRNAseq).
@@ -589,7 +596,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-09 13:44:45.
+Fecha de la última actualización de esta página: 2021-08-09 14:02:31.
 
 ## Licencia  {-}
 
