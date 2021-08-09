@@ -9,8 +9,8 @@ library("scRNAseq") ## para descargar datos de ejemplo
 library("AnnotationHub") ## para obtener información de genes
 library("scater") ## para gráficas y control de calidad
 library("BiocFileCache") ## para descargar datos
-library('DropletUtils') ## para detectar droplets
-library('Matrix') ## para leer datos en formatos comprimidos
+library("DropletUtils") ## para detectar droplets
+library("Matrix") ## para leer datos en formatos comprimidos
 ```
 
 ## Diapositivas de Peter Hickey
@@ -22,7 +22,7 @@ Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1pIiA7fZd1GBx
 
 ```r
 ## Datos
-library('scRNAseq')
+library("scRNAseq")
 sce.416b <- LunSpikeInData(which = "416b")
 ```
 
@@ -123,7 +123,7 @@ sce.416b$block <- factor(sce.416b$block)
 
 # Descarga los archivos de anotación de la base de datos de Ensembl
 # correspondientes usando los recursos disponibles vía AnnotationHub
-library('AnnotationHub')
+library("AnnotationHub")
 ah <- AnnotationHub()
 ```
 
@@ -180,9 +180,10 @@ location <- mapIds(
 ```r
 # Identifica los genes mitocondriales
 is.mito <- which(location == "MT")
-library('scater')
+library("scater")
 sce.416b <- addPerCellQC(sce.416b,
-    subsets = list(Mito = is.mito))
+    subsets = list(Mito = is.mito)
+)
 ## Si quieres guarda los resultados de addPerCellQC() para responder
 ## las preguntas del ejercicio. Eventualmente si necesitaremos los
 ## resultados de addPerCellQC() para las secciones posteriores a este
@@ -213,9 +214,10 @@ plotColData(sce.416b, x = "block", y = "detected") +
 plotColData(sce.416b,
     x = "block",
     y = "detected",
-    other_fields = "phenotype") +
+    other_fields = "phenotype"
+) +
     scale_y_log10() +
-    facet_wrap( ~ phenotype)
+    facet_wrap(~phenotype)
 ```
 
 <img src="05-control_calidad_files/figure-html/visualizar_qc-3.png" width="672" />
@@ -262,12 +264,16 @@ DataFrame(
 ```r
 ## Usando isOutlier() para determinar los valores de corte
 qc.lib2 <- isOutlier(sce.416b$sum, log = TRUE, type = "lower")
-qc.nexprs2 <- isOutlier(sce.416b$detected, log = TRUE,
-    type = "lower")
+qc.nexprs2 <- isOutlier(sce.416b$detected,
+    log = TRUE,
+    type = "lower"
+)
 qc.spike2 <- isOutlier(sce.416b$altexps_ERCC_percent,
-    type = "higher")
+    type = "higher"
+)
 qc.mito2 <- isOutlier(sce.416b$subsets_Mito_percent,
-    type = "higher")
+    type = "higher"
+)
 discard2 <- qc.lib2 | qc.nexprs2 | qc.spike2 | qc.mito2
 
 # Extraemos los límites de valores (thresholds)
@@ -312,9 +318,10 @@ DataFrame(
 plotColData(sce.416b,
     x = "block",
     y = "detected",
-    other_fields = "phenotype") +
+    other_fields = "phenotype"
+) +
     scale_y_log10() +
-    facet_wrap( ~ phenotype)
+    facet_wrap(~phenotype)
 ```
 
 <img src="05-control_calidad_files/figure-html/valores_qc-1.png" width="672" />
@@ -327,17 +334,21 @@ batch <- paste0(sce.416b$phenotype, "-", sce.416b$block)
 qc.lib3 <- isOutlier(sce.416b$sum,
     log = TRUE,
     type = "lower",
-    batch = batch)
+    batch = batch
+)
 qc.nexprs3 <- isOutlier(sce.416b$detected,
     log = TRUE,
     type = "lower",
-    batch = batch)
+    batch = batch
+)
 qc.spike3 <- isOutlier(sce.416b$altexps_ERCC_percent,
     type = "higher",
-    batch = batch)
+    batch = batch
+)
 qc.mito3 <- isOutlier(sce.416b$subsets_Mito_percent,
     type = "higher",
-    batch = batch)
+    batch = batch
+)
 discard3 <- qc.lib3 | qc.nexprs3 | qc.spike3 | qc.mito3
 
 # Extraemos los límites de valores (thresholds)
@@ -463,7 +474,8 @@ plotColData(sce.grun, x = "donor", y = "altexps_ERCC_percent")
 ## tuvo más problemas que el resto
 discard.ercc <- isOutlier(sce.grun$altexps_ERCC_percent,
     type = "higher",
-    batch = sce.grun$donor)
+    batch = sce.grun$donor
+)
 ```
 
 ```
@@ -542,11 +554,11 @@ plotColData(
     colour_by = "discard",
     other_fields = "phenotype"
 ) +
-    facet_wrap( ~ phenotype) +
+    facet_wrap(~phenotype) +
     scale_y_log10()
 ```
 
-<img src="05-control_calidad_files/figure-html/416b_qc_extra-1.png" width="672" />
+<img src="05-control_calidad_files/figure-html/qc_extra_416b-1.png" width="672" />
 
 ```r
 # Otra gráfica de diagnóstico útil
@@ -560,13 +572,13 @@ plotColData(
     facet_grid(block ~ phenotype)
 ```
 
-<img src="05-control_calidad_files/figure-html/416b_qc_extra-2.png" width="672" />
+<img src="05-control_calidad_files/figure-html/qc_extra_416b-2.png" width="672" />
 
 ## Ejercicio: ERCC Grun et al
 
 Adapta el código de `sce.416b` para los datos de Grun et al y reproduce la imagen siguiente.
 
-<img src="05-control_calidad_files/figure-html/grun_qc_extra-1.png" width="672" />
+<img src="05-control_calidad_files/figure-html/qc_extra_grun-1.png" width="672" />
 
 * Fíjate en que variables de `colData()` estamos graficando.
 * ¿Existe la variable `discard` en `colData()`?
@@ -586,7 +598,7 @@ Adapta el código de `sce.416b` para los datos de Grun et al y reproduce la imag
 
 ```r
 ## Descarguemos los datos
-library('BiocFileCache')
+library("BiocFileCache")
 bfc <- BiocFileCache()
 raw.path <-
     bfcrpath(
@@ -606,8 +618,8 @@ raw.path <-
 untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
 
 ## Leamos los datos en R
-library('DropletUtils')
-library('Matrix')
+library("DropletUtils")
+library("Matrix")
 fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
 sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 bcrank <- barcodeRanks(counts(sce.pbmc))
@@ -631,12 +643,16 @@ plot(
 ```
 
 ```r
-abline(h = metadata(bcrank)$inflection,
+abline(
+    h = metadata(bcrank)$inflection,
     col = "darkgreen",
-    lty = 2)
-abline(h = metadata(bcrank)$knee,
+    lty = 2
+)
+abline(
+    h = metadata(bcrank)$knee,
     col = "dodgerblue",
-    lty = 2)
+    lty = 2
+)
 legend(
     "bottomleft",
     legend = c("Inflection", "Knee"),
@@ -675,10 +691,11 @@ all.out <-
 # con un número total de cuentas menor a "lower" no son
 # de origen ambiental.
 hist(all.out$PValue[all.out$Total <= limit &
-        all.out$Total > 0],
-    xlab = "P-value",
-    main = "",
-    col = "grey80")
+    all.out$Total > 0],
+xlab = "P-value",
+main = "",
+col = "grey80"
+)
 ```
 
 <img src="05-control_calidad_files/figure-html/emptyDrops-1.png" width="672" />
@@ -732,7 +749,7 @@ Volvamos a crear `sce.pbmc` para poder usar `plotColData()` y visualizar la rela
 # Eliminemos las células de calidad baja
 # al quedarnos con las columnas del objeto sce que NO
 # queremos descartar (eso hace el !)
-filtered <- sce.416b[,!discard2]
+filtered <- sce.416b[, !discard2]
 # Alternativamente, podemos marcar
 # las células de baja calidad
 marked <- sce.416b
@@ -761,7 +778,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 01:33:14 UTC"
+## [1] "2021-08-09 03:08:57 UTC"
 ```
 
 ```r
@@ -770,7 +787,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 211.943   5.115 224.106
+## 204.339   5.184 239.466
 ```
 
 ```r

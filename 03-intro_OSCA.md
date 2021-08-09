@@ -17,7 +17,7 @@ Contenido adaptado del [Curso de RNASeq](https://lcolladotor.github.io/rnaseq_LC
 
 "Bioconductor proporciona herramientas para el análisis y la comprensión de datos genómicos de alto rendimiento. Bioconductor utiliza el lenguaje de programación estadístico R y es de código abierto y desarrollo abierto. Tiene dos lanzamientos cada año y una comunidad de usuarios activa. Bioconductor también está disponible como AMI (Imagen de máquina de Amazon) e imágenes de Docker." 
 
-> https://www.bioconductor.org/
+* https://www.bioconductor.org/
 
 * Where do I start using Bioconductor? http://lcolladotor.github.io/2014/10/16/startbioc/#.XqxNGRNKiuo
 
@@ -31,7 +31,7 @@ https://www.bioconductor.org/ y dar click en *About*
 
 Es conformado por diversos equipos y consejos ([Asesores científicos](https://www.bioconductor.org/about/scientific-advisory-board/), [técnicos](https://www.bioconductor.org/about/technical-advisory-board/) y de la [comunidad](https://www.bioconductor.org/about/community-advisory-board/)). Por ejemplo Leonardo Collado.
 
-  - Científicos : Proporciona orientación externa y supervisión de la dirección científica del proyecto y está compuesto por líderes en el análisis estadístico de datos genómicos.. 
+  - Científicos : Proporciona orientación externa y supervisión de la dirección científica del proyecto y está compuesto por líderes en el análisis estadístico de datos genómicos. 
   - Técnicos: Desarrollar estrategias para asegurar que la parte técnica de la infraestructura sea apropiada a largo plazo (manejo de paquetes, sitio web, slack, etc)
   - Comunidad : Empoderar a las comunidades de usuarios y desarrolladores mediante la coordinación de actividades de capacitación y divulgación.
 
@@ -149,7 +149,7 @@ Sin embargo, estas listas no son muy amigables si queremos explorar por lo que p
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Teach online data science, bioinformatics, or other computational skills interactively using the Orchestra platform:<a href="https://t.co/r4aJ2xAZbh">https://t.co/r4aJ2xAZbh</a> <br>Nearly 50 workshop environments preloaded with <a href="https://twitter.com/hashtag/jupyter?src=hash&amp;ref_src=twsrc%5Etfw">#jupyter</a>, <a href="https://twitter.com/hashtag/rstudio?src=hash&amp;ref_src=twsrc%5Etfw">#rstudio</a>, <a href="https://twitter.com/hashtag/shell?src=hash&amp;ref_src=twsrc%5Etfw">#shell</a>. <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a>, or <a href="https://twitter.com/hashtag/python?src=hash&amp;ref_src=twsrc%5Etfw">#python</a>.<a href="https://twitter.com/NIHSTRIDES?ref_src=twsrc%5Etfw">@NIHSTRIDES</a> <a href="https://twitter.com/NIHDataScience?ref_src=twsrc%5Etfw">@NIHDataScience</a> <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw">@Bioconductor</a> <a href="https://t.co/HyWVLBJxGU">pic.twitter.com/HyWVLBJxGU</a></p>&mdash; Sean Davis (@seandavis12) <a href="https://twitter.com/seandavis12/status/1348291911090626560?ref_src=twsrc%5Etfw">January 10, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-* El que ayudo a organizar en México: CDSB Workshop 2020 https://comunidadbioinfo.github.io/post/cdsb2020-building-workflows-with-rstudio-and-scrnaseq-with-bioconductor/#.XmJT-Z-YU1I
+* Talleres de la CDSB, como los talleres de CDSB 2020: https://comunidadbioinfo.github.io/post/cdsb2020-building-workflows-with-rstudio-and-scrnaseq-with-bioconductor/#.XmJT-Z-YU1I
 
 
 
@@ -175,7 +175,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 01:29:29 UTC"
+## [1] "2021-08-09 03:04:57 UTC"
 ```
 
 ```r
@@ -184,7 +184,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.412   0.142   0.424
+##   0.400   0.136   0.429
 ```
 
 ```r
