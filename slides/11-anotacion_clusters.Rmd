@@ -386,8 +386,6 @@ plotScoreDistribution(pred)
 # Identificando los genes con anotación dirigida
 
 ```{r, warning=FALSE, message=FALSE, fig.show='hide'}
-# install gmp, ClusterR, mbkmeans dependencies if needed
-library(clusterExperiment)
 sce.pbmc$labels <- pred$labels
 all.markers <- metadata(pred)$de.genes
 lab <- "B-cells"
@@ -395,8 +393,17 @@ lab <- "B-cells"
 # type
 top.markers <- Reduce(union, sapply(all.markers[[lab]], head, 10))
 
-# plotHeatmap(sce.pbmc, order_columns_by="labels",
-#  features=top.markers, center=TRUE, zlim=c(-3, 3), main=lab)
+plotHeatmap(sce.pbmc, order_columns_by="labels",
+  features=top.markers, center=TRUE, zlim=c(-3, 3), main=lab)
+```
+
+---
+
+# Identificando los genes con anotación dirigida
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plotHeatmap(sce.pbmc, order_columns_by="labels",
+  features=top.markers, center=TRUE, zlim=c(-3, 3), main=lab)
 ```
 
 ❓ Toma otro tipo celular e identifica los genes que dirigen la anotación
