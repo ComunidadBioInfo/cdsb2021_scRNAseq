@@ -305,7 +305,7 @@ plot1 + plot2
 ## Warning: Removed 1 rows containing missing values (geom_point).
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-10-1.png" width="1344" />
 
 ## Escalar los datos
 
@@ -513,19 +513,19 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 ```
 
 ```
-## 04:56:46 UMAP embedding parameters a = 0.9922 b = 1.112
+## 05:01:57 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ```
-## 04:56:46 Read 2638 rows and found 10 numeric columns
+## 05:01:57 Read 2638 rows and found 10 numeric columns
 ```
 
 ```
-## 04:56:46 Using Annoy for neighbor search, n_neighbors = 30
+## 05:01:57 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ```
-## 04:56:46 Building Annoy index with metric = cosine, n_trees = 50
+## 05:01:57 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ```
@@ -538,13 +538,13 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 
 ```
 ## **************************************************|
-## 04:56:46 Writing NN index file to temp file /tmp/RtmpgxlDCh/file4303a90c07b
-## 04:56:46 Searching Annoy index using 1 thread, search_k = 3000
-## 04:56:47 Annoy recall = 100%
-## 04:56:47 Commencing smooth kNN distance calibration using 1 thread
-## 04:56:48 Initializing from normalized Laplacian + noise
-## 04:56:48 Commencing optimization for 500 epochs, with 105124 positive edges
-## 04:56:51 Optimization finished
+## 05:01:57 Writing NN index file to temp file /tmp/RtmpoQN6YQ/file42b2f1a483
+## 05:01:57 Searching Annoy index using 1 thread, search_k = 3000
+## 05:01:58 Annoy recall = 100%
+## 05:01:58 Commencing smooth kNN distance calibration using 1 thread
+## 05:01:59 Initializing from normalized Laplacian + noise
+## 05:01:59 Commencing optimization for 500 epochs, with 105124 positive edges
+## 05:02:03 Optimization finished
 ```
 
 ```r
@@ -759,7 +759,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 04:57:30 UTC"
+## [1] "2021-08-09 05:02:43 UTC"
 ```
 
 ```r
@@ -768,7 +768,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 173.592  12.272 125.929
+## 170.401  13.200 125.866
 ```
 
 ```r

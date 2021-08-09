@@ -657,7 +657,7 @@ La función Read10X() lee en la salida de cellranger de 10X (de donde se obtuvie
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
 <pre><code>## Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-10-1.png" width="1344" /></p>
 </div>
 <div id="escalar-los-datos" class="section level2" number="13.7">
 <h2><span class="header-section-number">13.7</span> Escalar los datos</h2>
@@ -782,20 +782,20 @@ La función Read10X() lee en la salida de cellranger de 10X (de donde se obtuvie
 <pre><code>## Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
 ## To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
 ## This message will be shown once per session</code></pre>
-<pre><code>## 04:56:46 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>## 04:56:46 Read 2638 rows and found 10 numeric columns</code></pre>
-<pre><code>## 04:56:46 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>## 04:56:46 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>## 05:01:57 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>## 05:01:57 Read 2638 rows and found 10 numeric columns</code></pre>
+<pre><code>## 05:01:57 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>## 05:01:57 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 <pre><code>## 0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
 <pre><code>## [----|----|----|----|----|----|----|----|----|----|</code></pre>
 <pre><code>## **************************************************|
-## 04:56:46 Writing NN index file to temp file /tmp/RtmpgxlDCh/file4303a90c07b
-## 04:56:46 Searching Annoy index using 1 thread, search_k = 3000
-## 04:56:47 Annoy recall = 100%
-## 04:56:47 Commencing smooth kNN distance calibration using 1 thread
-## 04:56:48 Initializing from normalized Laplacian + noise
-## 04:56:48 Commencing optimization for 500 epochs, with 105124 positive edges
-## 04:56:51 Optimization finished</code></pre>
+## 05:01:57 Writing NN index file to temp file /tmp/RtmpoQN6YQ/file42b2f1a483
+## 05:01:57 Searching Annoy index using 1 thread, search_k = 3000
+## 05:01:58 Annoy recall = 100%
+## 05:01:58 Commencing smooth kNN distance calibration using 1 thread
+## 05:01:59 Initializing from normalized Laplacian + noise
+## 05:01:59 Commencing optimization for 500 epochs, with 105124 positive edges
+## 05:02:03 Optimization finished</code></pre>
 <div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="introducción-a-seurat.html#cb382-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that you can set `label = TRUE` or use the LabelClusters function to help label</span></span>
 <span id="cb382-2"><a href="introducción-a-seurat.html#cb382-2" aria-hidden="true" tabindex="-1"></a><span class="co"># individual clusters</span></span>
 <span id="cb382-3"><a href="introducción-a-seurat.html#cb382-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(pbmc, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>)</span></code></pre></div>
@@ -911,10 +911,10 @@ La función Read10X() lee en la salida de cellranger de 10X (de donde se obtuvie
 <h2><span class="header-section-number">13.15</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="introducción-a-seurat.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb408-2"><a href="introducción-a-seurat.html#cb408-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-09 04:57:30 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-09 05:02:43 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="introducción-a-seurat.html#cb410-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 173.592  12.272 125.929</code></pre>
+## 170.401  13.200 125.866</code></pre>
 <div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="introducción-a-seurat.html#cb412-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb412-2"><a href="introducción-a-seurat.html#cb412-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
