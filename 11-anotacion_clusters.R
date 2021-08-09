@@ -120,7 +120,6 @@ plotScoreDistribution(pred)
 
 ## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # install gmp, ClusterR, mbkmeans dependencies if needed
-library(clusterExperiment)
 sce.pbmc$labels <- pred$labels
 all.markers <- metadata(pred)$de.genes
 lab <- "B-cells"
@@ -128,7 +127,7 @@ lab <- "B-cells"
 # type
 top.markers <- Reduce(union, sapply(all.markers[[lab]], head, 10))
 
-scater::plotHeatmap(sce.pbmc,
+plotHeatmap(sce.pbmc,
     order_columns_by = "labels",
     features = top.markers, center = TRUE, zlim = c(-3, 3), main = lab
 )

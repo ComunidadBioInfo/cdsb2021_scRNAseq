@@ -20,7 +20,6 @@ Imports:
     BiocSingular,
     bluster,
     celldex,
-    clusterExperiment,
     cowplot,
     dplyr,
     DropletUtils,
