@@ -1,4 +1,4 @@
-# Inauguración CDSB2021
+# Inauguración CDSB2021 {-}
 
 <script async class="speakerdeck-embed" data-id="2183a59718804e359fedef8de75606d2" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
@@ -218,7 +218,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 04:08:25 UTC"
+## [1] "2021-08-09 04:12:21 UTC"
 ```
 
 ```r
@@ -227,7 +227,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.410   0.105   0.411
+##   0.388   0.108   0.389
 ```
 
 ```r

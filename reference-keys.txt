@@ -1,4 +1,3 @@
-inauguración-cdsb2021
 introducción-a-r-y-rstudio
 r
 github
