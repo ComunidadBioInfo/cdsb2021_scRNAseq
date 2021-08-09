@@ -227,9 +227,11 @@ dec.pbmc <- modelGeneVar(sce.pbmc)
 ```{r, warning=FALSE, message=FALSE, fig.show="hide"}
 # Visualizing the fit
 fit.pbmc <- metadata(dec.pbmc)
-plot(fit.pbmc$mean, fit.pbmc$var, xlab="Mean of log-expression",
-  ylab="Variance of log-expression")
-curve(fit.pbmc$trend(x), col="dodgerblue", add=TRUE, lwd=2)
+plot(fit.pbmc$mean, fit.pbmc$var,
+    xlab = "Mean of log-expression",
+    ylab = "Variance of log-expression"
+)
+curve(fit.pbmc$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
 ```
 
 ---
@@ -239,9 +241,11 @@ curve(fit.pbmc$trend(x), col="dodgerblue", add=TRUE, lwd=2)
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Visualizing the fit
 fit.pbmc <- metadata(dec.pbmc)
-plot(fit.pbmc$mean, fit.pbmc$var, xlab="Mean of log-expression",
-  ylab="Variance of log-expression")
-curve(fit.pbmc$trend(x), col="dodgerblue", add=TRUE, lwd=2)
+plot(fit.pbmc$mean, fit.pbmc$var,
+    xlab = "Mean of log-expression",
+    ylab = "Variance of log-expression"
+)
+curve(fit.pbmc$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
 ```
 
 ---
@@ -249,9 +253,9 @@ curve(fit.pbmc$trend(x), col="dodgerblue", add=TRUE, lwd=2)
 # Varianza de los _log-counts_
 
 ```{r, warning=FALSE, message=FALSE}
-# Ordering by largest 'biological' variation to 
+# Ordering by largest 'biological' variation to
 # identify most interesting genes
-dec.pbmc[order(dec.pbmc$bio, decreasing=TRUE),]
+dec.pbmc[order(dec.pbmc$bio, decreasing = TRUE), ]
 ```
 
 ---
@@ -284,10 +288,13 @@ dec.cv2.pbmc <- modelGeneCV2(sce.pbmc)
 ```{r, warning=FALSE, message=FALSE, fig.show="hide"}
 # Visualizing the fit
 fit.cv2.pbmc <- metadata(dec.cv2.pbmc)
-plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2, 
-  log="xy")
-curve(fit.cv2.pbmc$trend(x), col="dodgerblue", 
-  add=TRUE, lwd=2)
+plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2,
+    log = "xy"
+)
+curve(fit.cv2.pbmc$trend(x),
+    col = "dodgerblue",
+    add = TRUE, lwd = 2
+)
 ```
 
 ---
@@ -297,10 +304,13 @@ curve(fit.cv2.pbmc$trend(x), col="dodgerblue",
 ```{r, warning=FALSE, message=FALSE, echo = FALSE}
 # Visualizing the fit
 fit.cv2.pbmc <- metadata(dec.cv2.pbmc)
-plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2, 
-  log="xy")
-curve(fit.cv2.pbmc$trend(x), col="dodgerblue", 
-  add=TRUE, lwd=2)
+plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2,
+    log = "xy"
+)
+curve(fit.cv2.pbmc$trend(x),
+    col = "dodgerblue",
+    add = TRUE, lwd = 2
+)
 ```
 
 ---
@@ -310,7 +320,8 @@ curve(fit.cv2.pbmc$trend(x), col="dodgerblue",
 ```{r, warning=FALSE, message=FALSE}
 # Ordering by largest CV2 to identify most interesting genes
 dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
-  decreasing=TRUE),]
+    decreasing = TRUE
+), ]
 ```
 
 ---
