@@ -769,6 +769,102 @@ En [BioC2021](https://bioc2021.bioconductor.org/) presentaron [`ExperimentSubset
 <p class="caption">Descripción gráfica de `ExperimentSubset`. Fuente: [vignette `ExperimentSubset`](http://bioconductor.org/packages/release/bioc/vignettes/ExperimentSubset/inst/doc/ExperimentSubset.html).</p>
 </div>
 
+## Explorando datos de forma interactiva con iSEE
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> / <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw">@Bioconductor</a> congrats winners of the 1st Shiny Contest: iSEE <a href="https://t.co/oHgGkWqRsJ">https://t.co/oHgGkWqRsJ</a> <a href="https://t.co/vZLFvcMBIS">https://t.co/vZLFvcMBIS</a> !</p>&mdash; Bioconductor (@Bioconductor) <a href="https://twitter.com/Bioconductor/status/1114773873537449984?ref_src=twsrc%5Etfw">April 7, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+* http://bioconductor.org/packages/release/bioc/html/iSEE.html
+* http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html
+
+
+```r
+## Hagamos un objeto sencillo de tipo RangedSummarizedExperiment
+library("SummarizedExperiment")
+## ?SummarizedExperiment
+
+## De los ejemplos en la ayuda oficial
+## Creamos los datos para nuestro objeto de tipo SummarizedExperiment
+## para 200 genes a lo largo de 6 muestras
+nrows <- 200
+ncols <- 6
+
+## Números al azar de cuentas
+set.seed(20210223)
+counts <- matrix(runif(nrows * ncols, 1, 1e4), nrows)
+
+## Información de nuestros genes
+rowRanges <- GRanges(
+    rep(c("chr1", "chr2"), c(50, 150)),
+    IRanges(floor(runif(200, 1e5, 1e6)), width = 100),
+    strand = sample(c("+", "-"), 200, TRUE),
+    feature_id = sprintf("ID%03d", 1:200)
+)
+names(rowRanges) <- paste0("gene_", seq_len(length(rowRanges)))
+
+## Información de nuestras muestras
+colData <- DataFrame(
+    Treatment = rep(c("ChIP", "Input"), 3),
+    row.names = LETTERS[1:6]
+)
+
+## Juntamos ahora toda la información en un solo objeto de R
+rse <- SummarizedExperiment(
+    assays = SimpleList(counts = counts),
+    rowRanges = rowRanges,
+    colData = colData
+)
+
+## Exploremos el objeto resultante
+rse
+```
+
+```
+## class: RangedSummarizedExperiment 
+## dim: 200 6 
+## metadata(0):
+## assays(1): counts
+## rownames(200): gene_1 gene_2 ... gene_199 gene_200
+## rowData names(1): feature_id
+## colnames(6): A B ... E F
+## colData names(1): Treatment
+```
+
+```r
+## Explora el objeto rse de forma interactiva
+library("iSEE")
+if (interactive()) {
+    iSEE::iSEE(rse)
+}
+```
+
+### Ejercicio iSEE con sce.416b
+
+Repitamos la imagen que hicimos anteriormente.
+
+<a href="https://comunidadbioinfo.github.io/cdsb2021_scRNAseq/control-de-calidad.html#gr%C3%A1ficas-sobre-medidas-de-control-de-calidad-qc"><img src="https://comunidadbioinfo.github.io/cdsb2021_scRNAseq/05-control_calidad_files/figure-html/visualizar_qc-3.png"/></a>
+
+
+```r
+## Explora el objeto sce.416b de forma interactiva
+if (interactive()) {
+    iSEE::iSEE(sce.416b, appTitle = "sce.416b")
+}
+```
+
+### Datos de LIBD de Tran et al
+
+<a href="https://libd.shinyapps.io/tran2021_AMY/"><img src="https://raw.githubusercontent.com/LieberInstitute/10xPilot_snRNAseq-human/master/screenshot_tran2021_AMY.png"></a>
+
+* Datos de [Tran et al, _bioRxiv_, 2020](https://github.com/LieberInstitute/10xPilot_snRNAseq-human#explore-the-data-interactively).
+
+* Código de R para el sitio web: https://github.com/LieberInstitute/10xPilot_snRNAseq-human/tree/master/shiny_apps/tran2021_AMY. 
+
+### Más detalles de iSEE
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bK8D30MqXb8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+* [Notas en inglés](https://docs.google.com/document/d/19ZMeaFiFqhJUJJHiEj0qsCcH5WMrn32H-PCKzWag1oI/edit).
+
 ## Detalles de la sesión de R
 
 
@@ -778,7 +874,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 13:25:19 UTC"
+## [1] "2021-08-09 13:48:35 UTC"
 ```
 
 ```r
@@ -787,7 +883,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 208.292   4.967 244.120
+## 181.523   4.272 228.176
 ```
 
 ```r
@@ -834,8 +930,15 @@ sessioninfo::session_info()
 ##  bookdown                 0.22     2021-04-22 [1] RSPM (R 4.1.0)
 ##  bslib                    0.2.5.1  2021-05-18 [1] RSPM (R 4.1.0)
 ##  cachem                   1.0.5    2021-05-15 [2] RSPM (R 4.1.0)
+##  Cairo                    1.5-12.2 2020-07-07 [1] RSPM (R 4.1.0)
+##  circlize                 0.4.13   2021-06-09 [1] RSPM (R 4.1.0)
 ##  cli                      3.0.1    2021-07-17 [2] RSPM (R 4.1.0)
+##  clue                     0.3-59   2021-04-16 [1] RSPM (R 4.1.0)
+##  cluster                  2.1.2    2021-04-17 [3] CRAN (R 4.1.0)
+##  codetools                0.2-18   2020-11-04 [3] CRAN (R 4.1.0)
 ##  colorspace               2.0-2    2021-06-24 [1] RSPM (R 4.1.0)
+##  colourpicker             1.1.0    2020-09-14 [1] RSPM (R 4.1.0)
+##  ComplexHeatmap           2.8.0    2021-05-19 [1] Bioconductor  
 ##  cowplot                  1.1.1    2020-12-30 [1] RSPM (R 4.1.0)
 ##  crayon                   1.4.1    2021-02-08 [2] RSPM (R 4.1.0)
 ##  curl                     4.3.2    2021-06-23 [2] RSPM (R 4.1.0)
@@ -844,9 +947,11 @@ sessioninfo::session_info()
 ##  DelayedArray             0.18.0   2021-05-19 [1] Bioconductor  
 ##  DelayedMatrixStats       1.14.1   2021-08-05 [1] Bioconductor  
 ##  digest                   0.6.27   2020-10-24 [2] RSPM (R 4.1.0)
+##  doParallel               1.0.16   2020-10-16 [1] RSPM (R 4.1.0)
 ##  dplyr                    1.0.7    2021-06-18 [1] RSPM (R 4.1.0)
 ##  dqrng                    0.3.0    2021-05-01 [1] RSPM (R 4.1.0)
 ##  DropletUtils           * 1.12.2   2021-07-22 [1] Bioconductor  
+##  DT                       0.18     2021-04-14 [1] RSPM (R 4.1.0)
 ##  edgeR                    3.34.0   2021-05-19 [1] Bioconductor  
 ##  ellipsis                 0.3.2    2021-04-29 [2] RSPM (R 4.1.0)
 ##  ensembldb              * 2.16.4   2021-08-05 [1] Bioconductor  
@@ -856,14 +961,18 @@ sessioninfo::session_info()
 ##  farver                   2.1.0    2021-02-28 [1] RSPM (R 4.1.0)
 ##  fastmap                  1.1.0    2021-01-25 [2] RSPM (R 4.1.0)
 ##  filelock                 1.0.2    2018-10-05 [1] RSPM (R 4.1.0)
+##  foreach                  1.5.1    2020-10-15 [1] RSPM (R 4.1.0)
 ##  generics                 0.1.0    2020-10-31 [1] RSPM (R 4.1.0)
 ##  GenomeInfoDb           * 1.28.1   2021-07-01 [1] Bioconductor  
 ##  GenomeInfoDbData         1.2.6    2021-07-29 [1] Bioconductor  
 ##  GenomicAlignments        1.28.0   2021-05-19 [1] Bioconductor  
 ##  GenomicFeatures        * 1.44.0   2021-05-19 [1] Bioconductor  
 ##  GenomicRanges          * 1.44.0   2021-05-19 [1] Bioconductor  
+##  GetoptLong               1.0.5    2020-12-15 [1] RSPM (R 4.1.0)
 ##  ggbeeswarm               0.6.0    2017-08-07 [1] RSPM (R 4.1.0)
 ##  ggplot2                * 3.3.5    2021-06-25 [1] RSPM (R 4.1.0)
+##  ggrepel                  0.9.1    2021-01-15 [1] RSPM (R 4.1.0)
+##  GlobalOptions            0.1.2    2020-06-10 [1] RSPM (R 4.1.0)
 ##  glue                     1.4.2    2020-08-27 [2] RSPM (R 4.1.0)
 ##  gridExtra                2.3      2017-09-09 [1] RSPM (R 4.1.0)
 ##  gtable                   0.3.0    2019-03-25 [1] RSPM (R 4.1.0)
@@ -871,11 +980,15 @@ sessioninfo::session_info()
 ##  highr                    0.9      2021-04-16 [2] RSPM (R 4.1.0)
 ##  hms                      1.1.0    2021-05-17 [1] RSPM (R 4.1.0)
 ##  htmltools                0.5.1.1  2021-01-22 [1] RSPM (R 4.1.0)
+##  htmlwidgets              1.5.3    2020-12-10 [1] RSPM (R 4.1.0)
 ##  httpuv                   1.6.1    2021-05-07 [1] RSPM (R 4.1.0)
 ##  httr                     1.4.2    2020-07-20 [2] RSPM (R 4.1.0)
+##  igraph                   1.2.6    2020-10-06 [1] RSPM (R 4.1.0)
 ##  interactiveDisplayBase   1.30.0   2021-05-19 [1] Bioconductor  
 ##  IRanges                * 2.26.0   2021-05-19 [1] Bioconductor  
 ##  irlba                    2.3.3    2019-02-05 [1] RSPM (R 4.1.0)
+##  iSEE                   * 2.4.0    2021-05-19 [1] Bioconductor  
+##  iterators                1.0.13   2020-10-15 [1] RSPM (R 4.1.0)
 ##  jquerylib                0.1.4    2021-04-26 [1] RSPM (R 4.1.0)
 ##  jsonlite                 1.7.2    2020-12-09 [2] RSPM (R 4.1.0)
 ##  KEGGREST                 1.32.0   2021-05-19 [1] Bioconductor  
@@ -892,8 +1005,11 @@ sessioninfo::session_info()
 ##  MatrixGenerics         * 1.4.1    2021-08-03 [1] Bioconductor  
 ##  matrixStats            * 0.60.0   2021-07-26 [1] RSPM (R 4.1.0)
 ##  memoise                  2.0.0    2021-01-26 [2] RSPM (R 4.1.0)
+##  mgcv                     1.8-36   2021-06-01 [3] RSPM (R 4.1.0)
 ##  mime                     0.11     2021-06-23 [2] RSPM (R 4.1.0)
+##  miniUI                   0.1.1.1  2018-05-18 [1] RSPM (R 4.1.0)
 ##  munsell                  0.5.0    2018-06-12 [1] RSPM (R 4.1.0)
+##  nlme                     3.1-152  2021-02-04 [3] CRAN (R 4.1.0)
 ##  pillar                   1.6.2    2021-07-29 [2] RSPM (R 4.1.0)
 ##  pkgconfig                2.0.3    2019-09-22 [2] RSPM (R 4.1.0)
 ##  png                      0.1-7    2013-12-03 [1] RSPM (R 4.1.0)
@@ -907,12 +1023,14 @@ sessioninfo::session_info()
 ##  R.utils                  2.10.1   2020-08-26 [1] RSPM (R 4.1.0)
 ##  R6                       2.5.0    2020-10-28 [2] RSPM (R 4.1.0)
 ##  rappdirs                 0.3.3    2021-01-31 [2] RSPM (R 4.1.0)
+##  RColorBrewer             1.1-2    2014-12-07 [1] RSPM (R 4.1.0)
 ##  Rcpp                     1.0.7    2021-07-07 [2] RSPM (R 4.1.0)
 ##  RCurl                    1.98-1.3 2021-03-16 [1] RSPM (R 4.1.0)
 ##  restfulr                 0.0.13   2017-08-06 [1] RSPM (R 4.1.0)
 ##  rhdf5                    2.36.0   2021-05-19 [1] Bioconductor  
 ##  rhdf5filters             1.4.0    2021-05-19 [1] Bioconductor  
 ##  Rhdf5lib                 1.14.2   2021-07-06 [1] Bioconductor  
+##  rintrojs                 0.3.0    2021-06-06 [1] RSPM (R 4.1.0)
 ##  rjson                    0.2.20   2018-06-08 [1] RSPM (R 4.1.0)
 ##  rlang                    0.4.11   2021-04-30 [2] RSPM (R 4.1.0)
 ##  rmarkdown                2.9      2021-06-15 [1] RSPM (R 4.1.0)
@@ -928,7 +1046,12 @@ sessioninfo::session_info()
 ##  scRNAseq               * 2.6.1    2021-05-25 [1] Bioconductor  
 ##  scuttle                * 1.2.1    2021-08-05 [1] Bioconductor  
 ##  sessioninfo              1.1.1    2018-11-05 [2] RSPM (R 4.1.0)
+##  shape                    1.4.6    2021-05-19 [1] RSPM (R 4.1.0)
 ##  shiny                    1.6.0    2021-01-25 [1] RSPM (R 4.1.0)
+##  shinyAce                 0.4.1    2019-09-24 [1] RSPM (R 4.1.0)
+##  shinydashboard           0.7.1    2018-10-17 [1] RSPM (R 4.1.0)
+##  shinyjs                  2.0.0    2020-09-09 [1] RSPM (R 4.1.0)
+##  shinyWidgets             0.6.0    2021-03-15 [1] RSPM (R 4.1.0)
 ##  SingleCellExperiment   * 1.14.1   2021-05-21 [1] Bioconductor  
 ##  sparseMatrixStats        1.4.0    2021-05-19 [1] Bioconductor  
 ##  stringi                  1.7.3    2021-07-16 [2] RSPM (R 4.1.0)

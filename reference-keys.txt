@@ -44,6 +44,10 @@ filtrado-de-expresión-mitocondrial-adicional
 ejercicio-avanzado
 discusión-conviene-eliminar-datos
 un-nuevo-paquete-experimentsubset
+explorando-datos-de-forma-interactiva-con-isee
+ejercicio-isee-con-sce.416b
+datos-de-libd-de-tran-et-al
+más-detalles-de-isee
 detalles-de-la-sesión-de-r-4
 normalización-de-datos
 material

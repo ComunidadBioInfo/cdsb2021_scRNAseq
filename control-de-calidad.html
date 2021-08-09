@@ -222,7 +222,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="5.13.1" data-path="control-de-calidad.html"><a href="control-de-calidad.html#un-nuevo-paquete-experimentsubset"><i class="fa fa-check"></i><b>5.13.1</b> Un nuevo paquete: ExperimentSubset</a></li>
 </ul></li>
-<li class="chapter" data-level="5.14" data-path="control-de-calidad.html"><a href="control-de-calidad.html#detalles-de-la-sesión-de-r-4"><i class="fa fa-check"></i><b>5.14</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="5.14" data-path="control-de-calidad.html"><a href="control-de-calidad.html#explorando-datos-de-forma-interactiva-con-isee"><i class="fa fa-check"></i><b>5.14</b> Explorando datos de forma interactiva con iSEE</a>
+<ul>
+<li class="chapter" data-level="5.14.1" data-path="control-de-calidad.html"><a href="control-de-calidad.html#ejercicio-isee-con-sce.416b"><i class="fa fa-check"></i><b>5.14.1</b> Ejercicio iSEE con sce.416b</a></li>
+<li class="chapter" data-level="5.14.2" data-path="control-de-calidad.html"><a href="control-de-calidad.html#datos-de-libd-de-tran-et-al"><i class="fa fa-check"></i><b>5.14.2</b> Datos de LIBD de Tran et al</a></li>
+<li class="chapter" data-level="5.14.3" data-path="control-de-calidad.html"><a href="control-de-calidad.html#más-detalles-de-isee"><i class="fa fa-check"></i><b>5.14.3</b> Más detalles de iSEE</a></li>
+</ul></li>
+<li class="chapter" data-level="5.15" data-path="control-de-calidad.html"><a href="control-de-calidad.html#detalles-de-la-sesión-de-r-4"><i class="fa fa-check"></i><b>5.15</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="control-de-calidad.html"><a href="control-de-calidad.html#patrocinadores-5"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="normalización-de-datos.html"><a href="normalización-de-datos.html"><i class="fa fa-check"></i><b>6</b> Normalización de datos</a>
@@ -970,16 +976,106 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 </div>
 </div>
 </div>
-<div id="detalles-de-la-sesión-de-r-4" class="section level2" number="5.14">
-<h2><span class="header-section-number">5.14</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="control-de-calidad.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb144-2"><a href="control-de-calidad.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-09 13:25:19 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="control-de-calidad.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div id="explorando-datos-de-forma-interactiva-con-isee" class="section level2" number="5.14">
+<h2><span class="header-section-number">5.14</span> Explorando datos de forma interactiva con iSEE</h2>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+<a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> / <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw"><span class="citation">@Bioconductor</span></a> congrats winners of the 1st Shiny Contest: iSEE <a href="https://t.co/oHgGkWqRsJ">https://t.co/oHgGkWqRsJ</a> <a href="https://t.co/vZLFvcMBIS">https://t.co/vZLFvcMBIS</a> !
+</p>
+— Bioconductor (<span class="citation">@Bioconductor</span>) <a href="https://twitter.com/Bioconductor/status/1114773873537449984?ref_src=twsrc%5Etfw">April 7, 2019</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<ul>
+<li><a href="http://bioconductor.org/packages/release/bioc/html/iSEE.html" class="uri">http://bioconductor.org/packages/release/bioc/html/iSEE.html</a></li>
+<li><a href="http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html" class="uri">http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html</a></li>
+</ul>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="control-de-calidad.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Hagamos un objeto sencillo de tipo RangedSummarizedExperiment</span></span>
+<span id="cb144-2"><a href="control-de-calidad.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SummarizedExperiment&quot;</span>)</span>
+<span id="cb144-3"><a href="control-de-calidad.html#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="do">## ?SummarizedExperiment</span></span>
+<span id="cb144-4"><a href="control-de-calidad.html#cb144-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-5"><a href="control-de-calidad.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="do">## De los ejemplos en la ayuda oficial</span></span>
+<span id="cb144-6"><a href="control-de-calidad.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Creamos los datos para nuestro objeto de tipo SummarizedExperiment</span></span>
+<span id="cb144-7"><a href="control-de-calidad.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="do">## para 200 genes a lo largo de 6 muestras</span></span>
+<span id="cb144-8"><a href="control-de-calidad.html#cb144-8" aria-hidden="true" tabindex="-1"></a>nrows <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb144-9"><a href="control-de-calidad.html#cb144-9" aria-hidden="true" tabindex="-1"></a>ncols <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb144-10"><a href="control-de-calidad.html#cb144-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-11"><a href="control-de-calidad.html#cb144-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Números al azar de cuentas</span></span>
+<span id="cb144-12"><a href="control-de-calidad.html#cb144-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20210223</span>)</span>
+<span id="cb144-13"><a href="control-de-calidad.html#cb144-13" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(nrows <span class="sc">*</span> ncols, <span class="dv">1</span>, <span class="fl">1e4</span>), nrows)</span>
+<span id="cb144-14"><a href="control-de-calidad.html#cb144-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-15"><a href="control-de-calidad.html#cb144-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de nuestros genes</span></span>
+<span id="cb144-16"><a href="control-de-calidad.html#cb144-16" aria-hidden="true" tabindex="-1"></a>rowRanges <span class="ot">&lt;-</span> <span class="fu">GRanges</span>(</span>
+<span id="cb144-17"><a href="control-de-calidad.html#cb144-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr2&quot;</span>), <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">150</span>)),</span>
+<span id="cb144-18"><a href="control-de-calidad.html#cb144-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">IRanges</span>(<span class="fu">floor</span>(<span class="fu">runif</span>(<span class="dv">200</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>)), <span class="at">width =</span> <span class="dv">100</span>),</span>
+<span id="cb144-19"><a href="control-de-calidad.html#cb144-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">strand =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;+&quot;</span>, <span class="st">&quot;-&quot;</span>), <span class="dv">200</span>, <span class="cn">TRUE</span>),</span>
+<span id="cb144-20"><a href="control-de-calidad.html#cb144-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">feature_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;ID%03d&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>)</span>
+<span id="cb144-21"><a href="control-de-calidad.html#cb144-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb144-22"><a href="control-de-calidad.html#cb144-22" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rowRanges) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;gene_&quot;</span>, <span class="fu">seq_len</span>(<span class="fu">length</span>(rowRanges)))</span>
+<span id="cb144-23"><a href="control-de-calidad.html#cb144-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-24"><a href="control-de-calidad.html#cb144-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de nuestras muestras</span></span>
+<span id="cb144-25"><a href="control-de-calidad.html#cb144-25" aria-hidden="true" tabindex="-1"></a>colData <span class="ot">&lt;-</span> <span class="fu">DataFrame</span>(</span>
+<span id="cb144-26"><a href="control-de-calidad.html#cb144-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">Treatment =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;ChIP&quot;</span>, <span class="st">&quot;Input&quot;</span>), <span class="dv">3</span>),</span>
+<span id="cb144-27"><a href="control-de-calidad.html#cb144-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">row.names =</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb144-28"><a href="control-de-calidad.html#cb144-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb144-29"><a href="control-de-calidad.html#cb144-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-30"><a href="control-de-calidad.html#cb144-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Juntamos ahora toda la información en un solo objeto de R</span></span>
+<span id="cb144-31"><a href="control-de-calidad.html#cb144-31" aria-hidden="true" tabindex="-1"></a>rse <span class="ot">&lt;-</span> <span class="fu">SummarizedExperiment</span>(</span>
+<span id="cb144-32"><a href="control-de-calidad.html#cb144-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">assays =</span> <span class="fu">SimpleList</span>(<span class="at">counts =</span> counts),</span>
+<span id="cb144-33"><a href="control-de-calidad.html#cb144-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">rowRanges =</span> rowRanges,</span>
+<span id="cb144-34"><a href="control-de-calidad.html#cb144-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">colData =</span> colData</span>
+<span id="cb144-35"><a href="control-de-calidad.html#cb144-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb144-36"><a href="control-de-calidad.html#cb144-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-37"><a href="control-de-calidad.html#cb144-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Exploremos el objeto resultante</span></span>
+<span id="cb144-38"><a href="control-de-calidad.html#cb144-38" aria-hidden="true" tabindex="-1"></a>rse</span></code></pre></div>
+<pre><code>## class: RangedSummarizedExperiment 
+## dim: 200 6 
+## metadata(0):
+## assays(1): counts
+## rownames(200): gene_1 gene_2 ... gene_199 gene_200
+## rowData names(1): feature_id
+## colnames(6): A B ... E F
+## colData names(1): Treatment</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="control-de-calidad.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Explora el objeto rse de forma interactiva</span></span>
+<span id="cb146-2"><a href="control-de-calidad.html#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
+<span id="cb146-3"><a href="control-de-calidad.html#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
+<span id="cb146-4"><a href="control-de-calidad.html#cb146-4" aria-hidden="true" tabindex="-1"></a>    iSEE<span class="sc">::</span><span class="fu">iSEE</span>(rse)</span>
+<span id="cb146-5"><a href="control-de-calidad.html#cb146-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="ejercicio-isee-con-sce.416b" class="section level3" number="5.14.1">
+<h3><span class="header-section-number">5.14.1</span> Ejercicio iSEE con sce.416b</h3>
+<p>Repitamos la imagen que hicimos anteriormente.</p>
+<p><a href="https://comunidadbioinfo.github.io/cdsb2021_scRNAseq/control-de-calidad.html#gr%C3%A1ficas-sobre-medidas-de-control-de-calidad-qc"><img src="https://comunidadbioinfo.github.io/cdsb2021_scRNAseq/05-control_calidad_files/figure-html/visualizar_qc-3.png"/></a></p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="control-de-calidad.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Explora el objeto sce.416b de forma interactiva</span></span>
+<span id="cb147-2"><a href="control-de-calidad.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
+<span id="cb147-3"><a href="control-de-calidad.html#cb147-3" aria-hidden="true" tabindex="-1"></a>    iSEE<span class="sc">::</span><span class="fu">iSEE</span>(sce<span class="fl">.416</span>b, <span class="at">appTitle =</span> <span class="st">&quot;sce.416b&quot;</span>)</span>
+<span id="cb147-4"><a href="control-de-calidad.html#cb147-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="datos-de-libd-de-tran-et-al" class="section level3" number="5.14.2">
+<h3><span class="header-section-number">5.14.2</span> Datos de LIBD de Tran et al</h3>
+<p><a href="https://libd.shinyapps.io/tran2021_AMY/"><img src="https://raw.githubusercontent.com/LieberInstitute/10xPilot_snRNAseq-human/master/screenshot_tran2021_AMY.png"></a></p>
+<ul>
+<li><p>Datos de <a href="https://github.com/LieberInstitute/10xPilot_snRNAseq-human#explore-the-data-interactively">Tran et al, <em>bioRxiv</em>, 2020</a>.</p></li>
+<li><p>Código de R para el sitio web: <a href="https://github.com/LieberInstitute/10xPilot_snRNAseq-human/tree/master/shiny_apps/tran2021_AMY" class="uri">https://github.com/LieberInstitute/10xPilot_snRNAseq-human/tree/master/shiny_apps/tran2021_AMY</a>.</p></li>
+</ul>
+</div>
+<div id="más-detalles-de-isee" class="section level3" number="5.14.3">
+<h3><span class="header-section-number">5.14.3</span> Más detalles de iSEE</h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bK8D30MqXb8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<ul>
+<li><a href="https://docs.google.com/document/d/19ZMeaFiFqhJUJJHiEj0qsCcH5WMrn32H-PCKzWag1oI/edit">Notas en inglés</a>.</li>
+</ul>
+</div>
+</div>
+<div id="detalles-de-la-sesión-de-r-4" class="section level2" number="5.15">
+<h2><span class="header-section-number">5.15</span> Detalles de la sesión de R</h2>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="control-de-calidad.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb148-2"><a href="control-de-calidad.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-09 13:48:35 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="control-de-calidad.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 208.292   4.967 244.120</code></pre>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="control-de-calidad.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb148-2"><a href="control-de-calidad.html#cb148-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+## 181.523   4.272 228.176</code></pre>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="control-de-calidad.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb152-2"><a href="control-de-calidad.html#cb152-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)
@@ -1018,8 +1114,15 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 ##  bookdown                 0.22     2021-04-22 [1] RSPM (R 4.1.0)
 ##  bslib                    0.2.5.1  2021-05-18 [1] RSPM (R 4.1.0)
 ##  cachem                   1.0.5    2021-05-15 [2] RSPM (R 4.1.0)
+##  Cairo                    1.5-12.2 2020-07-07 [1] RSPM (R 4.1.0)
+##  circlize                 0.4.13   2021-06-09 [1] RSPM (R 4.1.0)
 ##  cli                      3.0.1    2021-07-17 [2] RSPM (R 4.1.0)
+##  clue                     0.3-59   2021-04-16 [1] RSPM (R 4.1.0)
+##  cluster                  2.1.2    2021-04-17 [3] CRAN (R 4.1.0)
+##  codetools                0.2-18   2020-11-04 [3] CRAN (R 4.1.0)
 ##  colorspace               2.0-2    2021-06-24 [1] RSPM (R 4.1.0)
+##  colourpicker             1.1.0    2020-09-14 [1] RSPM (R 4.1.0)
+##  ComplexHeatmap           2.8.0    2021-05-19 [1] Bioconductor  
 ##  cowplot                  1.1.1    2020-12-30 [1] RSPM (R 4.1.0)
 ##  crayon                   1.4.1    2021-02-08 [2] RSPM (R 4.1.0)
 ##  curl                     4.3.2    2021-06-23 [2] RSPM (R 4.1.0)
@@ -1028,9 +1131,11 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 ##  DelayedArray             0.18.0   2021-05-19 [1] Bioconductor  
 ##  DelayedMatrixStats       1.14.1   2021-08-05 [1] Bioconductor  
 ##  digest                   0.6.27   2020-10-24 [2] RSPM (R 4.1.0)
+##  doParallel               1.0.16   2020-10-16 [1] RSPM (R 4.1.0)
 ##  dplyr                    1.0.7    2021-06-18 [1] RSPM (R 4.1.0)
 ##  dqrng                    0.3.0    2021-05-01 [1] RSPM (R 4.1.0)
 ##  DropletUtils           * 1.12.2   2021-07-22 [1] Bioconductor  
+##  DT                       0.18     2021-04-14 [1] RSPM (R 4.1.0)
 ##  edgeR                    3.34.0   2021-05-19 [1] Bioconductor  
 ##  ellipsis                 0.3.2    2021-04-29 [2] RSPM (R 4.1.0)
 ##  ensembldb              * 2.16.4   2021-08-05 [1] Bioconductor  
@@ -1040,14 +1145,18 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 ##  farver                   2.1.0    2021-02-28 [1] RSPM (R 4.1.0)
 ##  fastmap                  1.1.0    2021-01-25 [2] RSPM (R 4.1.0)
 ##  filelock                 1.0.2    2018-10-05 [1] RSPM (R 4.1.0)
+##  foreach                  1.5.1    2020-10-15 [1] RSPM (R 4.1.0)
 ##  generics                 0.1.0    2020-10-31 [1] RSPM (R 4.1.0)
 ##  GenomeInfoDb           * 1.28.1   2021-07-01 [1] Bioconductor  
 ##  GenomeInfoDbData         1.2.6    2021-07-29 [1] Bioconductor  
 ##  GenomicAlignments        1.28.0   2021-05-19 [1] Bioconductor  
 ##  GenomicFeatures        * 1.44.0   2021-05-19 [1] Bioconductor  
 ##  GenomicRanges          * 1.44.0   2021-05-19 [1] Bioconductor  
+##  GetoptLong               1.0.5    2020-12-15 [1] RSPM (R 4.1.0)
 ##  ggbeeswarm               0.6.0    2017-08-07 [1] RSPM (R 4.1.0)
 ##  ggplot2                * 3.3.5    2021-06-25 [1] RSPM (R 4.1.0)
+##  ggrepel                  0.9.1    2021-01-15 [1] RSPM (R 4.1.0)
+##  GlobalOptions            0.1.2    2020-06-10 [1] RSPM (R 4.1.0)
 ##  glue                     1.4.2    2020-08-27 [2] RSPM (R 4.1.0)
 ##  gridExtra                2.3      2017-09-09 [1] RSPM (R 4.1.0)
 ##  gtable                   0.3.0    2019-03-25 [1] RSPM (R 4.1.0)
@@ -1055,11 +1164,15 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 ##  highr                    0.9      2021-04-16 [2] RSPM (R 4.1.0)
 ##  hms                      1.1.0    2021-05-17 [1] RSPM (R 4.1.0)
 ##  htmltools                0.5.1.1  2021-01-22 [1] RSPM (R 4.1.0)
+##  htmlwidgets              1.5.3    2020-12-10 [1] RSPM (R 4.1.0)
 ##  httpuv                   1.6.1    2021-05-07 [1] RSPM (R 4.1.0)
 ##  httr                     1.4.2    2020-07-20 [2] RSPM (R 4.1.0)
+##  igraph                   1.2.6    2020-10-06 [1] RSPM (R 4.1.0)
 ##  interactiveDisplayBase   1.30.0   2021-05-19 [1] Bioconductor  
 ##  IRanges                * 2.26.0   2021-05-19 [1] Bioconductor  
 ##  irlba                    2.3.3    2019-02-05 [1] RSPM (R 4.1.0)
+##  iSEE                   * 2.4.0    2021-05-19 [1] Bioconductor  
+##  iterators                1.0.13   2020-10-15 [1] RSPM (R 4.1.0)
 ##  jquerylib                0.1.4    2021-04-26 [1] RSPM (R 4.1.0)
 ##  jsonlite                 1.7.2    2020-12-09 [2] RSPM (R 4.1.0)
 ##  KEGGREST                 1.32.0   2021-05-19 [1] Bioconductor  
@@ -1076,8 +1189,11 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 ##  MatrixGenerics         * 1.4.1    2021-08-03 [1] Bioconductor  
 ##  matrixStats            * 0.60.0   2021-07-26 [1] RSPM (R 4.1.0)
 ##  memoise                  2.0.0    2021-01-26 [2] RSPM (R 4.1.0)
+##  mgcv                     1.8-36   2021-06-01 [3] RSPM (R 4.1.0)
 ##  mime                     0.11     2021-06-23 [2] RSPM (R 4.1.0)
+##  miniUI                   0.1.1.1  2018-05-18 [1] RSPM (R 4.1.0)
 ##  munsell                  0.5.0    2018-06-12 [1] RSPM (R 4.1.0)
+##  nlme                     3.1-152  2021-02-04 [3] CRAN (R 4.1.0)
 ##  pillar                   1.6.2    2021-07-29 [2] RSPM (R 4.1.0)
 ##  pkgconfig                2.0.3    2019-09-22 [2] RSPM (R 4.1.0)
 ##  png                      0.1-7    2013-12-03 [1] RSPM (R 4.1.0)
@@ -1091,12 +1207,14 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 ##  R.utils                  2.10.1   2020-08-26 [1] RSPM (R 4.1.0)
 ##  R6                       2.5.0    2020-10-28 [2] RSPM (R 4.1.0)
 ##  rappdirs                 0.3.3    2021-01-31 [2] RSPM (R 4.1.0)
+##  RColorBrewer             1.1-2    2014-12-07 [1] RSPM (R 4.1.0)
 ##  Rcpp                     1.0.7    2021-07-07 [2] RSPM (R 4.1.0)
 ##  RCurl                    1.98-1.3 2021-03-16 [1] RSPM (R 4.1.0)
 ##  restfulr                 0.0.13   2017-08-06 [1] RSPM (R 4.1.0)
 ##  rhdf5                    2.36.0   2021-05-19 [1] Bioconductor  
 ##  rhdf5filters             1.4.0    2021-05-19 [1] Bioconductor  
 ##  Rhdf5lib                 1.14.2   2021-07-06 [1] Bioconductor  
+##  rintrojs                 0.3.0    2021-06-06 [1] RSPM (R 4.1.0)
 ##  rjson                    0.2.20   2018-06-08 [1] RSPM (R 4.1.0)
 ##  rlang                    0.4.11   2021-04-30 [2] RSPM (R 4.1.0)
 ##  rmarkdown                2.9      2021-06-15 [1] RSPM (R 4.1.0)
@@ -1112,7 +1230,12 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 ##  scRNAseq               * 2.6.1    2021-05-25 [1] Bioconductor  
 ##  scuttle                * 1.2.1    2021-08-05 [1] Bioconductor  
 ##  sessioninfo              1.1.1    2018-11-05 [2] RSPM (R 4.1.0)
+##  shape                    1.4.6    2021-05-19 [1] RSPM (R 4.1.0)
 ##  shiny                    1.6.0    2021-01-25 [1] RSPM (R 4.1.0)
+##  shinyAce                 0.4.1    2019-09-24 [1] RSPM (R 4.1.0)
+##  shinydashboard           0.7.1    2018-10-17 [1] RSPM (R 4.1.0)
+##  shinyjs                  2.0.0    2020-09-09 [1] RSPM (R 4.1.0)
+##  shinyWidgets             0.6.0    2021-03-15 [1] RSPM (R 4.1.0)
 ##  SingleCellExperiment   * 1.14.1   2021-05-21 [1] Bioconductor  
 ##  sparseMatrixStats        1.4.0    2021-05-19 [1] Bioconductor  
 ##  stringi                  1.7.3    2021-07-16 [2] RSPM (R 4.1.0)
