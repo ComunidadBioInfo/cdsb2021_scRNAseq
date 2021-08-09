@@ -133,4 +133,7 @@ introducción-a-seurat
 diapositivas
 una-perspectiva-diferente
 kick-start
+quality-control
+normalización
+detección-de-genes-caractersticas-altamente-variables
 detalles-de-la-sesión-de-r-12
