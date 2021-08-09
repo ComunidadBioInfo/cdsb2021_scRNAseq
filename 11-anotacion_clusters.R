@@ -128,8 +128,10 @@ lab <- "B-cells"
 # type
 top.markers <- Reduce(union, sapply(all.markers[[lab]], head, 10))
 
-# plotHeatmap(sce.pbmc, order_columns_by="labels",
-#  features=top.markers, center=TRUE, zlim=c(-3, 3), main=lab)
+scater::plotHeatmap(sce.pbmc,
+    order_columns_by = "labels",
+    features = top.markers, center = TRUE, zlim = c(-3, 3), main = lab
+)
 
 
 ## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------

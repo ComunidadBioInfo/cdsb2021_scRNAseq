@@ -243,8 +243,10 @@ lab <- "B-cells"
 # type
 top.markers <- Reduce(union, sapply(all.markers[[lab]], head, 10))
 
-# plotHeatmap(sce.pbmc, order_columns_by="labels",
-#  features=top.markers, center=TRUE, zlim=c(-3, 3), main=lab)
+scater::plotHeatmap(sce.pbmc,
+    order_columns_by = "labels",
+    features = top.markers, center = TRUE, zlim = c(-3, 3), main = lab
+)
 ```
 
 ❓ Toma otro tipo celular e identifica los genes que dirigen la anotación
