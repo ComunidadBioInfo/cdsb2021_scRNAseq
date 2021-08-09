@@ -8,13 +8,14 @@ Presentación: [aquí](https://docs.google.com/presentation/d/18ZCddwDD9lY8j4gmt
 
 ## Una perspectiva diferente 
 
-Seurat es un paquete R diseñado para control de calidad, análisis y exploración de datos de secuencia de ARN de una sola célula. Seurat tiene como objetivo permitir a los usuarios identificar e interpretar fuentes de heterogeneidad a partir de mediciones transcriptómicas unicelulares e integrar diversos tipos de datos unicelulares. 
+**Seurat** es un paquete R diseñado para control de calidad, análisis y exploración de datos de secuencia de ARN de una sola célula. Seurat tiene como objetivo permitir a los usuarios identificar e interpretar fuentes de heterogeneidad a partir de mediciones transcriptómicas unicelulares e integrar diversos tipos de datos unicelulares. 
 
 Seurat es desarrollado y mantenido por el laboratorio de [Satija](https://satijalab.org/seurat/authors.html) y se publica bajo la Licencia Pública GNU (GPL 3.0).
 
 En este tutorial se ve como procesar los datos de scRNAseq con un nuevo paquete. Los pasos a realizar son en esencia los mismos que ya revisamos con el tutorial de la OSCA de RStudio.  
 No olvides nunca que el paquete mas adecuado y que deberás utilizar dependerá mayoritariamente de tus datos y el procesamiento que se adecúe a estos.  
-Además... siempre es bueno diversos puntos de vista sobre las cosas, no es así?
+
+**Además... siempre es bueno diversos puntos de vista sobre las cosas, no es así?**
 
 Aprende mas sobre Seurat: [aquí](https://satijalab.org/seurat/)
 
@@ -23,11 +24,11 @@ Aprende mas sobre Seurat: [aquí](https://satijalab.org/seurat/)
 En este tutorial partimos a partir de que ya se tienen los archivos FASTQ resultados de secuenciación.  
 
 - ¿Con qué datos estoy trabajando?  
-Peripheral Blood Mononuclear Cells (PBMC) disponibles gratuitamente de 10X Genomics. Son en total 2,700 céluas únicas secuenciadas con Illumina NextSeq 500.
+Peripheral Blood Mononuclear Cells **(PBMC)** disponibles gratuitamente de **10X Genomics**. Son en total 2,700 céluas únicas secuenciadas con **Illumina NextSeq 500**.
 Puedes descargar los datos de [aqui](https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz) (7.3MB).  
 Descarga el archivo comprimido y procede a descomprimirlo. Se creara el siguiente directorio *filtered_gene_bc_matrices/hg19/*, aquí estarán los archivos que necesitaremos.
 
-Este tutorial solo es la punta del **iceberg** de lo que se puede hacer con la paquetera de Seurat. Para comenzar a sumergirte en este mundo no dudes en visitar la página oficial mantenida por Satija Lab [Vignettes](https://satijalab.org/seurat/articles/get_started.html)
+Este tutorial solo es la punta del *iceberg* de lo que se puede hacer con la paquetera de Seurat. Para comenzar a sumergirte en este mundo no dudes en visitar la página oficial mantenida por Satija Lab [Vignettes](https://satijalab.org/seurat/articles/get_started.html)
 
 A continuación estableceremos nuestros directorio de trabajo y leeremos los datos anteriores.  
 La función Read10X () lee en la salida de cellranger de 10X (de donde se obtuvieron los FASTQs), devolviendo una matriz de recuento única identificada molecularmente (UMI). Los valores en esta matriz representan el número de moléculas para cada característica (es decir, gen; fila) que se detectan en cada celda (columna).
@@ -111,18 +112,18 @@ Estan almacenadas en la seccion de **meta-data** del objeto Seurat
 
 ## Normalización
 
-De forma predeterminada, se emplea un método de normalización de escala global "LogNormalize" que normaliza las medidas de expresión de características para cada celda por la expresión total, multiplica esto por un factor de escala (10.000 por defecto) y transforma el resultado en logaritmos. Los valores normalizados se almacenan en pbmc [["RNA"]] @ data 
+De forma predeterminada, se emplea un método de normalización de escala global **"LogNormalize"** que normaliza las medidas de expresión de características para cada celda por la expresión total, multiplica esto por un factor de escala (10.000 por defecto) y transforma el resultado en logaritmos. Los valores normalizados se almacenan en pbmc [["RNA"]] @ data 
 
 
 ```r
 #pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
 ```
 
-## Detección de Genes (caractersticas) Altamente Variables
+## Detección de genes (caractersticas) altamente variables
 
-A continuación, calculamos un subconjunto de características que exhiben una alta variación de celda a celda en el conjunto de datos (es decir, están altamente expresadas en algunas células y poco expresadas en otras). El equipo de Seurat y otros equipos han descubierto que centrarse en estos genes en el análisis posterior ayuda a resaltar la señal biológica en conjuntos de datos unicelulares.
+A continuación, calculamos un subconjunto de **características que exhiben una alta variación de célula a célula en el conjunto de datos** (es decir, están altamente expresadas en algunas células y poco expresadas en otras). El equipo de Seurat y otros equipos han descubierto que centrarse en estos genes en el análisis posterior ayuda a resaltar la señal biológica en conjuntos de datos unicelulares.
 
-Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola celda, y se implementa en la función *FindVariableFeatures()*. De forma predeterminada, devolvemos 2000 características por conjunto de datos. Estos se utilizarán en análisis posteriores, como PCA. 
+Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola celda, y se implementa en la función *FindVariableFeatures()*. De forma predeterminada, **devolvemos 2000 características por conjunto de datos** (aunque se puede modificar). Estos se utilizarán en análisis posteriores, como PCA. 
 
 
 ```r
@@ -139,6 +140,97 @@ Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versio
 #print(plot1 + plot2)
 #dev.off()
 ```
+## Scalar los datos
+
+A continuación, aplicamos una transformación lineal ("escalado") que es un paso de preprocesamiento estándar antes de las técnicas de reducción dimensional como PCA. La función *ScaleData()*:
+- Cambia la expresión de cada gen, de modo que la expresión media en las células sea 0
+- Escala la expresión de cada gen, de modo que la varianza entre las células sea 1
+     - Este paso otorga el mismo peso en los análisis posteriores, de modo que los genes altamente expresados no dominen
+Los resultados de esto se almacenan en pbmc [["RNA"]] @ scale.data
+
+
+```r
+#all.genes <- nombres de filas (pbmc)
+#pbmc <- ScaleData (pbmc, features = all.genes) 
+```
+all.genes <- nombres de filas (pbmc)
+pbmc <- ScaleData (pbmc, features = all.genes) 
+
+## Reducción dimensional lineal
+
+A continuación, realizamos PCA sobre los datos escalados. De forma predeterminada, solo las características variables determinadas previamente se utilizan como entrada, pero se pueden definir mediante el argumento de características si desea elegir un subconjunto diferente. 
+
+
+```r
+#pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+```
+
+Seurat proporciona varias formas útiles de visualizar tanto las celdas como las características que definen el PCA, incluidas *VizDimReduction()*, *DimPlot()* y *DimHeatmap()* 
+
+Puedes examinar y visualice los resultados de PCA de diferentes formas 
+
+
+```r
+#print(pbmc[["pca"]], dims = 1:5, nfeatures = 5)
+
+#pdf(paste0(proydir,"plots/LinearDimensionalReduction.pdf"))
+#p1 <- VizDimLoadings(pbmc, dims = 1:2, reduction = "pca")
+#p2 <- DimPlot(pbmc, reduction = "pca")
+#print(p1)
+#print(p2)
+```
+
+En particular, *DimHeatmap()* permite una fácil exploración de las fuentes primarias de heterogeneidad en un conjunto de datos y puede ser útil cuando se intenta decidir qué PC incluir para análisis posteriores posteriores. Tanto las celdas como las características se ordenan de acuerdo con sus puntajes de PCA. Establecer celdas en un número traza las celdas "extremas" en ambos extremos del espectro, lo que acelera drásticamente el trazado de grandes conjuntos de datos. Aunque claramente es un análisis supervisado, consideramos que esta es una herramienta valiosa para explorar conjuntos de características correlacionadas. 
+
+
+```r
+#p3 <- DimHeatmap(pbmc, dims = 1, cells = 500, balanced = TRUE)
+#p4 <- DimHeatmap(pbmc, dims = 1:15, cells = 500, balanced = TRUE)
+#print(p3)
+#print(p4)
+#dev.off()
+```
+
+## Determinar la dimensionalidad del conjunto de datos 
+
+Para superar el extenso ruido técnico en cualquier característica única para los datos de scRNA-seq, Seurat agrupa las células en función de sus puntuaciones de PCA, y cada PC representa esencialmente una "metafunción" que combina información en un conjunto de características correlacionadas. Por lo tanto, los componentes principales principales representan una compresión sólida del conjunto de datos. **Sin embargo, ¿cuántos componentes deberíamos elegir incluir? 10? 20? 100?**
+
+En Macosko et al, implementamos una prueba de remuestreo inspirada en el **procedimiento JackStraw**. Permutamos aleatoriamente un subconjunto de los datos (1% por defecto) y volvemos a ejecutar PCA, construyendo una "distribución nula" de puntuaciones de características, y repetimos este procedimiento. Identificamos PC "importantes" como aquellas que tienen un gran enriquecimiento de características de bajo valor p. 
+
+
+```r
+# NOTE: This process can take a long time for big datasets, comment out for expediency. More
+# approximate techniques such as those implemented in ElbowPlot() can be used to reduce
+# computation time
+#pbmc <- JackStraw(pbmc, num.replicate = 100)
+#pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
+```
+
+La función **JackStrawPlot()** proporciona una herramienta de visualización para comparar la distribución de los valores p para cada PC con una distribución uniforme (línea discontinua). Las PC "significativas" mostrarán un gran enriquecimiento de funciones con valores p bajos (curva sólida por encima de la línea discontinua). En este caso, parece que hay una fuerte caída en la importancia después de los primeros 10-12 PCs. 
+
+
+```r
+#pdf(paste0(proydir,"plots/DetermineDimensionality.pdf"))
+#p1 <- JackStrawPlot(pbmc, dims = 1:15)
+```
+
+Un método heurístico alternativo genera un **"diagrama de codo (Elbow Plot)"**: una clasificación de componentes principales basada en el porcentaje de varianza explicada por cada uno (función ElbowPlot ()). En este ejemplo, podemos observar un "codo" alrededor de PC9-10, lo que sugiere que la mayor parte de la señal verdadera se captura en las primeras 10 PC. 
+
+
+```r
+#p2 <- ElbowPlot(pbmc)
+#print(p1)
+#print(p2)
+#dev.off()
+```
+
+## Clustering 
+
+
+```r
+#pbmc <- FindNeighbors(pbmc, dims = 1:10)
+#pbmc <- FindClusters(pbmc, resolution = 0.5)
+```
 
 ## Detalles de la sesión de R
 
@@ -149,7 +241,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 00:06:42 UTC"
+## [1] "2021-08-09 01:07:56 UTC"
 ```
 
 ```r
@@ -158,7 +250,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.507   0.135   0.520
+##   0.526   0.117   0.526
 ```
 
 ```r

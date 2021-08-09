@@ -247,7 +247,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-08                  
+##  date     2021-08-09                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package                * version    date       lib source        
@@ -582,7 +582,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-08 23:51:48.
+Fecha de la última actualización de esta página: 2021-08-09 00:53:22.
 
 ## Licencia  {-}
 

@@ -136,4 +136,8 @@ kick-start
 quality-control
 normalización
 detección-de-genes-caractersticas-altamente-variables
+scalar-los-datos
+reducción-dimensional-lineal
+determinar-la-dimensionalidad-del-conjunto-de-datos
+clustering-1
 detalles-de-la-sesión-de-r-12

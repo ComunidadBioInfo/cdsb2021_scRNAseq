@@ -346,8 +346,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.3" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#kick-start"><i class="fa fa-check"></i><b>14.3</b> Kick-start</a></li>
 <li class="chapter" data-level="14.4" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#quality-control"><i class="fa fa-check"></i><b>14.4</b> Quality Control</a></li>
 <li class="chapter" data-level="14.5" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#normalización"><i class="fa fa-check"></i><b>14.5</b> Normalización</a></li>
-<li class="chapter" data-level="14.6" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detección-de-genes-caractersticas-altamente-variables"><i class="fa fa-check"></i><b>14.6</b> Detección de Genes (caractersticas) Altamente Variables</a></li>
-<li class="chapter" data-level="14.7" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detalles-de-la-sesión-de-r-12"><i class="fa fa-check"></i><b>14.7</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="14.6" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detección-de-genes-caractersticas-altamente-variables"><i class="fa fa-check"></i><b>14.6</b> Detección de genes (caractersticas) altamente variables</a></li>
+<li class="chapter" data-level="14.7" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#scalar-los-datos"><i class="fa fa-check"></i><b>14.7</b> Scalar los datos</a></li>
+<li class="chapter" data-level="14.8" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#reducción-dimensional-lineal"><i class="fa fa-check"></i><b>14.8</b> Reducción dimensional lineal</a></li>
+<li class="chapter" data-level="14.9" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#determinar-la-dimensionalidad-del-conjunto-de-datos"><i class="fa fa-check"></i><b>14.9</b> Determinar la dimensionalidad del conjunto de datos</a></li>
+<li class="chapter" data-level="14.10" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#clustering-1"><i class="fa fa-check"></i><b>14.10</b> Clustering</a></li>
+<li class="chapter" data-level="14.11" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detalles-de-la-sesión-de-r-12"><i class="fa fa-check"></i><b>14.11</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#patrocinadores-13"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 </ul>
@@ -376,11 +380,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="una-perspectiva-diferente" class="section level2" number="14.2">
 <h2><span class="header-section-number">14.2</span> Una perspectiva diferente</h2>
-<p>Seurat es un paquete R diseñado para control de calidad, análisis y exploración de datos de secuencia de ARN de una sola célula. Seurat tiene como objetivo permitir a los usuarios identificar e interpretar fuentes de heterogeneidad a partir de mediciones transcriptómicas unicelulares e integrar diversos tipos de datos unicelulares.</p>
+<p><strong>Seurat</strong> es un paquete R diseñado para control de calidad, análisis y exploración de datos de secuencia de ARN de una sola célula. Seurat tiene como objetivo permitir a los usuarios identificar e interpretar fuentes de heterogeneidad a partir de mediciones transcriptómicas unicelulares e integrar diversos tipos de datos unicelulares.</p>
 <p>Seurat es desarrollado y mantenido por el laboratorio de <a href="https://satijalab.org/seurat/authors.html">Satija</a> y se publica bajo la Licencia Pública GNU (GPL 3.0).</p>
 <p>En este tutorial se ve como procesar los datos de scRNAseq con un nuevo paquete. Los pasos a realizar son en esencia los mismos que ya revisamos con el tutorial de la OSCA de RStudio.<br />
-No olvides nunca que el paquete mas adecuado y que deberás utilizar dependerá mayoritariamente de tus datos y el procesamiento que se adecúe a estos.<br />
-Además… siempre es bueno diversos puntos de vista sobre las cosas, no es así?</p>
+No olvides nunca que el paquete mas adecuado y que deberás utilizar dependerá mayoritariamente de tus datos y el procesamiento que se adecúe a estos.</p>
+<p><strong>Además… siempre es bueno diversos puntos de vista sobre las cosas, no es así?</strong></p>
 <p>Aprende mas sobre Seurat: <a href="https://satijalab.org/seurat/">aquí</a></p>
 </div>
 <div id="kick-start" class="section level2" number="14.3">
@@ -388,11 +392,11 @@ Además… siempre es bueno diversos puntos de vista sobre las cosas, no es así
 <p>En este tutorial partimos a partir de que ya se tienen los archivos FASTQ resultados de secuenciación.</p>
 <ul>
 <li>¿Con qué datos estoy trabajando?<br />
-Peripheral Blood Mononuclear Cells (PBMC) disponibles gratuitamente de 10X Genomics. Son en total 2,700 céluas únicas secuenciadas con Illumina NextSeq 500.
+Peripheral Blood Mononuclear Cells <strong>(PBMC)</strong> disponibles gratuitamente de <strong>10X Genomics</strong>. Son en total 2,700 céluas únicas secuenciadas con <strong>Illumina NextSeq 500</strong>.
 Puedes descargar los datos de <a href="https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz">aqui</a> (7.3MB).<br />
 Descarga el archivo comprimido y procede a descomprimirlo. Se creara el siguiente directorio <em>filtered_gene_bc_matrices/hg19/</em>, aquí estarán los archivos que necesitaremos.</li>
 </ul>
-<p>Este tutorial solo es la punta del <strong>iceberg</strong> de lo que se puede hacer con la paquetera de Seurat. Para comenzar a sumergirte en este mundo no dudes en visitar la página oficial mantenida por Satija Lab <a href="https://satijalab.org/seurat/articles/get_started.html">Vignettes</a></p>
+<p>Este tutorial solo es la punta del <em>iceberg</em> de lo que se puede hacer con la paquetera de Seurat. Para comenzar a sumergirte en este mundo no dudes en visitar la página oficial mantenida por Satija Lab <a href="https://satijalab.org/seurat/articles/get_started.html">Vignettes</a></p>
 <p>A continuación estableceremos nuestros directorio de trabajo y leeremos los datos anteriores.<br />
 La función Read10X () lee en la salida de cellranger de 10X (de donde se obtuvieron los FASTQs), devolviendo una matriz de recuento única identificada molecularmente (UMI). Los valores en esta matriz representan el número de moléculas para cada característica (es decir, gen; fila) que se detectan en cada celda (columna).</p>
 <div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="introducción-a-seurat.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(dplyr)</span></span>
@@ -456,13 +460,13 @@ Estan almacenadas en la seccion de <strong>meta-data</strong> del objeto Seurat<
 </div>
 <div id="normalización" class="section level2" number="14.5">
 <h2><span class="header-section-number">14.5</span> Normalización</h2>
-<p>De forma predeterminada, se emplea un método de normalización de escala global “LogNormalize” que normaliza las medidas de expresión de características para cada celda por la expresión total, multiplica esto por un factor de escala (10.000 por defecto) y transforma el resultado en logaritmos. Los valores normalizados se almacenan en pbmc [[“RNA”]] @ data</p>
+<p>De forma predeterminada, se emplea un método de normalización de escala global <strong>“LogNormalize”</strong> que normaliza las medidas de expresión de características para cada celda por la expresión total, multiplica esto por un factor de escala (10.000 por defecto) y transforma el resultado en logaritmos. Los valores normalizados se almacenan en pbmc [[“RNA”]] @ data</p>
 <div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="introducción-a-seurat.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="co">#pbmc &lt;- NormalizeData(pbmc, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)</span></span></code></pre></div>
 </div>
 <div id="detección-de-genes-caractersticas-altamente-variables" class="section level2" number="14.6">
-<h2><span class="header-section-number">14.6</span> Detección de Genes (caractersticas) Altamente Variables</h2>
-<p>A continuación, calculamos un subconjunto de características que exhiben una alta variación de celda a celda en el conjunto de datos (es decir, están altamente expresadas en algunas células y poco expresadas en otras). El equipo de Seurat y otros equipos han descubierto que centrarse en estos genes en el análisis posterior ayuda a resaltar la señal biológica en conjuntos de datos unicelulares.</p>
-<p>Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola celda, y se implementa en la función <em>FindVariableFeatures()</em>. De forma predeterminada, devolvemos 2000 características por conjunto de datos. Estos se utilizarán en análisis posteriores, como PCA.</p>
+<h2><span class="header-section-number">14.6</span> Detección de genes (caractersticas) altamente variables</h2>
+<p>A continuación, calculamos un subconjunto de <strong>características que exhiben una alta variación de célula a célula en el conjunto de datos</strong> (es decir, están altamente expresadas en algunas células y poco expresadas en otras). El equipo de Seurat y otros equipos han descubierto que centrarse en estos genes en el análisis posterior ayuda a resaltar la señal biológica en conjuntos de datos unicelulares.</p>
+<p>Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola celda, y se implementa en la función <em>FindVariableFeatures()</em>. De forma predeterminada, <strong>devolvemos 2000 características por conjunto de datos</strong> (aunque se puede modificar). Estos se utilizarán en análisis posteriores, como PCA.</p>
 <div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="introducción-a-seurat.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="co">#pbmc &lt;- FindVariableFeatures(pbmc, selection.method = &quot;vst&quot;, nfeatures = 2000)</span></span>
 <span id="cb299-2"><a href="introducción-a-seurat.html#cb299-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb299-3"><a href="introducción-a-seurat.html#cb299-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify the 10 most highly variable genes</span></span>
@@ -476,16 +480,71 @@ Estan almacenadas en la seccion de <strong>meta-data</strong> del objeto Seurat<
 <span id="cb299-11"><a href="introducción-a-seurat.html#cb299-11" aria-hidden="true" tabindex="-1"></a><span class="co">#print(plot1 + plot2)</span></span>
 <span id="cb299-12"><a href="introducción-a-seurat.html#cb299-12" aria-hidden="true" tabindex="-1"></a><span class="co">#dev.off()</span></span></code></pre></div>
 </div>
-<div id="detalles-de-la-sesión-de-r-12" class="section level2" number="14.7">
-<h2><span class="header-section-number">14.7</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="introducción-a-seurat.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb300-2"><a href="introducción-a-seurat.html#cb300-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-09 00:06:42 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="introducción-a-seurat.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div id="scalar-los-datos" class="section level2" number="14.7">
+<h2><span class="header-section-number">14.7</span> Scalar los datos</h2>
+<p>A continuación, aplicamos una transformación lineal (“escalado”) que es un paso de preprocesamiento estándar antes de las técnicas de reducción dimensional como PCA. La función <em>ScaleData()</em>:
+- Cambia la expresión de cada gen, de modo que la expresión media en las células sea 0
+- Escala la expresión de cada gen, de modo que la varianza entre las células sea 1
+- Este paso otorga el mismo peso en los análisis posteriores, de modo que los genes altamente expresados no dominen
+Los resultados de esto se almacenan en pbmc [[“RNA”]] @ scale.data</p>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="introducción-a-seurat.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="co">#all.genes &lt;- nombres de filas (pbmc)</span></span>
+<span id="cb300-2"><a href="introducción-a-seurat.html#cb300-2" aria-hidden="true" tabindex="-1"></a><span class="co">#pbmc &lt;- ScaleData (pbmc, features = all.genes) </span></span></code></pre></div>
+<p>all.genes &lt;- nombres de filas (pbmc)
+pbmc &lt;- ScaleData (pbmc, features = all.genes)</p>
+</div>
+<div id="reducción-dimensional-lineal" class="section level2" number="14.8">
+<h2><span class="header-section-number">14.8</span> Reducción dimensional lineal</h2>
+<p>A continuación, realizamos PCA sobre los datos escalados. De forma predeterminada, solo las características variables determinadas previamente se utilizan como entrada, pero se pueden definir mediante el argumento de características si desea elegir un subconjunto diferente.</p>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="introducción-a-seurat.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="co">#pbmc &lt;- RunPCA(pbmc, features = VariableFeatures(object = pbmc))</span></span></code></pre></div>
+<p>Seurat proporciona varias formas útiles de visualizar tanto las celdas como las características que definen el PCA, incluidas <em>VizDimReduction()</em>, <em>DimPlot()</em> y <em>DimHeatmap()</em></p>
+<p>Puedes examinar y visualice los resultados de PCA de diferentes formas</p>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="introducción-a-seurat.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="co">#print(pbmc[[&quot;pca&quot;]], dims = 1:5, nfeatures = 5)</span></span>
+<span id="cb302-2"><a href="introducción-a-seurat.html#cb302-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb302-3"><a href="introducción-a-seurat.html#cb302-3" aria-hidden="true" tabindex="-1"></a><span class="co">#pdf(paste0(proydir,&quot;plots/LinearDimensionalReduction.pdf&quot;))</span></span>
+<span id="cb302-4"><a href="introducción-a-seurat.html#cb302-4" aria-hidden="true" tabindex="-1"></a><span class="co">#p1 &lt;- VizDimLoadings(pbmc, dims = 1:2, reduction = &quot;pca&quot;)</span></span>
+<span id="cb302-5"><a href="introducción-a-seurat.html#cb302-5" aria-hidden="true" tabindex="-1"></a><span class="co">#p2 &lt;- DimPlot(pbmc, reduction = &quot;pca&quot;)</span></span>
+<span id="cb302-6"><a href="introducción-a-seurat.html#cb302-6" aria-hidden="true" tabindex="-1"></a><span class="co">#print(p1)</span></span>
+<span id="cb302-7"><a href="introducción-a-seurat.html#cb302-7" aria-hidden="true" tabindex="-1"></a><span class="co">#print(p2)</span></span></code></pre></div>
+<p>En particular, <em>DimHeatmap()</em> permite una fácil exploración de las fuentes primarias de heterogeneidad en un conjunto de datos y puede ser útil cuando se intenta decidir qué PC incluir para análisis posteriores posteriores. Tanto las celdas como las características se ordenan de acuerdo con sus puntajes de PCA. Establecer celdas en un número traza las celdas “extremas” en ambos extremos del espectro, lo que acelera drásticamente el trazado de grandes conjuntos de datos. Aunque claramente es un análisis supervisado, consideramos que esta es una herramienta valiosa para explorar conjuntos de características correlacionadas.</p>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="introducción-a-seurat.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="co">#p3 &lt;- DimHeatmap(pbmc, dims = 1, cells = 500, balanced = TRUE)</span></span>
+<span id="cb303-2"><a href="introducción-a-seurat.html#cb303-2" aria-hidden="true" tabindex="-1"></a><span class="co">#p4 &lt;- DimHeatmap(pbmc, dims = 1:15, cells = 500, balanced = TRUE)</span></span>
+<span id="cb303-3"><a href="introducción-a-seurat.html#cb303-3" aria-hidden="true" tabindex="-1"></a><span class="co">#print(p3)</span></span>
+<span id="cb303-4"><a href="introducción-a-seurat.html#cb303-4" aria-hidden="true" tabindex="-1"></a><span class="co">#print(p4)</span></span>
+<span id="cb303-5"><a href="introducción-a-seurat.html#cb303-5" aria-hidden="true" tabindex="-1"></a><span class="co">#dev.off()</span></span></code></pre></div>
+</div>
+<div id="determinar-la-dimensionalidad-del-conjunto-de-datos" class="section level2" number="14.9">
+<h2><span class="header-section-number">14.9</span> Determinar la dimensionalidad del conjunto de datos</h2>
+<p>Para superar el extenso ruido técnico en cualquier característica única para los datos de scRNA-seq, Seurat agrupa las células en función de sus puntuaciones de PCA, y cada PC representa esencialmente una “metafunción” que combina información en un conjunto de características correlacionadas. Por lo tanto, los componentes principales principales representan una compresión sólida del conjunto de datos. <strong>Sin embargo, ¿cuántos componentes deberíamos elegir incluir? 10? 20? 100?</strong></p>
+<p>En Macosko et al, implementamos una prueba de remuestreo inspirada en el <strong>procedimiento JackStraw</strong>. Permutamos aleatoriamente un subconjunto de los datos (1% por defecto) y volvemos a ejecutar PCA, construyendo una “distribución nula” de puntuaciones de características, y repetimos este procedimiento. Identificamos PC “importantes” como aquellas que tienen un gran enriquecimiento de características de bajo valor p. </p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="introducción-a-seurat.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: This process can take a long time for big datasets, comment out for expediency. More</span></span>
+<span id="cb304-2"><a href="introducción-a-seurat.html#cb304-2" aria-hidden="true" tabindex="-1"></a><span class="co"># approximate techniques such as those implemented in ElbowPlot() can be used to reduce</span></span>
+<span id="cb304-3"><a href="introducción-a-seurat.html#cb304-3" aria-hidden="true" tabindex="-1"></a><span class="co"># computation time</span></span>
+<span id="cb304-4"><a href="introducción-a-seurat.html#cb304-4" aria-hidden="true" tabindex="-1"></a><span class="co">#pbmc &lt;- JackStraw(pbmc, num.replicate = 100)</span></span>
+<span id="cb304-5"><a href="introducción-a-seurat.html#cb304-5" aria-hidden="true" tabindex="-1"></a><span class="co">#pbmc &lt;- ScoreJackStraw(pbmc, dims = 1:20)</span></span></code></pre></div>
+<p>La función <strong>JackStrawPlot()</strong> proporciona una herramienta de visualización para comparar la distribución de los valores p para cada PC con una distribución uniforme (línea discontinua). Las PC “significativas” mostrarán un gran enriquecimiento de funciones con valores p bajos (curva sólida por encima de la línea discontinua). En este caso, parece que hay una fuerte caída en la importancia después de los primeros 10-12 PCs.</p>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="introducción-a-seurat.html#cb305-1" aria-hidden="true" tabindex="-1"></a><span class="co">#pdf(paste0(proydir,&quot;plots/DetermineDimensionality.pdf&quot;))</span></span>
+<span id="cb305-2"><a href="introducción-a-seurat.html#cb305-2" aria-hidden="true" tabindex="-1"></a><span class="co">#p1 &lt;- JackStrawPlot(pbmc, dims = 1:15)</span></span></code></pre></div>
+<p>Un método heurístico alternativo genera un <strong>“diagrama de codo (Elbow Plot)”</strong>: una clasificación de componentes principales basada en el porcentaje de varianza explicada por cada uno (función ElbowPlot ()). En este ejemplo, podemos observar un “codo” alrededor de PC9-10, lo que sugiere que la mayor parte de la señal verdadera se captura en las primeras 10 PC.</p>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="introducción-a-seurat.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="co">#p2 &lt;- ElbowPlot(pbmc)</span></span>
+<span id="cb306-2"><a href="introducción-a-seurat.html#cb306-2" aria-hidden="true" tabindex="-1"></a><span class="co">#print(p1)</span></span>
+<span id="cb306-3"><a href="introducción-a-seurat.html#cb306-3" aria-hidden="true" tabindex="-1"></a><span class="co">#print(p2)</span></span>
+<span id="cb306-4"><a href="introducción-a-seurat.html#cb306-4" aria-hidden="true" tabindex="-1"></a><span class="co">#dev.off()</span></span></code></pre></div>
+</div>
+<div id="clustering-1" class="section level2" number="14.10">
+<h2><span class="header-section-number">14.10</span> Clustering</h2>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="introducción-a-seurat.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="co">#pbmc &lt;- FindNeighbors(pbmc, dims = 1:10)</span></span>
+<span id="cb307-2"><a href="introducción-a-seurat.html#cb307-2" aria-hidden="true" tabindex="-1"></a><span class="co">#pbmc &lt;- FindClusters(pbmc, resolution = 0.5)</span></span></code></pre></div>
+</div>
+<div id="detalles-de-la-sesión-de-r-12" class="section level2" number="14.11">
+<h2><span class="header-section-number">14.11</span> Detalles de la sesión de R</h2>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="introducción-a-seurat.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb308-2"><a href="introducción-a-seurat.html#cb308-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-09 01:07:56 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="introducción-a-seurat.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.507   0.135   0.520</code></pre>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="introducción-a-seurat.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb304-2"><a href="introducción-a-seurat.html#cb304-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+##   0.526   0.117   0.526</code></pre>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="introducción-a-seurat.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb312-2"><a href="introducción-a-seurat.html#cb312-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)

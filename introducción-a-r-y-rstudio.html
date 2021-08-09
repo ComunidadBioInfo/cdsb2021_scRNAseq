@@ -346,8 +346,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.3" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#kick-start"><i class="fa fa-check"></i><b>14.3</b> Kick-start</a></li>
 <li class="chapter" data-level="14.4" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#quality-control"><i class="fa fa-check"></i><b>14.4</b> Quality Control</a></li>
 <li class="chapter" data-level="14.5" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#normalización"><i class="fa fa-check"></i><b>14.5</b> Normalización</a></li>
-<li class="chapter" data-level="14.6" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detección-de-genes-caractersticas-altamente-variables"><i class="fa fa-check"></i><b>14.6</b> Detección de Genes (caractersticas) Altamente Variables</a></li>
-<li class="chapter" data-level="14.7" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detalles-de-la-sesión-de-r-12"><i class="fa fa-check"></i><b>14.7</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="14.6" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detección-de-genes-caractersticas-altamente-variables"><i class="fa fa-check"></i><b>14.6</b> Detección de genes (caractersticas) altamente variables</a></li>
+<li class="chapter" data-level="14.7" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#scalar-los-datos"><i class="fa fa-check"></i><b>14.7</b> Scalar los datos</a></li>
+<li class="chapter" data-level="14.8" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#reducción-dimensional-lineal"><i class="fa fa-check"></i><b>14.8</b> Reducción dimensional lineal</a></li>
+<li class="chapter" data-level="14.9" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#determinar-la-dimensionalidad-del-conjunto-de-datos"><i class="fa fa-check"></i><b>14.9</b> Determinar la dimensionalidad del conjunto de datos</a></li>
+<li class="chapter" data-level="14.10" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#clustering-1"><i class="fa fa-check"></i><b>14.10</b> Clustering</a></li>
+<li class="chapter" data-level="14.11" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detalles-de-la-sesión-de-r-12"><i class="fa fa-check"></i><b>14.11</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#patrocinadores-13"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 </ul>
@@ -559,10 +563,10 @@ Thank you <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw"><span c
 <h2><span class="header-section-number">2.5</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="introducción-a-r-y-rstudio.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb15-2"><a href="introducción-a-r-y-rstudio.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-08 23:51:48 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-09 00:53:23 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="introducción-a-r-y-rstudio.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.514   0.095   0.495</code></pre>
+##   0.446   0.129   0.461</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="introducción-a-r-y-rstudio.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb19-2"><a href="introducción-a-r-y-rstudio.html#cb19-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -575,7 +579,7 @@ Thank you <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw"><span c
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-08                  
+##  date     2021-08-09                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package     * version date       lib source        
