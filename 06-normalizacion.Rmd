@@ -106,6 +106,13 @@ Donde $j$ es el número total de genes y $gene$ es el número de cuentas por gen
 
 El valor de *library size* es el que asumimos que escala con cualquier sesgo específico en cada célula.
 
+
+```{r echo=FALSE}
+knitr::include_graphics(here::here("img/libsize.png"))
+```
+
+
+
 Para escalar los datos ocuparemos un factor de escalamiento llamado *Library Size factor*. 
 
 $$ Library Size \propto Library Size factor $$
@@ -119,6 +126,10 @@ Y se define de tal manera que el promedio de *Library Size factor*  en todas las
 $$ mean(Library Size factor) = 1 $$
 
 Lo que nos permite que los valores normalizados están en la misma escala y pueden ser útiles para la interpretación. 
+
+```{r echo=FALSE}
+knitr::include_graphics(here::here("img/libfactor.png"))
+```
 
 
 ```{r}
