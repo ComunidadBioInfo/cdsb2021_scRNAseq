@@ -2,27 +2,24 @@
 
 Instructora: [**Yalbi I. Balderas-Martínez**](http://Yalbibalderas.github.io/)
 
-# Diapositivas de Peter Hickey
+## Diapositivas de Peter Hickey
 
 Ver las diapositivas originales [aquí](https://docs.google.com/presentation/d/19J2FyjKlBQdAkku4Oa6UZ6SA-Y4P7AEKCRIbEQWA9ho/edit#slide=id.ga100bba375887aa_0)
 
-Plantilla desarrollada por: [Leonardo Collado-Torres](http://lcolladotor.github.io/)
+
+## Motivación
+
+* Usualmente usamos datos scRNA-seq para caracterizar la heterogeneidad entre células
+
+* Para hacer esto, usamos métodos como el clustering y la reducción de dimensionalidad
+
+* Esto involucra resumir las diferencias por gen en una sola medida de (dis)similitud entre un par de células
+
+* **¿Cuáles genes deberíamos usar para calcular esta medida de (dis)similitud?**
 
 
 
-# Motivación
-
-Usualmente usamos datos scRNA-seq para caracterizar la heterogeneidad entre células
-
-Para hacer esto, usamos métodos como el clustering y la reducción de dimensionalidad
-
-Esto involucra resumir las diferencias por gen en una sola medida de (dis)similitud entre un par de células
-
-**¿Cuáles genes deberíamos usar para calcular esta medida de (dis)similitud?**
-
-
-
-# Selección de _features_ (genes)
+## Selección de _features_ (genes)
 
 La elección de los _features_ tiene un mayor impacto en qué tan similares decidimos que son las células 
 
@@ -32,16 +29,12 @@ La elección de los _features_ tiene un mayor impacto en qué tan similares deci
 
 Deseamos seleccionar los **genes altamente variables** (High Variable Genes **HVGs**). Genes con una variación incrementada en comparación con otros genes que están siendo afectados por ruido técnico u otra variación biológica que no es de nuestro interés.
 
+## Dataset ilustrativo: PBMC4k 10X sin filtrar
 
-class: inverse center middle
-
-# Dataset ilustrativo: PBMC4k 10X sin filtrar
-
-
-
-# Dataset ilustrativo: PBMC4k 10X sin filtrar
+### Descargar datos
 
 ```{r, warning=FALSE, message=FALSE}
+# Usemos datos de pbmc4k
 library(BiocFileCache)
 bfc <- BiocFileCache()
 raw.path <- bfcrpath(bfc, file.path(
@@ -49,31 +42,22 @@ raw.path <- bfcrpath(bfc, file.path(
     "cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz"
 ))
 untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
-```
 
-
-
-# Dataset ilustrativo: PBMC4k 10X sin filtrar
-
-```{r, warning=FALSE, message=FALSE}
 library(DropletUtils)
 library(Matrix)
 fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
 sce.pbmc <- read10xCounts(fname, col.names = TRUE)
+sce.pbmc
 ```
 
 Dataset "Células mononucleares humanas de sangre periférica" de 10X Genomics
 
-Descripción [aquí](https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-genomics.html)
+Descripción [aquí](https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-genomics.html) ^[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017).]
 
-.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
-
-
-
-# Dataset ilustrativo: PBMC4k 10X sin filtrar
+### Anotación
 
 ```{r, warning=FALSE, message=FALSE}
-# gene-annotation
+# Anotación de los genes
 library(scater)
 rownames(sce.pbmc) <- uniquifyFeatureNames(
     rowData(sce.pbmc)$ID, rowData(sce.pbmc)$Symbol
@@ -83,20 +67,17 @@ location <- mapIds(EnsDb.Hsapiens.v86,
     keys = rowData(sce.pbmc)$ID,
     column = "SEQNAME", keytype = "GENEID"
 )
-# cell-detection
+
+# Detección de _droplets_ con células
 set.seed(100)
 e.out <- emptyDrops(counts(sce.pbmc))
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 ```
 
-.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
-
-
-
-# Dataset ilustrativo: PBMC4k 10X sin filtrar
+### Control de calidad
 
 ```{r, warning=FALSE, message=FALSE}
-# quality-control
+# Control de calidad
 stats <- perCellQCMetrics(sce.pbmc,
     subsets = list(Mito = which(location == "MT"))
 )
@@ -104,7 +85,8 @@ high.mito <- isOutlier(stats$subsets_Mito_percent,
     type = "higher"
 )
 sce.pbmc <- sce.pbmc[, !high.mito]
-# normalization
+
+# Normalización de los datos
 library(scran)
 set.seed(1000)
 clusters <- quickCluster(sce.pbmc)
@@ -112,15 +94,10 @@ sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 ```
 
+## Cuantificando la varianza por gen
 
 
-class: inverse center middle
-
-# Cuantificando la varianza por gen
-
-
-
-# Varianza de los _log-counts_
+### Varianza de los _log-counts_
 
 El enfoque más simple para cuantificar la variación _per-feature_ es simplemente calcular la varianza de los _log-counts_
 
@@ -128,24 +105,23 @@ El enfoque más simple para cuantificar la variación _per-feature_ es simplemen
 * ⚠️ La transformación log no logra la estabilización de la varianza perfecta, así que se requiere modelar la relación de la varianza-media de los _features_.
 
 
+### Enfoque simple
 
-# Varianza de los _log-counts_
-
-### Enfoque simple:
 1. Calcular la varianza de los _log-counts_ para cada gen (ignorando grupos experimentales)
 2. Ordenar los genes del más-al-menos variable
 
-### Un enfoque más sofisticado:
+### Un enfoque más sofisticado
+
 1. Calcular la varianza de los _log-counts_ para cada gen (ignorando grupos experimentales)
 2. Modelar la relación de la media de la varianza de los _log-counts_ para estimar la variación _técnica_
 3. Estimar la varianza _biológica_ sustrayendo la varianza _técnica_ de la varianza total
 4. Ordenar los genes de la variable de mayor-a-menor biológicamente
 
 
-
-# Varianza de los _log-counts_
+### Supuestos
 
 ````{r, warning=FALSE, message=FALSE}
+# Varianza de las log-counts
 library(scran)
 dec.pbmc <- modelGeneVar(sce.pbmc)
 ```
@@ -155,43 +131,28 @@ dec.pbmc <- modelGeneVar(sce.pbmc)
 * 🤓 Podemos entonces descomponer la varianza total de cada gen en un componente _técnico_ y uno _biológico_ 
 * 🤓 Genes con una gran varianza _biológica_ son considerados interesantes 
 
-
-
-# Varianza de los _log-counts_
-
-```{r, warning=FALSE, message=FALSE, fig.show="hide"}
-# Visualizing the fit
-fit.pbmc <- metadata(dec.pbmc)
-plot(fit.pbmc$mean, fit.pbmc$var, xlab="Mean of log-expression",
-  ylab="Variance of log-expression")
-curve(fit.pbmc$trend(x), col="dodgerblue", add=TRUE, lwd=2)
-```
-
-
-
-# Varianza de los _log-counts_
-
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-# Visualizing the fit
-fit.pbmc <- metadata(dec.pbmc)
-plot(fit.pbmc$mean, fit.pbmc$var, xlab="Mean of log-expression",
-  ylab="Variance of log-expression")
-curve(fit.pbmc$trend(x), col="dodgerblue", add=TRUE, lwd=2)
-```
-
-
-
-# Varianza de los _log-counts_
+### Visualizando la media y varianza
 
 ```{r, warning=FALSE, message=FALSE}
-# Ordering by largest 'biological' variation to 
-# identify most interesting genes
+# Visualicemos la relación entre la media y la varianza
+fit.pbmc <- metadata(dec.pbmc)
+plot(fit.pbmc$mean, fit.pbmc$var, xlab="Mean of log-expression",
+  ylab="Variance of log-expression")
+curve(fit.pbmc$trend(x), col="dodgerblue", add=TRUE, lwd=2)
+```
+
+
+### Ordenando genes interesantes
+
+```{r, warning=FALSE, message=FALSE}
+# Ordenemos por los genes más interesantes para checar
+# los datos
 dec.pbmc[order(dec.pbmc$bio, decreasing=TRUE),]
 ```
 
 
 
-# Coeficiente de variación de las cuentas
+## Coeficiente de variación de las cuentas
 
 El coeficiente de variación de las cuentas al cuadrado (CV<sup>2</sup>) es una alternativa a la varianza de los _log-counts_
 
@@ -201,9 +162,10 @@ El coeficiente de variación de las cuentas al cuadrado (CV<sup>2</sup>) es una 
 
 
 
-# Coeficiente de variación
+### Coeficiente de variación
 
 ```{r, warning=FALSE, message=FALSE}
+# Coeficiente de variación
 dec.cv2.pbmc <- modelGeneCV2(sce.pbmc)
 ```
 
@@ -214,23 +176,10 @@ dec.cv2.pbmc <- modelGeneCV2(sce.pbmc)
 
 
 
-# Coeficiente de variación
-
-```{r, warning=FALSE, message=FALSE, fig.show="hide"}
-# Visualizing the fit
-fit.cv2.pbmc <- metadata(dec.cv2.pbmc)
-plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2, 
-  log="xy")
-curve(fit.cv2.pbmc$trend(x), col="dodgerblue", 
-  add=TRUE, lwd=2)
-```
-
-
-
-# Coeficiente de variación
+### Visualizando el coeficiente de variación
 
 ```{r, warning=FALSE, message=FALSE, echo = FALSE}
-# Visualizing the fit
+# Visualicemos la relación con la media
 fit.cv2.pbmc <- metadata(dec.cv2.pbmc)
 plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2, 
   log="xy")
@@ -240,17 +189,16 @@ curve(fit.cv2.pbmc$trend(x), col="dodgerblue",
 
 
 
-# Coeficiente de variación
+### Genes por coeficiente de variación
 
 ```{r, warning=FALSE, message=FALSE}
-# Ordering by largest CV2 to identify most interesting genes
+# Ordenemos por los genes más interesantes para checar
+# los datos
 dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
   decreasing=TRUE),]
 ```
 
-
-
-# La varianza de los _log-counts_ vs coeficiente de variación
+## Varianza de los _log-counts_ vs coeficiente de variación
 
 **Generalmente se usa la varianza de los _log-counts_** 
 
