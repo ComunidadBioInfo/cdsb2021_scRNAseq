@@ -64,6 +64,9 @@ list.files(here::here(), recursive = TRUE)
 ```
 
 ## usethis
+
+[manual de usuario](https://cran.r-project.org/web/packages/usethis/usethis.pdf)
+
 `usethis` puede ser más amigable, por ejemplo para la creación de nuevos archivos .R es capaz de agruparlos en la carpeta R (dando un orden al proyecto)
 
 
@@ -90,13 +93,15 @@ Ahora vamos a vincular nuestro proyecto de Rstudio con Github, esto es muy util 
 
 - https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
+>Despues de instalar git debemor reiniciar nuestro RStudio para que pueda anexarse
+
 Y la instalación de los siguientes paquetes:
   
 
 ```r
 # paquetes que vamos a requerir
 install.packages(c("gitcreds", "gert", "gh"))
-
+#cargarlos de manera separada
 library("gitcreds")
 library("gert")
 library("gh")
@@ -124,6 +129,7 @@ usethis::create_github_token() # redirige a github donde eligiras nombre especif
 # copia el token para después ingresarlo con gitcreds_set()
 gitcreds::gitcreds_set() # aquí colocas el token (NO tu contraseña de github!!!)
 ```
+> NOTA: en el comando `gitcreds::gitcreds_set()` **NO debemos poner nuestro token entre parentesis,** sino que al ejecutar el comando la misma función nos pedirá ingresar el token
 
 El siguiente paso será configurar nuestro usuario de github en el archivo `.gitconfig`
 
@@ -168,9 +174,9 @@ Una vez que ya vinculamos nuestro repositorio con github podemos seguir actualiz
 Checaremos `git_add`, `git_commit`, `git_log` y `git_push`
 
 ```r
-# escribimos un nuevo archivo e indicamos dónde lo queremos
-writeLines("hola", "R/prueba.R")
-# también podemos hacerlo así
+# escribimos un nuevo archivo, volvemos a usar here::here para especificar path
+writeLines("hola", here::here("R","prueba-here.R"))
+# otra manera es usar use_r
 usethis::use_r("archivo-prueba-github.R") # añade archivo al directorio R del proyecto actual
 
 # Por ejemplo podríamos probar añadir algo nuevo
@@ -188,6 +194,8 @@ gert::git_push() # COMANDO IMPORTANTE
 
 _Puede ser más amigable usar el recuadro de Git que aparece en RStudio para hacer todo lo anterior!_
 
+**Recuerden subir sus repositorios al**
+[Google Sheet](https://docs.google.com/spreadsheets/d/13xHCfRb3vATXCFxS1prIA5cYgHNFnzI0GLlcIjtenyw/edit)
 
 ## Ejercicio postcards
 * Similar a https://pages.github.com/
@@ -379,6 +387,9 @@ gert::git_push
 
 * <span style="color:DodgerBlue">**(opcional)**</span>. Anuncien su nueva página web en Twitter usando el hashtag `#rstats` y/o etiquen al autor de `postcards` https://twitter.com/seankross. Pueden después incluir su página web en su introducción en el canal `#bienvenida` del Slack de la CDSB ^^.
 
+**Recuerden subir sus repositorios al**
+[Google Sheet](https://docs.google.com/spreadsheets/d/13xHCfRb3vATXCFxS1prIA5cYgHNFnzI0GLlcIjtenyw/edit)
+
 ## Detalles de la sesión de R
 
 
@@ -388,7 +399,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 18:37:18 UTC"
+## [1] "2021-08-09 19:01:37 UTC"
 ```
 
 ```r
@@ -397,7 +408,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.588   0.141   0.602
+##   0.473   0.116   0.483
 ```
 
 ```r
