@@ -163,7 +163,7 @@ Sin embargo, estas listas no son muy amigables si queremos explorar por lo que p
   
 ## Introducción a RNA-seq de célula única (scRNA-seq) con Bioconductor y al libro de OSCA  
 
-[link a diapositivas](https://github.com/ComunidadBioInfo)
+[link a diapositivas](https://docs.google.com/presentation/d/1Jr_CtxAX4MviZF6Hb4taPOPWQl1HZW942M_pH51B4Vg/edit?usp=sharing)
 
 
 ## Detalles de la sesión de R
@@ -175,7 +175,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 04:39:43 UTC"
+## [1] "2021-08-09 08:42:32 UTC"
 ```
 
 ```r
@@ -184,7 +184,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.414   0.135   0.431
+##   0.383   0.131   0.383
 ```
 
 ```r
