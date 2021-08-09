@@ -97,7 +97,9 @@ Y la instalación de los siguientes paquetes:
 # paquetes que vamos a requerir
 install.packages("gitcreds", "gert", "gh")
 
-library("gitcreds", "gert", "gh")
+library("gitcreds")
+library("gert")
+library("gh")
 ```
 
 
@@ -386,7 +388,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 15:40:18 UTC"
+## [1] "2021-08-09 17:00:56 UTC"
 ```
 
 ```r
@@ -395,7 +397,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.494   0.089   0.491
+##   0.670   0.114   0.647
 ```
 
 ```r
