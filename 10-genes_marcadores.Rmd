@@ -28,10 +28,7 @@ raw.path <- bfcrpath(bfc, file.path(
     "cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz"
 ))
 untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
-```
 
-
-```{r, warning=FALSE, message=FALSE}
 library(DropletUtils)
 library(Matrix)
 fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
@@ -61,6 +58,8 @@ set.seed(100)
 e.out <- emptyDrops(counts(sce.pbmc))
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 ```
+
+### Control de calidad
 
 ```{r, warning=FALSE, message=FALSE}
 # Control de calidad
