@@ -5,3 +5,6 @@
 notas/
 _book
 *_files/
+.Rdata
+.httr-oauth
+.DS_Store
