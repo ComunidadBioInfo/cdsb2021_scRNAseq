@@ -347,11 +347,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.4" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#quality-control"><i class="fa fa-check"></i><b>14.4</b> Quality Control</a></li>
 <li class="chapter" data-level="14.5" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#normalización"><i class="fa fa-check"></i><b>14.5</b> Normalización</a></li>
 <li class="chapter" data-level="14.6" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detección-de-genes-caractersticas-altamente-variables"><i class="fa fa-check"></i><b>14.6</b> Detección de genes (caractersticas) altamente variables</a></li>
-<li class="chapter" data-level="14.7" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#scalar-los-datos"><i class="fa fa-check"></i><b>14.7</b> Scalar los datos</a></li>
+<li class="chapter" data-level="14.7" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#escalar-los-datos"><i class="fa fa-check"></i><b>14.7</b> Escalar los datos</a></li>
 <li class="chapter" data-level="14.8" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#reducción-dimensional-lineal"><i class="fa fa-check"></i><b>14.8</b> Reducción dimensional lineal</a></li>
 <li class="chapter" data-level="14.9" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#determinar-la-dimensionalidad-del-conjunto-de-datos"><i class="fa fa-check"></i><b>14.9</b> Determinar la dimensionalidad del conjunto de datos</a></li>
 <li class="chapter" data-level="14.10" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#clustering-1"><i class="fa fa-check"></i><b>14.10</b> Clustering</a></li>
-<li class="chapter" data-level="14.11" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detalles-de-la-sesión-de-r-12"><i class="fa fa-check"></i><b>14.11</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="14.11" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#non-linear-dimensional-reduction-umaptsne"><i class="fa fa-check"></i><b>14.11</b> Non-linear dimensional reduction (UMAP/tSNE)</a></li>
+<li class="chapter" data-level="14.12" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#detalles-de-la-sesión-de-r-12"><i class="fa fa-check"></i><b>14.12</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#patrocinadores-13"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 </ul>
@@ -480,8 +481,8 @@ Estan almacenadas en la seccion de <strong>meta-data</strong> del objeto Seurat<
 <span id="cb299-11"><a href="introducción-a-seurat.html#cb299-11" aria-hidden="true" tabindex="-1"></a><span class="co">#print(plot1 + plot2)</span></span>
 <span id="cb299-12"><a href="introducción-a-seurat.html#cb299-12" aria-hidden="true" tabindex="-1"></a><span class="co">#dev.off()</span></span></code></pre></div>
 </div>
-<div id="scalar-los-datos" class="section level2" number="14.7">
-<h2><span class="header-section-number">14.7</span> Scalar los datos</h2>
+<div id="escalar-los-datos" class="section level2" number="14.7">
+<h2><span class="header-section-number">14.7</span> Escalar los datos</h2>
 <p>A continuación, aplicamos una transformación lineal (“escalado”) que es un paso de preprocesamiento estándar antes de las técnicas de reducción dimensional como PCA. La función <em>ScaleData()</em>:
 - Cambia la expresión de cada gen, de modo que la expresión media en las células sea 0
 - Escala la expresión de cada gen, de modo que la varianza entre las células sea 1
@@ -489,8 +490,6 @@ Estan almacenadas en la seccion de <strong>meta-data</strong> del objeto Seurat<
 Los resultados de esto se almacenan en pbmc [[“RNA”]] @ scale.data</p>
 <div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="introducción-a-seurat.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="co">#all.genes &lt;- nombres de filas (pbmc)</span></span>
 <span id="cb300-2"><a href="introducción-a-seurat.html#cb300-2" aria-hidden="true" tabindex="-1"></a><span class="co">#pbmc &lt;- ScaleData (pbmc, features = all.genes) </span></span></code></pre></div>
-<p>all.genes &lt;- nombres de filas (pbmc)
-pbmc &lt;- ScaleData (pbmc, features = all.genes)</p>
 </div>
 <div id="reducción-dimensional-lineal" class="section level2" number="14.8">
 <h2><span class="header-section-number">14.8</span> Reducción dimensional lineal</h2>
@@ -535,16 +534,31 @@ pbmc &lt;- ScaleData (pbmc, features = all.genes)</p>
 <div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="introducción-a-seurat.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="co">#pbmc &lt;- FindNeighbors(pbmc, dims = 1:10)</span></span>
 <span id="cb307-2"><a href="introducción-a-seurat.html#cb307-2" aria-hidden="true" tabindex="-1"></a><span class="co">#pbmc &lt;- FindClusters(pbmc, resolution = 0.5)</span></span></code></pre></div>
 </div>
-<div id="detalles-de-la-sesión-de-r-12" class="section level2" number="14.11">
-<h2><span class="header-section-number">14.11</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="introducción-a-seurat.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb308-2"><a href="introducción-a-seurat.html#cb308-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-09 01:07:56 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="introducción-a-seurat.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div id="non-linear-dimensional-reduction-umaptsne" class="section level2" number="14.11">
+<h2><span class="header-section-number">14.11</span> Non-linear dimensional reduction (UMAP/tSNE)</h2>
+<p>Seurat ofrece varias técnicas de reducción dimensional no lineal, como <strong>tSNE</strong> y <strong>UMAP</strong>, para visualizar y explorar estos conjuntos de datos. El objetivo de estos algoritmos es aprender la variedad subyacente de los datos para colocar celdas similares juntas en un espacio de baja dimensión. Las celdas dentro de los grupos basados en gráficos determinados anteriormente deben ubicarse conjuntamente en estos gráficos de reducción de dimensión. Como entrada para UMAP y tSNE, sugerimos usar las mismas PC como entrada para el análisis de agrupamiento.</p>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="introducción-a-seurat.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If you haven&#39;t installed UMAP, you can do so via reticulate::py_install(packages = &#39;umap-learn&#39;)</span></span>
+<span id="cb308-2"><a href="introducción-a-seurat.html#cb308-2" aria-hidden="true" tabindex="-1"></a><span class="co">#pbmc &lt;- RunUMAP(pbmc, dims = 1:10)</span></span>
+<span id="cb308-3"><a href="introducción-a-seurat.html#cb308-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4"><a href="introducción-a-seurat.html#cb308-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that you can set `label = TRUE` or use the LabelClusters function to help label</span></span>
+<span id="cb308-5"><a href="introducción-a-seurat.html#cb308-5" aria-hidden="true" tabindex="-1"></a><span class="co"># individual clusters</span></span>
+<span id="cb308-6"><a href="introducción-a-seurat.html#cb308-6" aria-hidden="true" tabindex="-1"></a><span class="co">#pdf(paste0(proydir,&quot;plots/UMAP.pdf&quot;))</span></span>
+<span id="cb308-7"><a href="introducción-a-seurat.html#cb308-7" aria-hidden="true" tabindex="-1"></a><span class="co">#plot &lt;- DimPlot(pbmc, reduction = &quot;umap&quot;)</span></span>
+<span id="cb308-8"><a href="introducción-a-seurat.html#cb308-8" aria-hidden="true" tabindex="-1"></a><span class="co">#print(plot)</span></span>
+<span id="cb308-9"><a href="introducción-a-seurat.html#cb308-9" aria-hidden="true" tabindex="-1"></a><span class="co">#dev.off()</span></span></code></pre></div>
+<p>Puede guardar el objeto en este punto para que se pueda volver a cargar fácilmente sin tener que volver a ejecutar los pasos computacionalmente intensivos realizados anteriormente o compartir fácilmente con los colaboradores.</p>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="introducción-a-seurat.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(pbmc, file = paste0(proydir,&quot;output/pbmc_tutorial.rds&quot;))</span></span></code></pre></div>
+</div>
+<div id="detalles-de-la-sesión-de-r-12" class="section level2" number="14.12">
+<h2><span class="header-section-number">14.12</span> Detalles de la sesión de R</h2>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="introducción-a-seurat.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb310-2"><a href="introducción-a-seurat.html#cb310-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-09 01:28:08 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="introducción-a-seurat.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.526   0.117   0.526</code></pre>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="introducción-a-seurat.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb312-2"><a href="introducción-a-seurat.html#cb312-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+##   0.452   0.110   0.457</code></pre>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="introducción-a-seurat.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb314-2"><a href="introducción-a-seurat.html#cb314-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)

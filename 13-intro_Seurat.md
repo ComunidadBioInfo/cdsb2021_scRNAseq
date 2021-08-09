@@ -140,7 +140,7 @@ Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versio
 #print(plot1 + plot2)
 #dev.off()
 ```
-## Scalar los datos
+## Escalar los datos
 
 A continuación, aplicamos una transformación lineal ("escalado") que es un paso de preprocesamiento estándar antes de las técnicas de reducción dimensional como PCA. La función *ScaleData()*:
 - Cambia la expresión de cada gen, de modo que la expresión media en las células sea 0
@@ -153,8 +153,6 @@ Los resultados de esto se almacenan en pbmc [["RNA"]] @ scale.data
 #all.genes <- nombres de filas (pbmc)
 #pbmc <- ScaleData (pbmc, features = all.genes) 
 ```
-all.genes <- nombres de filas (pbmc)
-pbmc <- ScaleData (pbmc, features = all.genes) 
 
 ## Reducción dimensional lineal
 
@@ -232,6 +230,32 @@ Un método heurístico alternativo genera un **"diagrama de codo (Elbow Plot)"**
 #pbmc <- FindClusters(pbmc, resolution = 0.5)
 ```
 
+## Non-linear dimensional reduction (UMAP/tSNE)
+
+Seurat ofrece varias técnicas de reducción dimensional no lineal, como **tSNE** y **UMAP**, para visualizar y explorar estos conjuntos de datos. El objetivo de estos algoritmos es aprender la variedad subyacente de los datos para colocar celdas similares juntas en un espacio de baja dimensión. Las celdas dentro de los grupos basados en gráficos determinados anteriormente deben ubicarse conjuntamente en estos gráficos de reducción de dimensión. Como entrada para UMAP y tSNE, sugerimos usar las mismas PC como entrada para el análisis de agrupamiento. 
+
+
+```r
+# If you haven't installed UMAP, you can do so via reticulate::py_install(packages = 'umap-learn')
+#pbmc <- RunUMAP(pbmc, dims = 1:10)
+
+# Note that you can set `label = TRUE` or use the LabelClusters function to help label
+# individual clusters
+#pdf(paste0(proydir,"plots/UMAP.pdf"))
+#plot <- DimPlot(pbmc, reduction = "umap")
+#print(plot)
+#dev.off()
+```
+
+Puede guardar el objeto en este punto para que se pueda volver a cargar fácilmente sin tener que volver a ejecutar los pasos computacionalmente intensivos realizados anteriormente o compartir fácilmente con los colaboradores. 
+
+
+```r
+#saveRDS(pbmc, file = paste0(proydir,"output/pbmc_tutorial.rds"))
+```
+
+
+
 ## Detalles de la sesión de R
 
 
@@ -241,7 +265,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 01:07:56 UTC"
+## [1] "2021-08-09 01:28:08 UTC"
 ```
 
 ```r
@@ -250,7 +274,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.526   0.117   0.526
+##   0.452   0.110   0.457
 ```
 
 ```r
