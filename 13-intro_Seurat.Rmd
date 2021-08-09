@@ -12,7 +12,7 @@ Presentación: [aquí](https://docs.google.com/presentation/d/18ZCddwDD9lY8j4gmt
 
 Seurat es desarrollado y mantenido por el laboratorio de [Satija](https://satijalab.org/seurat/authors.html) y se publica bajo la Licencia Pública GNU (GPL 3.0).
 
-En este tutorial se ve como procesar los datos de scRNAseq con un nuevo paquete. Los pasos a realizar son en esencia los mismos que ya revisamos con el tutorial de la OSCA de RStudio.  
+En este tutorial se ve como procesar los datos de **scRNAseq** con un nuevo paquete. Los pasos a realizar son en esencia los mismos que ya revisamos con el tutorial de la OSCA de RStudio.  
 No olvides nunca que el paquete mas adecuado y que deberás utilizar dependerá mayoritariamente de tus datos y el procesamiento que se adecúe a estos.  
 
 **Además... siempre es bueno diversos puntos de vista sobre las cosas, ¿no es así?**
@@ -28,12 +28,12 @@ En este tutorial partimos a partir de que ya se tienen los archivos FASTQ result
 Peripheral Blood Mononuclear Cells **(PBMC)** disponibles gratuitamente de **10X Genomics**. Son en total 2,700 céluas únicas secuenciadas con **Illumina NextSeq 500**.
 
 Puedes descargar los datos de [aquí](https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz) (7.3MB).  
-Descarga el archivo comprimido y procede a descomprimirlo. Se creara el siguiente directorio *filtered_gene_bc_matrices/hg19/*, aquí estarán los archivos que necesitaremos. A continuación lo haremos con código de R.
+Descarga el archivo comprimido y procede a descomprimirlo. Se creara el siguiente directorio *filtered_gene_bc_matrices/hg19/*, aquí estarán los archivos que necesitaremos. A continuación lo haremos con código de **R**.
 
 Este tutorial solo es la punta del *iceberg* de lo que se puede hacer con la paquetera de Seurat. Para comenzar a sumergirte en este mundo no dudes en visitar la página oficial mantenida por Satija Lab [Vignettes](https://satijalab.org/seurat/articles/get_started.html)
 
 A continuación estableceremos nuestros directorio de trabajo y leeremos los datos anteriores.  
-La función Read10X() lee en la salida de cellranger de 10X (de donde se obtuvieron los FASTQs), devolviendo una matriz de recuento única identificada molecularmente (UMI). Los valores en esta matriz representan el número de moléculas para cada característica (es decir, gen; fila) que se detectan en cada celda (columna).
+La función Read10X() lee en la salida de cellranger de 10X (de donde se obtuvieron los FASTQs), devolviendo una matriz de recuento única identificada molecularmente (UMI). Los valores en esta matriz representan el número de moléculas para cada característica (es decir, gen; fila) que se detectan en cada célula (columna).
 
 ```{r, warning=FALSE, message=FALSE}
 ## Cargar paquetes de R
@@ -71,7 +71,7 @@ str(pbmc)
 
 - ¿Cómo se ven los datos en una matriz de recuento? 
 
-Examinemos algunos genes en las primeras treinta células. Los valores en la matriz representan ceros (no se detectan moléculas). Dado que la mayoría de los valores en una matriz scRNA-seq son 0, Seurat utiliza una representación de matriz dispersa (*sparse matrix*) siempre que sea posible. Esto da como resultado un ahorro significativo de memoria y velocidad.  
+Examinemos algunos genes en las primeras treinta células. Los valores en la matriz representan ceros (no se detectan moléculas). Dado que la mayoría de los valores en una matriz scRNA-seq son 0, Seurat utiliza una representación de **matriz dispersa (*sparse matrix*)** siempre que sea posible. Esto da como resultado un ahorro significativo de memoria y velocidad.  
 
 ```{r, warning=FALSE, message=FALSE}
 pbmc.data[c("CD3D", "TCL1A", "MS4A1"), 1:30]
@@ -88,11 +88,11 @@ dense.size / sparse.size
 
 Algunas métricas de control de calidad comúnmente utilizadas por la comunidad incluyen:
 
-- El número de genes únicos detectados en cada célula.
+- El número de **genes únicos** detectados en cada célula.
     - Las células de baja calidad o las gotitas vacías suelen tener muy pocos genes.
     - Los dobletes o multipletes celulares pueden exhibir un recuento de genes aberrantemente alto
-- De manera similar, el número total de moléculas detectadas dentro de una célula (se correlaciona fuertemente con genes únicos)
-- El porcentaje de lecturas que se asignan al genoma mitocondrial
+- De manera similar, el **número total de moléculas** detectadas dentro de una célula (se correlaciona fuertemente con genes únicos).
+- El porcentaje de **lecturas que se asignan al genoma mitocondrial**.
     - Las células de baja calidad / moribundas a menudo exhiben una extensa contaminación mitocondrial
     - Calculamos métricas de control de calidad mitocondrial con la función `PercentageFeatureSet()`, que calcula el porcentaje de recuentos que se originan a partir de un conjunto de características.
 
@@ -120,7 +120,7 @@ pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent
 ```
 
 - ¿Dónde se almacenan la métricas de QC en Seurat?
-  - Están almacenadas en la seccion de **meta-data** del objeto Seurat.
+Están almacenadas en la seccion de **meta-data** del objeto Seurat.
 
 ```{r, warning=FALSE, message=FALSE}
 head(pbmc@meta.data, 5)
@@ -128,7 +128,7 @@ head(pbmc@meta.data, 5)
 
 ## Normalización
 
-De forma predeterminada, se emplea un método de normalización de escala global **"LogNormalize"** que normaliza las medidas de expresión de características para cada celda por la expresión total, multiplica esto por un factor de escala (10.000 por defecto) y transforma el resultado en logaritmos. Los valores normalizados se almacenan en pbmc `[["RNA"]]@data`.
+De forma predeterminada, se emplea un método de normalización de escala global **"LogNormalize"** que normaliza las medidas de expresión de características para cada célula por la expresión total, multiplica esto por un factor de escala (10.000 por defecto) y transforma el resultado en logaritmos. Los valores normalizados se almacenan en pbmc `[["RNA"]]@data`.
 
 ```{r}
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
@@ -138,7 +138,7 @@ pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor 
 
 A continuación, calculamos un subconjunto de **características que exhiben una alta variación de célula a célula en el conjunto de datos** (es decir, están altamente expresadas en algunas células y poco expresadas en otras). El equipo de Seurat y otros equipos han descubierto que centrarse en estos genes en el análisis posterior ayuda a resaltar la señal biológica en conjuntos de datos unicelulares.
 
-Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola celda, y se implementa en la función `FindVariableFeatures()`. De forma predeterminada, **devolvemos 2000 características por conjunto de datos** (aunque se puede modificar). Estos se utilizarán en análisis posteriores, como PCA. 
+Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola célula, y se implementa en la función `FindVariableFeatures()`. De forma predeterminada, **devolvemos 2000 características por conjunto de datos** (aunque se puede modificar). Estos se utilizarán en análisis posteriores, como PCA. 
 
 ```{r, fig.width = 14, fig.height = 7}
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
@@ -157,8 +157,8 @@ plot1 + plot2
 
 A continuación, aplicamos una transformación lineal ("escalado") que es un paso de preprocesamiento estándar antes de las técnicas de reducción dimensional como PCA. La función `ScaleData()`:
 
-- Cambia la expresión de cada gen, de modo que la expresión media en las células sea 0
-- Escala la expresión de cada gen, de modo que la varianza entre las células sea 1
+- Cambia la expresión de cada gen, de modo que **la expresión media en las células sea 0**
+- Escala la expresión de cada gen, de modo que **la varianza entre las células sea 1**
      - Este paso otorga el mismo peso en los análisis posteriores, de modo que los genes altamente expresados no dominen
      
 Los resultados de esto se almacenan en pbmc `[["RNA"]]@scale.data`.
@@ -170,13 +170,13 @@ pbmc <- ScaleData(pbmc, features = all.genes)
 
 ## Reducción dimensional lineal
 
-A continuación, realizamos PCA sobre los datos escalados. De forma predeterminada, solo las características variables determinadas previamente se utilizan como entrada, pero se pueden definir mediante el argumento de características si desea elegir un subconjunto diferente. 
+A continuación, realizamos **PCA** sobre los datos escalados. De forma predeterminada, solo las características variables determinadas previamente se utilizan como entrada, pero se pueden definir mediante el argumento de características si desea elegir un subconjunto diferente. 
 
 ```{r}
 pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
 ```
 
-Seurat proporciona varias formas útiles de visualizar tanto las celdas como las características que definen el PCA, incluidas `VizDimReduction()`, `DimPlot()` y `DimHeatmap()`.
+Seurat proporciona varias formas útiles de visualizar tanto las células como las características que definen el PCA, incluidas `VizDimReduction()`, `DimPlot()` y `DimHeatmap()`.
 
 Puedes examinar y visualizar los resultados de PCA de diferentes formas. 
 
@@ -187,7 +187,7 @@ VizDimLoadings(pbmc, dims = 1:2, reduction = "pca")
 DimPlot(pbmc, reduction = "pca")
 ```
 
-En particular, `DimHeatmap()` permite una fácil exploración de las fuentes primarias de heterogeneidad en un conjunto de datos y puede ser útil cuando se intenta decidir qué PC incluir para análisis posteriores posteriores. Tanto las celdas como las características se ordenan de acuerdo con sus puntajes de PCA. Establecer celdas en un número traza las celdas "extremas" en ambos extremos del espectro, lo que acelera drásticamente el trazado de grandes conjuntos de datos. Aunque claramente es un análisis supervisado, consideramos que esta es una herramienta valiosa para explorar conjuntos de características correlacionadas. 
+En particular, `DimHeatmap()` permite una fácil exploración de las fuentes primarias de heterogeneidad en un conjunto de datos y puede ser útil cuando se intenta decidir qué PC incluir para análisis posteriores posteriores. Tanto las células como las características se ordenan de acuerdo con sus puntajes de PCA. Establecer `cells` en un número traza las células "extremas" en ambos extremos del espectro, lo que acelera drásticamente el trazado de grandes conjuntos de datos. Aunque claramente es un análisis supervisado, consideramos que esta es una herramienta valiosa para explorar conjuntos de características correlacionadas. 
 
 ```{r}
 DimHeatmap(pbmc, dims = 1, cells = 500, balanced = TRUE)
@@ -208,7 +208,7 @@ pbmc <- JackStraw(pbmc, num.replicate = 100)
 pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
 ```
 
-La función `JackStrawPlot()` proporciona una herramienta de visualización para comparar la distribución de los valores p para cada PC con una distribución uniforme (línea discontinua). Las PC "significativas" mostrarán un gran enriquecimiento de funciones con valores p bajos (curva sólida por encima de la línea discontinua). En este caso, parece que hay una fuerte caída en la importancia después de los primeros 10-12 PCs. 
+La función `JackStrawPlot()` proporciona una herramienta de visualización para comparar la distribución de los *p-values* para cada PC con una distribución uniforme (línea discontinua). Las PC "significativas" mostrarán un gran enriquecimiento de funciones con valores p bajos (curva sólida por encima de la línea discontinua). En este caso, parece que hay una fuerte caída en la importancia después de los primeros 10-12 PCs. 
 
 ```{r}
 JackStrawPlot(pbmc, dims = 1:15)
@@ -229,7 +229,7 @@ pbmc <- FindClusters(pbmc, resolution = 0.5)
 
 ## Reducción dimensional no lineal (UMAP/tSNE)
 
-Seurat ofrece varias técnicas de reducción dimensional no lineal, como **tSNE** y **UMAP**, para visualizar y explorar estos conjuntos de datos. El objetivo de estos algoritmos es aprender la variedad subyacente de los datos para colocar celdas similares juntas en un espacio de baja dimensión. Las celdas dentro de los grupos basados en gráficos determinados anteriormente deben ubicarse conjuntamente en estos gráficos de reducción de dimensión. Como entrada para UMAP y tSNE, sugerimos usar las mismas PC como entrada para el análisis de agrupamiento. 
+Seurat ofrece varias técnicas de reducción dimensional no lineal, como **tSNE** y **UMAP**, para visualizar y explorar estos conjuntos de datos. El objetivo de estos algoritmos es aprender la variedad subyacente de los datos para colocar células similares juntas en un espacio de baja dimensión. Las células dentro de los grupos basados en gráficos determinados anteriormente deben ubicarse conjuntamente en estos gráficos de reducción de dimensión. Como entrada para UMAP y tSNE, sugerimos usar las mismas PC como entrada para el análisis de agrupamiento. 
 
 ```{r}
 # If you haven't installed UMAP, you can do so via reticulate::py_install(packages = 'umap-learn')
@@ -250,9 +250,11 @@ if (interactive()) {
 
 ## Caracteristicas diferencialmente expresadas (biomarcadores de los clusters)
 
-Seurat puede ayudarlo a encontrar marcadores que definan clústeres mediante expresión diferencial. De forma predeterminada, identifica **marcadores positivos y negativos de un solo grupo (especificado en ident.1), en comparación con todas las demás células**. `FindAllMarkers()` automatiza este proceso para todos los clústeres, pero **también se pueden comparar grupos de clústeres entre sí o contra todas las celdas**.
+Seurat puede ayudarlo a encontrar marcadores que definan clústeres mediante expresión diferencial. De forma predeterminada, identifica **marcadores positivos y negativos de un solo grupo (especificado en ident.1), en comparación con todas las demás células**. `FindAllMarkers()` automatiza este proceso para todos los clústeres, pero **también se pueden comparar grupos de clústeres entre sí o contra todas las células**.
 
-El argumento min.pct requiere que se detecte una característica en un porcentaje mínimo en cualquiera de los dos grupos de celdas, y el argumento `thresh.test` requiere que una característica se exprese diferencialmente (en promedio) en alguna cantidad entre los dos grupos. Puede establecer ambos en 0, pero con un aumento dramático en el tiempo, ya que esto probará una gran cantidad de características que probablemente no sean altamente discriminatorias. Como otra opción para acelerar estos cálculos, se puede configurar el número máximo de celdas por identificador. Esto reducirá la resolución de cada clase de identidad para que no tenga más celdas que las que se establezcan. Si bien generalmente habrá una pérdida de potencia, los aumentos de velocidad pueden ser significativos y es probable que las características expresadas de manera más diferencial aún se eleven a la cima. 
+El argumento min.pct requiere que se detecte una característica en un porcentaje mínimo en cualquiera de los dos grupos de células, y el argumento `thresh.test` requiere que una característica se exprese diferencialmente (en promedio) en alguna cantidad entre los dos grupos. Puede establecer ambos en 0, pero con un aumento dramático en el tiempo, ya que esto probará una gran cantidad de características que probablemente no sean altamente discriminatorias.  
+- ¿Demasiado lento?  
+Como otra opción para acelerar estos cálculos, se puede configurar el número máximo de células por identificador. Esto reducirá la resolución de cada clase de identidad para que no tenga más células que las que se establezcan. Si bien generalmente habrá una pérdida de potencia, los aumentos de velocidad pueden ser significativos y es probable que las características expresadas de manera más diferencial aún se eleven a la cima. 
 
 ```{r}
 # find all markers of cluster 2

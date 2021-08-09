@@ -1,4 +1,4 @@
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # Usemos datos de pbmc4k
 library(BiocFileCache)
 bfc <- BiocFileCache()
@@ -15,7 +15,7 @@ sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 sce.pbmc
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # Anotación de los genes
 library(scater)
 rownames(sce.pbmc) <- uniquifyFeatureNames(
@@ -33,7 +33,7 @@ e.out <- emptyDrops(counts(sce.pbmc))
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # Control de calidad
 stats <- perCellQCMetrics(sce.pbmc,
     subsets = list(Mito = which(location == "MT"))
@@ -51,13 +51,13 @@ sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # Varianza de las log-counts
 library(scran)
 dec.pbmc <- modelGeneVar(sce.pbmc)
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # Visualicemos la relación entre la media y la varianza
 fit.pbmc <- metadata(dec.pbmc)
 plot(fit.pbmc$mean, fit.pbmc$var,
@@ -67,18 +67,18 @@ plot(fit.pbmc$mean, fit.pbmc$var,
 curve(fit.pbmc$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # Ordenemos por los genes más interesantes para checar
 # los datos
 dec.pbmc[order(dec.pbmc$bio, decreasing = TRUE), ]
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # Coeficiente de variación
 dec.cv2.pbmc <- modelGeneCV2(sce.pbmc)
 
 
-## ---- warning=FALSE, message=FALSE, echo = FALSE---------------------------------------------
+## ---- warning=FALSE, message=FALSE, echo = FALSE-----------------------------------------------------
 # Visualicemos la relación con la media
 fit.cv2.pbmc <- metadata(dec.cv2.pbmc)
 plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2,
@@ -90,7 +90,7 @@ curve(fit.cv2.pbmc$trend(x),
 )
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # Ordenemos por los genes más interesantes para checar
 # los datos
 dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
@@ -98,7 +98,7 @@ dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
 ), ]
 
 
-## --------------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------
 ## Información de la sesión de R
 Sys.time()
 proc.time()

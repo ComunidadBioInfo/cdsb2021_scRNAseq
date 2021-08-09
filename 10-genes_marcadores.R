@@ -1,4 +1,4 @@
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # Usemos datos de pbmc4k
 library(BiocFileCache)
 bfc <- BiocFileCache()
@@ -8,15 +8,13 @@ raw.path <- bfcrpath(bfc, file.path(
 ))
 untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
 
-
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
 library(DropletUtils)
 library(Matrix)
 fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
 sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # Anotación de los genes
 library(scater)
 rownames(sce.pbmc) <- uniquifyFeatureNames(
@@ -34,7 +32,7 @@ e.out <- emptyDrops(counts(sce.pbmc))
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # Control de calidad
 stats <- perCellQCMetrics(sce.pbmc,
     subsets = list(Mito = which(location == "MT"))
@@ -52,14 +50,14 @@ sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 ## Identificación de genes altamente variables
 set.seed(1001)
 dec.pbmc <- modelGeneVarByPoisson(sce.pbmc)
 top.pbmc <- getTopHVGs(dec.pbmc, prop = 0.1)
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 ## Reducción de dimensiones
 set.seed(10000)
 sce.pbmc <- denoisePCA(sce.pbmc,
@@ -72,14 +70,14 @@ set.seed(1000000)
 sce.pbmc <- runUMAP(sce.pbmc, dimred = "PCA")
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # clustering
 g <- buildSNNGraph(sce.pbmc, k = 10, use.dimred = "PCA")
 clust <- igraph::cluster_walktrap(g)$membership
 sce.pbmc$cluster <- factor(clust)
 
 
-## ---- warning=FALSE, message=FALSE, echo=FALSE--------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE, echo=FALSE-------------------------------------------------------
 # Is gene 1 associated with the clustering?
 plotExpression(sce.pbmc,
     features = rownames(sce.pbmc)[1],
@@ -87,7 +85,7 @@ plotExpression(sce.pbmc,
 )
 
 
-## ---- warning=FALSE, message=FALSE, echo=FALSE--------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE, echo=FALSE-------------------------------------------------------
 # Is gene 2 associated with the clustering?
 plotExpression(sce.pbmc,
     features = rownames(sce.pbmc)[2],
@@ -95,7 +93,7 @@ plotExpression(sce.pbmc,
 )
 
 
-## ---- warning=FALSE, message=FALSE, echo=FALSE--------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE, echo=FALSE-------------------------------------------------------
 # Is gene 2512 associated with the clustering?
 plotExpression(sce.pbmc,
     features = rownames(sce.pbmc)[2512],
@@ -103,7 +101,7 @@ plotExpression(sce.pbmc,
 )
 
 
-## ---- warning=FALSE, message=FALSE, echo=FALSE--------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE, echo=FALSE-------------------------------------------------------
 # Is gene 2512 associated with the clustering?
 plotExpression(sce.pbmc,
     features = "CD3E",
@@ -111,14 +109,14 @@ plotExpression(sce.pbmc,
 )
 
 
-## ---- warning=FALSE, message=FALSE, echo=FALSE--------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE, echo=FALSE-------------------------------------------------------
 plotExpression(sce.pbmc,
     features = "CD3E",
     x = "cluster", colour_by = "cluster"
 )
 
 
-## ---- warning=FALSE, message=FALSE, echo=FALSE--------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE, echo=FALSE-------------------------------------------------------
 library(kableExtra)
 comparison <- c("1 vs 2", "1 vs 3", "...", "2 vs 1", "...", "18 vs 17")
 logFC <- c("1.50", "-0.08", "...", "1.39", "...", "0.11")
@@ -133,12 +131,12 @@ knitr::kable(paired_tests, format = "html") %>%
     )
 
 
-## ---- warning=FALSE, message=FALSE, eval = FALSE------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE, eval = FALSE-----------------------------------------------------
 ## scran::pairwiseTTests()
 ## scran::combineMarkers()
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # scran::findMarkers()
 library(scran)
 markers.pbmc <- findMarkers(sce.pbmc,
@@ -147,18 +145,18 @@ markers.pbmc <- findMarkers(sce.pbmc,
 )
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 chosen <- "9"
 interesting <- markers.pbmc[[chosen]]
 
 
-## ---- warning=FALSE, message=FALSE, echo=FALSE--------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE, echo=FALSE-------------------------------------------------------
 plotExpression(sce.pbmc, rownames(interesting)[1:4],
     x = "cluster", colour_by = "cluster"
 )
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 best.set <- interesting[interesting$Top <= 6, ]
 logFCs <- as.matrix(best.set[, -(1:3)])
 colnames(logFCs) <- sub("logFC.", "", colnames(logFCs))
@@ -166,7 +164,7 @@ library(pheatmap)
 pheatmap(logFCs, breaks = seq(-5, 5, length.out = 101))
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 markers.pbmc.up <- findMarkers(sce.pbmc,
     groups = sce.pbmc$cluster,
     test.type = "t", direction = "up", pval.type = "any"
@@ -174,7 +172,7 @@ markers.pbmc.up <- findMarkers(sce.pbmc,
 interesting.up <- markers.pbmc.up[[chosen]]
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 markers.pbmc.up2 <- findMarkers(sce.pbmc,
     groups = sce.pbmc$cluster,
     test.type = "t", direction = "up", lfc = 1, pval.type = "any"
@@ -182,14 +180,14 @@ markers.pbmc.up2 <- findMarkers(sce.pbmc,
 interesting.up2 <- markers.pbmc.up2[[chosen]]
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 best.set <- interesting.up2[interesting.up2$Top <= 5, ]
 logFCs <- as.matrix(best.set[, -(1:3)])
 colnames(logFCs) <- sub("logFC.", "", colnames(logFCs))
 pheatmap(logFCs, breaks = seq(-5, 5, length.out = 101))
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 markers.pbmc.up3 <- findMarkers(sce.pbmc,
     groups = sce.pbmc$cluster,
     direction = "up", pval.type = "all"
@@ -197,7 +195,7 @@ markers.pbmc.up3 <- findMarkers(sce.pbmc,
 interesting.up3 <- markers.pbmc.up3[[chosen]]
 
 
-## ---- warning=FALSE, message=FALSE, echo=FALSE--------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE, echo=FALSE-------------------------------------------------------
 library(kableExtra)
 Poblacion <- c("DN(CD4-/CD8-)", "CD4+>", "CD8+>", "DP(CD4+/CD8+)")
 Expresion_CD4 <- c("No", "Si", "No", "Si")
@@ -212,7 +210,7 @@ knitr::kable(poblacion, format = "html") %>%
     )
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 markers.pbmc.up4 <- findMarkers(sce.pbmc,
     groups = sce.pbmc$cluster,
     direction = "up", pval.type = "some"
@@ -220,7 +218,7 @@ markers.pbmc.up4 <- findMarkers(sce.pbmc,
 interesting.up4 <- markers.pbmc.up4[[chosen]]
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 markers.pbmc.wmw <- findMarkers(sce.pbmc,
     groups = sce.pbmc$cluster, test.type = "wilcox",
     direction = "up", pval.type = "any"
@@ -228,7 +226,7 @@ markers.pbmc.wmw <- findMarkers(sce.pbmc,
 interesting.wmw <- markers.pbmc.wmw[[chosen]]
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 best.set <- interesting.wmw[interesting.wmw$Top <= 5, ]
 AUCs <- as.matrix(best.set[, -(1:3)])
 colnames(AUCs) <- sub("AUC.", "", colnames(AUCs))
@@ -238,7 +236,7 @@ pheatmap(AUCs,
 )
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 markers.pbmc.binom <- findMarkers(sce.pbmc,
     groups = sce.pbmc$cluster, test.type = "binom",
     direction = "up", pval.type = "any"
@@ -246,12 +244,12 @@ markers.pbmc.binom <- findMarkers(sce.pbmc,
 interesting.binom <- markers.pbmc.binom[[chosen]]
 
 
-## ---- warning=FALSE, message=FALSE, echo=FALSE--------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE, echo=FALSE-------------------------------------------------------
 top.genes <- head(rownames(interesting.binom))
 plotExpression(sce.pbmc, x = "cluster", features = top.genes)
 
 
-## -----------------------------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------
 ## Información de la sesión de R
 Sys.time()
 proc.time()

@@ -94,6 +94,12 @@ sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 ```
 
+### Preguntas de repaso
+
+* ¿Cómo determinamos cuales eran los genes mitocondriales? ^[Usando Ensembl v86 para humano]
+* ¿Cómo decidimos filtrar las células? ^[Usamos los resultados de `emptyDrops()` con un límite de 0.1% FDR y el filtro de 3 desviaciones sobre la mediana (MAD) en la expresión mitocondrial.]
+* ¿Puedes explicar como normalizamos los datos? ^[Encontramos unos clusters rápidos para las célulasy usamos esa información para calcular los factores de tamaño.]
+
 ## Cuantificando la varianza por gen
 
 
@@ -142,6 +148,14 @@ plot(fit.pbmc$mean, fit.pbmc$var,
 )
 curve(fit.pbmc$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
 ```
+
+#### Ejercicios
+
+* ¿Qué tipo de objeto nos regresó `modelGeneVar()`? ^[Es un `DFrame`]
+* ¿`dec.pbmc` es una tabla? ¿O contiene mayor información? ^[No, contiene más información dentro de `metadata(dec.pbmc)`]
+* ¿Qué tipo de objeto es `fit.pbmc` y que objetos con nombres contiene? ^[`class(metadata(dec.pbmc))` y `sapply(metadata(dec.pbmc), class)`]
+* ¿Qué tipo de objeto es `fit.pbmc$trend`? ^[Una función]
+* ¿Donde podemos encontrar más detalles de esta función? ^[Checa `?fitTrendVar` y si quieres también checa el código fuente (para mí es muy útil este paso) https://github.com/MarioniLab/scran/blob/master/R/fitTrendVar.R]
 
 
 ### Ordenando genes interesantes
