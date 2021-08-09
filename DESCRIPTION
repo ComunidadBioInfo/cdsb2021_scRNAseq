@@ -40,7 +40,6 @@ Imports:
     postcards,
     pryr,
     RColorBrewer,
-    rsthemes,
     Rtsne,
     scater,
     scPipe,
