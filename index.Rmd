@@ -57,6 +57,7 @@ http://congresos.nnb.unam.mx/EBM2021/
 * [Leonardo Collado-Torres](https://twitter.com/lcolladotor)
 * [Yalbi Balderas](https://twitter.com/yalbi_ibm)
 
+https://comunidadbioinfo.github.io/es/#people
 
 ## Ponentes e instructores invitados {-}
 
