@@ -143,7 +143,7 @@ BiocManager::version()
 
 
 ```
-## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "cowplot", "dplyr", "DropletUtils", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "here", "iSEE", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "pryr", "RColorBrewer", "rsthemes", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "suncalc", "TENxPBMCData", "usethis", "uwot"))
+## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "cowplot", "dplyr", "DropletUtils", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "here", "iSEE", "kableExtra", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "pryr", "RColorBrewer", "rsthemes", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "suncalc", "TENxPBMCData", "usethis", "uwot"))
 ```
 
 
@@ -396,6 +396,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  iterators                1.0.13     2020-10-15 [1] RSPM (R 4.1.0)
 ##  jquerylib                0.1.4      2021-04-26 [1] RSPM (R 4.1.0)
 ##  jsonlite                 1.7.2      2020-12-09 [2] RSPM (R 4.1.0)
+##  kableExtra               1.3.4      2021-02-20 [1] RSPM (R 4.1.0)
 ##  KEGGREST                 1.32.0     2021-05-19 [1] Bioconductor  
 ##  KernSmooth               2.23-20    2021-05-03 [3] CRAN (R 4.1.0)
 ##  knitr                    1.33       2021-04-24 [2] RSPM (R 4.1.0)
@@ -502,6 +503,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  rtracklayer              1.52.0     2021-05-19 [1] Bioconductor  
 ##  Rtsne                    0.15       2018-11-10 [1] RSPM (R 4.1.0)
 ##  rversions                2.1.1      2021-05-31 [2] RSPM (R 4.1.0)
+##  rvest                    1.0.1      2021-07-26 [1] RSPM (R 4.1.0)
 ##  S4Vectors                0.30.0     2021-05-19 [1] Bioconductor  
 ##  sass                     0.4.0      2021-05-12 [1] RSPM (R 4.1.0)
 ##  ScaledMatrix             1.0.0      2021-05-19 [1] Bioconductor  
@@ -513,6 +515,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  scRNAseq                 2.6.1      2021-05-25 [1] Bioconductor  
 ##  sctransform              0.3.2      2020-12-16 [1] RSPM (R 4.1.0)
 ##  scuttle                  1.2.1      2021-08-05 [1] Bioconductor  
+##  selectr                  0.4-2      2019-11-20 [1] RSPM (R 4.1.0)
 ##  sessioninfo              1.1.1      2018-11-05 [2] RSPM (R 4.1.0)
 ##  Seurat                   4.0.3      2021-06-10 [1] RSPM (R 4.1.0)
 ##  SeuratObject             4.0.2      2021-06-09 [1] RSPM (R 4.1.0)
@@ -545,7 +548,9 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  SummarizedExperiment     1.22.0     2021-05-19 [1] Bioconductor  
 ##  suncalc                  0.5.0      2019-04-03 [1] RSPM (R 4.1.0)
 ##  survival                 3.2-11     2021-04-26 [3] CRAN (R 4.1.0)
+##  svglite                  2.0.0      2021-02-20 [1] RSPM (R 4.1.0)
 ##  sys                      3.4        2020-07-23 [2] RSPM (R 4.1.0)
+##  systemfonts              1.0.2      2021-05-11 [1] RSPM (R 4.1.0)
 ##  tcltk                    4.1.0      2021-07-29 [3] local         
 ##  tensor                   1.5        2012-05-05 [1] RSPM (R 4.1.0)
 ##  TENxPBMCData             1.10.0     2021-05-20 [1] Bioconductor  
@@ -564,6 +569,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  viridis                  0.6.1      2021-05-11 [1] RSPM (R 4.1.0)
 ##  viridisLite              0.4.0      2021-04-13 [1] RSPM (R 4.1.0)
 ##  waldo                    0.2.5      2021-03-08 [2] RSPM (R 4.1.0)
+##  webshot                  0.5.2      2019-11-22 [1] RSPM (R 4.1.0)
 ##  whisker                  0.4        2019-08-28 [2] RSPM (R 4.1.0)
 ##  withr                    2.4.2      2021-04-18 [2] RSPM (R 4.1.0)
 ##  xfun                     0.24       2021-06-15 [2] RSPM (R 4.1.0)
@@ -582,7 +588,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-09 03:24:33.
+Fecha de la última actualización de esta página: 2021-08-09 03:34:48.
 
 ## Licencia  {-}
 

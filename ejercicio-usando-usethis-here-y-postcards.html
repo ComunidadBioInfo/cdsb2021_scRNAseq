@@ -51,6 +51,8 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -361,7 +363,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html"><i class="fa fa-check"></i><b>11</b> Identificación de genes marcadores</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#detalles-de-la-sesión-de-r-9"><i class="fa fa-check"></i><b>11.1</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="11.1" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#diapositivas-de-peter-hickey-4"><i class="fa fa-check"></i><b>11.1</b> Diapositivas de Peter Hickey</a></li>
+<li class="chapter" data-level="11.2" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#motivación-6"><i class="fa fa-check"></i><b>11.2</b> Motivación</a></li>
+<li class="chapter" data-level="11.3" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#dataset-ilustrativo-pbmc4k-10x-sin-filtrar-1"><i class="fa fa-check"></i><b>11.3</b> Dataset ilustrativo: PBMC4k 10X sin filtrar</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#descargar-datos-1"><i class="fa fa-check"></i><b>11.3.1</b> Descargar datos</a></li>
+<li class="chapter" data-level="11.3.2" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#anotación-1"><i class="fa fa-check"></i><b>11.3.2</b> Anotación</a></li>
+<li class="chapter" data-level="11.3.3" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#genes-variables"><i class="fa fa-check"></i><b>11.3.3</b> Genes variables</a></li>
+<li class="chapter" data-level="11.3.4" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#reducción-de-dimensiones-1"><i class="fa fa-check"></i><b>11.3.4</b> Reducción de dimensiones</a></li>
+<li class="chapter" data-level="11.3.5" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#clustering-1"><i class="fa fa-check"></i><b>11.3.5</b> Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#motivación---continuación"><i class="fa fa-check"></i><b>11.4</b> Motivación - continuación</a></li>
+<li class="chapter" data-level="11.5" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#prueba-t-modificada-de-welch-pareada"><i class="fa fa-check"></i><b>11.5</b> Prueba t modificada de Welch pareada</a></li>
+<li class="chapter" data-level="11.6" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#ejemplo-ilustrativo-cd3e-como-gen-marcador-en-el-dataset-pbmc4k-10x"><i class="fa fa-check"></i><b>11.6</b> Ejemplo ilustrativo: CD3E como gen marcador en el dataset PBMC4k 10X</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#pruebas-pareadas"><i class="fa fa-check"></i><b>11.6.1</b> Pruebas pareadas</a></li>
+<li class="chapter" data-level="11.6.2" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#combinando-comparaciones-del-gen-cd3e-para-el-clúster-1"><i class="fa fa-check"></i><b>11.6.2</b> Combinando comparaciones del gen CD3E para el clúster 1</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#aplicación-estándar"><i class="fa fa-check"></i><b>11.7</b> Aplicación estándar</a>
+<ul>
+<li class="chapter" data-level="11.7.1" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#explorando-los-resultados"><i class="fa fa-check"></i><b>11.7.1</b> Explorando los resultados</a></li>
+<li class="chapter" data-level="11.7.2" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#con-un-heatmap"><i class="fa fa-check"></i><b>11.7.2</b> Con un heatmap</a></li>
+</ul></li>
+<li class="chapter" data-level="11.8" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#usando-el-log-fold-change"><i class="fa fa-check"></i><b>11.8</b> Usando el <em>log-fold change</em></a>
+<ul>
+<li class="chapter" data-level="11.8.1" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#sin-espeficiar-el-lfc"><i class="fa fa-check"></i><b>11.8.1</b> Sin espeficiar el lfc</a></li>
+<li class="chapter" data-level="11.8.2" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#especificando-el-lfc"><i class="fa fa-check"></i><b>11.8.2</b> Especificando el lfc</a></li>
+<li class="chapter" data-level="11.8.3" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#heatmap"><i class="fa fa-check"></i><b>11.8.3</b> Heatmap</a></li>
+</ul></li>
+<li class="chapter" data-level="11.9" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#encontrando-marcadores-específicos-de-clústeres"><i class="fa fa-check"></i><b>11.9</b> Encontrando marcadores específicos de clústeres</a>
+<ul>
+<li class="chapter" data-level="11.9.1" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#proscons-de-los-genes-marcadores-específicos-de-los-clústeres"><i class="fa fa-check"></i><b>11.9.1</b> Pros/cons de los genes marcadores específicos de los clústeres</a></li>
+<li class="chapter" data-level="11.9.2" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#findmarkers-con-pval.type-some"><i class="fa fa-check"></i><b>11.9.2</b> findMarkers con pval.type some</a></li>
+</ul></li>
+<li class="chapter" data-level="11.10" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#pruebas-alternas"><i class="fa fa-check"></i><b>11.10</b> Pruebas alternas</a>
+<ul>
+<li class="chapter" data-level="11.10.1" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#motivación-7"><i class="fa fa-check"></i><b>11.10.1</b> Motivación</a></li>
+</ul></li>
+<li class="chapter" data-level="11.11" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#prueba-de-rangos-de-wilcoxon"><i class="fa fa-check"></i><b>11.11</b> Prueba de rangos de Wilcoxon</a>
+<ul>
+<li class="chapter" data-level="11.11.1" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#findmarkers-para-wilcoxon"><i class="fa fa-check"></i><b>11.11.1</b> findMarkers para Wilcoxon</a></li>
+<li class="chapter" data-level="11.11.2" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#heatmap-de-genes-marcadores-con-wilcoxon"><i class="fa fa-check"></i><b>11.11.2</b> Heatmap de genes marcadores con Wilcoxon</a></li>
+<li class="chapter" data-level="11.11.3" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#resumen-de-la-prueba-de-rangos-de-wilcoxon"><i class="fa fa-check"></i><b>11.11.3</b> Resumen de la prueba de rangos de Wilcoxon</a></li>
+</ul></li>
+<li class="chapter" data-level="11.12" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#prueba-binomial"><i class="fa fa-check"></i><b>11.12</b> Prueba binomial</a>
+<ul>
+<li class="chapter" data-level="11.12.1" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#findmarkers-para-binomial"><i class="fa fa-check"></i><b>11.12.1</b> findMarkers para binomial</a></li>
+<li class="chapter" data-level="11.12.2" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#visualizando-genes-marcadores-de-la-prueba-bionomial"><i class="fa fa-check"></i><b>11.12.2</b> Visualizando genes marcadores de la prueba bionomial</a></li>
+<li class="chapter" data-level="11.12.3" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#resumen-de-la-prueba-binomial"><i class="fa fa-check"></i><b>11.12.3</b> Resumen de la prueba binomial</a></li>
+</ul></li>
+<li class="chapter" data-level="11.13" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#métodos-de-expresión-diferencial-personalizados"><i class="fa fa-check"></i><b>11.13</b> Métodos de expresión diferencial personalizados</a></li>
+<li class="chapter" data-level="11.14" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#problemas-estadísticos"><i class="fa fa-check"></i><b>11.14</b> Problemas estadísticos</a>
+<ul>
+<li class="chapter" data-level="11.14.1" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#invalidez-de-p-values"><i class="fa fa-check"></i><b>11.14.1</b> Invalidez de P-values</a></li>
+<li class="chapter" data-level="11.14.2" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#naturaleza-de-la-replicación"><i class="fa fa-check"></i><b>11.14.2</b> Naturaleza de la replicación</a></li>
+<li class="chapter" data-level="11.14.3" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#comentarios-adicionales"><i class="fa fa-check"></i><b>11.14.3</b> Comentarios adicionales</a></li>
+</ul></li>
+<li class="chapter" data-level="11.15" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#resumen-y-recomendaciones-2"><i class="fa fa-check"></i><b>11.15</b> Resumen y recomendaciones</a></li>
+<li class="chapter" data-level="11.16" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#detalles-de-la-sesión-de-r-9"><i class="fa fa-check"></i><b>11.16</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="identificación-de-genes-marcadores.html"><a href="identificación-de-genes-marcadores.html#patrocinadores-10"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="anotación-de-clusters-de-células.html"><a href="anotación-de-clusters-de-células.html"><i class="fa fa-check"></i><b>12</b> Anotación de clusters de células</a>
@@ -385,7 +444,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.7" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#escalar-los-datos"><i class="fa fa-check"></i><b>14.7</b> Escalar los datos</a></li>
 <li class="chapter" data-level="14.8" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#reducción-dimensional-lineal"><i class="fa fa-check"></i><b>14.8</b> Reducción dimensional lineal</a></li>
 <li class="chapter" data-level="14.9" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#determinar-la-dimensionalidad-del-conjunto-de-datos"><i class="fa fa-check"></i><b>14.9</b> Determinar la dimensionalidad del conjunto de datos</a></li>
-<li class="chapter" data-level="14.10" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#clustering-1"><i class="fa fa-check"></i><b>14.10</b> Clustering</a></li>
+<li class="chapter" data-level="14.10" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#clustering-2"><i class="fa fa-check"></i><b>14.10</b> Clustering</a></li>
 <li class="chapter" data-level="14.11" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#reducción-dimensional-no-lineal-umaptsne"><i class="fa fa-check"></i><b>14.11</b> Reducción dimensional no lineal (UMAP/tSNE)</a></li>
 <li class="chapter" data-level="14.12" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#caracteristicas-diferencialmente-expresadas-biomarcadores-de-los-clusters"><i class="fa fa-check"></i><b>14.12</b> Caracteristicas diferencialmente expresadas (biomarcadores de los clusters)</a></li>
 <li class="chapter" data-level="14.13" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html#assigning-cell-type-identity-to-clusters"><i class="fa fa-check"></i><b>14.13</b> Assigning cell type identity to clusters</a></li>
@@ -702,10 +761,10 @@ tfawesome
 <h2><span class="header-section-number">3.5</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb41-2"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-09 03:24:34 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-09 03:34:49 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.510   0.105   0.514</code></pre>
+##   0.537   0.147   0.575</code></pre>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb45-2"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb45-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
