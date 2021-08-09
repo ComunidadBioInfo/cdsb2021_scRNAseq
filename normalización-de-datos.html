@@ -546,6 +546,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[Library Size_{cell} = \sum_{n=1}^{j} gene\]</span>
 Donde <span class="math inline">\(j\)</span> es el número total de genes y <span class="math inline">\(gene\)</span> es el número de cuentas por gen para cada célula.</p>
 <p>El valor de <em>library size</em> es el que asumimos que escala con cualquier sesgo específico en cada célula.</p>
+<p><img src="img/libsize.png" width="533" /></p>
 <p>Para escalar los datos ocuparemos un factor de escalamiento llamado <em>Library Size factor</em>.</p>
 <p><span class="math display">\[ Library Size \propto Library Size factor \]</span></p>
 <p>Se calcula usando <em>library size</em>:</p>
@@ -553,6 +554,7 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 <p>Y se define de tal manera que el promedio de <em>Library Size factor</em> en todas las células es igual a 1.</p>
 <p><span class="math display">\[ mean(Library Size factor) = 1 \]</span></p>
 <p>Lo que nos permite que los valores normalizados están en la misma escala y pueden ser útiles para la interpretación.</p>
+<p><img src="img/libfactor.png" width="796" /></p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="normalización-de-datos.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimar tamaños de librerías</span></span>
 <span id="cb152-2"><a href="normalización-de-datos.html#cb152-2" aria-hidden="true" tabindex="-1"></a>lib.sf.zeisel <span class="ot">&lt;-</span> <span class="fu">librarySizeFactors</span>(sce.zeisel)</span>
 <span id="cb152-3"><a href="normalización-de-datos.html#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Examina la distribución de los tamaños de librerías</span></span>
@@ -561,7 +563,7 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.1754  0.5682  0.8669  1.0000  1.2758  4.0651</code></pre>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="normalización-de-datos.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log10</span>(lib.sf.zeisel), <span class="at">xlab =</span> <span class="st">&quot;Log10[Library Size factor]&quot;</span>, <span class="at">col =</span> <span class="st">&quot;grey80&quot;</span>)</span></code></pre></div>
-<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="ejercicio-library-size" class="section level3" number="6.4.2">
 <h3><span class="header-section-number">6.4.2</span> Ejercicio: <em>library Size</em></h3>
@@ -612,7 +614,7 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 <span id="cb157-2"><a href="normalización-de-datos.html#cb157-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Log10[Deconvolution size factor]&quot;</span>,</span>
 <span id="cb157-3"><a href="normalización-de-datos.html#cb157-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;grey80&quot;</span></span>
 <span id="cb157-4"><a href="normalización-de-datos.html#cb157-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="normalización-de-datos.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lib.sf.zeisel,</span>
 <span id="cb158-2"><a href="normalización-de-datos.html#cb158-2" aria-hidden="true" tabindex="-1"></a>    deconv.sf.zeisel,</span>
 <span id="cb158-3"><a href="normalización-de-datos.html#cb158-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Library size factor&quot;</span>,</span>
@@ -621,7 +623,7 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 <span id="cb158-6"><a href="normalización-de-datos.html#cb158-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">pch =</span> <span class="dv">16</span></span>
 <span id="cb158-7"><a href="normalización-de-datos.html#cb158-7" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb158-8"><a href="normalización-de-datos.html#cb158-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
 <div id="ejercicios-deconvolution" class="section level3" number="6.5.1">
 <h3><span class="header-section-number">6.5.1</span> Ejercicios: deconvolution</h3>
 <ul>
@@ -715,7 +717,7 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    1460    2942    3693    3534    4097    4778</code></pre>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="normalización-de-datos.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ls.seurat)</span></code></pre></div>
-<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="normalización-de-datos.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trying to replicate it</span></span>
 <span id="cb176-2"><a href="normalización-de-datos.html#cb176-2" aria-hidden="true" tabindex="-1"></a>ls.zeisel <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">counts</span>(sce.zeisel))</span>
 <span id="cb176-3"><a href="normalización-de-datos.html#cb176-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ls.zeisel)</span></code></pre></div>
@@ -729,11 +731,11 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    1460    2942    3693    3534    4097    4778</code></pre>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="normalización-de-datos.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls.seurat, ls.steps)</span></code></pre></div>
-<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
+<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="normalización-de-datos.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare with deconv normalization</span></span>
 <span id="cb181-2"><a href="normalización-de-datos.html#cb181-2" aria-hidden="true" tabindex="-1"></a>ls.log <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">logcounts</span>(sce.zeisel))</span>
 <span id="cb181-3"><a href="normalización-de-datos.html#cb181-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls.seurat, ls.log)</span></code></pre></div>
-<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-10-3.png" width="672" /></p>
+<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
 <p>Nota: <a href="https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html">scanpy</a> ocupa un factor de normalización igual que Seurat.</p>
 </div>
 </div>
@@ -806,7 +808,7 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 <span id="cb186-17"><a href="normalización-de-datos.html#cb186-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;Mito %&quot;</span>),</span>
 <span id="cb186-18"><a href="normalización-de-datos.html#cb186-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">ncol =</span> <span class="dv">2</span></span>
 <span id="cb186-19"><a href="normalización-de-datos.html#cb186-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 </div>
 <div id="ejercicio-library-size-1" class="section level3" number="6.8.3">
 <h3><span class="header-section-number">6.8.3</span> Ejercicio: <em>library Size</em></h3>
@@ -819,7 +821,7 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    2623    8497   12964   14955   19080   60792</code></pre>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="normalización-de-datos.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log10</span>(ls.zeisel), <span class="at">xlab =</span> <span class="st">&quot;Log10[Library size]&quot;</span>, <span class="at">col =</span> <span class="st">&quot;grey80&quot;</span>)</span></code></pre></div>
-<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <ul>
 <li>¿Son idénticos <code>ls.zeisel</code> y <code>lib.sf.zeisel</code>?</li>
 </ul>
@@ -837,7 +839,7 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 <span id="cb192-7"><a href="normalización-de-datos.html#cb192-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Library size&quot;</span>,</span>
 <span id="cb192-8"><a href="normalización-de-datos.html#cb192-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot; Library size factor&quot;</span></span>
 <span id="cb192-9"><a href="normalización-de-datos.html#cb192-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <ul>
 <li>Calcula <code>lib.sf.zeisel</code> de forma manual. TIP: Checa el <a href="https://github.com/LTLA/scuttle/blob/master/R/librarySizeFactors.R">código fuente</a></li>
 </ul>
@@ -865,7 +867,7 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 ##  12   7   4   6  10   1   3  11   2   8   5   9 
 ## 113 123 140 224 231 243 252 259 281 300 324 325</code></pre>
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="normalización-de-datos.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(cells_cluster)</span></code></pre></div>
-<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <ul>
 <li>¿Cúantos clusters rápidos obtendríamos si cambiamos el tamaño mínimo a 200? Usa 100 como la semilla (seed).</li>
 </ul>
@@ -888,7 +890,7 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 <span id="cb204-9"><a href="normalización-de-datos.html#cb204-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
 <span id="cb204-10"><a href="normalización-de-datos.html#cb204-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="sc">-</span>.<span class="dv">2</span>, <span class="at">b =</span> <span class="fl">0.95</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
 <span id="cb204-11"><a href="normalización-de-datos.html#cb204-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fl">0.08</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="06-normalizacion_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 </div>
 <div id="ejercicio-transformación-logatítmica-1" class="section level3" number="6.8.5">
 <h3><span class="header-section-number">6.8.5</span> Ejercicio: Transformación logatítmica</h3>
@@ -928,10 +930,10 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 <h2><span class="header-section-number">6.11</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="normalización-de-datos.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb206-2"><a href="normalización-de-datos.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-09 08:47:29 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-09 13:26:49 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="normalización-de-datos.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  73.895   4.984  79.737</code></pre>
+##  79.473   4.621  90.076</code></pre>
 <div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="normalización-de-datos.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb210-2"><a href="normalización-de-datos.html#cb210-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## Registered S3 method overwritten by &#39;cli&#39;:
@@ -1020,6 +1022,7 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 ##  goftest                  1.2-2    2019-12-02 [1] RSPM (R 4.1.0)
 ##  gridExtra                2.3      2017-09-09 [1] RSPM (R 4.1.0)
 ##  gtable                   0.3.0    2019-03-25 [1] RSPM (R 4.1.0)
+##  here                     1.0.1    2020-12-13 [1] RSPM (R 4.1.0)
 ##  highr                    0.9      2021-04-16 [2] RSPM (R 4.1.0)
 ##  hms                      1.1.0    2021-05-17 [1] RSPM (R 4.1.0)
 ##  htmltools                0.5.1.1  2021-01-22 [1] RSPM (R 4.1.0)
@@ -1087,6 +1090,7 @@ Donde <span class="math inline">\(j\)</span> es el número total de genes y <spa
 ##  rmarkdown                2.9      2021-06-15 [1] RSPM (R 4.1.0)
 ##  ROCR                     1.0-11   2020-05-02 [1] RSPM (R 4.1.0)
 ##  rpart                    4.1-15   2019-04-12 [3] CRAN (R 4.1.0)
+##  rprojroot                2.0.2    2020-11-15 [2] RSPM (R 4.1.0)
 ##  Rsamtools                2.8.0    2021-05-19 [1] Bioconductor  
 ##  RSQLite                  2.2.7    2021-04-22 [1] RSPM (R 4.1.0)
 ##  rsvd                     1.0.5    2021-04-16 [1] RSPM (R 4.1.0)

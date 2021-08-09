@@ -106,6 +106,11 @@ Donde $j$ es el número total de genes y $gene$ es el número de cuentas por gen
 
 El valor de *library size* es el que asumimos que escala con cualquier sesgo específico en cada célula.
 
+
+<img src="/__w/cdsb2021_scRNAseq/cdsb2021_scRNAseq/img/libsize.png" width="533" />
+
+
+
 Para escalar los datos ocuparemos un factor de escalamiento llamado *Library Size factor*. 
 
 $$ Library Size \propto Library Size factor $$
@@ -119,6 +124,8 @@ Y se define de tal manera que el promedio de *Library Size factor*  en todas las
 $$ mean(Library Size factor) = 1 $$
 
 Lo que nos permite que los valores normalizados están en la misma escala y pueden ser útiles para la interpretación. 
+
+<img src="/__w/cdsb2021_scRNAseq/cdsb2021_scRNAseq/img/libfactor.png" width="796" />
 
 
 
@@ -139,7 +146,7 @@ summary(lib.sf.zeisel)
 hist(log10(lib.sf.zeisel), xlab = "Log10[Library Size factor]", col = "grey80")
 ```
 
-<img src="06-normalizacion_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="06-normalizacion_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 
 
@@ -211,7 +218,7 @@ hist(log10(deconv.sf.zeisel),
 )
 ```
 
-<img src="06-normalizacion_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="06-normalizacion_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 ```r
 plot(lib.sf.zeisel,
@@ -224,7 +231,7 @@ plot(lib.sf.zeisel,
 abline(a = 0, b = 1, col = "red")
 ```
 
-<img src="06-normalizacion_files/figure-html/unnamed-chunk-6-2.png" width="672" />
+<img src="06-normalizacion_files/figure-html/unnamed-chunk-8-2.png" width="672" />
 
 
 ### Ejercicios: deconvolution
@@ -389,7 +396,7 @@ summary(ls.seurat)
 hist(ls.seurat)
 ```
 
-<img src="06-normalizacion_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="06-normalizacion_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 ```r
 # Trying to replicate it
@@ -419,7 +426,7 @@ summary(ls.steps)
 plot(ls.seurat, ls.steps)
 ```
 
-<img src="06-normalizacion_files/figure-html/unnamed-chunk-10-2.png" width="672" />
+<img src="06-normalizacion_files/figure-html/unnamed-chunk-12-2.png" width="672" />
 
 ```r
 # Compare with deconv normalization
@@ -427,7 +434,7 @@ ls.log <- colSums(logcounts(sce.zeisel))
 plot(ls.seurat, ls.log)
 ```
 
-<img src="06-normalizacion_files/figure-html/unnamed-chunk-10-3.png" width="672" />
+<img src="06-normalizacion_files/figure-html/unnamed-chunk-12-3.png" width="672" />
 
 Nota: [scanpy](https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html) ocupa un factor de normalización igual que Seurat.
 
@@ -517,7 +524,7 @@ gridExtra::grid.arrange(
 )
 ```
 
-<img src="06-normalizacion_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="06-normalizacion_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 
 ### Ejercicio: *library Size*
@@ -541,7 +548,7 @@ summary(ls.zeisel)
 hist(log10(ls.zeisel), xlab = "Log10[Library size]", col = "grey80")
 ```
 
-<img src="06-normalizacion_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<img src="06-normalizacion_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 
 * ¿Son idénticos `ls.zeisel` y `lib.sf.zeisel`? 
@@ -571,7 +578,7 @@ plot(
 )
 ```
 
-<img src="06-normalizacion_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+<img src="06-normalizacion_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 
 * Calcula `lib.sf.zeisel` de forma manual. TIP: Checa el [código fuente](https://github.com/LTLA/scuttle/blob/master/R/librarySizeFactors.R)
@@ -630,7 +637,7 @@ cells_cluster
 barplot(cells_cluster)
 ```
 
-<img src="06-normalizacion_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="06-normalizacion_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 
 * ¿Cúantos clusters rápidos obtendríamos si cambiamos el tamaño mínimo a 200? Usa 100 como la semilla (seed).
@@ -665,7 +672,7 @@ abline(a = -.2, b = 0.95, col = "red")
 abline(a = 0.08, b = 1, col = "red")
 ```
 
-<img src="06-normalizacion_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+<img src="06-normalizacion_files/figure-html/unnamed-chunk-25-1.png" width="672" />
 
 ### Ejercicio: Transformación logatítmica
 
@@ -717,7 +724,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 08:47:29 UTC"
+## [1] "2021-08-09 13:26:49 UTC"
 ```
 
 ```r
@@ -726,7 +733,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##  73.895   4.984  79.737
+##  79.473   4.621  90.076
 ```
 
 ```r
@@ -824,6 +831,7 @@ sessioninfo::session_info()
 ##  goftest                  1.2-2    2019-12-02 [1] RSPM (R 4.1.0)
 ##  gridExtra                2.3      2017-09-09 [1] RSPM (R 4.1.0)
 ##  gtable                   0.3.0    2019-03-25 [1] RSPM (R 4.1.0)
+##  here                     1.0.1    2020-12-13 [1] RSPM (R 4.1.0)
 ##  highr                    0.9      2021-04-16 [2] RSPM (R 4.1.0)
 ##  hms                      1.1.0    2021-05-17 [1] RSPM (R 4.1.0)
 ##  htmltools                0.5.1.1  2021-01-22 [1] RSPM (R 4.1.0)
@@ -891,6 +899,7 @@ sessioninfo::session_info()
 ##  rmarkdown                2.9      2021-06-15 [1] RSPM (R 4.1.0)
 ##  ROCR                     1.0-11   2020-05-02 [1] RSPM (R 4.1.0)
 ##  rpart                    4.1-15   2019-04-12 [3] CRAN (R 4.1.0)
+##  rprojroot                2.0.2    2020-11-15 [2] RSPM (R 4.1.0)
 ##  Rsamtools                2.8.0    2021-05-19 [1] Bioconductor  
 ##  RSQLite                  2.2.7    2021-04-22 [1] RSPM (R 4.1.0)
 ##  rsvd                     1.0.5    2021-04-16 [1] RSPM (R 4.1.0)
