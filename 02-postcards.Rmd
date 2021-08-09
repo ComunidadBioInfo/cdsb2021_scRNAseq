@@ -90,7 +90,9 @@ Y la instalación de los siguientes paquetes:
 # paquetes que vamos a requerir
 install.packages("gitcreds", "gert", "gh")
 
-library("gitcreds", "gert", "gh")
+library("gitcreds")
+library("gert")
+library("gh")
 ```
 
 

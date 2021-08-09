@@ -176,17 +176,19 @@ sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 
 ```{r, warning=FALSE, message=FALSE}
 # quality-control
-stats <- perCellQCMetrics(sce.pbmc, 
-  subsets=list(Mito=which(location=="MT")))
-high.mito <- isOutlier(stats$subsets_Mito_percent, 
-                       type="higher")
-sce.pbmc <- sce.pbmc[,!high.mito]
+stats <- perCellQCMetrics(sce.pbmc,
+    subsets = list(Mito = which(location == "MT"))
+)
+high.mito <- isOutlier(stats$subsets_Mito_percent,
+    type = "higher"
+)
+sce.pbmc <- sce.pbmc[, !high.mito]
 
 # normalization
 library(scran)
 set.seed(1000)
 clusters <- quickCluster(sce.pbmc)
-sce.pbmc <- computeSumFactors(sce.pbmc, cluster=clusters)
+sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 ```
 
@@ -212,14 +214,16 @@ top.pbmc <- getTopHVGs(dec.pbmc, prop = 0.1)
 ```{r, warning=FALSE, message=FALSE}
 # dimensionality-reduction
 set.seed(10000)
-sce.pbmc <- denoisePCA(sce.pbmc, subset.row=top.pbmc, 
-  technical=dec.pbmc)
+sce.pbmc <- denoisePCA(sce.pbmc,
+    subset.row = top.pbmc,
+    technical = dec.pbmc
+)
 
 set.seed(100000)
-sce.pbmc <- runTSNE(sce.pbmc, dimred="PCA")
+sce.pbmc <- runTSNE(sce.pbmc, dimred = "PCA")
 
 set.seed(1000000)
-sce.pbmc <- runUMAP(sce.pbmc, dimred="PCA")
+sce.pbmc <- runUMAP(sce.pbmc, dimred = "PCA")
 ```
 
 .footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
@@ -230,7 +234,7 @@ sce.pbmc <- runUMAP(sce.pbmc, dimred="PCA")
 
 ```{r, warning=FALSE, message=FALSE}
 # clustering
-g <- buildSNNGraph(sce.pbmc, k=10, use.dimred="PCA")
+g <- buildSNNGraph(sce.pbmc, k = 10, use.dimred = "PCA")
 clust <- igraph::cluster_walktrap(g)$membership
 sce.pbmc$cluster <- factor(clust)
 ```
@@ -287,7 +291,7 @@ class: inverse center middle
 
 # Mice
 # SingleR::ImmGenData()
-#SingleR::MouseRNASeqData()
+# SingleR::MouseRNASeqData()
 ```
 
 ---
@@ -308,8 +312,10 @@ ref <- BlueprintEncodeData()
 # Usando las referencias integradas
 
 ```{r, warning=FALSE, message=FALSE}
-pred <- SingleR(test=sce.pbmc, ref=ref,
-  labels=ref$label.main)
+pred <- SingleR(
+    test = sce.pbmc, ref = ref,
+    labels = ref$label.main
+)
 ```
 
 * ❓ ¿Qué etiquetas han sido asignadas a los datos single-cell?
@@ -339,7 +345,7 @@ plotScoreHeatmap(pred)
 
 ```{r, warning=FALSE, message=FALSE, fig.show='hide'}
 total_pruned <- sum(is.na(pred$pruned.labels))
-plotScoreHeatmap(pred, show.pruned=TRUE)
+plotScoreHeatmap(pred, show.pruned = TRUE)
 ```
 
 * 👉 SingleR intentará podar aquellas asignaciones de baja calidad marcándolas como NA
@@ -348,7 +354,7 @@ plotScoreHeatmap(pred, show.pruned=TRUE)
 ---
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-plotScoreHeatmap(pred, show.pruned=TRUE)
+plotScoreHeatmap(pred, show.pruned = TRUE)
 ```
 
 ---
@@ -380,7 +386,7 @@ plotScoreDistribution(pred)
 # Identificando los genes con anotación dirigida
 
 ```{r, warning=FALSE, message=FALSE, fig.show='hide'}
-# install gmp, ClusterR, mbkmeans dependencies if needed 
+# install gmp, ClusterR, mbkmeans dependencies if needed
 library(clusterExperiment)
 sce.pbmc$labels <- pred$labels
 all.markers <- metadata(pred)$de.genes
@@ -389,7 +395,7 @@ lab <- "B-cells"
 # type
 top.markers <- Reduce(union, sapply(all.markers[[lab]], head, 10))
 
-#plotHeatmap(sce.pbmc, order_columns_by="labels",
+# plotHeatmap(sce.pbmc, order_columns_by="labels",
 #  features=top.markers, center=TRUE, zlim=c(-3, 3), main=lab)
 ```
 
@@ -400,31 +406,35 @@ top.markers <- Reduce(union, sapply(all.markers[[lab]], head, 10))
 # Comparando las etiquetas con los clústeres
 
 ```{r, warning=FALSE, message=FALSE, fig.show='hide'}
-tab <- table(Assigned=pred$pruned.labels, Cluster=sce.pbmc$cluster)
+tab <- table(Assigned = pred$pruned.labels, Cluster = sce.pbmc$cluster)
 
 library(pheatmap)
 # Proportion of cells in each cluster assigned to each label
-pheatmap(prop.table(tab, margin=2), 
-  color=colorRampPalette(c("white", "blue"))(101))
+pheatmap(prop.table(tab, margin = 2),
+    color = colorRampPalette(c("white", "blue"))(101)
+)
 # (log-)number of cells in each cluster assigned to each label
 # Adding a pseudo-count of 10 to avoid strong color jumps with just
 # 1 cell.
-pheatmap(log2(tab+10), 
-  color=colorRampPalette(c("white", "blue"))(101))
+pheatmap(log2(tab + 10),
+    color = colorRampPalette(c("white", "blue"))(101)
+)
 ```
 
 ---
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-pheatmap(prop.table(tab, margin=2), 
-  color=colorRampPalette(c("white", "blue"))(101))
+pheatmap(prop.table(tab, margin = 2),
+    color = colorRampPalette(c("white", "blue"))(101)
+)
 ```
 
 ---
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-pheatmap(log2(tab+10), 
-  color=colorRampPalette(c("white", "blue"))(101))
+pheatmap(log2(tab + 10),
+    color = colorRampPalette(c("white", "blue"))(101)
+)
 ```
 
 ---
@@ -432,7 +442,7 @@ pheatmap(log2(tab+10),
 # Voilà
 
 ```{r, warning=FALSE, message=FALSE}
-plotTSNE(sce.pbmc, colour_by="labels", text_by="labels")
+plotTSNE(sce.pbmc, colour_by = "labels", text_by = "labels")
 ```
 
 ---
