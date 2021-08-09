@@ -18,6 +18,14 @@ crear-el-repositorio
 modificar-y-subir-a-github-nuestro-postcard
 detalles-de-la-sesión-de-r-1
 introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca
+bioconductor
+equipos-y-consejos
+encontrando-paquetes-de-bioconductor
+estructura-de-un-paquete-de-bioc
+las-dos-ramas-de-bioconductor-release-y-devel
+cursos-y-eventos
+comunidad
+introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca-1
 detalles-de-la-sesión-de-r-2
 estructura-e-importe-de-datos
 detalles-de-la-sesión-de-r-3
