@@ -1,8 +1,3 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
 # Normalización de datos
 
 Instructora: [Ana Beatriz Villaseñor Altamirano](https://comunidadbioinfo.github.io/es/authors/anabva/)
@@ -15,7 +10,7 @@ Instructora: [Ana Beatriz Villaseñor Altamirano](https://comunidadbioinfo.githu
 
 ## Motivación
 
-Al igual que otras tecnologías, sigle-cell RNA-seq (scRNA-seq) tiene errores sistemáticos y es importante conocerlos. 
+Al igual que otras tecnologías, single-cell RNA-seq (scRNA-seq) tiene errores sistemáticos y es importante conocerlos. 
 
 Dentro de los más comunes se encuentran la captura de cDNA y la amplificación de PCR que se lleva acabo por célula. Tener poco material de inicio dificulta lograr una preparación de libreria consistente dando lugar a errores sistemáticos. 
 
@@ -24,7 +19,7 @@ Dentro de los más comunes se encuentran la captura de cDNA y la amplificación 
 knitr::include_graphics("https://scrnaseq-course.cog.sanger.ac.uk/website/figures/RNA-Seq_workflow-5.pdf.jpg")
 ```
 
-La **normalización** tiene como objetivo remover estás diffencias sistemáticas para que no interfieran cuando comparamos los periles de expresión entre células.
+La **normalización** tiene como objetivo remover estás diferencias sistemáticas para que no interfieran cuando comparamos los perfiles de expresión entre células.
 
 Al normalizar los datos, las diferencias observadas entre poblaciones célulares o condiciones son debido a la biología y no por factores técnicos. 
 
@@ -42,7 +37,7 @@ Al normalizar los datos, las diferencias observadas entre poblaciones célulares
 
 Usaremos el dataset de [**Zeisel**](https://bioconductor.org/books/release/OSCA/zeisel-mouse-brain-strt-seq.html).
 
-- Tipos ceulares en cerebro de ratón (oligodendrocitos, microglias, neuronas, etc.)
+- Tipos celulares en cerebro de ratón (oligodendrocitos, microglias, neuronas, etc.)
 
 - Procesado con STRT-seq (similar a CEL-seq), un sistema de microfluio. 
 
@@ -51,8 +46,8 @@ Usaremos el dataset de [**Zeisel**](https://bioconductor.org/books/release/OSCA/
 - Contiene UMIs
 
 
-```{r message=FALSE, warning=FALSE, cache=T}
-library('scRNAseq')
+```{r message=FALSE, warning=FALSE}
+library("scRNAseq")
 sce.zeisel <- ZeiselBrainData(ensembl = TRUE)
 sce.zeisel
 ```
@@ -66,9 +61,9 @@ sce.zeisel
 - Gráfica los resultados
 
 
-```{r all_code, message=FALSE, warning=FALSE, cache=TRUE, include=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 # Control de calidad
-library('scater')
+library("scater")
 
 unfiltered <- sce.zeisel
 
@@ -76,11 +71,11 @@ is.mito <- which(rowData(sce.zeisel)$featureType == "mito")
 stats <- perCellQCMetrics(sce.zeisel, subsets = list(Mt = is.mito))
 qc <-
     quickPerCellQC(stats,
-        percent_subsets = c("altexps_ERCC_percent", "subsets_Mt_percent"))
+        percent_subsets = c("altexps_ERCC_percent", "subsets_Mt_percent")
+    )
 
 colSums(as.data.frame(qc))
 sce.zeisel <- sce.zeisel[, !qc$discard]
-
 ```
 
 
@@ -137,7 +132,7 @@ knitr::include_graphics(here::here("img/libfactor.png"))
 ```
 
 
-```{r all_code2, cache=TRUE, dependson='all_code'}
+```{r}
 # Estimar tamaños de librerías
 lib.sf.zeisel <- librarySizeFactors(sce.zeisel)
 # Examina la distribución de los tamaños de librerías
@@ -182,7 +177,7 @@ Supongamos que un gen X (o grupo de genes) se expresa en mayor cantidad en la c�
 knitr::include_graphics("https://hbctraining.github.io/DGE_workshop/img/normalization_methods_composition.png")
 ```
 
-Este problema ha sido estudiado en bulk RNA-seq, `DESeq2::estimateSizeFactorsFromMatrix()` y `edgeR::calcNormFactors()`, contemplan este sesgo. Se assume que la mayoría de genes no estarán DE entre las muestras (en nuestro caso céluas) y cualquier diferencia entre los genes non-DE representa un sesgo el cual se remueve (calculando un factor de normalización). 
+Este problema ha sido estudiado en bulk RNA-seq, `DESeq2::estimateSizeFactorsFromMatrix()` y `edgeR::calcNormFactors()`, contemplan este sesgo. Se assume que la mayoría de genes no estarán DE entre las muestras (en nuestro caso células) y cualquier diferencia entre los genes non-DE representa un sesgo el cual se remueve (calculando un factor de normalización). 
 
 Sin embargo, single-cell RNA-seq tiene muchas cuentas bajas y ceros debido a limitaciones en la tecnología y no necesariamente indica ausencia de expresión. 
 
@@ -191,9 +186,9 @@ El método de `scran` resuelve este problema juntando las cuentas de varias cél
 Este factor calculado con las cuentas pool se les regresa individualmente a cada célula mediante decircunvolución (deconvolution). Utilizando este factor se normalizan los datos con `scran::calculateSumFactors()`.
 
 
-```{r all_code3, cache=TRUE, dependson='all_code2'}
+```{r}
 # Normalización por decircunvolución (deconvolution)
-library('scran')
+library("scran")
 # Pre-clustering
 set.seed(100)
 clust.zeisel <- quickCluster(sce.zeisel)
@@ -203,19 +198,20 @@ deconv.sf.zeisel <-
     calculateSumFactors(sce.zeisel, clusters = clust.zeisel, min.mean = 0.1)
 # Examina la distribución de los factores de tamaño
 summary(deconv.sf.zeisel)
-hist(log10(deconv.sf.zeisel), xlab = "Log10[Deconvolution size factor]",
-    col = "grey80")
+hist(log10(deconv.sf.zeisel),
+    xlab = "Log10[Deconvolution size factor]",
+    col = "grey80"
+)
 
 
-plot(lib.sf.zeisel, 
-     deconv.sf.zeisel, 
-     xlab="Library size factor",
-     ylab="Deconvolution size factor", 
-     log='xy', 
-     pch=16
-    )
-abline(a=0, b=1, col="red")
-
+plot(lib.sf.zeisel,
+    deconv.sf.zeisel,
+    xlab = "Library size factor",
+    ylab = "Deconvolution size factor",
+    log = "xy",
+    pch = 16
+)
+abline(a = 0, b = 1, col = "red")
 ```
 
 
@@ -233,7 +229,7 @@ abline(a=0, b=1, col="red")
 
 ### Puntos finales
 
-La normalización por decircunvolución (deconvolution) mejora los resultados para análsis posteriores de una manera más precisa que los métodos para bulk RNA-seq.
+La normalización por decircunvolución (deconvolution) mejora los resultados para análisis posteriores de una manera más precisa que los métodos para bulk RNA-seq.
 
 `scran` algunas veces alcula factores negativos o ceros lo cual altera la matrix de expresión normalizada. ¡Checa los factores que calculas!
 
@@ -254,11 +250,11 @@ Si obtienes factores negativos intenta variar el número de clusters, checa si i
 - *Gen Y*: el promedio de expresión en el tipo celular A: 1100 y B: 1000
 
 ```{r}
-50-10
-1100-1000
+50 - 10
+1100 - 1000
 
-log(50)-log(10)
-log(1100)-log(1000)
+log(50) - log(10)
+log(1100) - log(1000)
 ```
 
 
@@ -266,16 +262,15 @@ Una vez calculados los factores de normalización con `computeSumFactors()`, pod
 
 Estos valores resultantes son valores de expresión normalizados transformados en escala logarítmica.
 
-```{r all_code4, cache=TRUE, dependson='all_code3'}
+```{r}
 # Normalization
 # set.seed(100)
-# clust.zeisel <- quickCluster(sce.zeisel) 
+# clust.zeisel <- quickCluster(sce.zeisel)
 # sce.zeisel <- computeSumFactors(sce.zeisel, cluster=clust.zeisel, min.mean=0.1)
 
 # Log transformation
 sce.zeisel <- scater::logNormCounts(sce.zeisel)
 assayNames(sce.zeisel)
-
 ```
 
 ### Ejercicio: Transformación logatítmica
@@ -308,35 +303,39 @@ La normalización de Seurat con `NormalizeData()` (tomado de [aquí](https://git
 
 3. Sumar 1 y tomar el logaritmo natural.
 
-```{r all_code5, cache=TRUE, dependson='all_code4', message=FALSE, warning=FALSE}
-library('Seurat')
+```{r, message=FALSE, warning=FALSE}
+library("Seurat")
 # Create a Seurat obj
 sce <- sce.zeisel
 sce <- removeAltExps(sce)
-seurat.zeisel <- as.Seurat(sce,counts = "counts", data = NULL)
+seurat.zeisel <- as.Seurat(sce, counts = "counts", data = NULL)
 seurat.zeisel
 
 # Normalize using Seurat function
-seurat.zeisel <- NormalizeData(seurat.zeisel,normalization.method = "LogNormalize")
+seurat.zeisel <- NormalizeData(seurat.zeisel, normalization.method = "LogNormalize")
 # Compare Total counts per cell after normalization
-ls.seurat <- colSums(seurat.zeisel[["originalexp"]]@data)
+ls.seurat <- colSums(seurat.zeisel[[SingleCellExperiment::mainExpName(x = sce)]]@data)
+## Relacionado a
+## https://github.com/satijalab/seurat/blob/9b3892961c9e1bf418af3bbb1bc79950adb481d7/R/objects.R#L1041-L1046
+## donde podemos ver como Seurat convierte el objeto de SingleCellExperiment
+## a un objeto de Seurat
+
 summary(ls.seurat)
 hist(ls.seurat)
 
 # Trying to replicate it
 ls.zeisel <- colSums(counts(sce.zeisel))
 summary(ls.zeisel)
-step1 <- t(counts(sce.zeisel))/ls.zeisel # matrix(2,2,2,2) /c(1,2)
+step1 <- t(counts(sce.zeisel)) / ls.zeisel # matrix(2,2,2,2) /c(1,2)
 step2 <- step1 * 10000
 step3 <- t(log1p(step2))
 ls.steps <- colSums(step3)
 summary(ls.steps)
-plot(ls.seurat,ls.steps)
+plot(ls.seurat, ls.steps)
 
 # Compare with deconv normalization
 ls.log <- colSums(logcounts(sce.zeisel))
 plot(ls.seurat, ls.log)
-
 ```
 
 Nota: [scanpy](https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html) ocupa un factor de normalización igual que Seurat.
@@ -401,17 +400,20 @@ colData(unfiltered) <- cbind(colData(unfiltered), stats)
 unfiltered$discard <- qc$discard
 
 gridExtra::grid.arrange(
-    plotColData(unfiltered, y="sum", colour_by="discard") +
+    plotColData(unfiltered, y = "sum", colour_by = "discard") +
         scale_y_log10() + ggtitle("Cuentas Totales"),
-    plotColData(unfiltered, y="detected", colour_by="discard") +
+    plotColData(unfiltered, y = "detected", colour_by = "discard") +
         scale_y_log10() + ggtitle("Features (genes) detectados"),
-    plotColData(unfiltered, y="altexps_ERCC_percent",
-        colour_by="discard") + ggtitle("ERCC %"),
-    plotColData(unfiltered, y="subsets_Mt_percent",
-        colour_by="discard") + ggtitle("Mito %"),
-    ncol=2
+    plotColData(unfiltered,
+        y = "altexps_ERCC_percent",
+        colour_by = "discard"
+    ) + ggtitle("ERCC %"),
+    plotColData(unfiltered,
+        y = "subsets_Mt_percent",
+        colour_by = "discard"
+    ) + ggtitle("Mito %"),
+    ncol = 2
 )
-
 ```
 
 
@@ -438,7 +440,7 @@ identical(lib.sf.zeisel, ls.zeisel)
 * ¿Son proporcionales?
 
 ```{r}
-# Checamos proporcionalidad 
+# Checamos proporcionalidad
 plot(
     ls.zeisel,
     lib.sf.zeisel,
@@ -454,7 +456,7 @@ plot(
 
 ```{r}
 ## Ahora asegurate que su media sea 1 (unity mean)
-lib_size_factors <- ls.zeisel/mean(ls.zeisel)
+lib_size_factors <- ls.zeisel / mean(ls.zeisel)
 summary(lib_size_factors)
 identical(lib_size_factors, lib.sf.zeisel)
 ```
@@ -490,18 +492,17 @@ sort(table(quickCluster(sce.zeisel, min.size = 200)))
 * ¿Cúantas líneas ves en la gráfica?
 
 ```{r}
-plot(lib.sf.zeisel, 
-     deconv.sf.zeisel, 
-     xlab="Library size factor",
-     ylab="Deconvolution size factor", 
-     log='xy', 
-     pch=16,
-     col=as.integer(factor(sce.zeisel$level1class))
-    )
-abline(a=0, b=1, col="red")
-abline(a=-.2, b=0.95, col="red")
-abline(a=0.08, b=1, col="red")
-
+plot(lib.sf.zeisel,
+    deconv.sf.zeisel,
+    xlab = "Library size factor",
+    ylab = "Deconvolution size factor",
+    log = "xy",
+    pch = 16,
+    col = as.integer(factor(sce.zeisel$level1class))
+)
+abline(a = 0, b = 1, col = "red")
+abline(a = -.2, b = 0.95, col = "red")
+abline(a = 0.08, b = 1, col = "red")
 ```
 
 ### Ejercicio: Transformación logatítmica
@@ -546,7 +547,10 @@ Y en el material de la  [comunidadbioinfo/cdsb2020](https://github.com/comunidad
 
 ## Detalles de la sesión de R
 
-```{r 'reproducibility', cache = TRUE, dependson=knitr::all_labels()}
+```{r}
+## Información de la sesión de R
+Sys.time()
+proc.time()
 options(width = 120)
 sessioninfo::session_info()
 ```

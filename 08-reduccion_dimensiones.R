@@ -1,9 +1,9 @@
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 library(scRNAseq)
 sce.zeisel <- ZeiselBrainData(ensembl = TRUE)
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # Quality control
 library(scater)
 is.mito <- which(rowData(sce.zeisel)$featureType == "mito")
@@ -16,7 +16,7 @@ qc <- quickPerCellQC(stats,
 sce.zeisel <- sce.zeisel[, !qc$discard]
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # normalization
 library(scran)
 set.seed(1000)
@@ -33,7 +33,7 @@ dec.zeisel <- modelGeneVarWithSpikes(
 )
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 library(BiocFileCache)
 bfc <- BiocFileCache()
 raw.path <- bfcrpath(bfc, file.path(
@@ -43,14 +43,14 @@ raw.path <- bfcrpath(bfc, file.path(
 untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 library(DropletUtils)
 library(Matrix)
 fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
 sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # gene-annotation
 library(scater)
 rownames(sce.pbmc) <- uniquifyFeatureNames(
@@ -68,7 +68,7 @@ e.out <- emptyDrops(counts(sce.pbmc))
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 # quality-control
 stats <- perCellQCMetrics(sce.pbmc,
     subsets = list(Mito = which(location == "MT"))
@@ -86,14 +86,14 @@ sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 
 
-## --------------------------------------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------
 # variance modelling
 set.seed(1001)
 dec.pbmc <- modelGeneVarByPoisson(sce.pbmc)
 top.pbmc <- getTopHVGs(dec.pbmc, prop = 0.1)
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 library(scran)
 top.zeisel <- getTopHVGs(dec.zeisel, n = 2000)
 
@@ -104,7 +104,7 @@ sce.zeisel <- runPCA(sce.zeisel,
 )
 
 
-## ---- warning=FALSE, message=FALSE, fig.dim = c(5, 4)----------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE, fig.dim = c(5, 4)------------------------------------------------
 library(PCAtools)
 percent.var <- attr(reducedDim(sce.zeisel), "percentVar")
 chosen.elbow <- PCAtools::findElbowPoint(percent.var)
@@ -112,12 +112,12 @@ plot(percent.var, xlab = "PC", ylab = "Variance explained (%)")
 abline(v = chosen.elbow, col = "red")
 
 
-## --------------------------------------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------
 choices <- getClusteredPCs(reducedDim(sce.zeisel))
 chosen.clusters <- metadata(choices)$chosen
 
 
-## --------------------------------------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------
 set.seed(100)
 # Compute and store the 'full' set of PCs
 sce.zeisel <- runPCA(sce.zeisel, subset_row = top.zeisel)
@@ -133,7 +133,7 @@ reducedDim(sce.zeisel, "PCA_clusters") <- reducedDim(
 )[, 1:chosen.clusters]
 
 
-## ---- warning=FALSE, message=FALSE-----------------------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
 library(scran)
 set.seed(111001001)
 denoised.pbmc <- denoisePCA(sce.pbmc,
@@ -141,11 +141,11 @@ denoised.pbmc <- denoisePCA(sce.pbmc,
 )
 
 
-## --------------------------------------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------
 dim(reducedDim(denoised.pbmc, "PCA"))
 
 
-## --------------------------------------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------
 set.seed(001001001)
 denoised.zeisel <- denoisePCA(sce.zeisel,
     technical = dec.zeisel, subset.row = top.zeisel
@@ -153,7 +153,7 @@ denoised.zeisel <- denoisePCA(sce.zeisel,
 dim(reducedDim(denoised.zeisel))
 
 
-## --------------------------------------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------
 dec.pbmc2 <- modelGeneVar(sce.pbmc)
 denoised.pbmc2 <- denoisePCA(sce.pbmc,
     technical = dec.pbmc2, subset.row = top.pbmc
@@ -161,31 +161,31 @@ denoised.pbmc2 <- denoisePCA(sce.pbmc,
 dim(reducedDim(denoised.pbmc2))
 
 
-## ---- fig.dim = c(6, 4)----------------------------------------------------------------------------------------------
+## ---- fig.dim = c(6, 4)------------------------------------------------------------------------------
 plotReducedDim(sce.zeisel, dimred = "PCA")
 
 
-## ---- fig.dim = c(6, 4)----------------------------------------------------------------------------------------------
+## ---- fig.dim = c(6, 4)------------------------------------------------------------------------------
 plotReducedDim(sce.zeisel,
     dimred = "PCA",
     colour_by = "level1class"
 )
 
 
-## ---- fig.dim = c(6, 4)----------------------------------------------------------------------------------------------
+## ---- fig.dim = c(6, 4)------------------------------------------------------------------------------
 plotReducedDim(sce.zeisel,
     dimred = "PCA",
     ncomponents = 4, colour_by = "level1class"
 )
 
 
-## ---- fig.dim = c(5, 4)----------------------------------------------------------------------------------------------
+## ---- fig.dim = c(5, 4)------------------------------------------------------------------------------
 set.seed(00101001101)
 sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA")
 plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
 
 
-## ---- fig.dim = c(6, 4)----------------------------------------------------------------------------------------------
+## ---- fig.dim = c(6, 4)------------------------------------------------------------------------------
 set.seed(100)
 sce.zeisel <- runTSNE(sce.zeisel,
     dimred = "PCA",
@@ -197,7 +197,7 @@ plotReducedDim(sce.zeisel,
 )
 
 
-## ---- fig.dim = c(6, 4)----------------------------------------------------------------------------------------------
+## ---- fig.dim = c(6, 4)------------------------------------------------------------------------------
 set.seed(1100101001)
 sce.zeisel <- runUMAP(sce.zeisel, dimred = "PCA")
 plotReducedDim(sce.zeisel,
@@ -206,7 +206,7 @@ plotReducedDim(sce.zeisel,
 )
 
 
-## ---- fig.dim = c(6, 4)----------------------------------------------------------------------------------------------
+## ---- fig.dim = c(6, 4)------------------------------------------------------------------------------
 
 set.seed(100)
 sce.zeisel <- runUMAP(sce.zeisel,
@@ -217,4 +217,12 @@ plotReducedDim(sce.zeisel,
     dimred = "UMAP",
     colour_by = "level1class"
 )
+
+
+## ----------------------------------------------------------------------------------------------------
+## Información de la sesión de R
+Sys.time()
+proc.time()
+options(width = 120)
+sessioninfo::session_info()
 

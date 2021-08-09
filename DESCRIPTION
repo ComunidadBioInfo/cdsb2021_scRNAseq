@@ -27,6 +27,7 @@ Imports:
     fossil,
     here,
     iSEE,
+    kableExtra,
     org.Mm.eg.db,
     patchwork,
     PCAtools,

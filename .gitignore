@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 notas/
+_book
+*_files/

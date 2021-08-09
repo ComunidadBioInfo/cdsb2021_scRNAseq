@@ -1,6 +1,368 @@
 # Ejercicio usando `usethis`, `here` y `postcards`
 
-TODO
+Instructoras: [Elisa Márquez Zavala](https://twitter.com/naielisha), [Citlali Gil Aguillon](http://twitter.com/argininaa)
+
+Contenido adaptado del [Curso de RNASeq](https://lcolladotor.github.io/rnaseq_LCG-UNAM_2021/index.html) de [Leonardo Collado Torres](https://github.com/lcolladotor)
+
+## here
+
+Este paquete es bastante útil 
+
+El directorio que toma como base será en el que nos encontremos al momento de cargar el paquete  `here`, heuristicamente busca la raíz del proyecto y se posiciona en él.
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# se descargó previamente, así que solo se carga
+library("here") # busca la raiz del proyecto en el que se encuentre
+```
+
+En ciertas ocasiones puede haber algun error, ya que puede chocar con otros paquetes (como `plyr`). para evitar esto podemos usar `here::here` (que básicamente aclara que la función solicitada es del paquete `here`)
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+here::here()
+```
+
+Podemos checar en qué directorio nos encontramos con `getwd()`, si no es el que deseamos podemos cambiarlo con `setwd()`
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+getwd() # regresa la path en donde nos encontramos
+setwd("direccion/deseada") # nos lleva a la path indicada
+```
+
+Pero con `here` podemos no especificar la path 
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+getwd() # para checar en donde nos encontramos
+here::here() # para checar dónde te encuentras
+
+# nos movemos al subdirectorio R
+setwd(here::here("R")) # podemos cambiar de directorio, aun así `here está en la raíz
+```
+
+A continuación ofrecemos algunos ejemplos de cómo podría emplearse `here::here`
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# como ejemplo: vamos a guardar datos en archivo y cargarlos
+a <- 1
+c <- 23
+save(a, c, file = here::here("datos-prueba.RData"))
+# rm(a,c)
+load(here::here("datos-prueba.RData"))
+
+# creamos un directorio
+dir.create(here::here("subdirectorio"), showWarnings = FALSE)
+# podemos crear un archivo, indicando el subdirectorio, (en este caso el primer argumento)
+file.create(here::here("subdirectorio", "nombrearchivo"))
+# abrimos el nuevo archivo creado
+file.show(here::here("subdirectorio", "nombrearchivo")) # podemos editarlo!!
+
+# por ejemplo si quisieramos ver nuestros archivos del directorio
+list.files(here::here(), recursive = TRUE)
+```
+
+## usethis
+`usethis` puede ser más amigable, por ejemplo para la creación de nuevos archivos .R es capaz de agruparlos en la carpeta R (dando un orden al proyecto)
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+usethis::use_r("notas-prueba.R") # no importando en qué path estemos
+```
+
+En el siguiente ejercicio veremos algunos usos de `usethis`
+
+
+
+## Vinculando RStudio con Git y GitHub 
+
+
+Ahora vamos a vincular nuestro proyecto de Rstudio con Github, esto es muy util para tener un control de nuestros archivos, poder compartirlos o usar el de otrxs
+
+### Prerrequisitos
+
+  Debemos tener una cuenta de Github. Si no tienes este es el momento para crear una cuenta!
+
+  - https://docs.github.com/es/github/getting-started-with-github/signing-up-for-github/signing-up-for-a-new-github-account
+
+  También debemos instalar `git` en nuestras computadoras ya que el paquete `gitcreds` lo requiere
+
+- https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+
+Y la instalación de los siguientes paquetes:
+  
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# paquetes que vamos a requerir
+install.packages("gitcreds", "gert", "gh")
+
+library("gitcreds", "gert", "gh")
+```
+
+
+### Creando token de acceso personal (PAT)
+
+Para conectar nuestro repositorio de Rstudio con Github solicitamos un token, esto para que github otorgue permiso a nuestra computadora
+
+Emplearemos el siguiente bloque de código para solicitar dicho token (elige un nombre significativo)
+
+>Otra manera de solicitar el token es ingresando a https://github.com/settings/tokens, esta opción no dará una recomendación de los parámetros a seleccionar
+
+>El parámetro de expiración del token puede cambiarse para que no expire (por seguridad no lo recomienda Github), de otra manera considera su tiempo de vigencia
+
+Una vez generado el token debes guardarlo, pues no volverá a aparecer.
+
+>Siempre puedes volver a generar uno nuevo (no olvides borrar el token anterior)
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# Para iniciar conexión con GitHub
+usethis::create_github_token() # redirige a github donde eligiras nombre especifico del token
+# copia el token para después ingresarlo con gitcreds_set()
+gitcreds::gitcreds_set() # aquí colocas el token (NO tu contraseña de github!!!)
+```
+
+El siguiente paso será configurar nuestro usuario de github en el archivo `.gitconfig`
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# Configurar usuario de gitHub
+usethis::edit_git_config() # que abre el archivo .gitconfig
+# colocaremos nombre y correo de cuenta de github. SOLO borrar los # y respetar los demas espacios
+# [user]
+#   name = N O M B R E
+#   email = correodeGithub
+```
+
+### Inicializar repositorio de Git y Github
+Ahora vamos a inicializar el repositorio en Git (de manera local en tu computadora) y enseguida solicitamos que se conecte con los servidores de Github
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# inicializar el repositorio de Git
+usethis::use_git() #
+
+# conectar tu repositorio local de Git con los servidores de GitHub
+usethis::use_github()
+```
+
+>Git es el software mientras que GitHub es la plataforma web (basada en Git) que permite la colaboración
+
+
+**LISTO!!**
+
+>Comando útil para checar configuración
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+gh::gh_whoami() # para checar cómo quedó la configuración
+```
+
+### Probar otros comandos de `gert`
+
+Una vez que ya vinculamos nuestro repositorio con github podemos seguir actualizandolo. Vamos a checar brevemente algunos de los comandos que son útiles para ello:
+
+Checaremos `git_add`, `git_commit`, `git_log` y `git_push`
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# escribimos un nuevo archivo e indicamos dónde lo queremos
+writeLines("hola", "R/prueba.R")
+# también podemos hacerlo así
+usethis::use_r("archivo-prueba-github.R") # añade archivo al directorio R del proyecto actual
+
+# Por ejemplo podríamos probar añadir algo nuevo
+gert::git_add("R/archivo-prueba-github.R")
+
+# añadimos commit de lo que se hizo
+gert::git_commit("se subio archivo prueba")
+
+# nos da info de los commits
+gert::git_log()
+
+# sube tus cambios del repo local a los de github
+gert::git_push() # COMANDO IMPORTANTE
+```
+
+_Puede ser más amigable usar el recuadro de Git que aparece en RStudio para hacer todo lo anterior!_
+
+
+## Ejercicio postcards
+* Similar a https://pages.github.com/
+* `postcards` tiene 4 templados de páginas web https://github.com/seankross/postcards
+* Tu página web debe describir decir algo sobre ti, tus intereses, y tus proyectos además de cómo contactarte
+  - Ejemplo https://amy-peterson.github.io/ vía https://github.com/amy-peterson/amy-peterson.github.com
+  - http://jtleek.com/ vía https://github.com/jtleek/jtleek.github.io
+  - http://aejaffe.com/ vía https://github.com/andrewejaffe/andrewejaffe.github.io
+
+
+### Crear el repositorio
+* Podemos crearlo desde RStudio o desde github.com
+
+**(opción 1) Desde RStudio**
+
+<div class="alert alert-block alert-danger">
+<b>¡Cuidado!:</b> Antes de crear un proyecto, revisen dónde están parados (`getwd()`) en su directorio y dónde quieren que se cree
+</div>
+
+```{r postcards_proj, eval = FALSE}
+## Creen el RStudio project. Es MUY importante que el usuario debe sea igual que en github
+usethis::create_project("Su_Usuario.github.io")
+```
+
+Nuevo proyecto :
+
+```{r echo=FALSE, fig.cap="git user", out.width = "40%"}
+knitr::include_graphics("img_postcard/proyecto_github_user.png")
+```
+
+```{r postcards_git, eval = FALSE}
+## Configura Git y GitHub
+
+# Con use_git() preguntará si desean hacer un commit, y después pedirá reiniciar Rstudio para que obtengan un nuevo botón llamado "git()"
+usethis::use_git()
+```
+
+Nuevo botón
+
+```{r echo=FALSE, fig.cap="button_git", out.width = "40%"}
+knitr::include_graphics("img_postcard/activa_boton_git.png")
+```
+
+```{r postcards_github, eval = FALSE}
+usethis::use_github()
+```
+
+
+Creen su templado usando `postcards`. Va a crear un archivo `index.Rmd`
+
+```{r postcards_create, eval = FALSE}
+## Solo uno de estos, de acuerdo al templado que más les gustó
+postcards::create_postcard(template = "jolla")
+postcards::create_postcard(template = "jolla-blue")
+postcards::create_postcard(template = "trestles")
+postcards::create_postcard(template = "onofre")
+```
+
+**(opción 2) Desde github**
+
+* Creen un nuevo repositorio, público y **sin** archivo README en https://github.com/new llamado "usuario.github.io" con su **nombre exacto** en github
+
+<div class="alert alert-warning">
+  <strong>¡Cuidado!</strong> El repositorio debe ser **público** y sin README
+</div>
+
+* Creen un nuevo proyecto en RStudio: 
+  File > New_project > New directory > Postcards Website 
+  
+* Elijan el templado que más les gustó
+
+* Ya con el proyecto creado, hay que configurar git y github
+
+```{r postcards_git2, eval = FALSE}
+## Configura Git y GitHub
+
+# Con use_git() preguntará si desean hacer un commit, y después pedirá reiniciar Rstudio para que obtengan un nuevo botón llamado "git()"
+usethis::use_git()
+```
+
+  
+  
+Nuevo botón: 
+
+```{r echo=FALSE, fig.cap="button_git", out.width = "40%"}
+knitr::include_graphics("img_postcard/activa_boton_git.png")
+```
+
+* Ahora que tienen el botón Git, hagan click y en la esquina derecha habrá un símbolo con dos  rectángulos morados y un rombo blanco, denle click.
+
+```{r echo=FALSE, fig.cap="button_branch", out.width = "40%"}
+knitr::include_graphics("img_postcard/branch.png")
+```
+
+* Ahora el botón *Add Remote* y ahí podrán nombrar este acceso remoto como gusten, y agregar la URL de su repositorio en github.
+
+* Da click en *Add* y después asignen el nombre de rama **master**
+
+* Ahora pueden crear la rama, y sobreescribir el acceso cuando se los pregunte.
+
+-----------------------------
+
+
+-----------------------------
+
+### Modificar y subir a github nuestro postcard
+
+Ya que hayan creado con cualquiera de las 2 opciones anteriores pueden continuar:
+
+* Llenen su información usando el formato `Markdown`. Por ejemplo https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L17-L31.
+* Agreguen sus perfiles estilo https://github.com/andrewejaffe/andrewejaffe.github.io/blob/master/index.Rmd#L7-L12
+* Den click en el botón azul de `knit` en RStudio. Es equivalente a `rmarkdown::render("index.Rmd")`. Esto creará el archivo `index.html`.
+
+* Hagan un `commit` para guardar los archivos nuevos incluyendo `index.html` y luego un `push` para subir los archivos a GitHub con alguna de las siguientes dos maneras:
+
+**(opción 1) Botón de Git**
+* Para guardar los archivos nuevos, incluyendo `index.html`, debemos hacer un `commit`. Podemos hacerlo con el nuevo botón de git, primero seleccionando los archivos: 
+
+```{r echo=FALSE, fig.cap="add_file", out.width = "40%"}
+knitr::include_graphics("img_postcard/add_stag.png")
+```
+
+Cuando hayamos seleccionado **todos** los archivos, veremos que la columna Status cambia a una "A" de agregado o added y podemos darle al botón `Commit` justo arriba de Status. Esto abrirá una nueva pestaña donde podremos poner un mensaje sobre nuestro `commit` y después darle al botón `Commit`.
+
+```{r echo=FALSE, fig.cap="button_git", out.width = "80%"}
+knitr::include_graphics("img_postcard/commit_message.png")
+```
+
+Una vez terminado, en esa misma pantalla podemos darle un `push` para subir los archivos a GitHub con el botón de  `Push` con una flecha verde arriba de *Commit message*.
+
+
+**(opcion 2) Línea de comandos**
+Otra manera de hacer es vía línea de comandos, primero pueden agregar los archivos con `gert::git_add()`  o hacer directamente un commit de todos los archivos y luego un pull:
+
+```{r postcards_pull, eval = FALSE}
+## Guardamos los archivos nuevos con el commit
+gert::git_commit_all("mensaje sobre el commit")
+
+## Subimos los archivos a github
+gert::git_push
+```
+
+* <span style="color:DodgerBlue">**(extra)** </span>. Pueden copiar y pegar emojis en sus páginas o utilizar [fontawesome](https://github.com/rstudio/fontawesome) para agregar diferentes símbolos (como github o twitter):
+
+  - En código YAML
+```{r fawesome_yaml, eval = FALSE}
+
+
+# Utlilizando `r fontawesome::fa("font-awesome-logo-full", fill = "forestgreen")` en código YAML
+
+```
+
+```{r echo=FALSE, fig.cap="y_fawesome", out.width = "40%"}
+knitr::include_graphics("img_postcard/yaml_awesome.png")
+```
+
+  Se ve así:
+  
+```{r echo=FALSE, fig.cap="fawesome", out.width = "40%"}
+knitr::include_graphics("img_postcard/awesome.png")
+```
+
+* 
+   - En el texto
+
+
+```{r fawesome_text, eval = FALSE}
+
+
+# Utlilizando `r fontawesome::fa("font-awesome-logo-full", fill = "forestgreen")` en el texto
+
+```
+
+```{r echo=FALSE, fig.cap="tfawesome", out.width = "40%"}
+knitr::include_graphics("img_postcard/text_awesome.png")
+```
+
+
+* <span style="color:DodgerBlue">**(opcional)**</span>. Anuncien su nueva página web en Twitter usando el hashtag `#rstats` y/o etiquen al autor de `postcards` https://twitter.com/seankross. Pueden después incluir su página web en su introducción en el canal `#bienvenida` del Slack de la CDSB ^^.
+
+## Detalles de la sesión de R
+
+```{r}
+## Información de la sesión de R
+Sys.time()
+proc.time()
+options(width = 120)
+sessioninfo::session_info()
+```
 
 ## Patrocinadores {-}
 

@@ -1,26 +1,99 @@
-# Identificación de genes marcadores
+---
+title: "**Identificación de marcadores**"
+subtitle: "**Bioconductor** para datos transcriptómicos de célula única (**scRNA-seq**) -- **CDSB2021**"  
+author: 
+  - "Yalbi I. Balderas-Martínez"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+    includes:
+      #in_header:
+        #- 'gtag.js'
+---
 
-Instructora: [**Yalbi I. Balderas-Martínez**](http://Yalbibalderas.github.io/).
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
 
-## Diapositivas de Peter Hickey
+```{r xaringan-themer, include=FALSE}
+library(xaringanthemer)
+solarized_dark(
+    code_font_family = "Fira Code",
+    code_font_url    = "https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css"
+)
+```
+
+class: inverse
+
+.center[
+
+<a href="https://osca.bioconductor.org/"><img src="https://raw.githubusercontent.com/Bioconductor/OrchestratingSingleCellAnalysis-release/master/images/cover.png" style="width: 30%"/></a>
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+
+]
+
+.footnote[Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2021')` o revísalos en línea via [**comunidadbioinfo.github.io/cdsb2021**](http://comunidadbioinfo.github.io/cdsb2021).]
+
+```{css, echo = FALSE}
+/* From https://github.com/yihui/xaringan/issues/147  */
+.scroll-output {
+  height: 80%;
+  overflow-y: scroll;
+}
+/* https://stackoverflow.com/questions/50919104/horizontally-scrollable-output-on-xaringan-slides */
+pre {
+  max-width: 100%;
+  overflow-x: scroll;
+}
+/* From https://github.com/yihui/xaringan/wiki/Font-Size */
+.tiny{
+  font-size: 40%
+}
+/* From https://github.com/yihui/xaringan/wiki/Title-slide */
+.title-slide {
+  background-image: url(https://raw.githubusercontent.com/Bioconductor/OrchestratingSingleCellAnalysis/master/images/Workflow.png);
+  background-size: 33%;
+  background-position: 0% 100%
+}
+```
+
+---
+
+# Diapositivas de Peter Hickey
 
 Ver las diapositivas originales [aquí](https://docs.google.com/presentation/d/18NArqbfeo3Ujo8bcSJTWXirY8N4lEG-T_tFEqlI-uek/edit)
 
-## Motivación 
+Plantilla desarrollada por: [Leonardo Collado-Torres](http://lcolladotor.github.io/)
 
-* Ahora que hemos obtenido los clústeres, nos preguntamos, pero qué son? (e.g. ¿qué tipo celular es el clúster 1?)
+---
 
-* ¿Cuáles genes están dirigiendo el agrupamiento (e.g., ¿cuáles son los genes diferencialmente expresados entre los clústeres 1 y 2?)
+# Motivación 
 
-* Idea: Mirar las diferencias en los perfiles de expresión de las células de los diferentes clústeres
+Ahora que hemos obtenido los clústeres, nos preguntamos, pero qué son? (e.g. ¿qué tipo celular es el clúster 1?)
 
+¿Cuáles genes están dirigiendo el agrupamiento (e.g., ¿cuáles son los genes diferencialmente expresados entre los clústeres 1 y 2?)
 
-## Dataset ilustrativo: PBMC4k 10X sin filtrar
+Idea: Mirar las diferencias en los perfiles de expresión de las células de los diferentes clústeres
 
-### Descargar datos
+---
+
+class: inverse center middle
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
 
 ```{r, warning=FALSE, message=FALSE}
-# Usemos datos de pbmc4k
 library(BiocFileCache)
 bfc <- BiocFileCache()
 raw.path <- bfcrpath(bfc, file.path(
@@ -30,6 +103,9 @@ raw.path <- bfcrpath(bfc, file.path(
 untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
 ```
 
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
 
 ```{r, warning=FALSE, message=FALSE}
 library(DropletUtils)
@@ -40,12 +116,16 @@ sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 
 Dataset "Células mononucleares humanas de sangre periférica" de 10X Genomics
 
-Descripción [aquí](https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-genomics.html) ^[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017).]
+Descripción [aquí](https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-genomics.html)
 
-### Anotación
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
 
 ```{r, warning=FALSE, message=FALSE}
-# Anotación de los genes
+# gene-annotation
 library(scater)
 rownames(sce.pbmc) <- uniquifyFeatureNames(
     rowData(sce.pbmc)$ID, rowData(sce.pbmc)$Symbol
@@ -55,15 +135,20 @@ location <- mapIds(EnsDb.Hsapiens.v86,
     keys = rowData(sce.pbmc)$ID,
     column = "SEQNAME", keytype = "GENEID"
 )
-
-# Detección de _droplets_ con células
+# cell-detection
 set.seed(100)
 e.out <- emptyDrops(counts(sce.pbmc))
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 ```
 
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
+
 ```{r, warning=FALSE, message=FALSE}
-# Control de calidad
+# quality-control
 stats <- perCellQCMetrics(sce.pbmc,
     subsets = list(Mito = which(location == "MT"))
 )
@@ -72,7 +157,7 @@ high.mito <- isOutlier(stats$subsets_Mito_percent,
 )
 sce.pbmc <- sce.pbmc[, !high.mito]
 
-# Normalización de los datos
+# normalization
 library(scran)
 set.seed(1000)
 clusters <- quickCluster(sce.pbmc)
@@ -80,31 +165,45 @@ sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 ```
 
-### Genes variables
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
 
 ```{r, warning=FALSE, message=FALSE}
-## Identificación de genes altamente variables
+# variance modelling
 set.seed(1001)
 dec.pbmc <- modelGeneVarByPoisson(sce.pbmc)
 top.pbmc <- getTopHVGs(dec.pbmc, prop = 0.1)
 ```
 
-### Reducción de dimensiones
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
 
 ```{r, warning=FALSE, message=FALSE}
-## Reducción de dimensiones
+# dimensionality-reduction
 set.seed(10000)
 sce.pbmc <- denoisePCA(sce.pbmc,
     subset.row = top.pbmc,
     technical = dec.pbmc
 )
+
 set.seed(100000)
 sce.pbmc <- runTSNE(sce.pbmc, dimred = "PCA")
+
 set.seed(1000000)
 sce.pbmc <- runUMAP(sce.pbmc, dimred = "PCA")
 ```
 
-### Clustering
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
+
+---
+
+# Dataset ilustrativo: PBMC4k 10X sin filtrar
 
 ```{r, warning=FALSE, message=FALSE}
 # clustering
@@ -113,9 +212,29 @@ clust <- igraph::cluster_walktrap(g)$membership
 sce.pbmc$cluster <- factor(clust)
 ```
 
-## Motivación - continuación
+.footnote[Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)]
 
-¿Algunos de estos genes están asociados con los resultados de _clustering_?
+---
+
+class: inverse center middle
+
+# Motivación - continuación
+
+---
+
+# Motivación
+
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
+# Is gene 1 associated with the clustering?
+plotExpression(sce.pbmc,
+    features = rownames(sce.pbmc)[1],
+    x = "cluster", colour_by = "cluster"
+)
+```
+
+---
+
+# Motivación
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Is gene 1 associated with the clustering?
@@ -125,6 +244,22 @@ plotExpression(sce.pbmc,
 )
 ```
 
+---
+
+# Motivación
+
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
+# Is gene 2 associated with the clustering?
+plotExpression(sce.pbmc,
+    features = rownames(sce.pbmc)[2],
+    x = "cluster", colour_by = "cluster"
+)
+```
+
+---
+
+# Motivación
+
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Is gene 2 associated with the clustering?
 plotExpression(sce.pbmc,
@@ -132,6 +267,22 @@ plotExpression(sce.pbmc,
     x = "cluster", colour_by = "cluster"
 )
 ```
+
+---
+
+# Motivación
+
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
+# Is gene 2512 associated with the clustering?
+plotExpression(sce.pbmc,
+    features = rownames(sce.pbmc)[2512],
+    x = "cluster", colour_by = "cluster"
+)
+```
+
+---
+
+# Motivación
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Is gene 2512 associated with the clustering?
@@ -141,6 +292,21 @@ plotExpression(sce.pbmc,
 )
 ```
 
+---
+
+# Motivación
+
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
+# Is gene 2512 associated with the clustering?
+plotExpression(sce.pbmc,
+    features = "CD3E",
+    x = "cluster", colour_by = "cluster"
+)
+```
+
+---
+
+# Motivación
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Is gene 2512 associated with the clustering?
@@ -150,16 +316,19 @@ plotExpression(sce.pbmc,
 )
 ```
 
+---
 
-* Ver una gráfica como una forma de encontrar los genes marcadores obviamente no nos sirve a gran escala
+# Motivación
 
-* Necesitamos un método estadístico para identificar estos genes marcadores 
+Ver una gráfica como una forma de encontrar los genes marcadores obviamente no nos sirve a gran escala
+
+Necesitamos un método estadístico para identificar estos genes marcadores 
 
 * 👉 La prueba t de Welch es una opción obvia para probar las diferencias en la expresión entre clústeres
 
+---
 
-
-## Prueba t modificada de Welch pareada
+# Prueba t modificada de Welch pareada
 
 * ➕ Rápidas y buenas propiedades estadísticas para un gran número de células [(Soneson and Robinson, 2018)](https://www.ncbi.nlm.nih.gov/pubmed/29481549)
 
@@ -168,10 +337,15 @@ plotExpression(sce.pbmc,
 * 🤔 ¿Por qué no comparar cada clúster con el promedio de todas las otras células?
   - Sensible a la composición poblacional, una subpoblación dominante sola que dirige la selección de los marcadores _top_ para cualquier otro clúster 
 
+---
 
-## Ejemplo ilustrativo: CD3E como gen marcador en el dataset PBMC4k 10X
+class: inverse center middle
 
-### Pruebas pareadas
+# Ejemplo ilustrativo: CD3E como gen marcador en el dataset PBMC4k 10X
+
+---
+
+# Pruebas pareadas
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 plotExpression(sce.pbmc,
@@ -180,12 +354,19 @@ plotExpression(sce.pbmc,
 )
 ```
 
+---
+
+# Pruebas pareadas
+
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 library(kableExtra)
+
 comparison <- c("1 vs 2", "1 vs 3", "...", "2 vs 1", "...", "18 vs 17")
 logFC <- c("1.50", "-0.08", "...", "1.39", "...", "0.11")
 Pval <- c("1.7e-198", "0.11", "...", "1.7e-198", "...", "0.46")
+
 paired_tests <- data.frame(comparison, logFC, Pval)
+
 knitr::kable(paired_tests, format = "html") %>%
     kable_styling(
         bootstrap_options = c("striped", "hover"),
@@ -195,12 +376,13 @@ knitr::kable(paired_tests, format = "html") %>%
     )
 ```
 
-* K = 18 clústeres
-* K!/(K-2)! = 306 comparaciones
+K = 18 clústeres
+K!/K-2)! = 306 comparaciones
 * La mitad de ellas son **redundantes**
 
+---
 
-### Combinando comparaciones del gen CD3E para el clúster 1
+# Combinando comparaciones del gen CD3E para el clúster 1
 
 "Me interesa saber si el gen CD3 está diferencialmente expresado entre el clúster 1 y .."
 
@@ -208,13 +390,13 @@ knitr::kable(paired_tests, format = "html") %>%
 - **todos** (**all**) los otros clústeres = P = 0.11 (Berger's intersection-union test)
 - **algunos** (**some**) de los otros clústeres = P = 2.0 x 10<sup>-44</sup> (mediana u otro cuantil, Holm-adjusted P-values)
 
+---
 
+# Extendiendo a todos los genes
 
-#### Extendiendo a todos los genes
-
-```{r, warning=FALSE, message=FALSE, eval = FALSE}
-scran::pairwiseTTests()
-scran::combineMarkers()
+```{r, warning=FALSE, message=FALSE}
+# scran::pairwiseTTests()
+# scran::combineMarkers()
 ```
 
 - M = 33,694 genes
@@ -223,8 +405,15 @@ scran::combineMarkers()
 - Comparaciones involucrando clúster ...
 - Comparaciones involucrando clúster 18
 
+---
 
-## Aplicación estándar
+class: inverse center middle
+
+# Aplicación estándar
+
+---
+
+# Aplicación estándar
 
 Para cada clúster, usar pruebas **t de Welch** para identificar los genes que están diferencialmente expresados entre éste y **cualquier** (**any**) otro clúster 
 
@@ -237,12 +426,28 @@ markers.pbmc <- findMarkers(sce.pbmc,
 )
 ```
 
-### Explorando los resultados
+---
+
+# Aplicación estándar
 
 ```{r, warning=FALSE, message=FALSE}
 chosen <- "9"
 interesting <- markers.pbmc[[chosen]]
 ```
+
+---
+
+# Aplicación estándar
+
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
+plotExpression(sce.pbmc, rownames(interesting)[1:4],
+    x = "cluster", colour_by = "cluster"
+)
+```
+
+---
+
+# Aplicación estándar
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 plotExpression(sce.pbmc, rownames(interesting)[1:4],
@@ -250,22 +455,43 @@ plotExpression(sce.pbmc, rownames(interesting)[1:4],
 )
 ```
 
-### Con un heatmap
+---
 
-```{r, warning=FALSE, message=FALSE}
+# Aplicación estándar
+
+```{r, warning=FALSE, message=FALSE, fig.show="hide"}
 best.set <- interesting[interesting$Top <= 6, ]
 logFCs <- as.matrix(best.set[, -(1:3)])
 colnames(logFCs) <- sub("logFC.", "", colnames(logFCs))
+
 library(pheatmap)
 pheatmap(logFCs, breaks = seq(-5, 5, length.out = 101))
 ```
 
 👉 Usamos el campo _Top_ para identificar un conjunto de genes que distinguen el clúster 9 de cualquier otro clúster
 
+---
 
-## Usando el _log-fold change_
+# Aplicación estándar
 
-### Sin espeficiar el lfc
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+best.set <- interesting[interesting$Top <= 6, ]
+logFCs <- as.matrix(best.set[, -(1:3)])
+colnames(logFCs) <- sub("logFC.", "", colnames(logFCs))
+
+library(pheatmap)
+pheatmap(logFCs, breaks = seq(-5, 5, length.out = 101))
+```
+
+---
+
+class: inverse center middle
+
+# Usando el _log-fold change_
+
+---
+
+# Usando el _log-fold change_
 
 Para cada clúster, usa pruebas t de Welch para identificar los genes que están sobreexpresados entre éste y **cualquier** otro clúster
 
@@ -277,7 +503,9 @@ markers.pbmc.up <- findMarkers(sce.pbmc,
 interesting.up <- markers.pbmc.up[[chosen]]
 ```
 
-### Especificando el lfc
+---
+
+# Usando el _log-fold change_
 
 Para cada clúster, usa pruebas t de Welch para identificar los genes que están sobreexpresados con un log-fold change (lfc) o al menos 1 entre éste y **cualquier** otro clúster
 
@@ -292,14 +520,15 @@ interesting.up2 <- markers.pbmc.up2[[chosen]]
 * 👉 La prueba t también nos permite especificar un _log-fold change_ diferente de cero como la hipótesis nula 
 * 🤓 Es más riguroso que simplemente filtrar por _log-fold change_ [TREAT](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2654802/)
 
+---
 
+# Usando el _log-fold change_
 
-### Heatmap
-
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
 best.set <- interesting.up2[interesting.up2$Top <= 5, ]
 logFCs <- as.matrix(best.set[, -(1:3)])
 colnames(logFCs) <- sub("logFC.", "", colnames(logFCs))
+
 pheatmap(logFCs, breaks = seq(-5, 5, length.out = 101))
 ```
 
@@ -308,13 +537,35 @@ pheatmap(logFCs, breaks = seq(-5, 5, length.out = 101))
 * ⚠️ Si el _lfc_ es muy grande podría descartar genes útiles
 	- E.g., un gen sobreexpresado en una proporción pequeña de células en un clúster sigue siendo un marcador efectivo si el foco está en la especificidad más que en la sensibilidad 
 	
+---
 
-## Encontrando marcadores específicos de clústeres
+# Usando el _log-fold change_
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+best.set <- interesting.up2[interesting.up2$Top <= 5, ]
+logFCs <- as.matrix(best.set[, -(1:3)])
+colnames(logFCs) <- sub("logFC.", "", colnames(logFCs))
+
+pheatmap(logFCs, breaks = seq(-5, 5, length.out = 101))
+```
+
+---
+
+class: inverse center middle
+
+# Encontrando marcadores específicos de clústeres
+
+---
+
+# Encontrando marcadores específicos de clústeres
 
 * 👉 Por defecto, `scran::findMarkers()` dará un alto rango a genes que están DE en cualquier comparación pareada
 * 🤔 Quiero genes que son específicos de cada clúster
 * 👉 Tú quieres genes que son DE en todas las comparaciones pareadas
 
+---
+
+# Encontrando marcadores específicos de clústeres
 
 Para cada clúster, usa pruebas t de Welch para identificar genes que están sobreexpresados entre éste y **todos** los otros clústeres 
 
@@ -328,15 +579,19 @@ interesting.up3 <- markers.pbmc.up3[[chosen]]
 
 🤓 Usa una prueba de unión-intersección para combinar los P-values que es el máximo P-value de todas las comparaciones pareadas 
 
+---
 
-### Pros/cons de los genes marcadores específicos de los clústeres
+# Pros/cons de los genes marcadores específicos de los clústeres
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 library(kableExtra)
+
 Poblacion <- c("DN(CD4-/CD8-)", "CD4+>", "CD8+>", "DP(CD4+/CD8+)")
 Expresion_CD4 <- c("No", "Si", "No", "Si")
 Expresion_CD8 <- c("No", "No", "Si", "Si")
+
 poblacion <- data.frame(Poblacion, Expresion_CD4, Expresion_CD8)
+
 knitr::kable(poblacion, format = "html") %>%
     kable_styling(
         bootstrap_options = c("striped", "hover"),
@@ -346,7 +601,9 @@ knitr::kable(poblacion, format = "html") %>%
     )
 ```
 
-### findMarkers con pval.type some
+---
+
+# Encontrando los genes marcadores específicos por clúster
 
 Para cada clúster, usa pruebas t de Welch para identificar los genes que están sobreexpresados entre éste y **algunos** de los otros clústers 
 
@@ -362,11 +619,15 @@ interesting.up4 <- markers.pbmc.up4[[chosen]]
 * 🤓 Aplica la corrección Holm-Bonferroni a los P-values y toma el mejor valor de en medio como el P-value combinado
 * ⚠️ Perderás algunas garantías ofrecidas por los otros métodos 
 
+---
 
+class: inverse center middle
 
-## Pruebas alternas
+# Pruebas alternas
 
-### Motivación
+---
+
+# Motivación
 
 La prueba t no es la única forma de comparar dos grupos de mediciones
 
@@ -376,9 +637,9 @@ La prueba t no es la única forma de comparar dos grupos de mediciones
 * 🤔 Quiero identificar genes que son expresados más frecuentemente en un clúster que en otro
 - 👉 Prueba Binomial
 
+---
 
-
-## Prueba de rangos de Wilcoxon
+# Prueba de rangos de Wilcoxon
 
 Evalúa directamente la separación entre la distribución de la expresión de los diferentes clústeres
 
@@ -388,8 +649,10 @@ Evalúa directamente la separación entre la distribución de la expresión de l
 
 * 🤓 También se conoce como prueba Wilcoxon-Mann-Whitney (WMW)
 
+---
 
-### findMarkers para Wilcoxon
+# Prueba de rangos de Wilcoxon
+
 Para cada clúster, usa la prueba de rangos de Wilcoxon para identificar genes que están sobreexpresados entre éste y **cualquier** otro clúster 
 
 ```{r, warning=FALSE, message=FALSE}
@@ -400,28 +663,43 @@ markers.pbmc.wmw <- findMarkers(sce.pbmc,
 interesting.wmw <- markers.pbmc.wmw[[chosen]]
 ```
 
-### Heatmap de genes marcadores con Wilcoxon
+---
 
-```{r, warning=FALSE, message=FALSE}
+# Prueba de rangos de Wilcoxon
+
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
 best.set <- interesting.wmw[interesting.wmw$Top <= 5, ]
 AUCs <- as.matrix(best.set[, -(1:3)])
 colnames(AUCs) <- sub("AUC.", "", colnames(AUCs))
+
 pheatmap(AUCs,
     breaks = seq(0, 1, length.out = 21),
     color = viridis::viridis(21)
 )
 ```
 
+---
 
-### Resumen de la prueba de rangos de Wilcoxon
+# Prueba de rangos de Wilcoxon
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+pheatmap(AUCs,
+    breaks = seq(0, 1, length.out = 21),
+    color = viridis::viridis(21)
+)
+```
+
+---
+
+# Resumen de la prueba de rangos de Wilcoxon
 
 * ➕ Ofrece directamente la propiedad deseable de un gen marcador (i.e. que el gen distinga perfectamente entre dos clústeres)
 * ➕ Es simétrico con respecto a las diferencias en el tamaño de los grupos comparados
 * ➖ Es mucho más lento comparado con la prueba t (aunque esto en general no es un problema en la práctica)
 
+---
 
-
-## Prueba binomial
+# Prueba binomial
 
 * Es una prueba que identifica los genes que difieren en la proporción de células que se expresan entre clústeres 
 * Una definición mucho más estricta de genes marcadores 
@@ -429,9 +707,9 @@ pheatmap(AUCs,
 * 🤓 Convierte la expresión en una medida binaria de presencia/ausencia, por lo que toda la información cuantitativa es ignorada 
 - Desde una perspectiva práctica, puede ser más fácil para validar 
 
+---
 
-
-### findMarkers para binomial
+# Prueba binomial
 
 Para cada clúster, usa la prueba Binomial para identificar genes que están más frecuentemente expresados (sobreexpresados) en comparación con cualquier otro clúster 
 
@@ -446,16 +724,27 @@ interesting.binom <- markers.pbmc.binom[[chosen]]
 * 🤓 El efecto en el tamaño se reporta como el _log-fold change_ en la proporción de las células que se expresan entre clústeres 
 * 👉 _Log-fold changes_ grandes positivos, indican que el gen está más frecuentemente expresado en un clúster comparado con otro
 
-### Visualizando genes marcadores de la prueba bionomial
+---
+
+# Prueba binomial
+
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
+top.genes <- head(rownames(interesting.binom))
+plotExpression(sce.pbmc, x = "cluster", features = top.genes)
+```
+
+---
+
+# Prueba binomial
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 top.genes <- head(rownames(interesting.binom))
 plotExpression(sce.pbmc, x = "cluster", features = top.genes)
 ```
 
+---
 
-
-### Resumen de la prueba binomial
+# Resumen de la prueba binomial
 
 * La prueba Binomial no toma en cuenta la normalización
 
@@ -463,9 +752,9 @@ plotExpression(sce.pbmc, x = "cluster", features = top.genes)
 
 * ➖ Ser más estricto puede llevar a la pérdida de buenos marcadores candidatos  
 
+---
 
-
-## Métodos de expresión diferencial personalizados
+# Métodos de expresión diferencial personalizados
 
 * 🤔 ¿Por qué no usar edgeR/DESeq2/limma-voom u otros métodos personalizados (e.g., MAST)?
 * 👉 Claro que puedes! [Checa OSCA](https://osca.bioconductor.org/marker-detection.html#using-custom-de-methods)
@@ -474,12 +763,15 @@ plotExpression(sce.pbmc, x = "cluster", features = top.genes)
 * 🤓 Las células son nuestras "réplicas" para el propósito de identificar genes marcadores
 * 🤓 edgeR/DESeq2/limma-voom hacen asunciones más fuertes acerca de los datos que es más probable que no se cumplan para células individuales en scRNA-seq
 
+---
 
+class: inverse center middle
 
-## Problemas estadísticos
+# Problemas estadísticos
 
+---
 
-### Invalidez de P-values
+# Invalidez de P-values
 
 Todas las estrategias de DE para detectar genes marcadores entre clústeres son estadísticamente defectuosas de alguna manera
 
@@ -487,18 +779,29 @@ Todas las estrategias de DE para detectar genes marcadores entre clústeres son 
 
 * 👉 Las pruebas para genes DE entre clústeres producirá inevitablemente algunos resultados significativos y así es como los clústeres serán definidos!
 
-* 👉 Aún cuando los P-values son defectuosos, el efecto no es muy dañino para la detección de genes ya que los P-values solo son usados para los rangos
+---
 
-* 🤓 No se pueden usar P-values para definir "diferencias significativas" entre los clústeres con respecto a un umbral de la tasa de error 
+# Invalidez de P-values
 
+👉 Aún cuando los P-values son defectuosos, el efecto no es muy dañino para la detección de genes ya que los P-values solo son usados para los rangos
 
+🤓 No se pueden usar P-values para definir "diferencias significativas" entre los clústeres con respecto a un umbral de la tasa de error 
 
-### Naturaleza de la replicación
+---
+
+# Naturaleza de la replicación
 
 👉 Idealmente, validar algunos de los marcadores con una población de células independientes (y idealmente usando una técnica diferente, e.g., hibridación fluorescente _in situ_ o qPCR)
 
+---
 
-### Comentarios adicionales
+class: inverse center middle
+
+# Comentarios adicionales
+
+---
+
+# Comentarios adicionales
 
 * 👉 La estrategia de análisis DE es que los marcadores son definidos relativo a subpoblaciones en el mismo dataset 
 * 👉 Si un gen se expresa uniformemente a través de la población no servirá como un marcador
@@ -506,28 +809,50 @@ Todas las estrategias de DE para detectar genes marcadores entre clústeres son 
 - usualmente no es un problema, ya que tenemos idea de las células que se capturaron
 * 👉 Existen métodos de machine learning para hacer la identificación de los genes marcadores, pero la humilde prueba t sigue siendo muy buena
 
+---
 
-## Resumen y recomendaciones
+class: inverse center middle
+
+# Resumen y recomendaciones
+
+---
+
+# Resumen y recomendaciones
 
 * 👉 Crea múltiples listas de genes marcadores con diferentes niveles de rigor
 * 👉 La forma más simple de interpretar los genes marcadores es que son los sobreexpresados de "forma única", o son "genes específicos de clústeres", especialmente si queremos imponer un _log-fold change_ mínimo
 * 👉 Puedes requerir hacer una identificación de genes marcadores más enfocada, e.g., subset de los datos de solo 2 clústeres de interés y entonces correr `scran::findMarkers()`
 
+---
 
-## Detalles de la sesión de R
+La presentación fue hecha con el paquete de R [**xaringan**](https://github.com/yihui/xaringan) y configurada con [**xaringanthemer**](https://github.com/gadenbuie/xaringanthemer).
 
-```{r}
-## Información de la sesión de R
-Sys.time()
-proc.time()
+Este curso está basado en el libro [**Orchestrating Single Cell Analysis with Bioconductor**](https://osca.bioconductor.org/) de [Aaron Lun](https://www.linkedin.com/in/aaron-lun-869b5894/), [Robert Amezquita](https://robertamezquita.github.io/), [Stephanie Hicks](https://www.stephaniehicks.com/) y [Raphael Gottardo](http://rglab.org), además del [**curso de scRNA-seq para WEHI**](https://drive.google.com/drive/folders/1cn5d-Ey7-kkMiex8-74qxvxtCQT6o72h) creado por [Peter Hickey](https://www.peterhickey.org/).
+
+Puedes encontrar los archivos para este taller en  [comunidadbioinfo/cdsb2021](https://github.com/comunidadbioinfo/cdsb2021). 
+
+Instructora: [**Yalbi I. Balderas-Martínez**](http://Yalbibalderas.github.io/).
+
+.footnote[Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2021')` o revísalos en línea vía [**comunidadbioinfo.github.io/cdsb2021**](http://comunidadbioinfo.github.io/cdsb2021).]
+
+---
+
+# Detalles de la sesión de R
+
+
+.scroll-output[
+.tiny[
+
+```{r 'reproducibility', cache = TRUE, dependson=knitr::all_labels()}
 options(width = 120)
 sessioninfo::session_info()
 ```
 
-## Patrocinadores {-}
+]]
 
-Agradecemos a nuestros patrocinadores:
 
-<a href="https://comunidadbioinfo.github.io/es/post/cs_and_s_event_fund_award/#.YJH-wbVKj8A"><img src="https://comunidadbioinfo.github.io/post/2021-01-27-cs_and_s_event_fund_award/spanish_cs_and_s_award.jpeg" width="400px" align="center"/></a>
 
-<a href="https://www.r-consortium.org/"><img src="https://www.r-consortium.org/wp-content/uploads/sites/13/2016/09/RConsortium_Horizontal_Pantone.png" width="400px" align="center"/></a>
+
+
+
+
