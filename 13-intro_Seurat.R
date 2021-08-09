@@ -63,7 +63,7 @@ head(pbmc@meta.data, 5)
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
 
 
-## -----------------------------------------------------------------------------------------------------------
+## ---- fig.width = 14, fig.height = 7------------------------------------------------------------------------
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
 
 # Identify the 10 most highly variable genes

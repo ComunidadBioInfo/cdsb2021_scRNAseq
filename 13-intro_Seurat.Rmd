@@ -140,7 +140,7 @@ A continuación, calculamos un subconjunto de **características que exhiben una
 
 Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola celda, y se implementa en la función `FindVariableFeatures()`. De forma predeterminada, **devolvemos 2000 características por conjunto de datos** (aunque se puede modificar). Estos se utilizarán en análisis posteriores, como PCA. 
 
-```{r}
+```{r, fig.width = 14, fig.height = 7}
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
 
 # Identify the 10 most highly variable genes
