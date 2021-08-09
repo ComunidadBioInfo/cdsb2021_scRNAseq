@@ -136,9 +136,11 @@ dec.pbmc <- modelGeneVar(sce.pbmc)
 ```{r, warning=FALSE, message=FALSE}
 # Visualicemos la relación entre la media y la varianza
 fit.pbmc <- metadata(dec.pbmc)
-plot(fit.pbmc$mean, fit.pbmc$var, xlab="Mean of log-expression",
-  ylab="Variance of log-expression")
-curve(fit.pbmc$trend(x), col="dodgerblue", add=TRUE, lwd=2)
+plot(fit.pbmc$mean, fit.pbmc$var,
+    xlab = "Mean of log-expression",
+    ylab = "Variance of log-expression"
+)
+curve(fit.pbmc$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
 ```
 
 
@@ -147,7 +149,7 @@ curve(fit.pbmc$trend(x), col="dodgerblue", add=TRUE, lwd=2)
 ```{r, warning=FALSE, message=FALSE}
 # Ordenemos por los genes más interesantes para checar
 # los datos
-dec.pbmc[order(dec.pbmc$bio, decreasing=TRUE),]
+dec.pbmc[order(dec.pbmc$bio, decreasing = TRUE), ]
 ```
 
 
@@ -181,10 +183,13 @@ dec.cv2.pbmc <- modelGeneCV2(sce.pbmc)
 ```{r, warning=FALSE, message=FALSE, echo = FALSE}
 # Visualicemos la relación con la media
 fit.cv2.pbmc <- metadata(dec.cv2.pbmc)
-plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2, 
-  log="xy")
-curve(fit.cv2.pbmc$trend(x), col="dodgerblue", 
-  add=TRUE, lwd=2)
+plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2,
+    log = "xy"
+)
+curve(fit.cv2.pbmc$trend(x),
+    col = "dodgerblue",
+    add = TRUE, lwd = 2
+)
 ```
 
 
@@ -195,7 +200,8 @@ curve(fit.cv2.pbmc$trend(x), col="dodgerblue",
 # Ordenemos por los genes más interesantes para checar
 # los datos
 dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
-  decreasing=TRUE),]
+    decreasing = TRUE
+), ]
 ```
 
 ## Varianza de los _log-counts_ vs coeficiente de variación
