@@ -465,6 +465,87 @@ En [BioC2021](https://bioc2021.bioconductor.org/) presentaron [`ExperimentSubset
 knitr::include_graphics("img/ExperimentSubset.png")
 ```
 
+## Explorando datos de forma interactiva con iSEE
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> / <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw">@Bioconductor</a> congrats winners of the 1st Shiny Contest: iSEE <a href="https://t.co/oHgGkWqRsJ">https://t.co/oHgGkWqRsJ</a> <a href="https://t.co/vZLFvcMBIS">https://t.co/vZLFvcMBIS</a> !</p>&mdash; Bioconductor (@Bioconductor) <a href="https://twitter.com/Bioconductor/status/1114773873537449984?ref_src=twsrc%5Etfw">April 7, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+* http://bioconductor.org/packages/release/bioc/html/iSEE.html
+* http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html
+
+```{r isee_basic}
+## Hagamos un objeto sencillo de tipo RangedSummarizedExperiment
+library("SummarizedExperiment")
+## ?SummarizedExperiment
+
+## De los ejemplos en la ayuda oficial
+## Creamos los datos para nuestro objeto de tipo SummarizedExperiment
+## para 200 genes a lo largo de 6 muestras
+nrows <- 200
+ncols <- 6
+
+## Números al azar de cuentas
+set.seed(20210223)
+counts <- matrix(runif(nrows * ncols, 1, 1e4), nrows)
+
+## Información de nuestros genes
+rowRanges <- GRanges(
+    rep(c("chr1", "chr2"), c(50, 150)),
+    IRanges(floor(runif(200, 1e5, 1e6)), width = 100),
+    strand = sample(c("+", "-"), 200, TRUE),
+    feature_id = sprintf("ID%03d", 1:200)
+)
+names(rowRanges) <- paste0("gene_", seq_len(length(rowRanges)))
+
+## Información de nuestras muestras
+colData <- DataFrame(
+    Treatment = rep(c("ChIP", "Input"), 3),
+    row.names = LETTERS[1:6]
+)
+
+## Juntamos ahora toda la información en un solo objeto de R
+rse <- SummarizedExperiment(
+    assays = SimpleList(counts = counts),
+    rowRanges = rowRanges,
+    colData = colData
+)
+
+## Exploremos el objeto resultante
+rse
+
+## Explora el objeto rse de forma interactiva
+library("iSEE")
+if (interactive()) {
+    iSEE::iSEE(rse)
+}
+```
+
+### Ejercicio iSEE con sce.416b
+
+Repitamos la imagen que hicimos anteriormente.
+
+<a href="https://comunidadbioinfo.github.io/cdsb2021_scRNAseq/control-de-calidad.html#gr%C3%A1ficas-sobre-medidas-de-control-de-calidad-qc"><img src="https://comunidadbioinfo.github.io/cdsb2021_scRNAseq/05-control_calidad_files/figure-html/visualizar_qc-3.png"/></a>
+
+```{r isee_416b}
+## Explora el objeto sce.416b de forma interactiva
+if (interactive()) {
+    iSEE::iSEE(sce.416b, appTitle = "sce.416b")
+}
+```
+
+### Datos de LIBD de Tran et al
+
+<a href="https://libd.shinyapps.io/tran2021_AMY/"><img src="https://raw.githubusercontent.com/LieberInstitute/10xPilot_snRNAseq-human/master/screenshot_tran2021_AMY.png"></a>
+
+* Datos de [Tran et al, _bioRxiv_, 2020](https://github.com/LieberInstitute/10xPilot_snRNAseq-human#explore-the-data-interactively).
+
+* Código de R para el sitio web: https://github.com/LieberInstitute/10xPilot_snRNAseq-human/tree/master/shiny_apps/tran2021_AMY. 
+
+### Más detalles de iSEE
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bK8D30MqXb8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+* [Notas en inglés](https://docs.google.com/document/d/19ZMeaFiFqhJUJJHiEj0qsCcH5WMrn32H-PCKzWag1oI/edit).
+
 ## Detalles de la sesión de R
 
 ```{r}
