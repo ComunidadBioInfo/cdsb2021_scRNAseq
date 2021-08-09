@@ -513,19 +513,19 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 ```
 
 ```
-## 19:20:55 UMAP embedding parameters a = 0.9922 b = 1.112
+## 22:35:53 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ```
-## 19:20:55 Read 2638 rows and found 10 numeric columns
+## 22:35:53 Read 2638 rows and found 10 numeric columns
 ```
 
 ```
-## 19:20:55 Using Annoy for neighbor search, n_neighbors = 30
+## 22:35:53 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ```
-## 19:20:55 Building Annoy index with metric = cosine, n_trees = 50
+## 22:35:53 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ```
@@ -538,13 +538,13 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 
 ```
 ## **************************************************|
-## 19:20:55 Writing NN index file to temp file /tmp/RtmpcYFY3B/file46a728487f0
-## 19:20:55 Searching Annoy index using 1 thread, search_k = 3000
-## 19:20:56 Annoy recall = 100%
-## 19:20:56 Commencing smooth kNN distance calibration using 1 thread
-## 19:20:56 Initializing from normalized Laplacian + noise
-## 19:20:57 Commencing optimization for 500 epochs, with 105140 positive edges
-## 19:21:00 Optimization finished
+## 22:35:53 Writing NN index file to temp file /tmp/Rtmp3QGO76/file7555c5a6153
+## 22:35:53 Searching Annoy index using 1 thread, search_k = 3000
+## 22:35:54 Annoy recall = 100%
+## 22:35:54 Commencing smooth kNN distance calibration using 1 thread
+## 22:35:55 Initializing from normalized Laplacian + noise
+## 22:35:55 Commencing optimization for 500 epochs, with 105140 positive edges
+## 22:35:59 Optimization finished
 ```
 
 ```r
@@ -759,7 +759,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 19:21:35 UTC"
+## [1] "2021-08-09 22:36:37 UTC"
 ```
 
 ```r
@@ -768,7 +768,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 159.432  10.152 114.678
+## 181.969  11.268 129.370
 ```
 
 ```r
@@ -849,7 +849,7 @@ sessioninfo::session_info()
 ##  lazyeval          0.2.2   2019-03-15 [1] RSPM (R 4.1.0)
 ##  leiden            0.3.9   2021-07-27 [1] RSPM (R 4.1.0)
 ##  lifecycle         1.0.0   2021-02-15 [2] RSPM (R 4.1.0)
-##  limma             3.48.1  2021-06-24 [1] Bioconductor  
+##  limma             3.48.2  2021-08-08 [1] Bioconductor  
 ##  listenv           0.8.0   2019-12-05 [1] RSPM (R 4.1.0)
 ##  lmtest            0.9-38  2020-09-09 [1] RSPM (R 4.1.0)
 ##  magrittr          2.0.1   2020-11-17 [2] RSPM (R 4.1.0)

@@ -471,7 +471,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 19:14:37 UTC"
+## [1] "2021-08-09 22:25:57 UTC"
 ```
 
 ```r
@@ -480,7 +480,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 176.703   4.561 178.534
+## 201.297   4.917 202.927
 ```
 
 ```r
@@ -534,7 +534,7 @@ sessioninfo::session_info()
 ##  DBI                    1.1.1    2021-01-15 [1] RSPM (R 4.1.0)
 ##  dbplyr               * 2.1.1    2021-04-06 [1] RSPM (R 4.1.0)
 ##  DelayedArray           0.18.0   2021-05-19 [1] Bioconductor  
-##  DelayedMatrixStats     1.14.1   2021-08-05 [1] Bioconductor  
+##  DelayedMatrixStats     1.14.2   2021-08-08 [1] Bioconductor  
 ##  digest                 0.6.27   2020-10-24 [2] RSPM (R 4.1.0)
 ##  dplyr                  1.0.7    2021-06-18 [1] RSPM (R 4.1.0)
 ##  dqrng                  0.3.0    2021-05-01 [1] RSPM (R 4.1.0)
@@ -576,11 +576,11 @@ sessioninfo::session_info()
 ##  lattice                0.20-44  2021-05-02 [3] CRAN (R 4.1.0)
 ##  lazyeval               0.2.2    2019-03-15 [1] RSPM (R 4.1.0)
 ##  lifecycle              1.0.0    2021-02-15 [2] RSPM (R 4.1.0)
-##  limma                  3.48.1   2021-06-24 [1] Bioconductor  
+##  limma                  3.48.2   2021-08-08 [1] Bioconductor  
 ##  locfit                 1.5-9.4  2020-03-25 [1] RSPM (R 4.1.0)
 ##  magrittr               2.0.1    2020-11-17 [2] RSPM (R 4.1.0)
 ##  Matrix               * 1.3-4    2021-06-01 [3] RSPM (R 4.1.0)
-##  MatrixGenerics       * 1.4.1    2021-08-03 [1] Bioconductor  
+##  MatrixGenerics       * 1.4.2    2021-08-08 [1] Bioconductor  
 ##  matrixStats          * 0.60.0   2021-07-26 [1] RSPM (R 4.1.0)
 ##  memoise                2.0.0    2021-01-26 [2] RSPM (R 4.1.0)
 ##  metapod                1.0.0    2021-05-19 [1] Bioconductor  
@@ -623,7 +623,7 @@ sessioninfo::session_info()
 ##  scuttle              * 1.2.1    2021-08-05 [1] Bioconductor  
 ##  sessioninfo            1.1.1    2018-11-05 [2] RSPM (R 4.1.0)
 ##  SingleCellExperiment * 1.14.1   2021-05-21 [1] Bioconductor  
-##  sparseMatrixStats      1.4.0    2021-05-19 [1] Bioconductor  
+##  sparseMatrixStats      1.4.2    2021-08-08 [1] Bioconductor  
 ##  statmod                1.4.36   2021-05-10 [1] RSPM (R 4.1.0)
 ##  stringi                1.7.3    2021-07-16 [2] RSPM (R 4.1.0)
 ##  stringr                1.4.0    2019-02-10 [2] RSPM (R 4.1.0)

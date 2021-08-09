@@ -29,11 +29,7 @@ raw.path <- bfcrpath(bfc, file.path(
     "cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz"
 ))
 untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
-```
 
-
-
-```r
 library(DropletUtils)
 library(Matrix)
 fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
@@ -64,6 +60,8 @@ set.seed(100)
 e.out <- emptyDrops(counts(sce.pbmc))
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 ```
+
+### Control de calidad
 
 
 ```r
@@ -124,14 +122,14 @@ sce.pbmc$cluster <- factor(clust)
 
 ¿Algunos de estos genes están asociados con los resultados de _clustering_?
 
+<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+
 <img src="10-genes_marcadores_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 <img src="10-genes_marcadores_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
+
 <img src="10-genes_marcadores_files/figure-html/unnamed-chunk-10-1.png" width="672" />
-
-
-<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 
 * Ver una gráfica como una forma de encontrar los genes marcadores obviamente no nos sirve a gran escala
@@ -156,7 +154,7 @@ sce.pbmc$cluster <- factor(clust)
 
 ### Pruebas pareadas
 
-<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 <table class="table table-striped table-hover" style="font-size: 12px; width: auto !important; ">
  <thead>
@@ -252,7 +250,7 @@ chosen <- "9"
 interesting <- markers.pbmc[[chosen]]
 ```
 
-<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-16-1.png" width="672" />
 
 ### Con un heatmap
 
@@ -265,7 +263,7 @@ library(pheatmap)
 pheatmap(logFCs, breaks = seq(-5, 5, length.out = 101))
 ```
 
-<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 👉 Usamos el campo _Top_ para identificar un conjunto de genes que distinguen el clúster 9 de cualquier otro clúster
 
@@ -313,7 +311,7 @@ colnames(logFCs) <- sub("logFC.", "", colnames(logFCs))
 pheatmap(logFCs, breaks = seq(-5, 5, length.out = 101))
 ```
 
-<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 * 👉 Los promedios están más centrados en un conjunto de genes marcadores candidatos que están sobreexpresados en el clúster 9 
 * ⚠️ El incremento del rigor no se da sin costo 
@@ -445,7 +443,7 @@ pheatmap(AUCs,
 )
 ```
 
-<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-25-1.png" width="672" />
 
 
 ### Resumen de la prueba de rangos de Wilcoxon
@@ -484,7 +482,7 @@ interesting.binom <- markers.pbmc.binom[[chosen]]
 
 ### Visualizando genes marcadores de la prueba bionomial
 
-<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-28-1.png" width="672" />
+<img src="10-genes_marcadores_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
 
 
@@ -556,7 +554,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 19:19:39 UTC"
+## [1] "2021-08-09 22:31:24 UTC"
 ```
 
 ```r
@@ -565,7 +563,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 300.478   4.100 302.010
+## 324.825   4.355 326.426
 ```
 
 ```r
@@ -619,7 +617,7 @@ sessioninfo::session_info()
 ##  DBI                    1.1.1    2021-01-15 [1] RSPM (R 4.1.0)
 ##  dbplyr               * 2.1.1    2021-04-06 [1] RSPM (R 4.1.0)
 ##  DelayedArray           0.18.0   2021-05-19 [1] Bioconductor  
-##  DelayedMatrixStats     1.14.1   2021-08-05 [1] Bioconductor  
+##  DelayedMatrixStats     1.14.2   2021-08-08 [1] Bioconductor  
 ##  digest                 0.6.27   2020-10-24 [2] RSPM (R 4.1.0)
 ##  dplyr                  1.0.7    2021-06-18 [1] RSPM (R 4.1.0)
 ##  dqrng                  0.3.0    2021-05-01 [1] RSPM (R 4.1.0)
@@ -662,11 +660,11 @@ sessioninfo::session_info()
 ##  lattice                0.20-44  2021-05-02 [3] CRAN (R 4.1.0)
 ##  lazyeval               0.2.2    2019-03-15 [1] RSPM (R 4.1.0)
 ##  lifecycle              1.0.0    2021-02-15 [2] RSPM (R 4.1.0)
-##  limma                  3.48.1   2021-06-24 [1] Bioconductor  
+##  limma                  3.48.2   2021-08-08 [1] Bioconductor  
 ##  locfit                 1.5-9.4  2020-03-25 [1] RSPM (R 4.1.0)
 ##  magrittr               2.0.1    2020-11-17 [2] RSPM (R 4.1.0)
 ##  Matrix               * 1.3-4    2021-06-01 [3] RSPM (R 4.1.0)
-##  MatrixGenerics       * 1.4.1    2021-08-03 [1] Bioconductor  
+##  MatrixGenerics       * 1.4.2    2021-08-08 [1] Bioconductor  
 ##  matrixStats          * 0.60.0   2021-07-26 [1] RSPM (R 4.1.0)
 ##  memoise                2.0.0    2021-01-26 [2] RSPM (R 4.1.0)
 ##  metapod                1.0.0    2021-05-19 [1] Bioconductor  
@@ -711,7 +709,7 @@ sessioninfo::session_info()
 ##  scuttle              * 1.2.1    2021-08-05 [1] Bioconductor  
 ##  sessioninfo            1.1.1    2018-11-05 [2] RSPM (R 4.1.0)
 ##  SingleCellExperiment * 1.14.1   2021-05-21 [1] Bioconductor  
-##  sparseMatrixStats      1.4.0    2021-05-19 [1] Bioconductor  
+##  sparseMatrixStats      1.4.2    2021-08-08 [1] Bioconductor  
 ##  statmod                1.4.36   2021-05-10 [1] RSPM (R 4.1.0)
 ##  stringi                1.7.3    2021-07-16 [2] RSPM (R 4.1.0)
 ##  stringr                1.4.0    2019-02-10 [2] RSPM (R 4.1.0)

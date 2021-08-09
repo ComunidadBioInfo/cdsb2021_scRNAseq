@@ -144,7 +144,7 @@ BiocManager::version()
 
 
 ```
-## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "cowplot", "dplyr", "DropletUtils", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "postcards", "pryr", "RColorBrewer", "rsthemes", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "suncalc", "TENxPBMCData", "usethis", "uwot"))
+## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "celldex", "clusterExperiment", "cowplot", "dplyr", "DropletUtils", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "postcards", "pryr", "RColorBrewer", "rsthemes", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "SingleR", "suncalc", "TENxPBMCData", "usethis", "uwot"))
 ```
 
 
@@ -260,10 +260,13 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package                * version    date       lib source        
 ##  abind                    1.4-5      2016-07-21 [1] RSPM (R 4.1.0)
+##  ade4                     1.7-17     2021-06-17 [1] RSPM (R 4.1.0)
+##  annotate                 1.70.0     2021-05-19 [1] Bioconductor  
 ##  AnnotationDbi            1.54.1     2021-06-08 [1] Bioconductor  
 ##  AnnotationFilter         1.16.0     2021-05-19 [1] Bioconductor  
 ##  AnnotationHub            3.0.1      2021-06-20 [1] Bioconductor  
 ##  AnVIL                    1.4.1      2021-06-22 [2] Bioconductor  
+##  ape                      5.5        2021-04-25 [1] RSPM (R 4.1.0)
 ##  askpass                  1.1        2019-01-13 [2] RSPM (R 4.1.0)
 ##  assertthat               0.2.1      2019-03-21 [1] RSPM (R 4.1.0)
 ##  backports                1.2.1      2020-12-09 [1] RSPM (R 4.1.0)
@@ -272,6 +275,8 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  batchelor                1.8.0      2021-05-19 [1] Bioconductor  
 ##  beachmat                 2.8.0      2021-05-19 [1] Bioconductor  
 ##  beeswarm                 0.4.0      2021-06-01 [1] RSPM (R 4.1.0)
+##  benchmarkme              1.0.7      2021-03-21 [1] RSPM (R 4.1.0)
+##  benchmarkmeData          1.0.4      2020-04-23 [1] RSPM (R 4.1.0)
 ##  BH                       1.75.0-0   2021-01-11 [1] RSPM (R 4.1.0)
 ##  Biobase                  2.52.0     2021-05-19 [1] Bioconductor  
 ##  BiocFileCache            2.0.0      2021-05-19 [1] Bioconductor  
@@ -300,12 +305,15 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  Cairo                    1.5-12.2   2020-07-07 [1] RSPM (R 4.1.0)
 ##  callr                    3.7.0      2021-04-20 [2] RSPM (R 4.1.0)
 ##  caTools                  1.18.2     2021-03-28 [1] RSPM (R 4.1.0)
+##  celldex                  1.2.0      2021-05-20 [1] Bioconductor  
 ##  circlize                 0.4.13     2021-06-09 [1] RSPM (R 4.1.0)
 ##  class                    7.3-19     2021-05-03 [3] CRAN (R 4.1.0)
 ##  cli                      3.0.1      2021-07-17 [2] RSPM (R 4.1.0)
 ##  clipr                    0.7.1      2020-10-08 [2] RSPM (R 4.1.0)
 ##  clue                     0.3-59     2021-04-16 [1] RSPM (R 4.1.0)
 ##  cluster                  2.1.2      2021-04-17 [3] CRAN (R 4.1.0)
+##  clusterExperiment        2.12.0     2021-05-19 [1] Bioconductor  
+##  ClusterR                 1.2.5      2021-05-21 [1] RSPM (R 4.1.0)
 ##  codetools                0.2-18     2020-11-04 [3] CRAN (R 4.1.0)
 ##  colorspace               2.0-2      2021-06-24 [1] RSPM (R 4.1.0)
 ##  colourpicker             1.1.0      2020-09-14 [1] RSPM (R 4.1.0)
@@ -323,7 +331,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  DBI                      1.1.1      2021-01-15 [1] RSPM (R 4.1.0)
 ##  dbplyr                   2.1.1      2021-04-06 [1] RSPM (R 4.1.0)
 ##  DelayedArray             0.18.0     2021-05-19 [1] Bioconductor  
-##  DelayedMatrixStats       1.14.1     2021-08-05 [1] Bioconductor  
+##  DelayedMatrixStats       1.14.2     2021-08-08 [1] Bioconductor  
 ##  deldir                   0.2-10     2021-02-16 [1] RSPM (R 4.1.0)
 ##  DEoptimR                 1.0-9      2021-05-24 [1] RSPM (R 4.1.0)
 ##  desc                     1.3.0      2021-03-05 [2] RSPM (R 4.1.0)
@@ -358,6 +366,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  futile.options           1.0.1      2018-04-20 [1] RSPM (R 4.1.0)
 ##  future                   1.21.0     2020-12-10 [1] RSPM (R 4.1.0)
 ##  future.apply             1.7.0      2021-01-04 [1] RSPM (R 4.1.0)
+##  genefilter               1.74.0     2021-05-19 [1] Bioconductor  
 ##  generics                 0.1.0      2020-10-31 [1] RSPM (R 4.1.0)
 ##  GenomeInfoDb             1.28.1     2021-07-01 [1] Bioconductor  
 ##  GenomeInfoDbData         1.2.6      2021-07-29 [1] Bioconductor  
@@ -376,11 +385,13 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  GlobalOptions            0.1.2      2020-06-10 [1] RSPM (R 4.1.0)
 ##  globals                  0.14.0     2020-11-22 [1] RSPM (R 4.1.0)
 ##  glue                     1.4.2      2020-08-27 [2] RSPM (R 4.1.0)
+##  gmp                      0.6-2      2021-01-07 [1] RSPM (R 4.1.0)
 ##  goftest                  1.2-2      2019-12-02 [1] RSPM (R 4.1.0)
 ##  gplots                   3.1.1      2020-11-28 [1] RSPM (R 4.1.0)
 ##  graphics               * 4.1.0      2021-07-29 [3] local         
 ##  grDevices              * 4.1.0      2021-07-29 [3] local         
 ##  grid                     4.1.0      2021-07-29 [3] local         
+##  gridBase                 0.4-7      2014-02-24 [1] RSPM (R 4.1.0)
 ##  gridExtra                2.3        2017-09-09 [1] RSPM (R 4.1.0)
 ##  gtable                   0.3.0      2019-03-25 [1] RSPM (R 4.1.0)
 ##  gtools                   3.9.2      2021-06-06 [1] RSPM (R 4.1.0)
@@ -389,6 +400,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  here                     1.0.1      2020-12-13 [1] RSPM (R 4.1.0)
 ##  highr                    0.9        2021-04-16 [2] RSPM (R 4.1.0)
 ##  hms                      1.1.0      2021-05-17 [1] RSPM (R 4.1.0)
+##  howmany                  0.3-1      2012-06-01 [1] RSPM (R 4.1.0)
 ##  htmltools                0.5.1.1    2021-01-22 [1] RSPM (R 4.1.0)
 ##  htmlwidgets              1.5.3      2020-12-10 [1] RSPM (R 4.1.0)
 ##  httpuv                   1.6.1      2021-05-07 [1] RSPM (R 4.1.0)
@@ -406,6 +418,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  jsonlite                 1.7.2      2020-12-09 [2] RSPM (R 4.1.0)
 ##  kableExtra               1.3.4      2021-02-20 [1] RSPM (R 4.1.0)
 ##  KEGGREST                 1.32.0     2021-05-19 [1] Bioconductor  
+##  kernlab                  0.9-29     2019-11-12 [1] RSPM (R 4.1.0)
 ##  KernSmooth               2.23-20    2021-05-03 [3] CRAN (R 4.1.0)
 ##  knitr                    1.33       2021-04-24 [2] RSPM (R 4.1.0)
 ##  labeling                 0.4.2      2020-10-20 [1] RSPM (R 4.1.0)
@@ -415,11 +428,12 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  lazyeval                 0.2.2      2019-03-15 [1] RSPM (R 4.1.0)
 ##  leiden                   0.3.9      2021-07-27 [1] RSPM (R 4.1.0)
 ##  lifecycle                1.0.0      2021-02-15 [2] RSPM (R 4.1.0)
-##  limma                    3.48.1     2021-06-24 [1] Bioconductor  
+##  limma                    3.48.2     2021-08-08 [1] Bioconductor  
 ##  listenv                  0.8.0      2019-12-05 [1] RSPM (R 4.1.0)
 ##  littler                  0.3.13     2021-07-24 [2] RSPM (R 4.1.0)
 ##  lmtest                   0.9-38     2020-09-09 [1] RSPM (R 4.1.0)
 ##  lobstr                   1.1.1      2019-07-02 [1] RSPM (R 4.1.0)
+##  locfdr                   1.1-8      2015-07-15 [1] RSPM (R 4.1.0)
 ##  locfit                   1.5-9.4    2020-03-25 [1] RSPM (R 4.1.0)
 ##  lubridate                1.7.10     2021-02-26 [1] RSPM (R 4.1.0)
 ##  magrittr                 2.0.1      2020-11-17 [2] RSPM (R 4.1.0)
@@ -427,8 +441,9 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  markdown                 1.1        2019-08-07 [2] RSPM (R 4.1.0)
 ##  MASS                     7.3-54     2021-05-03 [3] CRAN (R 4.1.0)
 ##  Matrix                   1.3-4      2021-06-01 [3] RSPM (R 4.1.0)
-##  MatrixGenerics           1.4.1      2021-08-03 [1] Bioconductor  
+##  MatrixGenerics           1.4.2      2021-08-08 [1] Bioconductor  
 ##  matrixStats              0.60.0     2021-07-26 [1] RSPM (R 4.1.0)
+##  mbkmeans                 1.8.0      2021-05-19 [1] Bioconductor  
 ##  mclust                   5.4.7      2020-11-20 [1] RSPM (R 4.1.0)
 ##  memoise                  2.0.0      2021-01-26 [2] RSPM (R 4.1.0)
 ##  metapod                  1.0.0      2021-05-19 [1] Bioconductor  
@@ -438,6 +453,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  miniUI                   0.1.1.1    2018-05-18 [1] RSPM (R 4.1.0)
 ##  munsell                  0.5.0      2018-06-12 [1] RSPM (R 4.1.0)
 ##  nlme                     3.1-152    2021-02-04 [3] CRAN (R 4.1.0)
+##  NMF                      0.23.0     2020-08-01 [1] RSPM (R 4.1.0)
 ##  nnet                     7.3-16     2021-05-03 [3] CRAN (R 4.1.0)
 ##  openssl                  1.4.4      2021-04-30 [2] RSPM (R 4.1.0)
 ##  org.Hs.eg.db             3.13.0     2021-07-29 [1] Bioconductor  
@@ -448,16 +464,20 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  pbapply                  1.4-3      2020-08-18 [1] RSPM (R 4.1.0)
 ##  PCAtools                 2.4.0      2021-05-19 [1] Bioconductor  
 ##  pheatmap                 1.0.12     2019-01-04 [1] RSPM (R 4.1.0)
+##  phylobase                0.8.10     2020-03-01 [1] RSPM (R 4.1.0)
 ##  pillar                   1.6.2      2021-07-29 [2] RSPM (R 4.1.0)
+##  pixmap                   0.4-12     2021-01-29 [1] RSPM (R 4.1.0)
 ##  pkgbuild                 1.2.0      2020-12-15 [2] RSPM (R 4.1.0)
 ##  pkgconfig                2.0.3      2019-09-22 [2] RSPM (R 4.1.0)
 ##  pkgload                  1.2.1      2021-04-06 [2] RSPM (R 4.1.0)
+##  pkgmaker                 0.32.2     2020-10-20 [1] RSPM (R 4.1.0)
 ##  plogr                    0.2.0      2018-03-25 [1] RSPM (R 4.1.0)
 ##  plotly                   4.9.4.1    2021-06-18 [1] RSPM (R 4.1.0)
 ##  plyr                     1.8.6      2020-03-03 [1] RSPM (R 4.1.0)
 ##  png                      0.1-7      2013-12-03 [1] RSPM (R 4.1.0)
 ##  polyclip                 1.10-0     2019-03-14 [1] RSPM (R 4.1.0)
 ##  postcards                0.2.2      2021-07-31 [1] RSPM (R 4.1.0)
+##  pracma                   2.3.3      2021-01-23 [1] RSPM (R 4.1.0)
 ##  praise                   1.0.0      2015-08-11 [2] RSPM (R 4.1.0)
 ##  prettyunits              1.1.1      2020-01-24 [2] RSPM (R 4.1.0)
 ##  processx                 3.5.2      2021-04-30 [2] RSPM (R 4.1.0)
@@ -484,6 +504,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  RcppHNSW                 0.3.0      2020-09-06 [1] RSPM (R 4.1.0)
 ##  RcppProgress             0.4.2      2020-02-06 [1] RSPM (R 4.1.0)
 ##  RCurl                    1.98-1.3   2021-03-16 [1] RSPM (R 4.1.0)
+##  registry                 0.5-1      2019-03-05 [1] RSPM (R 4.1.0)
 ##  rematch2                 2.1.2      2020-05-01 [2] RSPM (R 4.1.0)
 ##  remotes                  2.4.0      2021-06-02 [1] RSPM (R 4.1.0)
 ##  reshape                  0.8.8      2018-10-23 [1] RSPM (R 4.1.0)
@@ -499,6 +520,9 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  rjson                    0.2.20     2018-06-08 [1] RSPM (R 4.1.0)
 ##  rlang                    0.4.11     2021-04-30 [2] RSPM (R 4.1.0)
 ##  rmarkdown                2.10       2021-08-06 [1] RSPM (R 4.1.0)
+##  rncl                     0.8.4      2020-02-10 [1] RSPM (R 4.1.0)
+##  RNeXML                   2.4.5      2020-06-18 [1] RSPM (R 4.1.0)
+##  rngtools                 1.5        2020-01-23 [1] RSPM (R 4.1.0)
 ##  robustbase               0.93-8     2021-06-02 [1] RSPM (R 4.1.0)
 ##  ROCR                     1.0-11     2020-05-02 [1] RSPM (R 4.1.0)
 ##  roxygen2                 7.1.1      2020-06-27 [2] RSPM (R 4.1.0)
@@ -536,11 +560,13 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  shinyjs                  2.0.0      2020-09-09 [1] RSPM (R 4.1.0)
 ##  shinyWidgets             0.6.0      2021-03-15 [1] RSPM (R 4.1.0)
 ##  SingleCellExperiment     1.14.1     2021-05-21 [1] Bioconductor  
+##  SingleR                  1.6.1      2021-05-20 [1] Bioconductor  
 ##  sitmo                    2.0.1      2019-01-07 [1] RSPM (R 4.1.0)
 ##  snow                     0.4-3      2018-09-14 [1] RSPM (R 4.1.0)
+##  softImpute               1.4-1      2021-05-09 [1] RSPM (R 4.1.0)
 ##  sourcetools              0.1.7      2018-04-25 [1] RSPM (R 4.1.0)
 ##  sp                       1.4-5      2021-01-10 [1] RSPM (R 4.1.0)
-##  sparseMatrixStats        1.4.0      2021-05-19 [1] Bioconductor  
+##  sparseMatrixStats        1.4.2      2021-08-08 [1] Bioconductor  
 ##  spatial                  7.3-14     2021-05-03 [3] CRAN (R 4.1.0)
 ##  spatstat.core            2.3-0      2021-07-16 [1] RSPM (R 4.1.0)
 ##  spatstat.data            2.1-0      2021-03-21 [1] RSPM (R 4.1.0)
@@ -572,6 +598,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  usethis                  2.0.1      2021-02-10 [2] RSPM (R 4.1.0)
 ##  utf8                     1.2.2      2021-07-24 [2] RSPM (R 4.1.0)
 ##  utils                  * 4.1.0      2021-07-29 [3] local         
+##  uuid                     0.1-4      2020-02-26 [1] RSPM (R 4.1.0)
 ##  uwot                     0.1.10     2020-12-15 [1] RSPM (R 4.1.0)
 ##  vctrs                    0.3.8      2021-04-29 [2] RSPM (R 4.1.0)
 ##  vipor                    0.4.5      2017-03-22 [1] RSPM (R 4.1.0)
@@ -588,6 +615,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  xtable                   1.8-4      2019-04-21 [1] RSPM (R 4.1.0)
 ##  XVector                  0.32.0     2021-05-19 [1] Bioconductor  
 ##  yaml                     2.2.1      2020-02-01 [2] RSPM (R 4.1.0)
+##  zinbwave                 1.14.1     2021-05-25 [1] Bioconductor  
 ##  zip                      2.2.0      2021-05-31 [2] RSPM (R 4.1.0)
 ##  zlibbioc                 1.38.0     2021-05-19 [1] Bioconductor  
 ##  zoo                      1.8-9      2021-03-09 [1] RSPM (R 4.1.0)
@@ -597,7 +625,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-09 19:01:36.
+Fecha de la última actualización de esta página: 2021-08-09 22:09:55.
 
 ## Licencia  {-}
 

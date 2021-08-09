@@ -101,7 +101,7 @@ Y la instalación de los siguientes paquetes:
 ```r
 # paquetes que vamos a requerir
 install.packages(c("gitcreds", "gert", "gh"))
-#cargarlos de manera separada
+# cargarlos de manera separada
 library("gitcreds")
 library("gert")
 library("gh")
@@ -175,7 +175,7 @@ Checaremos `git_add`, `git_commit`, `git_log` y `git_push`
 
 ```r
 # escribimos un nuevo archivo, volvemos a usar here::here para especificar path
-writeLines("hola", here::here("R","prueba-here.R"))
+writeLines("hola", here::here("R", "prueba-here.R"))
 # otra manera es usar use_r
 usethis::use_r("archivo-prueba-github.R") # añade archivo al directorio R del proyecto actual
 
@@ -399,7 +399,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-09 19:01:37 UTC"
+## [1] "2021-08-09 22:09:56 UTC"
 ```
 
 ```r
@@ -408,7 +408,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.473   0.116   0.483
+##   0.664   0.108   0.643
 ```
 
 ```r
