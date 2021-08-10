@@ -30,6 +30,10 @@ comunidad
 introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca-1
 detalles-de-la-sesión-de-r-2
 estructura-e-importe-de-datos
+preprocesamiento-de-datos
+cell-ranger
+scpipe
+etc
 estructura-de-singlecellexperiment
 ejercicio-1
 preguntas
@@ -37,10 +41,6 @@ breve-repaso-de-r
 ejercicio-2
 respuestas
 extra
-preprocesamiento-de-datos
-cell-ranger
-scpipe
-etc
 import-data
 detalles-de-la-sesión-de-r-3
 control-de-calidad
