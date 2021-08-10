@@ -13,7 +13,7 @@ Contenido adaptado de [CDSB2020: Introducción a scRNA-seq, estructura e importe
 
 <img src="https://support.10xgenomics.com/img/cellranger-workflows/1sample-1GEM-1flowcell.png"/>
 
-* [`cellranger count`](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/count) procesa los datos crudos de FASTQ y genera los archivos que podemos leer en R usando `DropletUtils::read10xCounts()`
+* [`cellranger count`](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/count) procesa los datos crudos de FASTQ y genera los archivos que podemos leer en R usando `DropletUtils::read10xCounts()`.
 
 ### scPipe
 
