@@ -1,6 +1,8 @@
+
 # Selección de genes
 
 Instructora: [**Yalbi I. Balderas-Martínez**](http://Yalbibalderas.github.io/)
+Instructora: [**Laura Gómez-Romero**](https://comunidadbioinfo.github.io/es/authors/lgomez/)
 
 ## Diapositivas de Peter Hickey
 
@@ -227,6 +229,289 @@ dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
 	- Éstos son dirigidos por una sobreregulación en subpoblaciones raras 
   - Puede asignar un alto rango a genes que no son de nuestro interés con varianza baja absoluta	
 * La variación descrita por el CV<sup>2</sup> de las cuentas es menos relevante para los procedimientos que operan en los _log-counts_
+
+
+
+## Importando un dataset con factores experimentales
+
+```{r, warning=FALSE, message=FALSE }
+library(scRNAseq)
+sce.416b <- LunSpikeInData(which="416b") 
+sce.416b$block <- factor(sce.416b$block)
+```
+
+Este dataset consiste de células de una línea celular de células inmortalizadas mieloides progenitoras de ratón utilizando SmartSeq2
+
+Una cantidad constante de spike-in ERCC RNA se agregó a cada lisado celular antes de la prepatación de la librería
+
+Descripción [aquí](https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2.html)
+
+*Lun, A. T. L., Calero-Nieto, F. J., Haim-Vilmovsky, L., Göttgens, B. & Marioni, J. C. Assessing the reliability of spike-in normalization for analyses of single-cell RNA sequencing data. Genome Res. 27, 1795–1806 (2017)*
+
+
+### Procesándolo
+
+```{r }
+# gene-annotation
+library(AnnotationHub)
+ens.mm.v97 <- AnnotationHub()[["AH73905"]]
+rowData(sce.416b)$ENSEMBL <- rownames(sce.416b)
+rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97, 
+  keys=rownames(sce.416b),
+  keytype="GENEID", column="SYMBOL")
+rowData(sce.416b)$SEQNAME <- mapIds(ens.mm.v97,
+  keys=rownames(sce.416b),
+  keytype="GENEID", column="SEQNAME")
+library(scater)
+rownames(sce.416b) <- uniquifyFeatureNames(rowData(sce.416b)$ENSEMBL, 
+  rowData(sce.416b)$SYMBOL)
+```
+
+
+```{r }
+# quality-control
+mito <- which(rowData(sce.416b)$SEQNAME=="MT")
+stats <- perCellQCMetrics(sce.416b, subsets=list(Mt=mito))
+qc <- quickPerCellQC(stats,
+  percent_subsets=c("subsets_Mt_percent", "altexps_ERCC_percent"),
+  batch=sce.416b$block)
+sce.416b <- sce.416b[,!qc$discard]
+
+# normalization
+library(scran)
+sce.416b <- computeSumFactors(sce.416b)
+sce.416b <- logNormCounts(sce.416b)
+```
+
+
+## Considerando factores experimentales 
+
+-Los datos que contienen múltiples *batches* muy seguido presentan **efecto de bloque** que pueden crear HGVs artificiales
+-Se debe identificar los HGVs en cada *batch* y combinarlos en una única lista de HGVs
+
+
+```{r }
+library(scran)
+dec.block.416b <- modelGeneVarWithSpikes(sce.416b, 
+  "ERCC", block=sce.416b$block)
+dec.block.416b[order(
+  dec.block.416b$bio, decreasing=TRUE),]
+```
+
+Al calcular tendencias específicas por batch se tomarán en cuenta las diferencias en la relación media-varianza entre batches
+
+Se deben obtener estimados de los componentes biológico y técnico para cada gene específicos de cada batch, los caules se promedian entre los batches para crear una única lista de HVGs
+
+
+<div>
+<p style = 'text-align:center;'>
+<img src="img/experimental.factor.pdf" width="800px">
+</p>
+</div>
+
+
+
+## Seleccionando genes altamante variables (high-variable genes, HVGs)
+
+
+Hasta ahora hemos ordenado los genes del más al menos **interesantemente variable**
+
+*¿Qué tanto debemos de bajar en la lista para seleccionar nuestros HVGs?*
+
+Elegir un subset más grande:
+- Reduce el riesgo de desechar señal biológica
+- Incrementa el ruido por la inclusión de genes irrelevantes
+
+Es difícil determinar el balance óptimo porque el rudio en un contexto podría ser una señal útil en otro contexto
+
+Discutiremos algunas estrategias para seleccionar HVGs
+
+
+### Seleccionando HVGs sobre la métrica de varianza
+
+La estrategia más simple es seleccionar los top-X genes con los valores más grandes para la métrica relevante de varianza, *por ejemplo, la varianza biológica más grande calculada con **scran::modelGeneVar()** *
+
+Pro: El usuario puede controlar directamente el número de HVGs
+Contra: ¿Qué valor de X se debe usar?
+
+
+```{r }
+# Works with modelGeneVar() output
+hvg.pbmc.var <- getTopHVGs(dec.pbmc, n=1000)
+str(hvg.pbmc.var)
+
+# Works with modelGeneVarWithSpikes() output
+#hvg.416b.var <- getTopHVGs(dec.spike.416b, n=1000)
+#str(hvg.416b.var)
+
+# Also works with modelGeneCV2() but note `var.field`
+hvg.pbmc.cv2 <- getTopHVGs(dec.cv2.pbmc,
+  var.field="ratio", n=1000)
+str(hvg.pbmc.cv2)
+```
+
+
+#### Estrategias para seleccionar X
+
+Asume que, por ejemplo, no más del 5% de los genes están diferencialmente expresados entre las célula de nuestra población:
+ - *Establece X como el 5% de los genes*
+ 
+ Normalmente no conocemos el número de genes diferecialmente expresados desde antes, por lo tanto, solo hemos cambiado un número arbitrario por otro número arbitrario
+ 
+ Si decides utilizar los top-X HGVs, elige un valor de X y procede con el resto del análisis con la intención de regresar más adelante y probar otros valores, en vez de dedicarle mucho esfuerzo a encontrar el valor óptimo
+
+
+### Seleccionando HVGs sobre su significancia estadística
+
+Establece un límite fijo en alguna métrica de significancia estadística: *algunos de los métodos reportan un p-valor para cada gene, entonces selecciona todos los genes con un p-valor ajustado menor que 0.05
+
+**Recuerda que las pruebas estadísticas siempre dependen del tamaño de la muestra**
+
+* Fácil de implementar
+* Menos predecible qe la estrategia de los top-X
+* Podría priorizar genes con significancia estadística fuerte en vez de significancia biológica fuerte
+
+
+```{r }
+# Works with modelGeneVar() output
+hvg.pbmc.var.2 <- getTopHVGs(dec.pbmc, fdr.threshold=0.05)
+str(hvg.pbmc.var.2)
+# Works with modelGeneVarWithSpikes() output
+#hvg.416b.var.2 <- getTopHVGs(dec.spike.416b,
+#  fdr.threshold=0.05)
+#str(hvg.416b.var.2)
+
+# Also works with modelGeneCV2() but note `var.field`
+hvg.pbmc.cv2.2 <- getTopHVGs(dec.cv2.pbmc,
+  var.field="ratio", fdr.threshold=0.05)
+str(hvg.pbmc.cv2.2)
+```
+
+
+### Seleccionando genes por arriba de la tendencia
+
+Selecciona todos los genes con **una varianza biológica positiva**
+
+Este es un extremo del equilibrio sesgo-varianza que minimiza el sesgo con el costo de maximizar el ruido
+
+* Le da a la estructura secundaria de la población una oportunidad de manifestarse
+* Se captura más ruido, lo cual puede reducir la resolución de poblaciones bien separadas enmascarando la señal secundaria que intentamos preservar
+
+Mejor preparado para datasets altamente heterogeneos que contienen muchos tipos celulares diferentes
+
+
+```{r }
+# Works with modelGeneVar() output
+hvg.pbmc.var.3 <- getTopHVGs(dec.pbmc, var.threshold=0)
+str(hvg.pbmc.var.3)
+
+# Works with modelGeneVarWithSpikes() output
+#hvg.416b.var.3 <- getTopHVGs(dec.spike.416b,
+#  var.threshold=0)
+#str(hvg.416b.var.3)
+
+# Also works with modelGeneCV2() but note `var.field` and 
+# value of `var.threshold`
+hvg.pbmc.cv2.3 <- getTopHVGs(dec.cv2.pbmc,
+  var.field="ratio", var.threshold=1)
+str(hvg.pbmc.cv2.2)
+```
+
+### Seleccionando genes de interés a priori
+
+Una estrategia contundente pero efecta es usar sets predefinidos de genes de interés
+
+No hay vergüenza en aprovechar el conocimiento biológivo previo
+
+*Contra*: Limita nuestra capacidad de descubrir aspectos nuevos o inesperados de la variación
+
+*Considera esta como una estrategia complementaria a otros tipo de estrategias de selección de HGVs*
+
+
+También podrías eliminar listas pre-definidas de genes:
+ * Genes de proteínas ribosomales o genes mitocondriales son conocidos por encontrarse dentro de los genes *más variables* y por interferir con análisis posteriores
+ 
+ *Tampoco hay que pecar de prevacido*, espera a que estos genes demuestren ser problemáticos para removerlos
+ 
+
+## Poniendo todo junto
+
+
+```{r }
+dec.pbmc <- modelGeneVar(sce.pbmc)
+chosen <- getTopHVGs(dec.pbmc, prop=0.1)
+str(chosen)
+```
+
+Después de esto tenemos varias opciones para imponer nuestra selección de HGVs durante el resto del análisis:
+1. Hacer un subset de SCE para quedarnos únicamente con los HGVs
+2. Especificar los HGVs en funciones posteriores
+3. Magia (altExps)
+
+
+### Quedándonos sólo con los HGVs
+```{r }
+sce.pbmc.hvg <- sce.pbmc[chosen,]
+sce.pbmc.hvg
+```
+
+PRO: Te aseguras de que los métodos posteriores **sólo** usen estos genes para sus cálculos
+
+CONTRA: Los genes no-HGVs son eliminados del nnuevo objeto *SingleCellExperiment*, lo cual hace menos conveniente la interrogación del dataset completo sobre genes que no son HGVs
+
+
+### Especificando los HGVs
+```{r }
+# Example of specifying HVGs in a downstream function
+# Performing PCA only on the chosen HVGs.
+library(scater)
+sce.pbmc <- runPCA(sce.pbmc, subset_row=chosen)
+sce.pbmc
+```
+
+Mantiene el objeto *SingleCellExperiment* original y especifica los genes para usar en funciones posteriores mediante un argumento adicional como **subset_row**
+
+PRO: Es útil si el análisis usa varios conjuntos de HGVs en diferentes pasos
+CONTRA: Podría ser inconveniente especificar repetidamente el mismo conjunto de HGVs en diferentes pasos
+
+
+### Witchcraft (Brujería)
+```{r }
+# Add the full SCE to the subsetted data SCE
+altExp(sce.pbmc.hvg, "original") <- sce.pbmc
+sce.pbmc.hvg
+altExp(sce.pbmc.hvg, "original")
+```
+
+Utilizando el sistema de "experimento alternartivo" en la clase *SingleCellExperiment*
+
+PRO: Evita algunos problemas a largo plazo cuando el dataset original no está sincronizado con el conjunto filtrado por HVGs
+CONTRA: Ralentiza todos los análisis subsecuentes
+
+
+## Resumen y recomendaciones
+
+* Es fácil atorarse en este paso debido a la variedad de opciones disponibles
+* Elige un conjunto de HVGs y continúa con el análisis, **recuerda regresar para probar la robustez de tus resultados usando una forma diferente para seleccionar los HVGs**
+* Si tienes spike-ins, trata de usarlos. No obstante, recuerda que los spike-ins no pueden capturar todas las fuentes de variación técnica
+
+
+
+## Recomendaciones para empezar
+
+Para CEL-Seq2:
+- **scran::modelGeneVarWithSpikes()**
+Para 10X:
+- **scran::modelGeneVarByPoisson()**
+
+
+Si quieres irte por el lado de conservar demasiados genes:
+- **scran::getTopHVGs(dec, var.threshold=0)**
+
+Y realiza una comparación rápida con, por lo menos, el top-1000 HVGs
+
+Regresa al paso de selección de HVG para **eliminar genes problemáticos** tantas veces como sea necesario
+
 
 ## Detalles de la sesión de R
 
