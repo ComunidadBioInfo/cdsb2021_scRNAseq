@@ -208,7 +208,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#breve-repaso-de-r"><i class="fa fa-check"></i><b>4.3</b> Breve repaso de R</a></li>
 <li class="chapter" data-level="4.4" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#ejercicio-2"><i class="fa fa-check"></i><b>4.4</b> Ejercicio 2</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#extra"><i class="fa fa-check"></i><b>4.4.1</b> Extra</a></li>
+<li class="chapter" data-level="4.4.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#respuestas"><i class="fa fa-check"></i><b>4.4.1</b> Respuestas</a></li>
+<li class="chapter" data-level="4.4.2" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#extra"><i class="fa fa-check"></i><b>4.4.2</b> Extra</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#import-data"><i class="fa fa-check"></i><b>4.5</b> Import data</a></li>
 <li class="chapter" data-level="4.6" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#detalles-de-la-sesión-de-r-3"><i class="fa fa-check"></i><b>4.6</b> Detalles de la sesión de R</a></li>
@@ -553,86 +554,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="dataset-ilustrativo-zeisel" class="section level2" number="8.4">
 <h2><span class="header-section-number">8.4</span> Dataset ilustrativo: Zeisel</h2>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="reducción-de-dimensiones.html#cb256-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scRNAseq)</span>
-<span id="cb256-2"><a href="reducción-de-dimensiones.html#cb256-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">ZeiselBrainData</span>(<span class="at">ensembl =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="reducción-de-dimensiones.html#cb400-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scRNAseq)</span>
+<span id="cb400-2"><a href="reducción-de-dimensiones.html#cb400-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">ZeiselBrainData</span>(<span class="at">ensembl =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Estudio de tipos celulares en el cerebro de ratón (oligodendrocitos, microglia, neuronas, etc) procesados con el sistema STRT-seq (similar a CEL-Seq)</p>
 <p>Descripción <a href="https://osca.bioconductor.org/zeisel-mouse-brain-strt-seq.html">aquí</a></p>
 <p><em>Zeisel, A. et al. Brain structure. Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq. Science 347, 1138-1142 (2015)</em></p>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="reducción-de-dimensiones.html#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quality control</span></span>
-<span id="cb257-2"><a href="reducción-de-dimensiones.html#cb257-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
-<span id="cb257-3"><a href="reducción-de-dimensiones.html#cb257-3" aria-hidden="true" tabindex="-1"></a>is.mito <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">rowData</span>(sce.zeisel)<span class="sc">$</span>featureType <span class="sc">==</span> <span class="st">&quot;mito&quot;</span>)</span>
-<span id="cb257-4"><a href="reducción-de-dimensiones.html#cb257-4" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">perCellQCMetrics</span>(sce.zeisel,</span>
-<span id="cb257-5"><a href="reducción-de-dimensiones.html#cb257-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mt =</span> is.mito)</span>
-<span id="cb257-6"><a href="reducción-de-dimensiones.html#cb257-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb257-7"><a href="reducción-de-dimensiones.html#cb257-7" aria-hidden="true" tabindex="-1"></a>qc <span class="ot">&lt;-</span> <span class="fu">quickPerCellQC</span>(stats,</span>
-<span id="cb257-8"><a href="reducción-de-dimensiones.html#cb257-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent_subsets =</span> <span class="fu">c</span>(<span class="st">&quot;altexps_ERCC_percent&quot;</span>, <span class="st">&quot;subsets_Mt_percent&quot;</span>)</span>
-<span id="cb257-9"><a href="reducción-de-dimensiones.html#cb257-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb257-10"><a href="reducción-de-dimensiones.html#cb257-10" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> sce.zeisel[, <span class="sc">!</span>qc<span class="sc">$</span>discard]</span></code></pre></div>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="reducción-de-dimensiones.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="co"># normalization</span></span>
-<span id="cb258-2"><a href="reducción-de-dimensiones.html#cb258-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
-<span id="cb258-3"><a href="reducción-de-dimensiones.html#cb258-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span>
-<span id="cb258-4"><a href="reducción-de-dimensiones.html#cb258-4" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">quickCluster</span>(sce.zeisel)</span>
-<span id="cb258-5"><a href="reducción-de-dimensiones.html#cb258-5" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">computeSumFactors</span>(sce.zeisel,</span>
-<span id="cb258-6"><a href="reducción-de-dimensiones.html#cb258-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> clusters</span>
-<span id="cb258-7"><a href="reducción-de-dimensiones.html#cb258-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb258-8"><a href="reducción-de-dimensiones.html#cb258-8" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.zeisel)</span>
-<span id="cb258-9"><a href="reducción-de-dimensiones.html#cb258-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb258-10"><a href="reducción-de-dimensiones.html#cb258-10" aria-hidden="true" tabindex="-1"></a><span class="co"># variance-modelling</span></span>
-<span id="cb258-11"><a href="reducción-de-dimensiones.html#cb258-11" aria-hidden="true" tabindex="-1"></a>dec.zeisel <span class="ot">&lt;-</span> <span class="fu">modelGeneVarWithSpikes</span>(</span>
-<span id="cb258-12"><a href="reducción-de-dimensiones.html#cb258-12" aria-hidden="true" tabindex="-1"></a>    sce.zeisel,</span>
-<span id="cb258-13"><a href="reducción-de-dimensiones.html#cb258-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;ERCC&quot;</span></span>
-<span id="cb258-14"><a href="reducción-de-dimensiones.html#cb258-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="reducción-de-dimensiones.html#cb401-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quality control</span></span>
+<span id="cb401-2"><a href="reducción-de-dimensiones.html#cb401-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb401-3"><a href="reducción-de-dimensiones.html#cb401-3" aria-hidden="true" tabindex="-1"></a>is.mito <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">rowData</span>(sce.zeisel)<span class="sc">$</span>featureType <span class="sc">==</span> <span class="st">&quot;mito&quot;</span>)</span>
+<span id="cb401-4"><a href="reducción-de-dimensiones.html#cb401-4" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">perCellQCMetrics</span>(sce.zeisel,</span>
+<span id="cb401-5"><a href="reducción-de-dimensiones.html#cb401-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mt =</span> is.mito)</span>
+<span id="cb401-6"><a href="reducción-de-dimensiones.html#cb401-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb401-7"><a href="reducción-de-dimensiones.html#cb401-7" aria-hidden="true" tabindex="-1"></a>qc <span class="ot">&lt;-</span> <span class="fu">quickPerCellQC</span>(stats,</span>
+<span id="cb401-8"><a href="reducción-de-dimensiones.html#cb401-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent_subsets =</span> <span class="fu">c</span>(<span class="st">&quot;altexps_ERCC_percent&quot;</span>, <span class="st">&quot;subsets_Mt_percent&quot;</span>)</span>
+<span id="cb401-9"><a href="reducción-de-dimensiones.html#cb401-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb401-10"><a href="reducción-de-dimensiones.html#cb401-10" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> sce.zeisel[, <span class="sc">!</span>qc<span class="sc">$</span>discard]</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="reducción-de-dimensiones.html#cb402-1" aria-hidden="true" tabindex="-1"></a><span class="co"># normalization</span></span>
+<span id="cb402-2"><a href="reducción-de-dimensiones.html#cb402-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
+<span id="cb402-3"><a href="reducción-de-dimensiones.html#cb402-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span>
+<span id="cb402-4"><a href="reducción-de-dimensiones.html#cb402-4" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">quickCluster</span>(sce.zeisel)</span>
+<span id="cb402-5"><a href="reducción-de-dimensiones.html#cb402-5" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">computeSumFactors</span>(sce.zeisel,</span>
+<span id="cb402-6"><a href="reducción-de-dimensiones.html#cb402-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> clusters</span>
+<span id="cb402-7"><a href="reducción-de-dimensiones.html#cb402-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb402-8"><a href="reducción-de-dimensiones.html#cb402-8" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.zeisel)</span>
+<span id="cb402-9"><a href="reducción-de-dimensiones.html#cb402-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb402-10"><a href="reducción-de-dimensiones.html#cb402-10" aria-hidden="true" tabindex="-1"></a><span class="co"># variance-modelling</span></span>
+<span id="cb402-11"><a href="reducción-de-dimensiones.html#cb402-11" aria-hidden="true" tabindex="-1"></a>dec.zeisel <span class="ot">&lt;-</span> <span class="fu">modelGeneVarWithSpikes</span>(</span>
+<span id="cb402-12"><a href="reducción-de-dimensiones.html#cb402-12" aria-hidden="true" tabindex="-1"></a>    sce.zeisel,</span>
+<span id="cb402-13"><a href="reducción-de-dimensiones.html#cb402-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;ERCC&quot;</span></span>
+<span id="cb402-14"><a href="reducción-de-dimensiones.html#cb402-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="dataset-ilustrativo-10x-pbmc4k-no-filtradas" class="section level2" number="8.5">
 <h2><span class="header-section-number">8.5</span> Dataset ilustrativo: 10x PBMC4k no filtradas</h2>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="reducción-de-dimensiones.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocFileCache)</span>
-<span id="cb259-2"><a href="reducción-de-dimensiones.html#cb259-2" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
-<span id="cb259-3"><a href="reducción-de-dimensiones.html#cb259-3" aria-hidden="true" tabindex="-1"></a>raw.path <span class="ot">&lt;-</span> <span class="fu">bfcrpath</span>(bfc, <span class="fu">file.path</span>(</span>
-<span id="cb259-4"><a href="reducción-de-dimensiones.html#cb259-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;http://cf.10xgenomics.com/samples&quot;</span>,</span>
-<span id="cb259-5"><a href="reducción-de-dimensiones.html#cb259-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz&quot;</span></span>
-<span id="cb259-6"><a href="reducción-de-dimensiones.html#cb259-6" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb259-7"><a href="reducción-de-dimensiones.html#cb259-7" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(raw.path, <span class="at">exdir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k&quot;</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="reducción-de-dimensiones.html#cb260-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DropletUtils)</span>
-<span id="cb260-2"><a href="reducción-de-dimensiones.html#cb260-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
-<span id="cb260-3"><a href="reducción-de-dimensiones.html#cb260-3" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k/raw_gene_bc_matrices/GRCh38&quot;</span>)</span>
-<span id="cb260-4"><a href="reducción-de-dimensiones.html#cb260-4" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">read10xCounts</span>(fname, <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="reducción-de-dimensiones.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocFileCache)</span>
+<span id="cb403-2"><a href="reducción-de-dimensiones.html#cb403-2" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
+<span id="cb403-3"><a href="reducción-de-dimensiones.html#cb403-3" aria-hidden="true" tabindex="-1"></a>raw.path <span class="ot">&lt;-</span> <span class="fu">bfcrpath</span>(bfc, <span class="fu">file.path</span>(</span>
+<span id="cb403-4"><a href="reducción-de-dimensiones.html#cb403-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;http://cf.10xgenomics.com/samples&quot;</span>,</span>
+<span id="cb403-5"><a href="reducción-de-dimensiones.html#cb403-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz&quot;</span></span>
+<span id="cb403-6"><a href="reducción-de-dimensiones.html#cb403-6" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb403-7"><a href="reducción-de-dimensiones.html#cb403-7" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(raw.path, <span class="at">exdir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="reducción-de-dimensiones.html#cb404-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DropletUtils)</span>
+<span id="cb404-2"><a href="reducción-de-dimensiones.html#cb404-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
+<span id="cb404-3"><a href="reducción-de-dimensiones.html#cb404-3" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k/raw_gene_bc_matrices/GRCh38&quot;</span>)</span>
+<span id="cb404-4"><a href="reducción-de-dimensiones.html#cb404-4" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">read10xCounts</span>(fname, <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Dataset “Células mononucleares humanas de sangre periférica” de 10X Genomics</p>
 <p>Descripción <a href="https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-genomics.html">aquí</a></p>
 <p><em>Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)</em></p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="reducción-de-dimensiones.html#cb261-1" aria-hidden="true" tabindex="-1"></a><span class="co"># gene-annotation</span></span>
-<span id="cb261-2"><a href="reducción-de-dimensiones.html#cb261-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
-<span id="cb261-3"><a href="reducción-de-dimensiones.html#cb261-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sce.pbmc) <span class="ot">&lt;-</span> <span class="fu">uniquifyFeatureNames</span>(</span>
-<span id="cb261-4"><a href="reducción-de-dimensiones.html#cb261-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID, <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>Symbol</span>
-<span id="cb261-5"><a href="reducción-de-dimensiones.html#cb261-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb261-6"><a href="reducción-de-dimensiones.html#cb261-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EnsDb.Hsapiens.v86)</span>
-<span id="cb261-7"><a href="reducción-de-dimensiones.html#cb261-7" aria-hidden="true" tabindex="-1"></a>location <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(EnsDb.Hsapiens.v86,</span>
-<span id="cb261-8"><a href="reducción-de-dimensiones.html#cb261-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">keys =</span> <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID,</span>
-<span id="cb261-9"><a href="reducción-de-dimensiones.html#cb261-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">&quot;SEQNAME&quot;</span>, <span class="at">keytype =</span> <span class="st">&quot;GENEID&quot;</span></span>
-<span id="cb261-10"><a href="reducción-de-dimensiones.html#cb261-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb261-11"><a href="reducción-de-dimensiones.html#cb261-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb261-12"><a href="reducción-de-dimensiones.html#cb261-12" aria-hidden="true" tabindex="-1"></a><span class="co"># cell-detection</span></span>
-<span id="cb261-13"><a href="reducción-de-dimensiones.html#cb261-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb261-14"><a href="reducción-de-dimensiones.html#cb261-14" aria-hidden="true" tabindex="-1"></a>e.out <span class="ot">&lt;-</span> <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc))</span>
-<span id="cb261-15"><a href="reducción-de-dimensiones.html#cb261-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="fu">which</span>(e.out<span class="sc">$</span>FDR <span class="sc">&lt;=</span> <span class="fl">0.001</span>)]</span></code></pre></div>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="reducción-de-dimensiones.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quality-control</span></span>
-<span id="cb262-2"><a href="reducción-de-dimensiones.html#cb262-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">perCellQCMetrics</span>(sce.pbmc,</span>
-<span id="cb262-3"><a href="reducción-de-dimensiones.html#cb262-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mito =</span> <span class="fu">which</span>(location <span class="sc">==</span> <span class="st">&quot;MT&quot;</span>))</span>
-<span id="cb262-4"><a href="reducción-de-dimensiones.html#cb262-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb262-5"><a href="reducción-de-dimensiones.html#cb262-5" aria-hidden="true" tabindex="-1"></a>high.mito <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(stats<span class="sc">$</span>subsets_Mito_percent,</span>
-<span id="cb262-6"><a href="reducción-de-dimensiones.html#cb262-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span></span>
-<span id="cb262-7"><a href="reducción-de-dimensiones.html#cb262-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb262-8"><a href="reducción-de-dimensiones.html#cb262-8" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="sc">!</span>high.mito]</span>
-<span id="cb262-9"><a href="reducción-de-dimensiones.html#cb262-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb262-10"><a href="reducción-de-dimensiones.html#cb262-10" aria-hidden="true" tabindex="-1"></a><span class="co"># normalization</span></span>
-<span id="cb262-11"><a href="reducción-de-dimensiones.html#cb262-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
-<span id="cb262-12"><a href="reducción-de-dimensiones.html#cb262-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span>
-<span id="cb262-13"><a href="reducción-de-dimensiones.html#cb262-13" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">quickCluster</span>(sce.pbmc)</span>
-<span id="cb262-14"><a href="reducción-de-dimensiones.html#cb262-14" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">computeSumFactors</span>(sce.pbmc, <span class="at">cluster =</span> clusters)</span>
-<span id="cb262-15"><a href="reducción-de-dimensiones.html#cb262-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.pbmc)</span></code></pre></div>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="reducción-de-dimensiones.html#cb263-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variance modelling</span></span>
-<span id="cb263-2"><a href="reducción-de-dimensiones.html#cb263-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1001</span>)</span>
-<span id="cb263-3"><a href="reducción-de-dimensiones.html#cb263-3" aria-hidden="true" tabindex="-1"></a>dec.pbmc <span class="ot">&lt;-</span> <span class="fu">modelGeneVarByPoisson</span>(sce.pbmc)</span>
-<span id="cb263-4"><a href="reducción-de-dimensiones.html#cb263-4" aria-hidden="true" tabindex="-1"></a>top.pbmc <span class="ot">&lt;-</span> <span class="fu">getTopHVGs</span>(dec.pbmc, <span class="at">prop =</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="reducción-de-dimensiones.html#cb405-1" aria-hidden="true" tabindex="-1"></a><span class="co"># gene-annotation</span></span>
+<span id="cb405-2"><a href="reducción-de-dimensiones.html#cb405-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb405-3"><a href="reducción-de-dimensiones.html#cb405-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sce.pbmc) <span class="ot">&lt;-</span> <span class="fu">uniquifyFeatureNames</span>(</span>
+<span id="cb405-4"><a href="reducción-de-dimensiones.html#cb405-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID, <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>Symbol</span>
+<span id="cb405-5"><a href="reducción-de-dimensiones.html#cb405-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb405-6"><a href="reducción-de-dimensiones.html#cb405-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EnsDb.Hsapiens.v86)</span>
+<span id="cb405-7"><a href="reducción-de-dimensiones.html#cb405-7" aria-hidden="true" tabindex="-1"></a>location <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(EnsDb.Hsapiens.v86,</span>
+<span id="cb405-8"><a href="reducción-de-dimensiones.html#cb405-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">keys =</span> <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID,</span>
+<span id="cb405-9"><a href="reducción-de-dimensiones.html#cb405-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">&quot;SEQNAME&quot;</span>, <span class="at">keytype =</span> <span class="st">&quot;GENEID&quot;</span></span>
+<span id="cb405-10"><a href="reducción-de-dimensiones.html#cb405-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb405-11"><a href="reducción-de-dimensiones.html#cb405-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb405-12"><a href="reducción-de-dimensiones.html#cb405-12" aria-hidden="true" tabindex="-1"></a><span class="co"># cell-detection</span></span>
+<span id="cb405-13"><a href="reducción-de-dimensiones.html#cb405-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb405-14"><a href="reducción-de-dimensiones.html#cb405-14" aria-hidden="true" tabindex="-1"></a>e.out <span class="ot">&lt;-</span> <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc))</span>
+<span id="cb405-15"><a href="reducción-de-dimensiones.html#cb405-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="fu">which</span>(e.out<span class="sc">$</span>FDR <span class="sc">&lt;=</span> <span class="fl">0.001</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="reducción-de-dimensiones.html#cb406-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quality-control</span></span>
+<span id="cb406-2"><a href="reducción-de-dimensiones.html#cb406-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">perCellQCMetrics</span>(sce.pbmc,</span>
+<span id="cb406-3"><a href="reducción-de-dimensiones.html#cb406-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mito =</span> <span class="fu">which</span>(location <span class="sc">==</span> <span class="st">&quot;MT&quot;</span>))</span>
+<span id="cb406-4"><a href="reducción-de-dimensiones.html#cb406-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb406-5"><a href="reducción-de-dimensiones.html#cb406-5" aria-hidden="true" tabindex="-1"></a>high.mito <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(stats<span class="sc">$</span>subsets_Mito_percent,</span>
+<span id="cb406-6"><a href="reducción-de-dimensiones.html#cb406-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span></span>
+<span id="cb406-7"><a href="reducción-de-dimensiones.html#cb406-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb406-8"><a href="reducción-de-dimensiones.html#cb406-8" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="sc">!</span>high.mito]</span>
+<span id="cb406-9"><a href="reducción-de-dimensiones.html#cb406-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb406-10"><a href="reducción-de-dimensiones.html#cb406-10" aria-hidden="true" tabindex="-1"></a><span class="co"># normalization</span></span>
+<span id="cb406-11"><a href="reducción-de-dimensiones.html#cb406-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
+<span id="cb406-12"><a href="reducción-de-dimensiones.html#cb406-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span>
+<span id="cb406-13"><a href="reducción-de-dimensiones.html#cb406-13" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">quickCluster</span>(sce.pbmc)</span>
+<span id="cb406-14"><a href="reducción-de-dimensiones.html#cb406-14" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">computeSumFactors</span>(sce.pbmc, <span class="at">cluster =</span> clusters)</span>
+<span id="cb406-15"><a href="reducción-de-dimensiones.html#cb406-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.pbmc)</span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="reducción-de-dimensiones.html#cb407-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variance modelling</span></span>
+<span id="cb407-2"><a href="reducción-de-dimensiones.html#cb407-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1001</span>)</span>
+<span id="cb407-3"><a href="reducción-de-dimensiones.html#cb407-3" aria-hidden="true" tabindex="-1"></a>dec.pbmc <span class="ot">&lt;-</span> <span class="fu">modelGeneVarByPoisson</span>(sce.pbmc)</span>
+<span id="cb407-4"><a href="reducción-de-dimensiones.html#cb407-4" aria-hidden="true" tabindex="-1"></a>top.pbmc <span class="ot">&lt;-</span> <span class="fu">getTopHVGs</span>(dec.pbmc, <span class="at">prop =</span> <span class="fl">0.1</span>)</span></code></pre></div>
 </div>
 <div id="análisis-de-componentes-principales" class="section level2" number="8.6">
 <h2><span class="header-section-number">8.6</span> Análisis de Componentes Principales</h2>
@@ -656,14 +657,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Se espera que el ruido técnico azaroso afecte cada gen independientemente</li>
 </ul>
 <p><strong>Consideración: Los primeros PCs capturarán “batch effects” (efectos de lote) que afectan muchos genes en una manera coordinada</strong></p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="reducción-de-dimensiones.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
-<span id="cb264-2"><a href="reducción-de-dimensiones.html#cb264-2" aria-hidden="true" tabindex="-1"></a>top.zeisel <span class="ot">&lt;-</span> <span class="fu">getTopHVGs</span>(dec.zeisel, <span class="at">n =</span> <span class="dv">2000</span>)</span>
-<span id="cb264-3"><a href="reducción-de-dimensiones.html#cb264-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb264-4"><a href="reducción-de-dimensiones.html#cb264-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
-<span id="cb264-5"><a href="reducción-de-dimensiones.html#cb264-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb264-6"><a href="reducción-de-dimensiones.html#cb264-6" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runPCA</span>(sce.zeisel,</span>
-<span id="cb264-7"><a href="reducción-de-dimensiones.html#cb264-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset_row =</span> top.zeisel</span>
-<span id="cb264-8"><a href="reducción-de-dimensiones.html#cb264-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="reducción-de-dimensiones.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
+<span id="cb408-2"><a href="reducción-de-dimensiones.html#cb408-2" aria-hidden="true" tabindex="-1"></a>top.zeisel <span class="ot">&lt;-</span> <span class="fu">getTopHVGs</span>(dec.zeisel, <span class="at">n =</span> <span class="dv">2000</span>)</span>
+<span id="cb408-3"><a href="reducción-de-dimensiones.html#cb408-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb408-4"><a href="reducción-de-dimensiones.html#cb408-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb408-5"><a href="reducción-de-dimensiones.html#cb408-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb408-6"><a href="reducción-de-dimensiones.html#cb408-6" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runPCA</span>(sce.zeisel,</span>
+<span id="cb408-7"><a href="reducción-de-dimensiones.html#cb408-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset_row =</span> top.zeisel</span>
+<span id="cb408-8"><a href="reducción-de-dimensiones.html#cb408-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Por default, <strong>runPCA()</strong> usa un método rápido aproximado que realiza simulaciones, por lo tanto, es necesario <em>‘configurar la semilla’</em> para obtener resultados reproducibles</p>
 </div>
 <div id="eligiendo-el-número-de-pcs" class="section level3" number="8.6.3">
@@ -675,18 +676,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Ahora exploraremos algunas estrategias guiadas por los datos (data-driven) para hacer esta selección</p>
 <div id="usando-el-punto-del-codo" class="section level4" number="8.6.3.1">
 <h4><span class="header-section-number">8.6.3.1</span> Usando el punto del codo</h4>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="reducción-de-dimensiones.html#cb265-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PCAtools)</span>
-<span id="cb265-2"><a href="reducción-de-dimensiones.html#cb265-2" aria-hidden="true" tabindex="-1"></a>percent.var <span class="ot">&lt;-</span> <span class="fu">attr</span>(<span class="fu">reducedDim</span>(sce.zeisel), <span class="st">&quot;percentVar&quot;</span>)</span>
-<span id="cb265-3"><a href="reducción-de-dimensiones.html#cb265-3" aria-hidden="true" tabindex="-1"></a>chosen.elbow <span class="ot">&lt;-</span> PCAtools<span class="sc">::</span><span class="fu">findElbowPoint</span>(percent.var)</span>
-<span id="cb265-4"><a href="reducción-de-dimensiones.html#cb265-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(percent.var, <span class="at">xlab =</span> <span class="st">&quot;PC&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Variance explained (%)&quot;</span>)</span>
-<span id="cb265-5"><a href="reducción-de-dimensiones.html#cb265-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> chosen.elbow, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="reducción-de-dimensiones.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PCAtools)</span>
+<span id="cb409-2"><a href="reducción-de-dimensiones.html#cb409-2" aria-hidden="true" tabindex="-1"></a>percent.var <span class="ot">&lt;-</span> <span class="fu">attr</span>(<span class="fu">reducedDim</span>(sce.zeisel), <span class="st">&quot;percentVar&quot;</span>)</span>
+<span id="cb409-3"><a href="reducción-de-dimensiones.html#cb409-3" aria-hidden="true" tabindex="-1"></a>chosen.elbow <span class="ot">&lt;-</span> PCAtools<span class="sc">::</span><span class="fu">findElbowPoint</span>(percent.var)</span>
+<span id="cb409-4"><a href="reducción-de-dimensiones.html#cb409-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(percent.var, <span class="at">xlab =</span> <span class="st">&quot;PC&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Variance explained (%)&quot;</span>)</span>
+<span id="cb409-5"><a href="reducción-de-dimensiones.html#cb409-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> chosen.elbow, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-10-1.png" width="480" /></p>
 <p>Una heurística simple es elegir el número de PCs basado en el <strong>porcentaje de varianza explicado</strong> por PCs sucesivos</p>
 </div>
 <div id="basados-en-la-estructura-de-la-población" class="section level4" number="8.6.3.2">
 <h4><span class="header-section-number">8.6.3.2</span> Basados en la estructura de la población</h4>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="reducción-de-dimensiones.html#cb266-1" aria-hidden="true" tabindex="-1"></a>choices <span class="ot">&lt;-</span> <span class="fu">getClusteredPCs</span>(<span class="fu">reducedDim</span>(sce.zeisel))</span>
-<span id="cb266-2"><a href="reducción-de-dimensiones.html#cb266-2" aria-hidden="true" tabindex="-1"></a>chosen.clusters <span class="ot">&lt;-</span> <span class="fu">metadata</span>(choices)<span class="sc">$</span>chosen</span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="reducción-de-dimensiones.html#cb410-1" aria-hidden="true" tabindex="-1"></a>choices <span class="ot">&lt;-</span> <span class="fu">getClusteredPCs</span>(<span class="fu">reducedDim</span>(sce.zeisel))</span>
+<span id="cb410-2"><a href="reducción-de-dimensiones.html#cb410-2" aria-hidden="true" tabindex="-1"></a>chosen.clusters <span class="ot">&lt;-</span> <span class="fu">metadata</span>(choices)<span class="sc">$</span>chosen</span></code></pre></div>
 <p>Esta es una aproximación heurística más sofisticada que usa el número de clusters como un <em>proxy</em> del número de subpoblaciones</p>
 <p>Supongamos que esperamos <em>d</em> subpoblaciones de células, en ese caso, necesitamos <em>d-1</em> dimensiones para garantizar la separación de todas las subpoblaciones</p>
 <p>Pero… en un escenario real realmente no sabes cuántas poblaciones hay…</p>
@@ -701,48 +702,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="juntando-todo" class="section level3" number="8.6.4">
 <h3><span class="header-section-number">8.6.4</span> Juntando todo</h3>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="reducción-de-dimensiones.html#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb267-2"><a href="reducción-de-dimensiones.html#cb267-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and store the &#39;full&#39; set of PCs</span></span>
-<span id="cb267-3"><a href="reducción-de-dimensiones.html#cb267-3" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runPCA</span>(sce.zeisel, <span class="at">subset_row =</span> top.zeisel)</span>
-<span id="cb267-4"><a href="reducción-de-dimensiones.html#cb267-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb267-5"><a href="reducción-de-dimensiones.html#cb267-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Can also select d and store the reduced set of PCs</span></span>
-<span id="cb267-6"><a href="reducción-de-dimensiones.html#cb267-6" aria-hidden="true" tabindex="-1"></a><span class="co"># e.g., using the elbow point</span></span>
-<span id="cb267-7"><a href="reducción-de-dimensiones.html#cb267-7" aria-hidden="true" tabindex="-1"></a><span class="fu">reducedDim</span>(sce.zeisel, <span class="st">&quot;PCA_elbow&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">reducedDim</span>(</span>
-<span id="cb267-8"><a href="reducción-de-dimensiones.html#cb267-8" aria-hidden="true" tabindex="-1"></a>    sce.zeisel, <span class="st">&quot;PCA&quot;</span></span>
-<span id="cb267-9"><a href="reducción-de-dimensiones.html#cb267-9" aria-hidden="true" tabindex="-1"></a>)[, <span class="dv">1</span><span class="sc">:</span>chosen.elbow]</span>
-<span id="cb267-10"><a href="reducción-de-dimensiones.html#cb267-10" aria-hidden="true" tabindex="-1"></a><span class="co"># e.g., based on population structure</span></span>
-<span id="cb267-11"><a href="reducción-de-dimensiones.html#cb267-11" aria-hidden="true" tabindex="-1"></a><span class="fu">reducedDim</span>(sce.zeisel, <span class="st">&quot;PCA_clusters&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">reducedDim</span>(</span>
-<span id="cb267-12"><a href="reducción-de-dimensiones.html#cb267-12" aria-hidden="true" tabindex="-1"></a>    sce.zeisel, <span class="st">&quot;PCA&quot;</span></span>
-<span id="cb267-13"><a href="reducción-de-dimensiones.html#cb267-13" aria-hidden="true" tabindex="-1"></a>)[, <span class="dv">1</span><span class="sc">:</span>chosen.clusters]</span></code></pre></div>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="reducción-de-dimensiones.html#cb411-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb411-2"><a href="reducción-de-dimensiones.html#cb411-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and store the &#39;full&#39; set of PCs</span></span>
+<span id="cb411-3"><a href="reducción-de-dimensiones.html#cb411-3" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runPCA</span>(sce.zeisel, <span class="at">subset_row =</span> top.zeisel)</span>
+<span id="cb411-4"><a href="reducción-de-dimensiones.html#cb411-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb411-5"><a href="reducción-de-dimensiones.html#cb411-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Can also select d and store the reduced set of PCs</span></span>
+<span id="cb411-6"><a href="reducción-de-dimensiones.html#cb411-6" aria-hidden="true" tabindex="-1"></a><span class="co"># e.g., using the elbow point</span></span>
+<span id="cb411-7"><a href="reducción-de-dimensiones.html#cb411-7" aria-hidden="true" tabindex="-1"></a><span class="fu">reducedDim</span>(sce.zeisel, <span class="st">&quot;PCA_elbow&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">reducedDim</span>(</span>
+<span id="cb411-8"><a href="reducción-de-dimensiones.html#cb411-8" aria-hidden="true" tabindex="-1"></a>    sce.zeisel, <span class="st">&quot;PCA&quot;</span></span>
+<span id="cb411-9"><a href="reducción-de-dimensiones.html#cb411-9" aria-hidden="true" tabindex="-1"></a>)[, <span class="dv">1</span><span class="sc">:</span>chosen.elbow]</span>
+<span id="cb411-10"><a href="reducción-de-dimensiones.html#cb411-10" aria-hidden="true" tabindex="-1"></a><span class="co"># e.g., based on population structure</span></span>
+<span id="cb411-11"><a href="reducción-de-dimensiones.html#cb411-11" aria-hidden="true" tabindex="-1"></a><span class="fu">reducedDim</span>(sce.zeisel, <span class="st">&quot;PCA_clusters&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">reducedDim</span>(</span>
+<span id="cb411-12"><a href="reducción-de-dimensiones.html#cb411-12" aria-hidden="true" tabindex="-1"></a>    sce.zeisel, <span class="st">&quot;PCA&quot;</span></span>
+<span id="cb411-13"><a href="reducción-de-dimensiones.html#cb411-13" aria-hidden="true" tabindex="-1"></a>)[, <span class="dv">1</span><span class="sc">:</span>chosen.clusters]</span></code></pre></div>
 </div>
 <div id="usando-el-ruido-técnico" class="section level3" number="8.6.5">
 <h3><span class="header-section-number">8.6.5</span> Usando el ruido técnico</h3>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="reducción-de-dimensiones.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
-<span id="cb268-2"><a href="reducción-de-dimensiones.html#cb268-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111001001</span>)</span>
-<span id="cb268-3"><a href="reducción-de-dimensiones.html#cb268-3" aria-hidden="true" tabindex="-1"></a>denoised.pbmc <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.pbmc,</span>
-<span id="cb268-4"><a href="reducción-de-dimensiones.html#cb268-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">technical =</span> dec.pbmc, <span class="at">subset.row =</span> top.pbmc</span>
-<span id="cb268-5"><a href="reducción-de-dimensiones.html#cb268-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="reducción-de-dimensiones.html#cb412-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
+<span id="cb412-2"><a href="reducción-de-dimensiones.html#cb412-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111001001</span>)</span>
+<span id="cb412-3"><a href="reducción-de-dimensiones.html#cb412-3" aria-hidden="true" tabindex="-1"></a>denoised.pbmc <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.pbmc,</span>
+<span id="cb412-4"><a href="reducción-de-dimensiones.html#cb412-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">technical =</span> dec.pbmc, <span class="at">subset.row =</span> top.pbmc</span>
+<span id="cb412-5"><a href="reducción-de-dimensiones.html#cb412-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Conserva todos los PCs hasta que el % de variación explicado alcance algun límite (por ejemplo, basado en la estimación de la variación técnica)</p>
 <p><strong>denoisePCA()</strong> automáticamente selecciona el número de PCs</p>
 <p>Por default, denoisePCA() realiza algunas simulaciones, por lo tanto necesitamos <em>‘configurar la semilla’</em> para obtener resultados reproducibles</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="reducción-de-dimensiones.html#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">reducedDim</span>(denoised.pbmc, <span class="st">&quot;PCA&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="reducción-de-dimensiones.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">reducedDim</span>(denoised.pbmc, <span class="st">&quot;PCA&quot;</span>))</span></code></pre></div>
 <pre><code>## [1] 3985    9</code></pre>
 <p>La dimensionalidad del output es el límite inferior para el número de PCs requeridos para explicar toda la variación biológica. Lo que significa que cualquier número menor de PCs definitivamente descartaría algún aspecto de la señal biológica</p>
 <p><strong>Esto no grantiza que los PCs retenidos capturen toda la señal biológica</strong></p>
 <p><em>Esta técnica usualmente retiene más PCs que el método del punto del codo</em></p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="reducción-de-dimensiones.html#cb271-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">001001001</span>)</span>
-<span id="cb271-2"><a href="reducción-de-dimensiones.html#cb271-2" aria-hidden="true" tabindex="-1"></a>denoised.zeisel <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.zeisel,</span>
-<span id="cb271-3"><a href="reducción-de-dimensiones.html#cb271-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">technical =</span> dec.zeisel, <span class="at">subset.row =</span> top.zeisel</span>
-<span id="cb271-4"><a href="reducción-de-dimensiones.html#cb271-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb271-5"><a href="reducción-de-dimensiones.html#cb271-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">reducedDim</span>(denoised.zeisel))</span></code></pre></div>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="reducción-de-dimensiones.html#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">001001001</span>)</span>
+<span id="cb415-2"><a href="reducción-de-dimensiones.html#cb415-2" aria-hidden="true" tabindex="-1"></a>denoised.zeisel <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.zeisel,</span>
+<span id="cb415-3"><a href="reducción-de-dimensiones.html#cb415-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">technical =</span> dec.zeisel, <span class="at">subset.row =</span> top.zeisel</span>
+<span id="cb415-4"><a href="reducción-de-dimensiones.html#cb415-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb415-5"><a href="reducción-de-dimensiones.html#cb415-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">reducedDim</span>(denoised.zeisel))</span></code></pre></div>
 <pre><code>## [1] 2815   50</code></pre>
 <p><strong>scran::denoisePCA()</strong> internamente limita el numero de PCs, por default 5-50, para evitar la selección de excesivamente pocos PCs (cuando el ruido técnico es alto relativo al ruido biológico) o excesivamente muchos PCs (cuando el ruido técnico es demasiado bajo)</p>
 <p><em>Los datos de cerebro de Zeisel están cerca de este límite superior</em></p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="reducción-de-dimensiones.html#cb273-1" aria-hidden="true" tabindex="-1"></a>dec.pbmc2 <span class="ot">&lt;-</span> <span class="fu">modelGeneVar</span>(sce.pbmc)</span>
-<span id="cb273-2"><a href="reducción-de-dimensiones.html#cb273-2" aria-hidden="true" tabindex="-1"></a>denoised.pbmc2 <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.pbmc,</span>
-<span id="cb273-3"><a href="reducción-de-dimensiones.html#cb273-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">technical =</span> dec.pbmc2, <span class="at">subset.row =</span> top.pbmc</span>
-<span id="cb273-4"><a href="reducción-de-dimensiones.html#cb273-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb273-5"><a href="reducción-de-dimensiones.html#cb273-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">reducedDim</span>(denoised.pbmc2))</span></code></pre></div>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="reducción-de-dimensiones.html#cb417-1" aria-hidden="true" tabindex="-1"></a>dec.pbmc2 <span class="ot">&lt;-</span> <span class="fu">modelGeneVar</span>(sce.pbmc)</span>
+<span id="cb417-2"><a href="reducción-de-dimensiones.html#cb417-2" aria-hidden="true" tabindex="-1"></a>denoised.pbmc2 <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.pbmc,</span>
+<span id="cb417-3"><a href="reducción-de-dimensiones.html#cb417-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">technical =</span> dec.pbmc2, <span class="at">subset.row =</span> top.pbmc</span>
+<span id="cb417-4"><a href="reducción-de-dimensiones.html#cb417-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb417-5"><a href="reducción-de-dimensiones.html#cb417-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">reducedDim</span>(denoised.pbmc2))</span></code></pre></div>
 <pre><code>## [1] 3985    5</code></pre>
 <p><strong>scran::denoisePCA()</strong> tiende a funcionar mejor cuando la relación media-varianza refleja el ruiudo técnico verdadero, <em>i.e</em> estimado por <strong>scran::modelGeneVarByPoisson()</strong> o <strong>scran::modelGeneVarWithSpikes()</strong> en vez de <strong>scran::modelGeneVar()</strong></p>
 <p><em>El dataset PBMC está cerca de este límite inferior</em></p>
@@ -757,21 +758,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="visualizando-con-pca" class="section level3" number="8.7.2">
 <h3><span class="header-section-number">8.7.2</span> Visualizando con PCA</h3>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="reducción-de-dimensiones.html#cb275-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="reducción-de-dimensiones.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span></code></pre></div>
 <p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-17-1.png" width="576" /></p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="reducción-de-dimensiones.html#cb276-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
-<span id="cb276-2"><a href="reducción-de-dimensiones.html#cb276-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>,</span>
-<span id="cb276-3"><a href="reducción-de-dimensiones.html#cb276-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
-<span id="cb276-4"><a href="reducción-de-dimensiones.html#cb276-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="reducción-de-dimensiones.html#cb420-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
+<span id="cb420-2"><a href="reducción-de-dimensiones.html#cb420-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>,</span>
+<span id="cb420-3"><a href="reducción-de-dimensiones.html#cb420-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
+<span id="cb420-4"><a href="reducción-de-dimensiones.html#cb420-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-18-1.png" width="576" /></p>
 <p>PCA es una técnica lineal, por lo tanto, no es eficiente para comprimir diferencias en más de 2 dimensiones en los primeros 2 PCs</p>
 </div>
 <div id="retos-y-resumen-de-la-visualización-con-pca" class="section level3" number="8.7.3">
 <h3><span class="header-section-number">8.7.3</span> Retos y resumen de la visualización con PCA</h3>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="reducción-de-dimensiones.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
-<span id="cb277-2"><a href="reducción-de-dimensiones.html#cb277-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>,</span>
-<span id="cb277-3"><a href="reducción-de-dimensiones.html#cb277-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ncomponents =</span> <span class="dv">4</span>, <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
-<span id="cb277-4"><a href="reducción-de-dimensiones.html#cb277-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="reducción-de-dimensiones.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
+<span id="cb421-2"><a href="reducción-de-dimensiones.html#cb421-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>,</span>
+<span id="cb421-3"><a href="reducción-de-dimensiones.html#cb421-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ncomponents =</span> <span class="dv">4</span>, <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
+<span id="cb421-4"><a href="reducción-de-dimensiones.html#cb421-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-19-1.png" width="576" /></p>
 <p><strong>Ventajas:</strong></p>
 <ul>
@@ -785,22 +786,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="visualización-con-t-sne" class="section level3" number="8.7.4">
 <h3><span class="header-section-number">8.7.4</span> Visualización con t-SNE</h3>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="reducción-de-dimensiones.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">00101001101</span>)</span>
-<span id="cb278-2"><a href="reducción-de-dimensiones.html#cb278-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
-<span id="cb278-3"><a href="reducción-de-dimensiones.html#cb278-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;TSNE&quot;</span>, <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="reducción-de-dimensiones.html#cb422-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">00101001101</span>)</span>
+<span id="cb422-2"><a href="reducción-de-dimensiones.html#cb422-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
+<span id="cb422-3"><a href="reducción-de-dimensiones.html#cb422-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;TSNE&quot;</span>, <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span>)</span></code></pre></div>
 <p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-20-1.png" width="480" /></p>
 <p><em>t-stochastic neighbour embedding (t-SNE)</em> es la visualización por excelencia de datos de scRNA-seq. <strong>Intenta encontrar una representación (no-lineal) de los datos usando pocas dimensiones que preserve las distancias entre cada punto y sus vecinos en el espacio multi-dimensional</strong></p>
 <div id="retos-de-la-visualización-con-t-sne" class="section level4" number="8.7.4.1">
 <h4><span class="header-section-number">8.7.4.1</span> Retos de la visualización con t-SNE</h4>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="reducción-de-dimensiones.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb279-2"><a href="reducción-de-dimensiones.html#cb279-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(sce.zeisel,</span>
-<span id="cb279-3"><a href="reducción-de-dimensiones.html#cb279-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>,</span>
-<span id="cb279-4"><a href="reducción-de-dimensiones.html#cb279-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">perplexity =</span> <span class="dv">30</span></span>
-<span id="cb279-5"><a href="reducción-de-dimensiones.html#cb279-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb279-6"><a href="reducción-de-dimensiones.html#cb279-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
-<span id="cb279-7"><a href="reducción-de-dimensiones.html#cb279-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;TSNE&quot;</span>,</span>
-<span id="cb279-8"><a href="reducción-de-dimensiones.html#cb279-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
-<span id="cb279-9"><a href="reducción-de-dimensiones.html#cb279-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="reducción-de-dimensiones.html#cb423-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb423-2"><a href="reducción-de-dimensiones.html#cb423-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(sce.zeisel,</span>
+<span id="cb423-3"><a href="reducción-de-dimensiones.html#cb423-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>,</span>
+<span id="cb423-4"><a href="reducción-de-dimensiones.html#cb423-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">perplexity =</span> <span class="dv">30</span></span>
+<span id="cb423-5"><a href="reducción-de-dimensiones.html#cb423-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb423-6"><a href="reducción-de-dimensiones.html#cb423-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
+<span id="cb423-7"><a href="reducción-de-dimensiones.html#cb423-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;TSNE&quot;</span>,</span>
+<span id="cb423-8"><a href="reducción-de-dimensiones.html#cb423-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
+<span id="cb423-9"><a href="reducción-de-dimensiones.html#cb423-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-21-1.png" width="576" /></p>
 </div>
 <div id="preguntas-1" class="section level4" number="8.7.4.2">
@@ -836,12 +837,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Uniform manifold approximation and project (UMAP)</em> es una alternativa a t-SNE</p>
 <p>Así como t-SNE, UMAP <strong>intenta encontrar una representación (no lineal) de pocas dimensiones de los datos que preserve las distancias entre cada puntos y sus vecinos en el espacio multi-dimensional</strong></p>
 <p>t-SNE y UMAP están basados en diferentes teorías matemáticas</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="reducción-de-dimensiones.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1100101001</span>)</span>
-<span id="cb280-2"><a href="reducción-de-dimensiones.html#cb280-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
-<span id="cb280-3"><a href="reducción-de-dimensiones.html#cb280-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
-<span id="cb280-4"><a href="reducción-de-dimensiones.html#cb280-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;UMAP&quot;</span>,</span>
-<span id="cb280-5"><a href="reducción-de-dimensiones.html#cb280-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
-<span id="cb280-6"><a href="reducción-de-dimensiones.html#cb280-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="reducción-de-dimensiones.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1100101001</span>)</span>
+<span id="cb424-2"><a href="reducción-de-dimensiones.html#cb424-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
+<span id="cb424-3"><a href="reducción-de-dimensiones.html#cb424-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
+<span id="cb424-4"><a href="reducción-de-dimensiones.html#cb424-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;UMAP&quot;</span>,</span>
+<span id="cb424-5"><a href="reducción-de-dimensiones.html#cb424-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
+<span id="cb424-6"><a href="reducción-de-dimensiones.html#cb424-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-22-1.png" width="576" /></p>
 <p>Comparado con t-SNE:</p>
 <ul>
@@ -851,15 +852,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="retos-de-la-visualización-con-umap" class="section level4" number="8.7.5.1">
 <h4><span class="header-section-number">8.7.5.1</span> Retos de la visualización con UMAP</h4>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="reducción-de-dimensiones.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb281-2"><a href="reducción-de-dimensiones.html#cb281-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(sce.zeisel,</span>
-<span id="cb281-3"><a href="reducción-de-dimensiones.html#cb281-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>,</span>
-<span id="cb281-4"><a href="reducción-de-dimensiones.html#cb281-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_neighbors =</span> <span class="dv">15</span></span>
-<span id="cb281-5"><a href="reducción-de-dimensiones.html#cb281-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb281-6"><a href="reducción-de-dimensiones.html#cb281-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
-<span id="cb281-7"><a href="reducción-de-dimensiones.html#cb281-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;UMAP&quot;</span>,</span>
-<span id="cb281-8"><a href="reducción-de-dimensiones.html#cb281-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
-<span id="cb281-9"><a href="reducción-de-dimensiones.html#cb281-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="reducción-de-dimensiones.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb425-2"><a href="reducción-de-dimensiones.html#cb425-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(sce.zeisel,</span>
+<span id="cb425-3"><a href="reducción-de-dimensiones.html#cb425-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>,</span>
+<span id="cb425-4"><a href="reducción-de-dimensiones.html#cb425-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_neighbors =</span> <span class="dv">15</span></span>
+<span id="cb425-5"><a href="reducción-de-dimensiones.html#cb425-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb425-6"><a href="reducción-de-dimensiones.html#cb425-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
+<span id="cb425-7"><a href="reducción-de-dimensiones.html#cb425-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;UMAP&quot;</span>,</span>
+<span id="cb425-8"><a href="reducción-de-dimensiones.html#cb425-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
+<span id="cb425-9"><a href="reducción-de-dimensiones.html#cb425-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-1.png" width="576" /></p>
 </div>
 <div id="preguntas-2" class="section level4" number="8.7.5.2">
@@ -910,14 +911,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="detalles-de-la-sesión-de-r-7" class="section level2" number="8.9">
 <h2><span class="header-section-number">8.9</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="reducción-de-dimensiones.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb282-2"><a href="reducción-de-dimensiones.html#cb282-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-10 09:23:45 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="reducción-de-dimensiones.html#cb284-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="reducción-de-dimensiones.html#cb426-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb426-2"><a href="reducción-de-dimensiones.html#cb426-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-10 13:48:52 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="reducción-de-dimensiones.html#cb428-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 290.873   6.747 291.692</code></pre>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="reducción-de-dimensiones.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb286-2"><a href="reducción-de-dimensiones.html#cb286-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+## 296.662   6.740 297.464</code></pre>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="reducción-de-dimensiones.html#cb430-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb430-2"><a href="reducción-de-dimensiones.html#cb430-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)

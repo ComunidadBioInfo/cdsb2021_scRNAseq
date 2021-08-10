@@ -35,14 +35,6 @@ sce.416b <- LunSpikeInData(which = "416b")
 ```
 
 ```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
 ## loading from cache
 ```
 
@@ -51,27 +43,11 @@ sce.416b <- LunSpikeInData(which = "416b")
 ```
 
 ```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
 ## loading from cache
 ```
 
 ```
 ## see ?scRNAseq and browseVignettes('scRNAseq') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
 ```
 
 ```
@@ -87,27 +63,11 @@ sce.416b <- LunSpikeInData(which = "416b")
 ```
 
 ```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
 ## loading from cache
 ```
 
 ```
 ## snapshotDate(): 2021-05-18
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
 ```
 
 ```
@@ -874,7 +834,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-10 09:15:18 UTC"
+## [1] "2021-08-10 13:40:12 UTC"
 ```
 
 ```r
@@ -883,7 +843,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 215.992   4.868 227.951
+## 219.605   3.936 225.233
 ```
 
 ```r

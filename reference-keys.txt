@@ -32,6 +32,7 @@ ejercicio-1
 preguntas
 breve-repaso-de-r
 ejercicio-2
+respuestas
 extra
 import-data
 detalles-de-la-sesión-de-r-3

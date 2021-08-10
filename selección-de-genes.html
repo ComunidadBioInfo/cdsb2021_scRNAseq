@@ -208,7 +208,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#breve-repaso-de-r"><i class="fa fa-check"></i><b>4.3</b> Breve repaso de R</a></li>
 <li class="chapter" data-level="4.4" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#ejercicio-2"><i class="fa fa-check"></i><b>4.4</b> Ejercicio 2</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#extra"><i class="fa fa-check"></i><b>4.4.1</b> Extra</a></li>
+<li class="chapter" data-level="4.4.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#respuestas"><i class="fa fa-check"></i><b>4.4.1</b> Respuestas</a></li>
+<li class="chapter" data-level="4.4.2" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#extra"><i class="fa fa-check"></i><b>4.4.2</b> Extra</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#import-data"><i class="fa fa-check"></i><b>4.5</b> Import data</a></li>
 <li class="chapter" data-level="4.6" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#detalles-de-la-sesión-de-r-3"><i class="fa fa-check"></i><b>4.6</b> Detalles de la sesión de R</a></li>
@@ -551,20 +552,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">7.4</span> Dataset ilustrativo: PBMC4k 10X sin filtrar</h2>
 <div id="descargar-datos" class="section level3" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> Descargar datos</h3>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="selección-de-genes.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usemos datos de pbmc4k</span></span>
-<span id="cb239-2"><a href="selección-de-genes.html#cb239-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocFileCache)</span>
-<span id="cb239-3"><a href="selección-de-genes.html#cb239-3" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
-<span id="cb239-4"><a href="selección-de-genes.html#cb239-4" aria-hidden="true" tabindex="-1"></a>raw.path <span class="ot">&lt;-</span> <span class="fu">bfcrpath</span>(bfc, <span class="fu">file.path</span>(</span>
-<span id="cb239-5"><a href="selección-de-genes.html#cb239-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;http://cf.10xgenomics.com/samples&quot;</span>,</span>
-<span id="cb239-6"><a href="selección-de-genes.html#cb239-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz&quot;</span></span>
-<span id="cb239-7"><a href="selección-de-genes.html#cb239-7" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb239-8"><a href="selección-de-genes.html#cb239-8" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(raw.path, <span class="at">exdir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k&quot;</span>))</span>
-<span id="cb239-9"><a href="selección-de-genes.html#cb239-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb239-10"><a href="selección-de-genes.html#cb239-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DropletUtils)</span>
-<span id="cb239-11"><a href="selección-de-genes.html#cb239-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
-<span id="cb239-12"><a href="selección-de-genes.html#cb239-12" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k/raw_gene_bc_matrices/GRCh38&quot;</span>)</span>
-<span id="cb239-13"><a href="selección-de-genes.html#cb239-13" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">read10xCounts</span>(fname, <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb239-14"><a href="selección-de-genes.html#cb239-14" aria-hidden="true" tabindex="-1"></a>sce.pbmc</span></code></pre></div>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="selección-de-genes.html#cb383-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usemos datos de pbmc4k</span></span>
+<span id="cb383-2"><a href="selección-de-genes.html#cb383-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocFileCache)</span>
+<span id="cb383-3"><a href="selección-de-genes.html#cb383-3" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
+<span id="cb383-4"><a href="selección-de-genes.html#cb383-4" aria-hidden="true" tabindex="-1"></a>raw.path <span class="ot">&lt;-</span> <span class="fu">bfcrpath</span>(bfc, <span class="fu">file.path</span>(</span>
+<span id="cb383-5"><a href="selección-de-genes.html#cb383-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;http://cf.10xgenomics.com/samples&quot;</span>,</span>
+<span id="cb383-6"><a href="selección-de-genes.html#cb383-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz&quot;</span></span>
+<span id="cb383-7"><a href="selección-de-genes.html#cb383-7" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb383-8"><a href="selección-de-genes.html#cb383-8" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(raw.path, <span class="at">exdir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k&quot;</span>))</span>
+<span id="cb383-9"><a href="selección-de-genes.html#cb383-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb383-10"><a href="selección-de-genes.html#cb383-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DropletUtils)</span>
+<span id="cb383-11"><a href="selección-de-genes.html#cb383-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
+<span id="cb383-12"><a href="selección-de-genes.html#cb383-12" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k/raw_gene_bc_matrices/GRCh38&quot;</span>)</span>
+<span id="cb383-13"><a href="selección-de-genes.html#cb383-13" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">read10xCounts</span>(fname, <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb383-14"><a href="selección-de-genes.html#cb383-14" aria-hidden="true" tabindex="-1"></a>sce.pbmc</span></code></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 33694 737280 
 ## metadata(1): Samples
@@ -583,39 +584,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="anotación" class="section level3" number="7.4.2">
 <h3><span class="header-section-number">7.4.2</span> Anotación</h3>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="selección-de-genes.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Anotación de los genes</span></span>
-<span id="cb241-2"><a href="selección-de-genes.html#cb241-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
-<span id="cb241-3"><a href="selección-de-genes.html#cb241-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sce.pbmc) <span class="ot">&lt;-</span> <span class="fu">uniquifyFeatureNames</span>(</span>
-<span id="cb241-4"><a href="selección-de-genes.html#cb241-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID, <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>Symbol</span>
-<span id="cb241-5"><a href="selección-de-genes.html#cb241-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb241-6"><a href="selección-de-genes.html#cb241-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EnsDb.Hsapiens.v86)</span>
-<span id="cb241-7"><a href="selección-de-genes.html#cb241-7" aria-hidden="true" tabindex="-1"></a>location <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(EnsDb.Hsapiens.v86,</span>
-<span id="cb241-8"><a href="selección-de-genes.html#cb241-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">keys =</span> <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID,</span>
-<span id="cb241-9"><a href="selección-de-genes.html#cb241-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">&quot;SEQNAME&quot;</span>, <span class="at">keytype =</span> <span class="st">&quot;GENEID&quot;</span></span>
-<span id="cb241-10"><a href="selección-de-genes.html#cb241-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb241-11"><a href="selección-de-genes.html#cb241-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb241-12"><a href="selección-de-genes.html#cb241-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Detección de _droplets_ con células</span></span>
-<span id="cb241-13"><a href="selección-de-genes.html#cb241-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb241-14"><a href="selección-de-genes.html#cb241-14" aria-hidden="true" tabindex="-1"></a>e.out <span class="ot">&lt;-</span> <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc))</span>
-<span id="cb241-15"><a href="selección-de-genes.html#cb241-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="fu">which</span>(e.out<span class="sc">$</span>FDR <span class="sc">&lt;=</span> <span class="fl">0.001</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="selección-de-genes.html#cb385-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Anotación de los genes</span></span>
+<span id="cb385-2"><a href="selección-de-genes.html#cb385-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb385-3"><a href="selección-de-genes.html#cb385-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sce.pbmc) <span class="ot">&lt;-</span> <span class="fu">uniquifyFeatureNames</span>(</span>
+<span id="cb385-4"><a href="selección-de-genes.html#cb385-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID, <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>Symbol</span>
+<span id="cb385-5"><a href="selección-de-genes.html#cb385-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb385-6"><a href="selección-de-genes.html#cb385-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EnsDb.Hsapiens.v86)</span>
+<span id="cb385-7"><a href="selección-de-genes.html#cb385-7" aria-hidden="true" tabindex="-1"></a>location <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(EnsDb.Hsapiens.v86,</span>
+<span id="cb385-8"><a href="selección-de-genes.html#cb385-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">keys =</span> <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID,</span>
+<span id="cb385-9"><a href="selección-de-genes.html#cb385-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">&quot;SEQNAME&quot;</span>, <span class="at">keytype =</span> <span class="st">&quot;GENEID&quot;</span></span>
+<span id="cb385-10"><a href="selección-de-genes.html#cb385-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb385-11"><a href="selección-de-genes.html#cb385-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb385-12"><a href="selección-de-genes.html#cb385-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Detección de _droplets_ con células</span></span>
+<span id="cb385-13"><a href="selección-de-genes.html#cb385-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb385-14"><a href="selección-de-genes.html#cb385-14" aria-hidden="true" tabindex="-1"></a>e.out <span class="ot">&lt;-</span> <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc))</span>
+<span id="cb385-15"><a href="selección-de-genes.html#cb385-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="fu">which</span>(e.out<span class="sc">$</span>FDR <span class="sc">&lt;=</span> <span class="fl">0.001</span>)]</span></code></pre></div>
 </div>
 <div id="control-de-calidad-1" class="section level3" number="7.4.3">
 <h3><span class="header-section-number">7.4.3</span> Control de calidad</h3>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="selección-de-genes.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Control de calidad</span></span>
-<span id="cb242-2"><a href="selección-de-genes.html#cb242-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">perCellQCMetrics</span>(sce.pbmc,</span>
-<span id="cb242-3"><a href="selección-de-genes.html#cb242-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mito =</span> <span class="fu">which</span>(location <span class="sc">==</span> <span class="st">&quot;MT&quot;</span>))</span>
-<span id="cb242-4"><a href="selección-de-genes.html#cb242-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb242-5"><a href="selección-de-genes.html#cb242-5" aria-hidden="true" tabindex="-1"></a>high.mito <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(stats<span class="sc">$</span>subsets_Mito_percent,</span>
-<span id="cb242-6"><a href="selección-de-genes.html#cb242-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span></span>
-<span id="cb242-7"><a href="selección-de-genes.html#cb242-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb242-8"><a href="selección-de-genes.html#cb242-8" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="sc">!</span>high.mito]</span>
-<span id="cb242-9"><a href="selección-de-genes.html#cb242-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb242-10"><a href="selección-de-genes.html#cb242-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalización de los datos</span></span>
-<span id="cb242-11"><a href="selección-de-genes.html#cb242-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
-<span id="cb242-12"><a href="selección-de-genes.html#cb242-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span>
-<span id="cb242-13"><a href="selección-de-genes.html#cb242-13" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">quickCluster</span>(sce.pbmc)</span>
-<span id="cb242-14"><a href="selección-de-genes.html#cb242-14" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">computeSumFactors</span>(sce.pbmc, <span class="at">cluster =</span> clusters)</span>
-<span id="cb242-15"><a href="selección-de-genes.html#cb242-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.pbmc)</span></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="selección-de-genes.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Control de calidad</span></span>
+<span id="cb386-2"><a href="selección-de-genes.html#cb386-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">perCellQCMetrics</span>(sce.pbmc,</span>
+<span id="cb386-3"><a href="selección-de-genes.html#cb386-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mito =</span> <span class="fu">which</span>(location <span class="sc">==</span> <span class="st">&quot;MT&quot;</span>))</span>
+<span id="cb386-4"><a href="selección-de-genes.html#cb386-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb386-5"><a href="selección-de-genes.html#cb386-5" aria-hidden="true" tabindex="-1"></a>high.mito <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(stats<span class="sc">$</span>subsets_Mito_percent,</span>
+<span id="cb386-6"><a href="selección-de-genes.html#cb386-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span></span>
+<span id="cb386-7"><a href="selección-de-genes.html#cb386-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb386-8"><a href="selección-de-genes.html#cb386-8" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="sc">!</span>high.mito]</span>
+<span id="cb386-9"><a href="selección-de-genes.html#cb386-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb386-10"><a href="selección-de-genes.html#cb386-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalización de los datos</span></span>
+<span id="cb386-11"><a href="selección-de-genes.html#cb386-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
+<span id="cb386-12"><a href="selección-de-genes.html#cb386-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span>
+<span id="cb386-13"><a href="selección-de-genes.html#cb386-13" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">quickCluster</span>(sce.pbmc)</span>
+<span id="cb386-14"><a href="selección-de-genes.html#cb386-14" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">computeSumFactors</span>(sce.pbmc, <span class="at">cluster =</span> clusters)</span>
+<span id="cb386-15"><a href="selección-de-genes.html#cb386-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.pbmc)</span></code></pre></div>
 </div>
 <div id="preguntas-de-repaso" class="section level3" number="7.4.4">
 <h3><span class="header-section-number">7.4.4</span> Preguntas de repaso</h3>
@@ -654,9 +655,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="supuestos" class="section level3" number="7.5.4">
 <h3><span class="header-section-number">7.5.4</span> Supuestos</h3>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="selección-de-genes.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Varianza de las log-counts</span></span>
-<span id="cb243-2"><a href="selección-de-genes.html#cb243-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
-<span id="cb243-3"><a href="selección-de-genes.html#cb243-3" aria-hidden="true" tabindex="-1"></a>dec.pbmc <span class="ot">&lt;-</span> <span class="fu">modelGeneVar</span>(sce.pbmc)</span></code></pre></div>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="selección-de-genes.html#cb387-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Varianza de las log-counts</span></span>
+<span id="cb387-2"><a href="selección-de-genes.html#cb387-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
+<span id="cb387-3"><a href="selección-de-genes.html#cb387-3" aria-hidden="true" tabindex="-1"></a>dec.pbmc <span class="ot">&lt;-</span> <span class="fu">modelGeneVar</span>(sce.pbmc)</span></code></pre></div>
 <ul>
 <li>🤓 El supuesto es que a cualquier abundancia dada, la abundancia de los perfiles de expresión de la mayoría de los genes están dominados por el ruido aleatorio <em>técnico</em></li>
 <li>🤓 Por lo consiguiente, una tendencia representa un estimado del ruido técnico como una función de la abundancia</li>
@@ -666,13 +667,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="visualizando-la-media-y-varianza" class="section level3" number="7.5.5">
 <h3><span class="header-section-number">7.5.5</span> Visualizando la media y varianza</h3>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="selección-de-genes.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualicemos la relación entre la media y la varianza</span></span>
-<span id="cb244-2"><a href="selección-de-genes.html#cb244-2" aria-hidden="true" tabindex="-1"></a>fit.pbmc <span class="ot">&lt;-</span> <span class="fu">metadata</span>(dec.pbmc)</span>
-<span id="cb244-3"><a href="selección-de-genes.html#cb244-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.pbmc<span class="sc">$</span>mean, fit.pbmc<span class="sc">$</span>var,</span>
-<span id="cb244-4"><a href="selección-de-genes.html#cb244-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Mean of log-expression&quot;</span>,</span>
-<span id="cb244-5"><a href="selección-de-genes.html#cb244-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Variance of log-expression&quot;</span></span>
-<span id="cb244-6"><a href="selección-de-genes.html#cb244-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb244-7"><a href="selección-de-genes.html#cb244-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(fit.pbmc<span class="sc">$</span><span class="fu">trend</span>(x), <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="selección-de-genes.html#cb388-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualicemos la relación entre la media y la varianza</span></span>
+<span id="cb388-2"><a href="selección-de-genes.html#cb388-2" aria-hidden="true" tabindex="-1"></a>fit.pbmc <span class="ot">&lt;-</span> <span class="fu">metadata</span>(dec.pbmc)</span>
+<span id="cb388-3"><a href="selección-de-genes.html#cb388-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.pbmc<span class="sc">$</span>mean, fit.pbmc<span class="sc">$</span>var,</span>
+<span id="cb388-4"><a href="selección-de-genes.html#cb388-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Mean of log-expression&quot;</span>,</span>
+<span id="cb388-5"><a href="selección-de-genes.html#cb388-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Variance of log-expression&quot;</span></span>
+<span id="cb388-6"><a href="selección-de-genes.html#cb388-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb388-7"><a href="selección-de-genes.html#cb388-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(fit.pbmc<span class="sc">$</span><span class="fu">trend</span>(x), <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="07-seleccion_genes_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <div id="ejercicios" class="section level4" number="7.5.5.1">
 <h4><span class="header-section-number">7.5.5.1</span> Ejercicios</h4>
@@ -687,9 +688,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="ordenando-genes-interesantes" class="section level3" number="7.5.6">
 <h3><span class="header-section-number">7.5.6</span> Ordenando genes interesantes</h3>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="selección-de-genes.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordenemos por los genes más interesantes para checar</span></span>
-<span id="cb245-2"><a href="selección-de-genes.html#cb245-2" aria-hidden="true" tabindex="-1"></a><span class="co"># los datos</span></span>
-<span id="cb245-3"><a href="selección-de-genes.html#cb245-3" aria-hidden="true" tabindex="-1"></a>dec.pbmc[<span class="fu">order</span>(dec.pbmc<span class="sc">$</span>bio, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ]</span></code></pre></div>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="selección-de-genes.html#cb389-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordenemos por los genes más interesantes para checar</span></span>
+<span id="cb389-2"><a href="selección-de-genes.html#cb389-2" aria-hidden="true" tabindex="-1"></a><span class="co"># los datos</span></span>
+<span id="cb389-3"><a href="selección-de-genes.html#cb389-3" aria-hidden="true" tabindex="-1"></a>dec.pbmc[<span class="fu">order</span>(dec.pbmc<span class="sc">$</span>bio, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ]</span></code></pre></div>
 <pre><code>## DataFrame with 33694 rows and 6 columns
 ##              mean     total      tech       bio      p.value          FDR
 ##         &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;    &lt;numeric&gt;    &lt;numeric&gt;
@@ -715,8 +716,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="coeficiente-de-variación" class="section level3" number="7.6.1">
 <h3><span class="header-section-number">7.6.1</span> Coeficiente de variación</h3>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="selección-de-genes.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Coeficiente de variación</span></span>
-<span id="cb247-2"><a href="selección-de-genes.html#cb247-2" aria-hidden="true" tabindex="-1"></a>dec.cv2.pbmc <span class="ot">&lt;-</span> <span class="fu">modelGeneCV2</span>(sce.pbmc)</span></code></pre></div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="selección-de-genes.html#cb391-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Coeficiente de variación</span></span>
+<span id="cb391-2"><a href="selección-de-genes.html#cb391-2" aria-hidden="true" tabindex="-1"></a>dec.cv2.pbmc <span class="ot">&lt;-</span> <span class="fu">modelGeneCV2</span>(sce.pbmc)</span></code></pre></div>
 <ul>
 <li>🤓 Modela la relación de la media de la varianza cuando se considera la relevancia de cada gen</li>
 <li>🤓 Asume que la mayoría de los genes contienen ruido aleatorio y que la tendencia captura la mayoría de la variación técnica</li>
@@ -730,11 +731,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="genes-por-coeficiente-de-variación" class="section level3" number="7.6.3">
 <h3><span class="header-section-number">7.6.3</span> Genes por coeficiente de variación</h3>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="selección-de-genes.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordenemos por los genes más interesantes para checar</span></span>
-<span id="cb248-2"><a href="selección-de-genes.html#cb248-2" aria-hidden="true" tabindex="-1"></a><span class="co"># los datos</span></span>
-<span id="cb248-3"><a href="selección-de-genes.html#cb248-3" aria-hidden="true" tabindex="-1"></a>dec.cv2.pbmc[<span class="fu">order</span>(dec.cv2.pbmc<span class="sc">$</span>ratio,</span>
-<span id="cb248-4"><a href="selección-de-genes.html#cb248-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">decreasing =</span> <span class="cn">TRUE</span></span>
-<span id="cb248-5"><a href="selección-de-genes.html#cb248-5" aria-hidden="true" tabindex="-1"></a>), ]</span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="selección-de-genes.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordenemos por los genes más interesantes para checar</span></span>
+<span id="cb392-2"><a href="selección-de-genes.html#cb392-2" aria-hidden="true" tabindex="-1"></a><span class="co"># los datos</span></span>
+<span id="cb392-3"><a href="selección-de-genes.html#cb392-3" aria-hidden="true" tabindex="-1"></a>dec.cv2.pbmc[<span class="fu">order</span>(dec.cv2.pbmc<span class="sc">$</span>ratio,</span>
+<span id="cb392-4"><a href="selección-de-genes.html#cb392-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">decreasing =</span> <span class="cn">TRUE</span></span>
+<span id="cb392-5"><a href="selección-de-genes.html#cb392-5" aria-hidden="true" tabindex="-1"></a>), ]</span></code></pre></div>
 <pre><code>## DataFrame with 33694 rows and 6 columns
 ##                 mean     total     trend     ratio   p.value       FDR
 ##            &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
@@ -767,14 +768,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="detalles-de-la-sesión-de-r-6" class="section level2" number="7.8">
 <h2><span class="header-section-number">7.8</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="selección-de-genes.html#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb250-2"><a href="selección-de-genes.html#cb250-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-10 09:18:53 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="selección-de-genes.html#cb252-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="selección-de-genes.html#cb394-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb394-2"><a href="selección-de-genes.html#cb394-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-10 13:43:54 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="selección-de-genes.html#cb396-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 122.218   3.130 123.992</code></pre>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="selección-de-genes.html#cb254-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb254-2"><a href="selección-de-genes.html#cb254-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+## 125.717   3.181 127.555</code></pre>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="selección-de-genes.html#cb398-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb398-2"><a href="selección-de-genes.html#cb398-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)

@@ -208,7 +208,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#breve-repaso-de-r"><i class="fa fa-check"></i><b>4.3</b> Breve repaso de R</a></li>
 <li class="chapter" data-level="4.4" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#ejercicio-2"><i class="fa fa-check"></i><b>4.4</b> Ejercicio 2</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#extra"><i class="fa fa-check"></i><b>4.4.1</b> Extra</a></li>
+<li class="chapter" data-level="4.4.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#respuestas"><i class="fa fa-check"></i><b>4.4.1</b> Respuestas</a></li>
+<li class="chapter" data-level="4.4.2" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#extra"><i class="fa fa-check"></i><b>4.4.2</b> Extra</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#import-data"><i class="fa fa-check"></i><b>4.5</b> Import data</a></li>
 <li class="chapter" data-level="4.6" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#detalles-de-la-sesión-de-r-3"><i class="fa fa-check"></i><b>4.6</b> Detalles de la sesión de R</a></li>
@@ -530,67 +531,67 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="dataset-ilustrativo-10x-pbmc4k-no-filtrado" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Dataset ilustrativo: 10X PBMC4k no filtrado</h2>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="clustering.html#cb288-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocFileCache)</span>
-<span id="cb288-2"><a href="clustering.html#cb288-2" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
-<span id="cb288-3"><a href="clustering.html#cb288-3" aria-hidden="true" tabindex="-1"></a>raw.path <span class="ot">&lt;-</span> <span class="fu">bfcrpath</span>(bfc, <span class="fu">file.path</span>(</span>
-<span id="cb288-4"><a href="clustering.html#cb288-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;http://cf.10xgenomics.com/samples&quot;</span>,</span>
-<span id="cb288-5"><a href="clustering.html#cb288-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz&quot;</span></span>
-<span id="cb288-6"><a href="clustering.html#cb288-6" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb288-7"><a href="clustering.html#cb288-7" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(raw.path, <span class="at">exdir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k&quot;</span>))</span>
-<span id="cb288-8"><a href="clustering.html#cb288-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb288-9"><a href="clustering.html#cb288-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DropletUtils)</span>
-<span id="cb288-10"><a href="clustering.html#cb288-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
-<span id="cb288-11"><a href="clustering.html#cb288-11" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k/raw_gene_bc_matrices/GRCh38&quot;</span>)</span>
-<span id="cb288-12"><a href="clustering.html#cb288-12" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">read10xCounts</span>(fname, <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="clustering.html#cb432-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocFileCache)</span>
+<span id="cb432-2"><a href="clustering.html#cb432-2" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
+<span id="cb432-3"><a href="clustering.html#cb432-3" aria-hidden="true" tabindex="-1"></a>raw.path <span class="ot">&lt;-</span> <span class="fu">bfcrpath</span>(bfc, <span class="fu">file.path</span>(</span>
+<span id="cb432-4"><a href="clustering.html#cb432-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;http://cf.10xgenomics.com/samples&quot;</span>,</span>
+<span id="cb432-5"><a href="clustering.html#cb432-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz&quot;</span></span>
+<span id="cb432-6"><a href="clustering.html#cb432-6" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb432-7"><a href="clustering.html#cb432-7" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(raw.path, <span class="at">exdir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k&quot;</span>))</span>
+<span id="cb432-8"><a href="clustering.html#cb432-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb432-9"><a href="clustering.html#cb432-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DropletUtils)</span>
+<span id="cb432-10"><a href="clustering.html#cb432-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
+<span id="cb432-11"><a href="clustering.html#cb432-11" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k/raw_gene_bc_matrices/GRCh38&quot;</span>)</span>
+<span id="cb432-12"><a href="clustering.html#cb432-12" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">read10xCounts</span>(fname, <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Dataset de células mononucleares de sangre periférica humana (PBMC) de 10X Genomics</p>
 <p>Descripción <a href="https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-genomics.html">aquí</a></p>
 <p><em>Zheng, G. X. Y. et al. Massively parallel digital transcriptional profiling of single cells. Nat. Commun. 8, 14049 (2017)</em></p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="clustering.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="co"># gene-annotation</span></span>
-<span id="cb289-2"><a href="clustering.html#cb289-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
-<span id="cb289-3"><a href="clustering.html#cb289-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sce.pbmc) <span class="ot">&lt;-</span> <span class="fu">uniquifyFeatureNames</span>(</span>
-<span id="cb289-4"><a href="clustering.html#cb289-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID, <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>Symbol</span>
-<span id="cb289-5"><a href="clustering.html#cb289-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb289-6"><a href="clustering.html#cb289-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EnsDb.Hsapiens.v86)</span>
-<span id="cb289-7"><a href="clustering.html#cb289-7" aria-hidden="true" tabindex="-1"></a>location <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(EnsDb.Hsapiens.v86,</span>
-<span id="cb289-8"><a href="clustering.html#cb289-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">keys =</span> <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID,</span>
-<span id="cb289-9"><a href="clustering.html#cb289-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">&quot;SEQNAME&quot;</span>, <span class="at">keytype =</span> <span class="st">&quot;GENEID&quot;</span></span>
-<span id="cb289-10"><a href="clustering.html#cb289-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb289-11"><a href="clustering.html#cb289-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb289-12"><a href="clustering.html#cb289-12" aria-hidden="true" tabindex="-1"></a><span class="co"># cell-detection</span></span>
-<span id="cb289-13"><a href="clustering.html#cb289-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb289-14"><a href="clustering.html#cb289-14" aria-hidden="true" tabindex="-1"></a>e.out <span class="ot">&lt;-</span> <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc))</span>
-<span id="cb289-15"><a href="clustering.html#cb289-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="fu">which</span>(e.out<span class="sc">$</span>FDR <span class="sc">&lt;=</span> <span class="fl">0.001</span>)]</span></code></pre></div>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="clustering.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quality-control</span></span>
-<span id="cb290-2"><a href="clustering.html#cb290-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">perCellQCMetrics</span>(sce.pbmc,</span>
-<span id="cb290-3"><a href="clustering.html#cb290-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mito =</span> <span class="fu">which</span>(location <span class="sc">==</span> <span class="st">&quot;MT&quot;</span>))</span>
-<span id="cb290-4"><a href="clustering.html#cb290-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb290-5"><a href="clustering.html#cb290-5" aria-hidden="true" tabindex="-1"></a>high.mito <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(stats<span class="sc">$</span>subsets_Mito_percent,</span>
-<span id="cb290-6"><a href="clustering.html#cb290-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span></span>
-<span id="cb290-7"><a href="clustering.html#cb290-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb290-8"><a href="clustering.html#cb290-8" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="sc">!</span>high.mito]</span>
-<span id="cb290-9"><a href="clustering.html#cb290-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb290-10"><a href="clustering.html#cb290-10" aria-hidden="true" tabindex="-1"></a><span class="co"># normalization</span></span>
-<span id="cb290-11"><a href="clustering.html#cb290-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
-<span id="cb290-12"><a href="clustering.html#cb290-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span>
-<span id="cb290-13"><a href="clustering.html#cb290-13" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">quickCluster</span>(sce.pbmc)</span>
-<span id="cb290-14"><a href="clustering.html#cb290-14" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">computeSumFactors</span>(sce.pbmc, <span class="at">cluster =</span> clusters)</span>
-<span id="cb290-15"><a href="clustering.html#cb290-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.pbmc)</span></code></pre></div>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="clustering.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variance modelling</span></span>
-<span id="cb291-2"><a href="clustering.html#cb291-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1001</span>)</span>
-<span id="cb291-3"><a href="clustering.html#cb291-3" aria-hidden="true" tabindex="-1"></a>dec.pbmc <span class="ot">&lt;-</span> <span class="fu">modelGeneVarByPoisson</span>(sce.pbmc)</span>
-<span id="cb291-4"><a href="clustering.html#cb291-4" aria-hidden="true" tabindex="-1"></a>top.pbmc <span class="ot">&lt;-</span> <span class="fu">getTopHVGs</span>(dec.pbmc, <span class="at">prop =</span> <span class="fl">0.1</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="clustering.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dimensionality-reduction</span></span>
-<span id="cb292-2"><a href="clustering.html#cb292-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10000</span>)</span>
-<span id="cb292-3"><a href="clustering.html#cb292-3" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.pbmc,</span>
-<span id="cb292-4"><a href="clustering.html#cb292-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset.row =</span> top.pbmc,</span>
-<span id="cb292-5"><a href="clustering.html#cb292-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">technical =</span> dec.pbmc</span>
-<span id="cb292-6"><a href="clustering.html#cb292-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb292-7"><a href="clustering.html#cb292-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb292-8"><a href="clustering.html#cb292-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100000</span>)</span>
-<span id="cb292-9"><a href="clustering.html#cb292-9" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(sce.pbmc, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
-<span id="cb292-10"><a href="clustering.html#cb292-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb292-11"><a href="clustering.html#cb292-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000000</span>)</span>
-<span id="cb292-12"><a href="clustering.html#cb292-12" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(sce.pbmc, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="clustering.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="co"># gene-annotation</span></span>
+<span id="cb433-2"><a href="clustering.html#cb433-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb433-3"><a href="clustering.html#cb433-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sce.pbmc) <span class="ot">&lt;-</span> <span class="fu">uniquifyFeatureNames</span>(</span>
+<span id="cb433-4"><a href="clustering.html#cb433-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID, <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>Symbol</span>
+<span id="cb433-5"><a href="clustering.html#cb433-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb433-6"><a href="clustering.html#cb433-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EnsDb.Hsapiens.v86)</span>
+<span id="cb433-7"><a href="clustering.html#cb433-7" aria-hidden="true" tabindex="-1"></a>location <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(EnsDb.Hsapiens.v86,</span>
+<span id="cb433-8"><a href="clustering.html#cb433-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">keys =</span> <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID,</span>
+<span id="cb433-9"><a href="clustering.html#cb433-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">&quot;SEQNAME&quot;</span>, <span class="at">keytype =</span> <span class="st">&quot;GENEID&quot;</span></span>
+<span id="cb433-10"><a href="clustering.html#cb433-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb433-11"><a href="clustering.html#cb433-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb433-12"><a href="clustering.html#cb433-12" aria-hidden="true" tabindex="-1"></a><span class="co"># cell-detection</span></span>
+<span id="cb433-13"><a href="clustering.html#cb433-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb433-14"><a href="clustering.html#cb433-14" aria-hidden="true" tabindex="-1"></a>e.out <span class="ot">&lt;-</span> <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc))</span>
+<span id="cb433-15"><a href="clustering.html#cb433-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="fu">which</span>(e.out<span class="sc">$</span>FDR <span class="sc">&lt;=</span> <span class="fl">0.001</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="clustering.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quality-control</span></span>
+<span id="cb434-2"><a href="clustering.html#cb434-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">perCellQCMetrics</span>(sce.pbmc,</span>
+<span id="cb434-3"><a href="clustering.html#cb434-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mito =</span> <span class="fu">which</span>(location <span class="sc">==</span> <span class="st">&quot;MT&quot;</span>))</span>
+<span id="cb434-4"><a href="clustering.html#cb434-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb434-5"><a href="clustering.html#cb434-5" aria-hidden="true" tabindex="-1"></a>high.mito <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(stats<span class="sc">$</span>subsets_Mito_percent,</span>
+<span id="cb434-6"><a href="clustering.html#cb434-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span></span>
+<span id="cb434-7"><a href="clustering.html#cb434-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb434-8"><a href="clustering.html#cb434-8" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="sc">!</span>high.mito]</span>
+<span id="cb434-9"><a href="clustering.html#cb434-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb434-10"><a href="clustering.html#cb434-10" aria-hidden="true" tabindex="-1"></a><span class="co"># normalization</span></span>
+<span id="cb434-11"><a href="clustering.html#cb434-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
+<span id="cb434-12"><a href="clustering.html#cb434-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span>
+<span id="cb434-13"><a href="clustering.html#cb434-13" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">quickCluster</span>(sce.pbmc)</span>
+<span id="cb434-14"><a href="clustering.html#cb434-14" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">computeSumFactors</span>(sce.pbmc, <span class="at">cluster =</span> clusters)</span>
+<span id="cb434-15"><a href="clustering.html#cb434-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.pbmc)</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="clustering.html#cb435-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variance modelling</span></span>
+<span id="cb435-2"><a href="clustering.html#cb435-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1001</span>)</span>
+<span id="cb435-3"><a href="clustering.html#cb435-3" aria-hidden="true" tabindex="-1"></a>dec.pbmc <span class="ot">&lt;-</span> <span class="fu">modelGeneVarByPoisson</span>(sce.pbmc)</span>
+<span id="cb435-4"><a href="clustering.html#cb435-4" aria-hidden="true" tabindex="-1"></a>top.pbmc <span class="ot">&lt;-</span> <span class="fu">getTopHVGs</span>(dec.pbmc, <span class="at">prop =</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="clustering.html#cb436-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dimensionality-reduction</span></span>
+<span id="cb436-2"><a href="clustering.html#cb436-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10000</span>)</span>
+<span id="cb436-3"><a href="clustering.html#cb436-3" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.pbmc,</span>
+<span id="cb436-4"><a href="clustering.html#cb436-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset.row =</span> top.pbmc,</span>
+<span id="cb436-5"><a href="clustering.html#cb436-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">technical =</span> dec.pbmc</span>
+<span id="cb436-6"><a href="clustering.html#cb436-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb436-7"><a href="clustering.html#cb436-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-8"><a href="clustering.html#cb436-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100000</span>)</span>
+<span id="cb436-9"><a href="clustering.html#cb436-9" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(sce.pbmc, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
+<span id="cb436-10"><a href="clustering.html#cb436-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-11"><a href="clustering.html#cb436-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000000</span>)</span>
+<span id="cb436-12"><a href="clustering.html#cb436-12" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(sce.pbmc, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span></code></pre></div>
 </div>
 <div id="motivación-5" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Motivación</h2>
@@ -696,15 +697,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="clustering-basado-en-grafos-1" class="section level2" number="9.8">
 <h2><span class="header-section-number">9.8</span> Clustering basado en grafos</h2>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="clustering.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
-<span id="cb293-2"><a href="clustering.html#cb293-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Build graph using k = 10 nearest neighbours in PCA-space</span></span>
-<span id="cb293-3"><a href="clustering.html#cb293-3" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(sce.pbmc, <span class="at">k =</span> <span class="dv">10</span>, <span class="at">use.dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
-<span id="cb293-4"><a href="clustering.html#cb293-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify communities using the Walktrap method</span></span>
-<span id="cb293-5"><a href="clustering.html#cb293-5" aria-hidden="true" tabindex="-1"></a>clust <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">cluster_walktrap</span>(g)<span class="sc">$</span>membership</span></code></pre></div>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="clustering.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise clusters on t-SNE plot</span></span>
-<span id="cb294-2"><a href="clustering.html#cb294-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
-<span id="cb294-3"><a href="clustering.html#cb294-3" aria-hidden="true" tabindex="-1"></a>sce.pbmc<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">factor</span>(clust)</span>
-<span id="cb294-4"><a href="clustering.html#cb294-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.pbmc, <span class="st">&quot;TSNE&quot;</span>, <span class="at">colour_by =</span> <span class="st">&quot;cluster&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="clustering.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
+<span id="cb437-2"><a href="clustering.html#cb437-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Build graph using k = 10 nearest neighbours in PCA-space</span></span>
+<span id="cb437-3"><a href="clustering.html#cb437-3" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(sce.pbmc, <span class="at">k =</span> <span class="dv">10</span>, <span class="at">use.dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
+<span id="cb437-4"><a href="clustering.html#cb437-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify communities using the Walktrap method</span></span>
+<span id="cb437-5"><a href="clustering.html#cb437-5" aria-hidden="true" tabindex="-1"></a>clust <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">cluster_walktrap</span>(g)<span class="sc">$</span>membership</span></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="clustering.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise clusters on t-SNE plot</span></span>
+<span id="cb438-2"><a href="clustering.html#cb438-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb438-3"><a href="clustering.html#cb438-3" aria-hidden="true" tabindex="-1"></a>sce.pbmc<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">factor</span>(clust)</span>
+<span id="cb438-4"><a href="clustering.html#cb438-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.pbmc, <span class="st">&quot;TSNE&quot;</span>, <span class="at">colour_by =</span> <span class="st">&quot;cluster&quot;</span>)</span></code></pre></div>
 <p><img src="09-clustering_files/figure-html/unnamed-chunk-7-1.png" width="576" /></p>
 <p><strong>¿Qué pasa si utilizas una k más grande o más pequeña?</strong></p>
 <div id="detalles-adicionales-del-ejemplo-previo" class="section level3" number="9.8.1">
@@ -725,12 +726,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="estilo-seurat" class="section level3" number="9.8.3">
 <h3><span class="header-section-number">9.8.3</span> Estilo Seurat</h3>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="clustering.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Jaccard-based weights followed by Louvain clustering</span></span>
-<span id="cb295-2"><a href="clustering.html#cb295-2" aria-hidden="true" tabindex="-1"></a><span class="co"># aka &#39;Seurat-style&#39; clustering</span></span>
-<span id="cb295-3"><a href="clustering.html#cb295-3" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(sce.pbmc, <span class="at">k =</span> <span class="dv">10</span>, <span class="at">use.dimred =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">type =</span> <span class="st">&quot;jaccard&quot;</span>)</span>
-<span id="cb295-4"><a href="clustering.html#cb295-4" aria-hidden="true" tabindex="-1"></a>clust2 <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">cluster_louvain</span>(g)<span class="sc">$</span>membership</span>
-<span id="cb295-5"><a href="clustering.html#cb295-5" aria-hidden="true" tabindex="-1"></a>sce.pbmc<span class="sc">$</span>cluster2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(clust2)</span>
-<span id="cb295-6"><a href="clustering.html#cb295-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.pbmc, <span class="st">&quot;TSNE&quot;</span>, <span class="at">colour_by =</span> <span class="st">&quot;cluster2&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="clustering.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Jaccard-based weights followed by Louvain clustering</span></span>
+<span id="cb439-2"><a href="clustering.html#cb439-2" aria-hidden="true" tabindex="-1"></a><span class="co"># aka &#39;Seurat-style&#39; clustering</span></span>
+<span id="cb439-3"><a href="clustering.html#cb439-3" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(sce.pbmc, <span class="at">k =</span> <span class="dv">10</span>, <span class="at">use.dimred =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">type =</span> <span class="st">&quot;jaccard&quot;</span>)</span>
+<span id="cb439-4"><a href="clustering.html#cb439-4" aria-hidden="true" tabindex="-1"></a>clust2 <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">cluster_louvain</span>(g)<span class="sc">$</span>membership</span>
+<span id="cb439-5"><a href="clustering.html#cb439-5" aria-hidden="true" tabindex="-1"></a>sce.pbmc<span class="sc">$</span>cluster2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(clust2)</span>
+<span id="cb439-6"><a href="clustering.html#cb439-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.pbmc, <span class="st">&quot;TSNE&quot;</span>, <span class="at">colour_by =</span> <span class="st">&quot;cluster2&quot;</span>)</span></code></pre></div>
 <p><img src="09-clustering_files/figure-html/unnamed-chunk-8-1.png" width="576" /></p>
 </div>
 <div id="clustering-basado-en-un-grafo" class="section level3" number="9.8.4">
@@ -757,16 +758,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Modularidad</strong> es una métrica natural para evaluar la separación entre comunidades/clusters</p>
 <p>Definido como la diferencia (escalada) entre el peso total observado de las aristas entre los nodos en el mismo cluster y el peso total esperado si los pesos fueran distribuidos aleatoriamente entre todos los pares de nodos</p>
 <p>Nosotros computaremos un <strong>score de modularidad</strong> para cada cluster (usando las tasas en vez de las diferencias)</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="clustering.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bluster)</span>
-<span id="cb296-2"><a href="clustering.html#cb296-2" aria-hidden="true" tabindex="-1"></a>ratio <span class="ot">&lt;-</span> <span class="fu">pairwiseModularity</span>(g, clust, <span class="at">as.ratio =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb296-3"><a href="clustering.html#cb296-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ratio)</span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="clustering.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bluster)</span>
+<span id="cb440-2"><a href="clustering.html#cb440-2" aria-hidden="true" tabindex="-1"></a>ratio <span class="ot">&lt;-</span> <span class="fu">pairwiseModularity</span>(g, clust, <span class="at">as.ratio =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb440-3"><a href="clustering.html#cb440-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ratio)</span></code></pre></div>
 <pre><code>## [1] 16 16</code></pre>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="clustering.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
-<span id="cb298-2"><a href="clustering.html#cb298-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(<span class="fu">log2</span>(ratio <span class="sc">+</span> <span class="dv">1</span>),</span>
-<span id="cb298-3"><a href="clustering.html#cb298-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb298-4"><a href="clustering.html#cb298-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster_cols =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb298-5"><a href="clustering.html#cb298-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;blue&quot;</span>))(<span class="dv">100</span>)</span>
-<span id="cb298-6"><a href="clustering.html#cb298-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="clustering.html#cb442-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
+<span id="cb442-2"><a href="clustering.html#cb442-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(<span class="fu">log2</span>(ratio <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb442-3"><a href="clustering.html#cb442-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb442-4"><a href="clustering.html#cb442-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster_cols =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb442-5"><a href="clustering.html#cb442-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;blue&quot;</span>))(<span class="dv">100</span>)</span>
+<span id="cb442-6"><a href="clustering.html#cb442-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="09-clustering_files/figure-html/unnamed-chunk-10-1.png" width="576" /></p>
 <p>Un dataset que contiene clusters bien separados debería contener la mayoría del peso total observado en las entradas diagonales, <em>i.e</em> la mayoría de las aristas ocurren entre células del mismo cluster</p>
 <p>Para más detalles sobre evaluación de la separación entre clusters <a href="https://osca.bioconductor.org/clustering.html#assessing-cluster-separation">visite esta página</a></p>
@@ -794,22 +795,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Esto incrementa la probabilida de que las conclusiones puedan ser replicadas en un estudio independiente</li>
 </ul>
 <p>Uno puede hacer un proceso de <strong>bootstrap</strong> para evaluar la estabilidad de un algoritmo de clustering en un dataset dado</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="clustering.html#cb299-1" aria-hidden="true" tabindex="-1"></a>myClusterFUN <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb299-2"><a href="clustering.html#cb299-2" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(x, <span class="at">use.dimred =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">type =</span> <span class="st">&quot;jaccard&quot;</span>)</span>
-<span id="cb299-3"><a href="clustering.html#cb299-3" aria-hidden="true" tabindex="-1"></a>    igraph<span class="sc">::</span><span class="fu">cluster_louvain</span>(g)<span class="sc">$</span>membership</span>
-<span id="cb299-4"><a href="clustering.html#cb299-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb299-5"><a href="clustering.html#cb299-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb299-6"><a href="clustering.html#cb299-6" aria-hidden="true" tabindex="-1"></a>originals <span class="ot">&lt;-</span> <span class="fu">myClusterFUN</span>(sce.pbmc)</span>
-<span id="cb299-7"><a href="clustering.html#cb299-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">0010010100</span>)</span>
-<span id="cb299-8"><a href="clustering.html#cb299-8" aria-hidden="true" tabindex="-1"></a>coassign <span class="ot">&lt;-</span> <span class="fu">bootstrapStability</span>(sce.pbmc,</span>
-<span id="cb299-9"><a href="clustering.html#cb299-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">FUN =</span> myClusterFUN,</span>
-<span id="cb299-10"><a href="clustering.html#cb299-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">clusters =</span> originals</span>
-<span id="cb299-11"><a href="clustering.html#cb299-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="clustering.html#cb443-1" aria-hidden="true" tabindex="-1"></a>myClusterFUN <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb443-2"><a href="clustering.html#cb443-2" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(x, <span class="at">use.dimred =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">type =</span> <span class="st">&quot;jaccard&quot;</span>)</span>
+<span id="cb443-3"><a href="clustering.html#cb443-3" aria-hidden="true" tabindex="-1"></a>    igraph<span class="sc">::</span><span class="fu">cluster_louvain</span>(g)<span class="sc">$</span>membership</span>
+<span id="cb443-4"><a href="clustering.html#cb443-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb443-5"><a href="clustering.html#cb443-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb443-6"><a href="clustering.html#cb443-6" aria-hidden="true" tabindex="-1"></a>originals <span class="ot">&lt;-</span> <span class="fu">myClusterFUN</span>(sce.pbmc)</span>
+<span id="cb443-7"><a href="clustering.html#cb443-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">0010010100</span>)</span>
+<span id="cb443-8"><a href="clustering.html#cb443-8" aria-hidden="true" tabindex="-1"></a>coassign <span class="ot">&lt;-</span> <span class="fu">bootstrapStability</span>(sce.pbmc,</span>
+<span id="cb443-9"><a href="clustering.html#cb443-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">FUN =</span> myClusterFUN,</span>
+<span id="cb443-10"><a href="clustering.html#cb443-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">clusters =</span> originals</span>
+<span id="cb443-11"><a href="clustering.html#cb443-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><strong>Coasignación</strong> es la probabilidad de que células elegidas al azar del cluster X y Y sean asignadas al mismo cluster en la réplica del proceso de bootstrap</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="clustering.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(coassign,</span>
-<span id="cb300-2"><a href="clustering.html#cb300-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster_row =</span> <span class="cn">FALSE</span>, <span class="at">cluster_col =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb300-3"><a href="clustering.html#cb300-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">rev</span>(viridis<span class="sc">::</span><span class="fu">magma</span>(<span class="dv">100</span>))</span>
-<span id="cb300-4"><a href="clustering.html#cb300-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="clustering.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(coassign,</span>
+<span id="cb444-2"><a href="clustering.html#cb444-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster_row =</span> <span class="cn">FALSE</span>, <span class="at">cluster_col =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb444-3"><a href="clustering.html#cb444-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">rev</span>(viridis<span class="sc">::</span><span class="fu">magma</span>(<span class="dv">100</span>))</span>
+<span id="cb444-4"><a href="clustering.html#cb444-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="09-clustering_files/figure-html/unnamed-chunk-12-1.png" width="576" /></p>
 <p><em>Probabilidad alta de coasignación indica que X no es estable con respecto a su separación de Y.
 </em>Queremos altas probabilidades de coasignación en la diagonal</p>
@@ -822,32 +823,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Mejora la resolucón al repetir el proceso de <em>feature selection</em> y <em>clustering</em> dentro de un único cluster</p></li>
 <li><p>Se enfoca en los HGVs y PCs que son los más relevantes para un cluster específico</p></li>
 </ul>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="clustering.html#cb301-1" aria-hidden="true" tabindex="-1"></a>g.full <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(sce.pbmc, <span class="at">use.dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
-<span id="cb301-2"><a href="clustering.html#cb301-2" aria-hidden="true" tabindex="-1"></a>clust.full <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">cluster_walktrap</span>(g.full)<span class="sc">$</span>membership</span>
-<span id="cb301-3"><a href="clustering.html#cb301-3" aria-hidden="true" tabindex="-1"></a>sce.pbmc<span class="sc">$</span>clust.full <span class="ot">&lt;-</span> <span class="fu">factor</span>(clust.full)</span>
-<span id="cb301-4"><a href="clustering.html#cb301-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotExpression</span>(sce.pbmc,</span>
-<span id="cb301-5"><a href="clustering.html#cb301-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;CD3E&quot;</span>, <span class="st">&quot;CCR7&quot;</span>, <span class="st">&quot;CD69&quot;</span>, <span class="st">&quot;CD44&quot;</span>),</span>
-<span id="cb301-6"><a href="clustering.html#cb301-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;clust.full&quot;</span>, <span class="at">colour_by =</span> <span class="st">&quot;clust.full&quot;</span></span>
-<span id="cb301-7"><a href="clustering.html#cb301-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="clustering.html#cb445-1" aria-hidden="true" tabindex="-1"></a>g.full <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(sce.pbmc, <span class="at">use.dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
+<span id="cb445-2"><a href="clustering.html#cb445-2" aria-hidden="true" tabindex="-1"></a>clust.full <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">cluster_walktrap</span>(g.full)<span class="sc">$</span>membership</span>
+<span id="cb445-3"><a href="clustering.html#cb445-3" aria-hidden="true" tabindex="-1"></a>sce.pbmc<span class="sc">$</span>clust.full <span class="ot">&lt;-</span> <span class="fu">factor</span>(clust.full)</span>
+<span id="cb445-4"><a href="clustering.html#cb445-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotExpression</span>(sce.pbmc,</span>
+<span id="cb445-5"><a href="clustering.html#cb445-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;CD3E&quot;</span>, <span class="st">&quot;CCR7&quot;</span>, <span class="st">&quot;CD69&quot;</span>, <span class="st">&quot;CD44&quot;</span>),</span>
+<span id="cb445-6"><a href="clustering.html#cb445-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;clust.full&quot;</span>, <span class="at">colour_by =</span> <span class="st">&quot;clust.full&quot;</span></span>
+<span id="cb445-7"><a href="clustering.html#cb445-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="09-clustering_files/figure-html/unnamed-chunk-13-1.png" width="576" /></p>
 <p><em>CD3E, CCR7, CD69, y CD44 son marcadores de células T de memoria</em>. Dentro de las células T de memoria, ¿dónde están las subpoblaciones CD4+ y CD8+?</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="clustering.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeating modelling and PCA on the subset of cells we have</span></span>
-<span id="cb302-2"><a href="clustering.html#cb302-2" aria-hidden="true" tabindex="-1"></a><span class="co"># identified as memory T-cells (cluster 6).</span></span>
-<span id="cb302-3"><a href="clustering.html#cb302-3" aria-hidden="true" tabindex="-1"></a>memory <span class="ot">&lt;-</span> <span class="dv">6</span></span>
-<span id="cb302-4"><a href="clustering.html#cb302-4" aria-hidden="true" tabindex="-1"></a>sce.memory <span class="ot">&lt;-</span> sce.pbmc[, clust.full <span class="sc">==</span> memory]</span>
-<span id="cb302-5"><a href="clustering.html#cb302-5" aria-hidden="true" tabindex="-1"></a>dec.memory <span class="ot">&lt;-</span> <span class="fu">modelGeneVar</span>(sce.memory)</span>
-<span id="cb302-6"><a href="clustering.html#cb302-6" aria-hidden="true" tabindex="-1"></a>sce.memory <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.memory,</span>
-<span id="cb302-7"><a href="clustering.html#cb302-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">technical =</span> dec.memory,</span>
-<span id="cb302-8"><a href="clustering.html#cb302-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset.row =</span> <span class="fu">getTopHVGs</span>(dec.memory, <span class="at">prop =</span> <span class="fl">0.1</span>)</span>
-<span id="cb302-9"><a href="clustering.html#cb302-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb302-10"><a href="clustering.html#cb302-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeating clustering on the subset.</span></span>
-<span id="cb302-11"><a href="clustering.html#cb302-11" aria-hidden="true" tabindex="-1"></a>g.memory <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(sce.memory, <span class="at">use.dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
-<span id="cb302-12"><a href="clustering.html#cb302-12" aria-hidden="true" tabindex="-1"></a>clust.memory <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">cluster_walktrap</span>(g.memory)<span class="sc">$</span>membership</span>
-<span id="cb302-13"><a href="clustering.html#cb302-13" aria-hidden="true" tabindex="-1"></a>sce.memory<span class="sc">$</span>clust.memory <span class="ot">&lt;-</span> <span class="fu">factor</span>(clust.memory)</span></code></pre></div>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="clustering.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotExpression</span>(sce.memory,</span>
-<span id="cb303-2"><a href="clustering.html#cb303-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;CD8A&quot;</span>, <span class="st">&quot;CD4&quot;</span>),</span>
-<span id="cb303-3"><a href="clustering.html#cb303-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;clust.memory&quot;</span></span>
-<span id="cb303-4"><a href="clustering.html#cb303-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="clustering.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeating modelling and PCA on the subset of cells we have</span></span>
+<span id="cb446-2"><a href="clustering.html#cb446-2" aria-hidden="true" tabindex="-1"></a><span class="co"># identified as memory T-cells (cluster 6).</span></span>
+<span id="cb446-3"><a href="clustering.html#cb446-3" aria-hidden="true" tabindex="-1"></a>memory <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb446-4"><a href="clustering.html#cb446-4" aria-hidden="true" tabindex="-1"></a>sce.memory <span class="ot">&lt;-</span> sce.pbmc[, clust.full <span class="sc">==</span> memory]</span>
+<span id="cb446-5"><a href="clustering.html#cb446-5" aria-hidden="true" tabindex="-1"></a>dec.memory <span class="ot">&lt;-</span> <span class="fu">modelGeneVar</span>(sce.memory)</span>
+<span id="cb446-6"><a href="clustering.html#cb446-6" aria-hidden="true" tabindex="-1"></a>sce.memory <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.memory,</span>
+<span id="cb446-7"><a href="clustering.html#cb446-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">technical =</span> dec.memory,</span>
+<span id="cb446-8"><a href="clustering.html#cb446-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset.row =</span> <span class="fu">getTopHVGs</span>(dec.memory, <span class="at">prop =</span> <span class="fl">0.1</span>)</span>
+<span id="cb446-9"><a href="clustering.html#cb446-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb446-10"><a href="clustering.html#cb446-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeating clustering on the subset.</span></span>
+<span id="cb446-11"><a href="clustering.html#cb446-11" aria-hidden="true" tabindex="-1"></a>g.memory <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(sce.memory, <span class="at">use.dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
+<span id="cb446-12"><a href="clustering.html#cb446-12" aria-hidden="true" tabindex="-1"></a>clust.memory <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">cluster_walktrap</span>(g.memory)<span class="sc">$</span>membership</span>
+<span id="cb446-13"><a href="clustering.html#cb446-13" aria-hidden="true" tabindex="-1"></a>sce.memory<span class="sc">$</span>clust.memory <span class="ot">&lt;-</span> <span class="fu">factor</span>(clust.memory)</span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="clustering.html#cb447-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotExpression</span>(sce.memory,</span>
+<span id="cb447-2"><a href="clustering.html#cb447-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;CD8A&quot;</span>, <span class="st">&quot;CD4&quot;</span>),</span>
+<span id="cb447-3"><a href="clustering.html#cb447-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;clust.memory&quot;</span></span>
+<span id="cb447-4"><a href="clustering.html#cb447-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="09-clustering_files/figure-html/unnamed-chunk-15-1.png" width="576" /></p>
 <p>Expresión de CD4 es bajo, por lo tanto, su cambio es modesto, pero la interpretación es clara</p>
 <p><strong>scran::quickSubCluster()</strong> ciclará sobre los clusters y realizará el proceso de subclustering de acuerdo a una función especificada por el usuario. Esto asume que la misma función es apropiada para todos los clusters</p>
@@ -879,14 +880,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="detalles-de-la-sesión-de-r-8" class="section level2" number="9.14">
 <h2><span class="header-section-number">9.14</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="clustering.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb304-2"><a href="clustering.html#cb304-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-10 09:27:41 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="clustering.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="clustering.html#cb448-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb448-2"><a href="clustering.html#cb448-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-10 13:52:47 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="clustering.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 233.400   5.371 235.408</code></pre>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="clustering.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb308-2"><a href="clustering.html#cb308-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+## 232.504   5.956 235.119</code></pre>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="clustering.html#cb452-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb452-2"><a href="clustering.html#cb452-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)
