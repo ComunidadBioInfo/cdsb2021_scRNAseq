@@ -27,6 +27,10 @@ comunidad
 introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca-1
 detalles-de-la-sesión-de-r-2
 estructura-e-importe-de-datos
+breve-repaso-de-r
+ejercicio-2
+extra
+import-data
 detalles-de-la-sesión-de-r-3
 control-de-calidad
 diapositivas-de-peter-hickey

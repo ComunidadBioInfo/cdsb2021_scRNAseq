@@ -200,7 +200,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html"><i class="fa fa-check"></i><b>4</b> Estructura e importe de datos</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#detalles-de-la-sesión-de-r-3"><i class="fa fa-check"></i><b>4.1</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="4.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#breve-repaso-de-r"><i class="fa fa-check"></i><b>4.1</b> Breve repaso de R</a></li>
+<li class="chapter" data-level="4.2" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#ejercicio-2"><i class="fa fa-check"></i><b>4.2</b> Ejercicio 2</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#extra"><i class="fa fa-check"></i><b>4.2.1</b> Extra</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#import-data"><i class="fa fa-check"></i><b>4.3</b> Import data</a></li>
+<li class="chapter" data-level="4.4" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#detalles-de-la-sesión-de-r-3"><i class="fa fa-check"></i><b>4.4</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#patrocinadores-4"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="control-de-calidad.html"><a href="control-de-calidad.html"><i class="fa fa-check"></i><b>5</b> Control de calidad</a>
@@ -512,17 +518,249 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="estructura-e-importe-de-datos" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Estructura e importe de datos</h1>
-<p>TODO</p>
-<div id="detalles-de-la-sesión-de-r-3" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="estructura-e-importe-de-datos.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb53-2"><a href="estructura-e-importe-de-datos.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-09 23:59:12 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="estructura-e-importe-de-datos.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<p>Instructoras: <a href="https://twitter.com/naielisha">Elisa Márquez Zavala</a>, <a href="http://twitter.com/argininaa">Citlali Gil Aguillon</a></p>
+<p>Contenido adaptado de <a href="https://comunidadbioinfo.github.io/cdsb2020/scRNAseq/02-data-infrastructure-and-import.html#1">CDSB2020: Introducción a scRNA-seq, estructura e importe de datos</a> de <a href="https://github.com/lcolladotor">Leonardo Collado Torres</a></p>
+<div id="breve-repaso-de-r" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Breve repaso de R</h2>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="estructura-e-importe-de-datos.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creamos un data.frame</span></span>
+<span id="cb53-2"><a href="estructura-e-importe-de-datos.html#cb53-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">NA</span>, <span class="cn">NA</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">34</span>, <span class="dv">56</span>, <span class="dv">78</span>))</span>
+<span id="cb53-3"><a href="estructura-e-importe-de-datos.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(df) <span class="ot">&lt;-</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb53-4"><a href="estructura-e-importe-de-datos.html#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-5"><a href="estructura-e-importe-de-datos.html#cb53-5" aria-hidden="true" tabindex="-1"></a>df </span></code></pre></div>
+<pre><code>##       x  y
+## a  TRUE 12
+## b FALSE 34
+## c    NA 56
+## d    NA 78</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="estructura-e-importe-de-datos.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Para acceder a los nombres de las columnas</span></span>
+<span id="cb55-2"><a href="estructura-e-importe-de-datos.html#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df)</span></code></pre></div>
+<pre><code>## [1] &quot;x&quot; &quot;y&quot;</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="estructura-e-importe-de-datos.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Para acceder a los nombres de las filas</span></span>
+<span id="cb57-2"><a href="estructura-e-importe-de-datos.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(df)</span></code></pre></div>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="estructura-e-importe-de-datos.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Podemos sacar información booleana</span></span>
+<span id="cb59-2"><a href="estructura-e-importe-de-datos.html#cb59-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>y <span class="sc">&lt;</span> <span class="dv">20</span></span></code></pre></div>
+<pre><code>## [1]  TRUE FALSE FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="estructura-e-importe-de-datos.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Y podemos acceder al mismo data.frame con la información booleana</span></span>
+<span id="cb61-2"><a href="estructura-e-importe-de-datos.html#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="estructura-e-importe-de-datos.html#cb61-3" aria-hidden="true" tabindex="-1"></a>df[df<span class="sc">$</span>y<span class="sc">&lt;</span><span class="dv">40</span>,]</span></code></pre></div>
+<pre><code>##       x  y
+## a  TRUE 12
+## b FALSE 34</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="estructura-e-importe-de-datos.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="do">## %in% (dentro de)</span></span>
+<span id="cb63-2"><a href="estructura-e-importe-de-datos.html#cb63-2" aria-hidden="true" tabindex="-1"></a>bool_info <span class="ot">&lt;-</span> <span class="fu">rownames</span>(df) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;c&#39;</span>,<span class="st">&#39;z&#39;</span>)</span>
+<span id="cb63-3"><a href="estructura-e-importe-de-datos.html#cb63-3" aria-hidden="true" tabindex="-1"></a>df[bool_info,]</span></code></pre></div>
+<pre><code>##      x  y
+## a TRUE 12
+## c   NA 56</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="estructura-e-importe-de-datos.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &amp; (y)  </span></span>
+<span id="cb65-2"><a href="estructura-e-importe-de-datos.html#cb65-2" aria-hidden="true" tabindex="-1"></a>bool_info <span class="ot">&lt;-</span> df<span class="sc">$</span>y <span class="sc">&lt;</span> <span class="dv">50</span> <span class="sc">&amp;</span> df<span class="sc">$</span>y <span class="sc">&gt;</span> <span class="dv">20</span></span>
+<span id="cb65-3"><a href="estructura-e-importe-de-datos.html#cb65-3" aria-hidden="true" tabindex="-1"></a>df[bool_info,]</span></code></pre></div>
+<pre><code>##       x  y
+## b FALSE 34</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="estructura-e-importe-de-datos.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="do">## | (o)</span></span>
+<span id="cb67-2"><a href="estructura-e-importe-de-datos.html#cb67-2" aria-hidden="true" tabindex="-1"></a>bool_info <span class="ot">&lt;-</span> df<span class="sc">$</span>y <span class="sc">&lt;</span> <span class="dv">20</span> <span class="sc">|</span> df<span class="sc">$</span>y <span class="sc">&gt;</span> <span class="dv">60</span></span>
+<span id="cb67-3"><a href="estructura-e-importe-de-datos.html#cb67-3" aria-hidden="true" tabindex="-1"></a>df[bool_info,]</span></code></pre></div>
+<pre><code>##      x  y
+## a TRUE 12
+## d   NA 78</code></pre>
+</div>
+<div id="ejercicio-2" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Ejercicio 2</h2>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="estructura-e-importe-de-datos.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SingleCellExperiment&quot;</span>)</span>
+<span id="cb69-2"><a href="estructura-e-importe-de-datos.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scRNAseq&quot;</span>)</span>
+<span id="cb69-3"><a href="estructura-e-importe-de-datos.html#cb69-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-4"><a href="estructura-e-importe-de-datos.html#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mini muestreo del set de datos usado en: https://bioconductor.org/books/release/OSCA/zeisel-mouse-brain-strt-seq.html#introduction-5</span></span>
+<span id="cb69-5"><a href="estructura-e-importe-de-datos.html#cb69-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-6"><a href="estructura-e-importe-de-datos.html#cb69-6" aria-hidden="true" tabindex="-1"></a>archivo_cuentas <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/emarquezz/minidataset_osca/main/min_sce.csv&quot;</span></span>
+<span id="cb69-7"><a href="estructura-e-importe-de-datos.html#cb69-7" aria-hidden="true" tabindex="-1"></a>archivo_rowData <span class="ot">&lt;-</span><span class="st">&quot;https://raw.githubusercontent.com/emarquezz/minidataset_osca/main/rowD.csv&quot;</span></span>
+<span id="cb69-8"><a href="estructura-e-importe-de-datos.html#cb69-8" aria-hidden="true" tabindex="-1"></a>archivo_colData <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/emarquezz/minidataset_osca/main/colD.csv&quot;</span></span>
+<span id="cb69-9"><a href="estructura-e-importe-de-datos.html#cb69-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-10"><a href="estructura-e-importe-de-datos.html#cb69-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-11"><a href="estructura-e-importe-de-datos.html#cb69-11" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(archivo_cuentas, <span class="at">row.names =</span> <span class="dv">1</span>, <span class="at">header=</span> <span class="cn">TRUE</span>, <span class="at">check.names=</span>F)</span>
+<span id="cb69-12"><a href="estructura-e-importe-de-datos.html#cb69-12" aria-hidden="true" tabindex="-1"></a>col.data <span class="ot">&lt;-</span> <span class="fu">DataFrame</span>(<span class="fu">read.csv</span>(archivo_colData, <span class="at">row.names =</span> <span class="dv">1</span>, <span class="at">header=</span> <span class="cn">TRUE</span>, <span class="at">check.names=</span>F)) </span>
+<span id="cb69-13"><a href="estructura-e-importe-de-datos.html#cb69-13" aria-hidden="true" tabindex="-1"></a>row.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(archivo_rowData, <span class="at">row.names =</span> <span class="dv">1</span>, <span class="at">header=</span> <span class="cn">TRUE</span>, <span class="at">check.names=</span>F)</span></code></pre></div>
+<ul>
+<li><p>Crea un objeto SingleCellExperiment</p>
+<ul>
+<li><p>¿Cuántos genes tenemos?</p></li>
+<li><p>¿Qué información tenemos en el rowData?</p></li>
+</ul></li>
+<li><p>Extraigan los datos de los genes que nos interesan (objeto ´int_gen´)</p>
+<ul>
+<li><p>Pasen el mouse sobre los siguientes textos para ver recomendaciones:</p></li>
+<li><p><a href="##" title="Recuerda que puedes acceder con booleanos">Recomendación 1</a></p></li>
+<li><p><a href="##" title="Recuerda que puedes utilizar el operador %in%">Recomendación 2</a></p></li>
+<li><p><a href="##" title="Esto es como el ejercicio &#39;Using **rowData** for subsetting&#39;">Recomendación 3</a></p></li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="estructura-e-importe-de-datos.html#cb70-1" aria-hidden="true" tabindex="-1"></a>int_gen <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="st">&quot;Angpt1&quot;</span>,<span class="st">&quot;Chic2&quot;</span>,<span class="st">&quot;Mir503&quot;</span>,<span class="st">&quot;Magee2&quot;</span>,<span class="st">&quot;Nenf&quot;</span>,<span class="st">&quot;Eps15l1&quot;</span>,<span class="st">&quot;Hsf2bp&quot;</span>,<span class="st">&quot;Gnptg&quot;</span>,<span class="st">&quot;Vegfb&quot;</span>,<span class="st">&quot;Atmin&quot;</span>,<span class="st">&quot;Gad1&quot;</span>,<span class="st">&quot;Gad2&quot;</span>,<span class="st">&quot;Slc32a1&quot;</span>,<span class="st">&quot;Dner&quot;</span>,<span class="st">&quot;Slc2a13&quot;</span>,<span class="st">&quot;Slc6a1&quot;</span>,<span class="st">&quot;Nrxn3&quot;</span>)</span></code></pre></div>
+<ul>
+<li><p>Creen un objeto llamado ´min_sce´ con los datos de los genes</p>
+<ul>
+<li><p>¿Cuáles son parte del tejido ´interneurons´ o del tejido ´pyramidal CA1´ ? (del objeto ´min_sce´)</p></li>
+<li><p><a href="##" title="Recuerda que puedes acceder con booleanos">Recomendación 1</a></p></li>
+<li><p><a href="##" title="Recuerda que puedes utilizar el operador |">Recomendación 2</a></p></li>
+<li><p><a href="##" title="Esto es como el ejercicio &#39;Using **colData** for subsetting&#39;">Recomendación 3</a></p></li>
+</ul></li>
+<li><p>Con este subconjunto, crea el objeto tej_min_sce</p></li>
+<li><p>Una vez que tengan el objeto ´SingleCellExperiment´ llamado ´tej_min_sce´, corran el siguiente código.</p></li>
+</ul>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="estructura-e-importe-de-datos.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scater&quot;</span>)</span>
+<span id="cb71-2"><a href="estructura-e-importe-de-datos.html#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-3"><a href="estructura-e-importe-de-datos.html#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotHeatmap</span>(<span class="at">object=</span> tej_min_sce, <span class="at">features=</span><span class="fu">rownames</span>(tej_min_sce), <span class="at">order_columns_by=</span><span class="st">&quot;level1class&quot;</span>)</span></code></pre></div>
+<div id="extra" class="section level3" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Extra</h3>
+<ul>
+<li>Realiza los mismos pasos, pero ahora los genes que buscamos no tienen el nombre usual de gen (Gad1), sino su Ensembl gene IDs</li>
+</ul>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="estructura-e-importe-de-datos.html#cb72-1" aria-hidden="true" tabindex="-1"></a>int_gen <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="st">&quot;ENSMUSG00000071076&quot;</span>,<span class="st">&quot;ENSMUSG00000002076&quot;</span>,<span class="st">&quot;ENSMUSG00000024962&quot;</span>,<span class="st">&quot;ENSMUSG00000031224&quot;</span>,<span class="st">&quot;ENSMSG00000036560&quot;</span>,<span class="st">&quot;ENSMUSG00000037499&quot;</span>,<span class="st">&quot;ENSMUSG00000006276&quot;</span>,<span class="st">&quot;ENSMUSG00000035521&quot;</span>,<span class="st">&quot;ENSMUSG00000047388&quot;</span>,<span class="st">&quot;ENSMUSG0000051079&quot;</span>,<span class="st">&quot;ENSMUSG00000076122&quot;</span>,<span class="st">&quot;ENSMUSG00000029229&quot;</span>,<span class="st">&quot;ENSMUSG00000022309&quot;</span>,<span class="st">&quot;ENSMUSG00000036766&quot;</span>,<span class="st">&quot;ENSMUSG00000070880&quot;</span>,<span class="st">&quot;ENSMUSG00000026787&quot;</span>,<span class="st">&quot;ENSMUSG00000066392&quot;</span>,<span class="st">&quot;ENSMUSG00000036298&quot;</span>,<span class="st">&quot;ENSMUSG00000037771&quot;</span>,<span class="st">&quot;ENSMUSG00000030310&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="import-data" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Import data</h2>
+<ul>
+<li>Diapositivas de Peter Hickey</li>
+</ul>
+<p>Ve las diapositivas <a href="https://docs.google.com/presentation/d/1X9qP3wNlnn3BMUQhuZwAo4vCV76c33X_M-UnHxkPZpE/edit">aquí</a></p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="estructura-e-importe-de-datos.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descarga datos de ejemplo procesados con CellRanger</span></span>
+<span id="cb73-2"><a href="estructura-e-importe-de-datos.html#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Paréntesis: al usar BiocFileCache solo tenemos que descargar</span></span>
+<span id="cb73-3"><a href="estructura-e-importe-de-datos.html#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="co">#             los datos una vez.</span></span>
+<span id="cb73-4"><a href="estructura-e-importe-de-datos.html#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;BiocFileCache&#39;</span>)</span>
+<span id="cb73-5"><a href="estructura-e-importe-de-datos.html#cb73-5" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
+<span id="cb73-6"><a href="estructura-e-importe-de-datos.html#cb73-6" aria-hidden="true" tabindex="-1"></a>pbmc.url <span class="ot">&lt;-</span></span>
+<span id="cb73-7"><a href="estructura-e-importe-de-datos.html#cb73-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(</span>
+<span id="cb73-8"><a href="estructura-e-importe-de-datos.html#cb73-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;http://cf.10xgenomics.com/samples/cell-vdj/&quot;</span>,</span>
+<span id="cb73-9"><a href="estructura-e-importe-de-datos.html#cb73-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;3.1.0/vdj_v1_hs_pbmc3/&quot;</span>,</span>
+<span id="cb73-10"><a href="estructura-e-importe-de-datos.html#cb73-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;vdj_v1_hs_pbmc3_filtered_feature_bc_matrix.tar.gz&quot;</span></span>
+<span id="cb73-11"><a href="estructura-e-importe-de-datos.html#cb73-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb73-12"><a href="estructura-e-importe-de-datos.html#cb73-12" aria-hidden="true" tabindex="-1"></a>pbmc.data <span class="ot">&lt;-</span> <span class="fu">bfcrpath</span>(bfc, pbmc.url)</span>
+<span id="cb73-13"><a href="estructura-e-importe-de-datos.html#cb73-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-14"><a href="estructura-e-importe-de-datos.html#cb73-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Extrae los archivos en un directorio temporal</span></span>
+<span id="cb73-15"><a href="estructura-e-importe-de-datos.html#cb73-15" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(pbmc.data, <span class="at">exdir =</span> <span class="fu">tempdir</span>())</span>
+<span id="cb73-16"><a href="estructura-e-importe-de-datos.html#cb73-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-17"><a href="estructura-e-importe-de-datos.html#cb73-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Enumera los archivos que descargamos y que extrajimos</span></span>
+<span id="cb73-18"><a href="estructura-e-importe-de-datos.html#cb73-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Estos son los archivos típicos de CellRanger</span></span>
+<span id="cb73-19"><a href="estructura-e-importe-de-datos.html#cb73-19" aria-hidden="true" tabindex="-1"></a>pbmc.dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(),</span>
+<span id="cb73-20"><a href="estructura-e-importe-de-datos.html#cb73-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;filtered_feature_bc_matrix&quot;</span>)</span>
+<span id="cb73-21"><a href="estructura-e-importe-de-datos.html#cb73-21" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(pbmc.dir)</span>
+<span id="cb73-22"><a href="estructura-e-importe-de-datos.html#cb73-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-23"><a href="estructura-e-importe-de-datos.html#cb73-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Importa los datos como un objeto de tipo SingleCellExperiment</span></span>
+<span id="cb73-24"><a href="estructura-e-importe-de-datos.html#cb73-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;DropletUtils&#39;</span>)</span>
+<span id="cb73-25"><a href="estructura-e-importe-de-datos.html#cb73-25" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">read10xCounts</span>(pbmc.dir)</span>
+<span id="cb73-26"><a href="estructura-e-importe-de-datos.html#cb73-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Revisa el objeto que acabamos de construir</span></span>
+<span id="cb73-27"><a href="estructura-e-importe-de-datos.html#cb73-27" aria-hidden="true" tabindex="-1"></a>sce.pbmc</span>
+<span id="cb73-28"><a href="estructura-e-importe-de-datos.html#cb73-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-29"><a href="estructura-e-importe-de-datos.html#cb73-29" aria-hidden="true" tabindex="-1"></a><span class="do">## ¿Qué tan grande es el objeto de R?</span></span>
+<span id="cb73-30"><a href="estructura-e-importe-de-datos.html#cb73-30" aria-hidden="true" tabindex="-1"></a>pryr<span class="sc">::</span><span class="fu">object_size</span>(sce.pbmc)</span>
+<span id="cb73-31"><a href="estructura-e-importe-de-datos.html#cb73-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-32"><a href="estructura-e-importe-de-datos.html#cb73-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Almacena la información de CITE-seq como un experimento alternativo</span></span>
+<span id="cb73-33"><a href="estructura-e-importe-de-datos.html#cb73-33" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">splitAltExps</span>(sce.pbmc, <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>Type)</span>
+<span id="cb73-34"><a href="estructura-e-importe-de-datos.html#cb73-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Revisa el objeto que acabamos de actualizar</span></span>
+<span id="cb73-35"><a href="estructura-e-importe-de-datos.html#cb73-35" aria-hidden="true" tabindex="-1"></a>sce.pbmc</span>
+<span id="cb73-36"><a href="estructura-e-importe-de-datos.html#cb73-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-37"><a href="estructura-e-importe-de-datos.html#cb73-37" aria-hidden="true" tabindex="-1"></a><span class="do">## ¿Qué tan grande es el objeto de R?</span></span>
+<span id="cb73-38"><a href="estructura-e-importe-de-datos.html#cb73-38" aria-hidden="true" tabindex="-1"></a>pryr<span class="sc">::</span><span class="fu">object_size</span>(sce.pbmc)</span>
+<span id="cb73-39"><a href="estructura-e-importe-de-datos.html#cb73-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-40"><a href="estructura-e-importe-de-datos.html#cb73-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Descarga datos de ejemplo procesados con scPipe</span></span>
+<span id="cb73-41"><a href="estructura-e-importe-de-datos.html#cb73-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;BiocFileCache&#39;</span>)</span>
+<span id="cb73-42"><a href="estructura-e-importe-de-datos.html#cb73-42" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
+<span id="cb73-43"><a href="estructura-e-importe-de-datos.html#cb73-43" aria-hidden="true" tabindex="-1"></a>sis_seq.url <span class="ot">&lt;-</span></span>
+<span id="cb73-44"><a href="estructura-e-importe-de-datos.html#cb73-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;https://github.com/LuyiTian/SIS-seq_script/archive/master.zip&quot;</span></span>
+<span id="cb73-45"><a href="estructura-e-importe-de-datos.html#cb73-45" aria-hidden="true" tabindex="-1"></a>sis_seq.data <span class="ot">&lt;-</span> <span class="fu">bfcrpath</span>(bfc, sis_seq.url)</span>
+<span id="cb73-46"><a href="estructura-e-importe-de-datos.html#cb73-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-47"><a href="estructura-e-importe-de-datos.html#cb73-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Extrae los archivos en un directorio temporal</span></span>
+<span id="cb73-48"><a href="estructura-e-importe-de-datos.html#cb73-48" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(sis_seq.data, <span class="at">exdir =</span> <span class="fu">tempdir</span>())</span>
+<span id="cb73-49"><a href="estructura-e-importe-de-datos.html#cb73-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-50"><a href="estructura-e-importe-de-datos.html#cb73-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Enumera (algunos de) los archivos que descargamos y extrajimos</span></span>
+<span id="cb73-51"><a href="estructura-e-importe-de-datos.html#cb73-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Estos son los archivos típicos de scPipe</span></span>
+<span id="cb73-52"><a href="estructura-e-importe-de-datos.html#cb73-52" aria-hidden="true" tabindex="-1"></a>sis_seq.dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(),</span>
+<span id="cb73-53"><a href="estructura-e-importe-de-datos.html#cb73-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;SIS-seq_script-master&quot;</span>,</span>
+<span id="cb73-54"><a href="estructura-e-importe-de-datos.html#cb73-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;data&quot;</span>,</span>
+<span id="cb73-55"><a href="estructura-e-importe-de-datos.html#cb73-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;BcorKO_scRNAseq&quot;</span>,</span>
+<span id="cb73-56"><a href="estructura-e-importe-de-datos.html#cb73-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;RPI10&quot;</span>)</span>
+<span id="cb73-57"><a href="estructura-e-importe-de-datos.html#cb73-57" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(sis_seq.dir)</span>
+<span id="cb73-58"><a href="estructura-e-importe-de-datos.html#cb73-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-59"><a href="estructura-e-importe-de-datos.html#cb73-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Importa los datos como un objeto de tipo SingleCellExperiment</span></span>
+<span id="cb73-60"><a href="estructura-e-importe-de-datos.html#cb73-60" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;scPipe&#39;</span>)</span>
+<span id="cb73-61"><a href="estructura-e-importe-de-datos.html#cb73-61" aria-hidden="true" tabindex="-1"></a>sce.sis_seq <span class="ot">&lt;-</span> <span class="fu">create_sce_by_dir</span>(sis_seq.dir)</span>
+<span id="cb73-62"><a href="estructura-e-importe-de-datos.html#cb73-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Revisa el objeto que acabamos de construir</span></span>
+<span id="cb73-63"><a href="estructura-e-importe-de-datos.html#cb73-63" aria-hidden="true" tabindex="-1"></a>sce.sis_seq</span>
+<span id="cb73-64"><a href="estructura-e-importe-de-datos.html#cb73-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-65"><a href="estructura-e-importe-de-datos.html#cb73-65" aria-hidden="true" tabindex="-1"></a><span class="do">## ¿Qué tan grande es el objeto de R?</span></span>
+<span id="cb73-66"><a href="estructura-e-importe-de-datos.html#cb73-66" aria-hidden="true" tabindex="-1"></a>pryr<span class="sc">::</span><span class="fu">object_size</span>(sce.sis_seq)</span>
+<span id="cb73-67"><a href="estructura-e-importe-de-datos.html#cb73-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-68"><a href="estructura-e-importe-de-datos.html#cb73-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Descarga un ejemplo de un montón de archivos</span></span>
+<span id="cb73-69"><a href="estructura-e-importe-de-datos.html#cb73-69" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;BiocFileCache&#39;</span>)</span>
+<span id="cb73-70"><a href="estructura-e-importe-de-datos.html#cb73-70" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
+<span id="cb73-71"><a href="estructura-e-importe-de-datos.html#cb73-71" aria-hidden="true" tabindex="-1"></a>lun_counts.url <span class="ot">&lt;-</span></span>
+<span id="cb73-72"><a href="estructura-e-importe-de-datos.html#cb73-72" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(</span>
+<span id="cb73-73"><a href="estructura-e-importe-de-datos.html#cb73-73" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;https://www.ebi.ac.uk/arrayexpress/files/&quot;</span>,</span>
+<span id="cb73-74"><a href="estructura-e-importe-de-datos.html#cb73-74" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;E-MTAB-5522/E-MTAB-5522.processed.1.zip&quot;</span></span>
+<span id="cb73-75"><a href="estructura-e-importe-de-datos.html#cb73-75" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb73-76"><a href="estructura-e-importe-de-datos.html#cb73-76" aria-hidden="true" tabindex="-1"></a>lun_counts.data <span class="ot">&lt;-</span> <span class="fu">bfcrpath</span>(bfc, lun_counts.url)</span>
+<span id="cb73-77"><a href="estructura-e-importe-de-datos.html#cb73-77" aria-hidden="true" tabindex="-1"></a>lun_coldata.url <span class="ot">&lt;-</span></span>
+<span id="cb73-78"><a href="estructura-e-importe-de-datos.html#cb73-78" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">&quot;https://www.ebi.ac.uk/arrayexpress/files/&quot;</span>,</span>
+<span id="cb73-79"><a href="estructura-e-importe-de-datos.html#cb73-79" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;E-MTAB-5522/E-MTAB-5522.sdrf.txt&quot;</span>)</span>
+<span id="cb73-80"><a href="estructura-e-importe-de-datos.html#cb73-80" aria-hidden="true" tabindex="-1"></a>lun_coldata.data <span class="ot">&lt;-</span> <span class="fu">bfcrpath</span>(bfc, lun_coldata.url)</span>
+<span id="cb73-81"><a href="estructura-e-importe-de-datos.html#cb73-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-82"><a href="estructura-e-importe-de-datos.html#cb73-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Extrae los archivos en un directorio temporal</span></span>
+<span id="cb73-83"><a href="estructura-e-importe-de-datos.html#cb73-83" aria-hidden="true" tabindex="-1"></a>lun_counts.dir <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="st">&quot;lun_counts.&quot;</span>)</span>
+<span id="cb73-84"><a href="estructura-e-importe-de-datos.html#cb73-84" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(lun_counts.data, <span class="at">exdir =</span> lun_counts.dir)</span>
+<span id="cb73-85"><a href="estructura-e-importe-de-datos.html#cb73-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-86"><a href="estructura-e-importe-de-datos.html#cb73-86" aria-hidden="true" tabindex="-1"></a><span class="co"># Enumera los archivos que descargamos y extrajimos</span></span>
+<span id="cb73-87"><a href="estructura-e-importe-de-datos.html#cb73-87" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(lun_counts.dir)</span>
+<span id="cb73-88"><a href="estructura-e-importe-de-datos.html#cb73-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-89"><a href="estructura-e-importe-de-datos.html#cb73-89" aria-hidden="true" tabindex="-1"></a><span class="co"># Lee la matriz de cuentas (para una placa)</span></span>
+<span id="cb73-90"><a href="estructura-e-importe-de-datos.html#cb73-90" aria-hidden="true" tabindex="-1"></a>lun.counts <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(</span>
+<span id="cb73-91"><a href="estructura-e-importe-de-datos.html#cb73-91" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(lun_counts.dir, <span class="st">&quot;counts_Calero_20160113.tsv&quot;</span>),</span>
+<span id="cb73-92"><a href="estructura-e-importe-de-datos.html#cb73-92" aria-hidden="true" tabindex="-1"></a>    <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb73-93"><a href="estructura-e-importe-de-datos.html#cb73-93" aria-hidden="true" tabindex="-1"></a>    <span class="at">row.names =</span> <span class="dv">1</span>,</span>
+<span id="cb73-94"><a href="estructura-e-importe-de-datos.html#cb73-94" aria-hidden="true" tabindex="-1"></a>    <span class="at">check.names =</span> <span class="cn">FALSE</span></span>
+<span id="cb73-95"><a href="estructura-e-importe-de-datos.html#cb73-95" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb73-96"><a href="estructura-e-importe-de-datos.html#cb73-96" aria-hidden="true" tabindex="-1"></a><span class="co"># Almacena la información de la longitud de los genes para después</span></span>
+<span id="cb73-97"><a href="estructura-e-importe-de-datos.html#cb73-97" aria-hidden="true" tabindex="-1"></a>gene.lengths <span class="ot">&lt;-</span> lun.counts<span class="sc">$</span>Length</span>
+<span id="cb73-98"><a href="estructura-e-importe-de-datos.html#cb73-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Convierte los datos de cuentas de genez a una matriz (quitamos las longitudes)</span></span>
+<span id="cb73-99"><a href="estructura-e-importe-de-datos.html#cb73-99" aria-hidden="true" tabindex="-1"></a>lun.counts <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(lun.counts[, <span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb73-100"><a href="estructura-e-importe-de-datos.html#cb73-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-101"><a href="estructura-e-importe-de-datos.html#cb73-101" aria-hidden="true" tabindex="-1"></a><span class="co"># Lee la información de las muestras (células)</span></span>
+<span id="cb73-102"><a href="estructura-e-importe-de-datos.html#cb73-102" aria-hidden="true" tabindex="-1"></a>lun.coldata <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(lun_coldata.data,</span>
+<span id="cb73-103"><a href="estructura-e-importe-de-datos.html#cb73-103" aria-hidden="true" tabindex="-1"></a>    <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb73-104"><a href="estructura-e-importe-de-datos.html#cb73-104" aria-hidden="true" tabindex="-1"></a>    <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb73-105"><a href="estructura-e-importe-de-datos.html#cb73-105" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;S4Vectors&#39;</span>)</span>
+<span id="cb73-106"><a href="estructura-e-importe-de-datos.html#cb73-106" aria-hidden="true" tabindex="-1"></a>lun.coldata <span class="ot">&lt;-</span> <span class="fu">as</span>(lun.coldata, <span class="st">&quot;DataFrame&quot;</span>)</span>
+<span id="cb73-107"><a href="estructura-e-importe-de-datos.html#cb73-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-108"><a href="estructura-e-importe-de-datos.html#cb73-108" aria-hidden="true" tabindex="-1"></a><span class="co"># Pon en orden la información de las muestras para que</span></span>
+<span id="cb73-109"><a href="estructura-e-importe-de-datos.html#cb73-109" aria-hidden="true" tabindex="-1"></a><span class="co"># sea idéntico al orden en la matriz de cuentas</span></span>
+<span id="cb73-110"><a href="estructura-e-importe-de-datos.html#cb73-110" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">match</span>(<span class="fu">colnames</span>(lun.counts),</span>
+<span id="cb73-111"><a href="estructura-e-importe-de-datos.html#cb73-111" aria-hidden="true" tabindex="-1"></a>    lun.coldata<span class="sc">$</span><span class="st">`</span><span class="at">Source Name</span><span class="st">`</span>)</span>
+<span id="cb73-112"><a href="estructura-e-importe-de-datos.html#cb73-112" aria-hidden="true" tabindex="-1"></a>lun.coldata <span class="ot">&lt;-</span> lun.coldata[m,]</span>
+<span id="cb73-113"><a href="estructura-e-importe-de-datos.html#cb73-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-114"><a href="estructura-e-importe-de-datos.html#cb73-114" aria-hidden="true" tabindex="-1"></a><span class="co"># Construye la tabla de información de los genes</span></span>
+<span id="cb73-115"><a href="estructura-e-importe-de-datos.html#cb73-115" aria-hidden="true" tabindex="-1"></a>lun.rowdata <span class="ot">&lt;-</span> <span class="fu">DataFrame</span>(<span class="at">Length =</span> gene.lengths)</span>
+<span id="cb73-116"><a href="estructura-e-importe-de-datos.html#cb73-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-117"><a href="estructura-e-importe-de-datos.html#cb73-117" aria-hidden="true" tabindex="-1"></a><span class="co"># Construye el objeto de SingleCellExperiment</span></span>
+<span id="cb73-118"><a href="estructura-e-importe-de-datos.html#cb73-118" aria-hidden="true" tabindex="-1"></a>lun.sce <span class="ot">&lt;-</span> <span class="fu">SingleCellExperiment</span>(</span>
+<span id="cb73-119"><a href="estructura-e-importe-de-datos.html#cb73-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">assays =</span> <span class="fu">list</span>(<span class="at">assays =</span> lun.counts),</span>
+<span id="cb73-120"><a href="estructura-e-importe-de-datos.html#cb73-120" aria-hidden="true" tabindex="-1"></a>    <span class="at">colData =</span> lun.coldata,</span>
+<span id="cb73-121"><a href="estructura-e-importe-de-datos.html#cb73-121" aria-hidden="true" tabindex="-1"></a>    <span class="at">rowData =</span> lun.rowdata</span>
+<span id="cb73-122"><a href="estructura-e-importe-de-datos.html#cb73-122" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb73-123"><a href="estructura-e-importe-de-datos.html#cb73-123" aria-hidden="true" tabindex="-1"></a><span class="co"># Revisa el objeto que acabamos de construir</span></span>
+<span id="cb73-124"><a href="estructura-e-importe-de-datos.html#cb73-124" aria-hidden="true" tabindex="-1"></a>lun.sce</span>
+<span id="cb73-125"><a href="estructura-e-importe-de-datos.html#cb73-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-126"><a href="estructura-e-importe-de-datos.html#cb73-126" aria-hidden="true" tabindex="-1"></a><span class="do">## ¿Qué tan grande es el objeto de R?</span></span>
+<span id="cb73-127"><a href="estructura-e-importe-de-datos.html#cb73-127" aria-hidden="true" tabindex="-1"></a>pryr<span class="sc">::</span><span class="fu">object_size</span>(lun.sce)</span></code></pre></div>
+</div>
+<div id="detalles-de-la-sesión-de-r-3" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Detalles de la sesión de R</h2>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="estructura-e-importe-de-datos.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb74-2"><a href="estructura-e-importe-de-datos.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-10 07:24:54 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="estructura-e-importe-de-datos.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.382   0.100   0.365</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="estructura-e-importe-de-datos.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb57-2"><a href="estructura-e-importe-de-datos.html#cb57-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+##   0.413   0.130   0.437</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="estructura-e-importe-de-datos.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb78-2"><a href="estructura-e-importe-de-datos.html#cb78-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)
@@ -533,7 +771,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-09                  
+##  date     2021-08-10                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package     * version date       lib source        
