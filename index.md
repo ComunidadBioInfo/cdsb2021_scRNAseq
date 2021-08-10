@@ -144,7 +144,7 @@ BiocManager::version()
 
 
 ```
-## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "celldex", "clusterExperiment", "cowplot", "dplyr", "DropletUtils", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "postcards", "pryr", "RColorBrewer", "rsthemes", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "SingleR", "suncalc", "TENxPBMCData", "usethis", "uwot"))
+## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "celldex", "clusterExperiment", "cowplot", "dplyr", "DropletUtils", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "postcards", "pryr", "RColorBrewer", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "SingleR", "suncalc", "TENxPBMCData", "usethis", "uwot"))
 ```
 
 
@@ -316,6 +316,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  Cairo                    1.5-12.2   2020-07-07 [1] RSPM (R 4.1.0)
 ##  callr                    3.7.0      2021-04-20 [2] RSPM (R 4.1.0)
 ##  caTools                  1.18.2     2021-03-28 [1] RSPM (R 4.1.0)
+##  cdsb2021scRNAseq         0.99.0     2021-08-09 [1] local         
 ##  celldex                  1.2.0      2021-05-20 [1] Bioconductor  
 ##  circlize                 0.4.13     2021-06-09 [1] RSPM (R 4.1.0)
 ##  class                    7.3-19     2021-05-03 [3] CRAN (R 4.1.0)
@@ -636,7 +637,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-09 23:36:23.
+Fecha de la última actualización de esta página: 2021-08-09 23:48:49.
 
 ## Licencia  {-}
 
