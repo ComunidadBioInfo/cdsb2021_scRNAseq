@@ -214,6 +214,17 @@ Aquí están las listas de canciones por si desean escuchar algo de música mien
 
 Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2021_scRNAseq')` o revisalos en línea vía [**comunidadbioinfo.github.io/cdsb2021_scRNAseq**](http://comunidadbioinfo.github.io/cdsb2021_scRNAseq).
 
+## Fuentes {-}
+
+El material de este curso está basado en el:
+
+* libro [**Orchestrating Single Cell Analysis with Bioconductor**](https://osca.bioconductor.org/) de [Aaron Lun](https://www.linkedin.com/in/aaron-lun-869b5894/), [Robert Amezquita](https://robertamezquita.github.io/), [Stephanie Hicks](https://www.stephaniehicks.com/) y [Raphael Gottardo](http://rglab.org)
+* [**curso de scRNA-seq para WEHI**](https://drive.google.com/drive/folders/1cn5d-Ey7-kkMiex8-74qxvxtCQT6o72h) creado por [Peter Hickey](https://www.peterhickey.org/)
+* curso de [Leonardo Collado-Torres](https://twitter.com/lcolladotor) para LCG-UNAM-EJ de marzo 2020 https://github.com/lcolladotor/osca_LIIGH_UNAM_2020
+* taller de la CDSB 2020 https://github.com/ComunidadBioInfo/cdsb2020
+* curso de [Leonardo Collado-Torres](https://twitter.com/lcolladotor) para la LCG-UNAM de febrero 2021 https://github.com/lcolladotor/rnaseq_LCG-UNAM_2021
+
+
 ## Zoom {-}
 
 Las ligas de Zoom están disponibles exclusivamente para lxs participantes de CDSB2021 vía Slack. Te enviaremos una invitación al correo electrónico que usaste para registrate.
@@ -625,7 +636,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-09 22:52:05.
+Fecha de la última actualización de esta página: 2021-08-09 23:34:18.
 
 ## Licencia  {-}
 
