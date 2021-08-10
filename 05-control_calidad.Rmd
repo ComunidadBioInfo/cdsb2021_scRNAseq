@@ -429,8 +429,9 @@ plotColData(
     sce.pbmc,
     x = "total",
     y = "subsets_MT_percent",
-    colour_by = "discard_mito"
-) + facet_grid(~ ifelse(sce.pbmc$is_cell, "Célula", "Droplet vacío"))
+    colour_by = "discard_mito",
+    other_fields = c("is_cell")
+) + facet_grid(~ ifelse(is_cell, "Célula", "Droplet vacío"))
 ```
 
 * No podemos usar nuestro objeto `sce.pbmc` porque ya eliminamos los droplets vacíos al correr `sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]`. Por eso tendremos que volver a usar `sce.pbmc <- read10xCounts(fname, col.names = TRUE)`.

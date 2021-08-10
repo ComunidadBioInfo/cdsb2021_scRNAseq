@@ -1,4 +1,4 @@
-## ----install, eval = FALSE---------------------------------------------------------------------------
+## ----install, eval = FALSE--------------------------------------------------------------------------
 ## ## Para instalar paquetes
 ## if (!requireNamespace("remotes", quietly = TRUE)) {
 ##     install.packages("remotes")
@@ -12,7 +12,7 @@
 ## ## Instala los paquetes de R que necesitamos
 
 
-## ----auto_deps, echo = FALSE-------------------------------------------------------------------------
+## ----auto_deps, echo = FALSE------------------------------------------------------------------------
 cat(paste0(
     'BiocManager::install(c("',
     paste(
@@ -27,7 +27,7 @@ cat(paste0(
 knitr::include_graphics("img/clone_version_control.png")
 
 
-## ----echo=FALSE, fig.cap="Selecciona la opción de `Git` (la primera).", out.width="60%"--------------
+## ----echo=FALSE, fig.cap="Selecciona la opción de `Git` (la primera).", out.width="60%"-------------
 knitr::include_graphics("img/clone_choose_git.png")
 
 
@@ -35,7 +35,7 @@ knitr::include_graphics("img/clone_choose_git.png")
 knitr::include_graphics("img/clone_add_info.png")
 
 
-## ----session_info------------------------------------------------------------------------------------
+## ----session_info-----------------------------------------------------------------------------------
 options(width = 120)
 pkgs <- installed.packages()[, "Package"]
 sessioninfo::session_info(pkgs, include_base = TRUE)
