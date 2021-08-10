@@ -3,7 +3,7 @@
 Instructoras: [Elisa Márquez Zavala](https://twitter.com/naielisha), [Citlali Gil Aguillon](http://twitter.com/argininaa)
 
 Contenido adaptado de [CDSB2020: Introducción a scRNA-seq, estructura e importe de datos
-](https://comunidadbioinfo.github.io/cdsb2020/scRNAseq/02-data-infrastructure-and-import.html#1) de [Leonardo Collado Torres](https://github.com/lcolladotor) 
+](https://comunidadbioinfo.github.io/cdsb2020/scRNAseq/02-data-infrastructure-and-import.html#1) de [Leonardo Collado Torres](https://twitter.com/lcolladotor). 
 
 
 ## Estructura de `SingleCellExperiment`
@@ -29,7 +29,7 @@ Todo lo anterior está ligado, por lo que hace más sencillo el manejo de subset
 Examinaremos cada una de estas partes a detalle
 
 
-Usaremos las diapositivas de [Peter Hickey](https://www.peterhickey.org/) para explicar la clase `SingleCellExperiment` [LINK A DIAPOSITIVAS](https://docs.google.com/presentation/d/1X9qP3wNlnn3BMUQhuZwAo4vCV76c33X_M-UnHxkPZpE/edit#slide=id.g7e63e0fe24_0_151). A la par se demostrará el siguiente código
+Usaremos las diapositivas de [Peter Hickey](https://www.peterhickey.org/) para explicar la clase `SingleCellExperiment` [en las siguientes diapositivas](https://docs.google.com/presentation/d/1X9qP3wNlnn3BMUQhuZwAo4vCV76c33X_M-UnHxkPZpE/edit#slide=id.g7e63e0fe24_0_151). A la par se demostrará el siguiente código.
 
 
 ## Ejercicio 1
@@ -38,7 +38,7 @@ The A. T. L. Lun et al. (2017) dataset contains two 96-well plates of 416B cells
 
 Fragmento obtenido de https://bioconductor.org/books/release/OSCA/lun-416b-cell-line-smart-seq2.html
 
-```{r, eval=FALSE, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library('scRNAseq')
 sce.416b <- LunSpikeInData(which = "416b")
 
@@ -60,7 +60,7 @@ sce <- SingleCellExperiment(assays = list(counts = counts.416b))
 sce
 
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(sce)
+lobstr::obj_size(sce)
 
 # Accesa la matriz de cuenta del compartimento (slot) "assays" 
 # assays(sce, "counts")
@@ -77,7 +77,7 @@ sce <- scater::logNormCounts(sce)
 sce
 
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(sce)
+lobstr::obj_size(sce)
 
 # 1. El método general
 assay(sce, "logcounts")[110:115, 1:3]
@@ -93,7 +93,7 @@ assays(sce) # indica num y nombre de assays
 assayNames(sce) # solo nos dará los nombres de los assays
 #      assay(sce, "counts_100")[110:115, 1:3]
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(sce)
+lobstr::obj_size(sce)
 
 
 "segunda parte:
@@ -125,13 +125,13 @@ colData(sce)
 sce
 
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(sce)
+lobstr::obj_size(sce)
 
 ## Agrega las cuentas normalizadas (lognorm) de nuevo
 sce <- scater::logNormCounts(sce)
 
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(sce)
+lobstr::obj_size(sce)
 
 # Ejemplo: obtén el subconjunto de células de fenotipo "wild type"
 # Acuérdate que las células son columnas del SCE !!!!
@@ -151,7 +151,7 @@ sce <- scater::addPerFeatureQC(sce)
 rowData(sce)
 
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(sce)
+lobstr::obj_size(sce)
 
 # Descarga los archivos de anotación de la base de datos de Ensembl
 # correspondientes usando los recursos disponibles vía AnnotationHub
@@ -171,7 +171,7 @@ rowData(sce)$chromosome <- chromosome
 rowData(sce)
 
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(sce)
+lobstr::obj_size(sce)
 
 # Ejemplo: obtén el subconjunto de datos donde los genes están en el
 # cromosoma 3
@@ -239,7 +239,7 @@ altExp(sce, "ERCC") <- ercc.sce.416b
 sce
 
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(sce)
+lobstr::obj_size(sce)
 
 # Enumera los experimentos alternativos almacenados en nuestro objeto
 altExps(sce)
@@ -252,7 +252,7 @@ ncol(sce.subset)
 ncol(altExp(sce.subset))
 
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(sce.subset)
+lobstr::obj_size(sce.subset)
 
 "Septima parte:
 sizefactores"
@@ -283,6 +283,7 @@ NOTA: La clase `SingleCellExperiment`está basada en `SummarizedExperiment`, por
 * ¿donde usamos los `rownames(sce)`?
 
 ## Breve repaso de R
+
 ```{r}
 # Creamos un data.frame
 df <- data.frame(x = c(TRUE, FALSE, NA, NA), y = c(12, 34, 56, 78))
@@ -320,8 +321,7 @@ df[bool_info,]
 
 ## Ejercicio 2
 
-```{r, eval = FALSE}
-
+```{r}
 library("SingleCellExperiment")
 library("scRNAseq")
 
@@ -338,23 +338,13 @@ row.data <- read.csv(archivo_rowData, row.names = 1, header= TRUE, check.names=F
 ```
 
 
-* Crea un objeto SingleCellExperiment
+* Crea un objeto `SingleCellExperiment`
 
-```{r, echo =FALSE, eval=FALSE}
-sce <- SingleCellExperiment(
-  assays = list(counts = counts),
-  colData = col.data,
-  rowData = row.data)
-
-sce <- scater::logNormCounts(sce)
-
-sce
-```
   - ¿Cuántos genes tenemos?
 
-  - ¿Qué información tenemos en el rowData? 
+  - ¿Qué información tenemos en el `rowData()`? 
 
-* Extraigan los datos de los genes que nos interesan (objeto ´int_gen´)
+* Extraigan los datos de los genes que nos interesan (objeto `int_gen`)
   - Pasen el mouse sobre los siguientes textos para ver recomendaciones:
   - [Recomendación 1](## "Recuerda que puedes acceder con booleanos")
   
@@ -364,18 +354,13 @@ sce
   
   - [Recomendación 3](## "Esto es como el ejercicio 'Using **rowData** for subsetting'")
 
-```{r, echo =TRUE, eval=FALSE}
+```{r}
 int_gen <-  c("Angpt1","Chic2","Mir503","Magee2","Nenf","Eps15l1","Hsf2bp","Gnptg","Vegfb","Atmin","Gad1","Gad2","Slc32a1","Dner","Slc2a13","Slc6a1","Nrxn3")
 ```
 
-* Creen un objeto llamado ´min_sce´ con los datos de los genes
+* Creen un objeto llamado `min_sce` con los datos de solo esos genes
 
-```{r, echo =FALSE, eval=FALSE}
-bool_data <- rownames(rowData(sce))
-min_sce <- sce[ bool_data %in% int_gen,]
-```
-
-  - ¿Cuáles son parte del tejido ´interneurons´ o del tejido ´pyramidal CA1´ ? (del objeto ´min_sce´) 
+  - ¿Cuáles son parte del tejido `interneurons` o del tejido `pyramidal CA1` ? (del objeto `min_sce`) 
 
 
   - [Recomendación 1](## "Recuerda que puedes acceder con booleanos")
@@ -387,9 +372,36 @@ min_sce <- sce[ bool_data %in% int_gen,]
   - [Recomendación 3](## "Esto es como el ejercicio 'Using **colData** for subsetting'")
 
 
-* Con este subconjunto, crea el objeto tej_min_sce
+* Con este subconjunto, crea el objeto `tej_min_sce`
 
-```{r, echo =FALSE, eval=FALSE}
+* Una vez que tengan el objeto ´SingleCellExperiment´ llamado ´tej_min_sce´, corran el siguiente código.
+```{r, eval= FALSE}
+library("scater")
+
+plotHeatmap(object= tej_min_sce, features=rownames(tej_min_sce), order_columns_by="level1class")
+```
+
+
+### Respuestas
+
+```{r}
+sce <- SingleCellExperiment(
+  assays = list(counts = counts),
+  colData = col.data,
+  rowData = row.data)
+
+sce <- scater::logNormCounts(sce)
+
+sce
+```
+
+```{r}
+bool_data <- rownames(rowData(sce))
+min_sce <- sce[ bool_data %in% int_gen,]
+```
+
+
+```{r}
 tej_int <- min_sce$level1class == "interneurons"
 tej_pyr <- min_sce$level1class == "pyramidal CA1"
 
@@ -397,8 +409,7 @@ tej_pyr <- min_sce$level1class == "pyramidal CA1"
 tej_min_sce <- min_sce[, tej_int | tej_pyr]
 ```
 
-* Una vez que tengan el objeto ´SingleCellExperiment´ llamado ´tej_min_sce´, corran el siguiente código.
-```{r, eval= FALSE}
+```{r}
 library("scater")
 
 plotHeatmap(object= tej_min_sce, features=rownames(tej_min_sce), order_columns_by="level1class")
@@ -408,18 +419,17 @@ plotHeatmap(object= tej_min_sce, features=rownames(tej_min_sce), order_columns_b
 
 * Realiza los mismos pasos, pero ahora los genes que buscamos no tienen el nombre usual de gen (Gad1), sino su Ensembl gene IDs
 
-```{r, eval= FALSE}
+```{r}
 int_gen <-  c("ENSMUSG00000071076","ENSMUSG00000002076","ENSMUSG00000024962","ENSMUSG00000031224","ENSMSG00000036560","ENSMUSG00000037499","ENSMUSG00000006276","ENSMUSG00000035521","ENSMUSG00000047388","ENSMUSG0000051079","ENSMUSG00000076122","ENSMUSG00000029229","ENSMUSG00000022309","ENSMUSG00000036766","ENSMUSG00000070880","ENSMUSG00000026787","ENSMUSG00000066392","ENSMUSG00000036298","ENSMUSG00000037771","ENSMUSG00000030310")
-
 ```
 
 ## Import data
 
 * Diapositivas de Peter Hickey
 
-Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1X9qP3wNlnn3BMUQhuZwAo4vCV76c33X_M-UnHxkPZpE/edit)
+Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1X9qP3wNlnn3BMUQhuZwAo4vCV76c33X_M-UnHxkPZpE/edit).
 
-```{r eval=FALSE, echo=TRUE}
+```{r}
 # Descarga datos de ejemplo procesados con CellRanger
 # Paréntesis: al usar BiocFileCache solo tenemos que descargar
 #             los datos una vez.
@@ -449,7 +459,7 @@ sce.pbmc <- read10xCounts(pbmc.dir)
 sce.pbmc
 
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(sce.pbmc)
+lobstr::obj_size(sce.pbmc)
 
 # Almacena la información de CITE-seq como un experimento alternativo
 sce.pbmc <- splitAltExps(sce.pbmc, rowData(sce.pbmc)$Type)
@@ -457,7 +467,7 @@ sce.pbmc <- splitAltExps(sce.pbmc, rowData(sce.pbmc)$Type)
 sce.pbmc
 
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(sce.pbmc)
+lobstr::obj_size(sce.pbmc)
 
 # Descarga datos de ejemplo procesados con scPipe
 library('BiocFileCache')
@@ -485,7 +495,7 @@ sce.sis_seq <- create_sce_by_dir(sis_seq.dir)
 sce.sis_seq
 
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(sce.sis_seq)
+lobstr::obj_size(sce.sis_seq)
 
 # Descarga un ejemplo de un montón de archivos
 library('BiocFileCache')
@@ -546,7 +556,7 @@ lun.sce <- SingleCellExperiment(
 lun.sce
 
 ## ¿Qué tan grande es el objeto de R?
-pryr::object_size(lun.sce)
+lobstr::obj_size(lun.sce)
 ```
 
 ## Detalles de la sesión de R
