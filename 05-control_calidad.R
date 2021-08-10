@@ -1,4 +1,4 @@
-## ----cargar_paquetes, message = FALSE---------------------------------------------------------------------------------
+## ----cargar_paquetes, message = FALSE---------------------------------------------------------------
 ## Paquetes de este capítulo
 library("scRNAseq") ## para descargar datos de ejemplo
 library("AnnotationHub") ## para obtener información de genes
@@ -8,7 +8,7 @@ library("DropletUtils") ## para detectar droplets
 library("Matrix") ## para leer datos en formatos comprimidos
 
 
-## ----datos_ejercicio_1------------------------------------------------------------------------------------------------
+## ----datos_ejercicio_1------------------------------------------------------------------------------
 ## Datos
 library("scRNAseq")
 sce.416b <- LunSpikeInData(which = "416b")
@@ -40,7 +40,7 @@ sce.416b <- addPerCellQC(sce.416b,
 ## ejercicio.
 
 
-## ----visualizar_qc----------------------------------------------------------------------------------------------------
+## ----visualizar_qc----------------------------------------------------------------------------------
 plotColData(sce.416b, x = "block", y = "detected")
 plotColData(sce.416b, x = "block", y = "detected") +
     scale_y_log10()
@@ -53,7 +53,7 @@ plotColData(sce.416b,
     facet_wrap(~phenotype)
 
 
-## ----qc_altexps_ERCC_percent, echo = FALSE----------------------------------------------------------------------------
+## ----qc_altexps_ERCC_percent, echo = FALSE----------------------------------------------------------
 plotColData(sce.416b, x = "block", y = "altexps_ERCC_percent")
 plotColData(sce.416b,
     x = "block",
@@ -63,7 +63,7 @@ plotColData(sce.416b,
     facet_wrap(~phenotype)
 
 
-## ----valores_qc-------------------------------------------------------------------------------------------------------
+## ----valores_qc-------------------------------------------------------------------------------------
 # Valores de límite ejemplo
 qc.lib <- sce.416b$sum < 100000
 qc.nexprs <- sce.416b$detected < 5000
@@ -157,7 +157,7 @@ DataFrame(
 )
 
 
-## ----grun_problema----------------------------------------------------------------------------------------------------
+## ----grun_problema----------------------------------------------------------------------------------
 sce.grun <- GrunPancreasData()
 sce.grun <- addPerCellQC(sce.grun)
 
@@ -165,7 +165,7 @@ sce.grun <- addPerCellQC(sce.grun)
 plotColData(sce.grun, x = "donor", y = "altexps_ERCC_percent")
 
 
-## ----grun_isOutlier---------------------------------------------------------------------------------------------------
+## ----grun_isOutlier---------------------------------------------------------------------------------
 ## isOutlier() puede ayudarnos cuando un grupo de muestras
 ## tuvo más problemas que el resto
 discard.ercc <- isOutlier(sce.grun$altexps_ERCC_percent,
@@ -196,7 +196,7 @@ plotColData(
 )
 
 
-## ----qc_extra_416b----------------------------------------------------------------------------------------------------
+## ----qc_extra_416b----------------------------------------------------------------------------------
 # Agregamos información sobre que células
 # tienen valores extremos
 sce.416b$discard <- discard2
@@ -224,7 +224,7 @@ plotColData(
     facet_grid(block ~ phenotype)
 
 
-## ----qc_extra_grun, echo = FALSE--------------------------------------------------------------------------------------
+## ----qc_extra_grun, echo = FALSE--------------------------------------------------------------------
 sce.grun$discard <- discard.ercc2
 plotColData(
     sce.grun,
@@ -244,7 +244,7 @@ knitr::include_graphics("https://cdn.10xgenomics.com/image/upload/dpr_2.0,e_shar
 knitr::include_graphics("img/emptyDrops_Fig2.png")
 
 
-## ----pbmc_qc----------------------------------------------------------------------------------------------------------
+## ----pbmc_qc----------------------------------------------------------------------------------------
 ## Descarguemos los datos
 library("BiocFileCache")
 bfc <- BiocFileCache()
@@ -295,7 +295,7 @@ legend(
 )
 
 
-## ----emptyDrops-------------------------------------------------------------------------------------------------------
+## ----emptyDrops-------------------------------------------------------------------------------------
 ## Usemos DropletUtils para encontrar los droplets
 set.seed(100)
 e.out <- emptyDrops(counts(sce.pbmc))
@@ -319,7 +319,7 @@ col = "grey80"
 )
 
 
-## ----pbmc_chrMT_ayuda-------------------------------------------------------------------------------------------------
+## ----pbmc_chrMT_ayuda-------------------------------------------------------------------------------
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 is.mito <- grep("^MT-", rowData(sce.pbmc)$Symbol)
 sce.pmbc <- addPerCellQC(sce.pbmc, subsets = list(MT = is.mito))
@@ -335,7 +335,7 @@ plot(
 abline(h = attr(discard.mito, "thresholds")["higher"], col = "red")
 
 
-## ----pbmc_combined, echo = FALSE--------------------------------------------------------------------------------------
+## ----pbmc_combined, echo = FALSE--------------------------------------------------------------------
 ## Leer los datos crudos de nuevo
 sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 
@@ -360,11 +360,12 @@ plotColData(
     sce.pbmc,
     x = "total",
     y = "subsets_MT_percent",
-    colour_by = "discard_mito"
-) + facet_grid(~ ifelse(sce.pbmc$is_cell, "Célula", "Droplet vacío"))
+    colour_by = "discard_mito",
+    other_fields = c("is_cell")
+) + facet_grid(~ ifelse(is_cell, "Célula", "Droplet vacío"))
 
 
-## ----filtrar_o_no-----------------------------------------------------------------------------------------------------
+## ----filtrar_o_no-----------------------------------------------------------------------------------
 # Eliminemos las células de calidad baja
 # al quedarnos con las columnas del objeto sce que NO
 # queremos descartar (eso hace el !)
@@ -379,7 +380,7 @@ marked$discard <- discard2
 knitr::include_graphics("img/ExperimentSubset.png")
 
 
-## ----isee_basic-------------------------------------------------------------------------------------------------------
+## ----isee_basic-------------------------------------------------------------------------------------
 ## Hagamos un objeto sencillo de tipo RangedSummarizedExperiment
 library("SummarizedExperiment")
 ## ?SummarizedExperiment
@@ -426,14 +427,14 @@ if (interactive()) {
 }
 
 
-## ----isee_416b--------------------------------------------------------------------------------------------------------
+## ----isee_416b--------------------------------------------------------------------------------------
 ## Explora el objeto sce.416b de forma interactiva
 if (interactive()) {
     iSEE::iSEE(sce.416b, appTitle = "sce.416b")
 }
 
 
-## ---------------------------------------------------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------------
 ## Información de la sesión de R
 Sys.time()
 proc.time()
