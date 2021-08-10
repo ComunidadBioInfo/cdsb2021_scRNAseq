@@ -236,7 +236,7 @@ dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
 
 ```{r, warning=FALSE, message=FALSE }
 library(scRNAseq)
-sce.416b <- LunSpikeInData(which="416b") 
+sce.416b <- LunSpikeInData(which = "416b")
 sce.416b$block <- factor(sce.416b$block)
 ```
 
@@ -256,26 +256,31 @@ Descripción [aquí](https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2
 library(AnnotationHub)
 ens.mm.v97 <- AnnotationHub()[["AH73905"]]
 rowData(sce.416b)$ENSEMBL <- rownames(sce.416b)
-rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97, 
-  keys=rownames(sce.416b),
-  keytype="GENEID", column="SYMBOL")
+rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97,
+    keys = rownames(sce.416b),
+    keytype = "GENEID", column = "SYMBOL"
+)
 rowData(sce.416b)$SEQNAME <- mapIds(ens.mm.v97,
-  keys=rownames(sce.416b),
-  keytype="GENEID", column="SEQNAME")
+    keys = rownames(sce.416b),
+    keytype = "GENEID", column = "SEQNAME"
+)
 library(scater)
-rownames(sce.416b) <- uniquifyFeatureNames(rowData(sce.416b)$ENSEMBL, 
-  rowData(sce.416b)$SYMBOL)
+rownames(sce.416b) <- uniquifyFeatureNames(
+    rowData(sce.416b)$ENSEMBL,
+    rowData(sce.416b)$SYMBOL
+)
 ```
 
 
 ```{r }
 # quality-control
-mito <- which(rowData(sce.416b)$SEQNAME=="MT")
-stats <- perCellQCMetrics(sce.416b, subsets=list(Mt=mito))
+mito <- which(rowData(sce.416b)$SEQNAME == "MT")
+stats <- perCellQCMetrics(sce.416b, subsets = list(Mt = mito))
 qc <- quickPerCellQC(stats,
-  percent_subsets=c("subsets_Mt_percent", "altexps_ERCC_percent"),
-  batch=sce.416b$block)
-sce.416b <- sce.416b[,!qc$discard]
+    percent_subsets = c("subsets_Mt_percent", "altexps_ERCC_percent"),
+    batch = sce.416b$block
+)
+sce.416b <- sce.416b[, !qc$discard]
 
 # normalization
 library(scran)
@@ -292,10 +297,14 @@ sce.416b <- logNormCounts(sce.416b)
 
 ```{r }
 library(scran)
-dec.block.416b <- modelGeneVarWithSpikes(sce.416b, 
-  "ERCC", block=sce.416b$block)
+dec.block.416b <- modelGeneVarWithSpikes(sce.416b,
+    "ERCC",
+    block = sce.416b$block
+)
 dec.block.416b[order(
-  dec.block.416b$bio, decreasing=TRUE),]
+    dec.block.416b$bio,
+    decreasing = TRUE
+), ]
 ```
 
 Al calcular tendencias específicas por batch se tomarán en cuenta las diferencias en la relación media-varianza entre batches
@@ -339,16 +348,17 @@ Contra: ¿Qué valor de X se debe usar?
 
 ```{r }
 # Works with modelGeneVar() output
-hvg.pbmc.var <- getTopHVGs(dec.pbmc, n=1000)
+hvg.pbmc.var <- getTopHVGs(dec.pbmc, n = 1000)
 str(hvg.pbmc.var)
 
 # Works with modelGeneVarWithSpikes() output
-#hvg.416b.var <- getTopHVGs(dec.spike.416b, n=1000)
-#str(hvg.416b.var)
+# hvg.416b.var <- getTopHVGs(dec.spike.416b, n=1000)
+# str(hvg.416b.var)
 
 # Also works with modelGeneCV2() but note `var.field`
 hvg.pbmc.cv2 <- getTopHVGs(dec.cv2.pbmc,
-  var.field="ratio", n=1000)
+    var.field = "ratio", n = 1000
+)
 str(hvg.pbmc.cv2)
 ```
 
@@ -379,16 +389,17 @@ Establece un límite fijo en alguna métrica de significancia estadística:
 
 ```{r }
 # Works with modelGeneVar() output
-hvg.pbmc.var.2 <- getTopHVGs(dec.pbmc, fdr.threshold=0.05)
+hvg.pbmc.var.2 <- getTopHVGs(dec.pbmc, fdr.threshold = 0.05)
 str(hvg.pbmc.var.2)
 # Works with modelGeneVarWithSpikes() output
-#hvg.416b.var.2 <- getTopHVGs(dec.spike.416b,
+# hvg.416b.var.2 <- getTopHVGs(dec.spike.416b,
 #  fdr.threshold=0.05)
-#str(hvg.416b.var.2)
+# str(hvg.416b.var.2)
 
 # Also works with modelGeneCV2() but note `var.field`
 hvg.pbmc.cv2.2 <- getTopHVGs(dec.cv2.pbmc,
-  var.field="ratio", fdr.threshold=0.05)
+    var.field = "ratio", fdr.threshold = 0.05
+)
 str(hvg.pbmc.cv2.2)
 ```
 
@@ -407,18 +418,19 @@ Mejor preparado para datasets altamente heterogeneos que contienen muchos tipos 
 
 ```{r }
 # Works with modelGeneVar() output
-hvg.pbmc.var.3 <- getTopHVGs(dec.pbmc, var.threshold=0)
+hvg.pbmc.var.3 <- getTopHVGs(dec.pbmc, var.threshold = 0)
 str(hvg.pbmc.var.3)
 
 # Works with modelGeneVarWithSpikes() output
-#hvg.416b.var.3 <- getTopHVGs(dec.spike.416b,
+# hvg.416b.var.3 <- getTopHVGs(dec.spike.416b,
 #  var.threshold=0)
-#str(hvg.416b.var.3)
+# str(hvg.416b.var.3)
 
-# Also works with modelGeneCV2() but note `var.field` and 
+# Also works with modelGeneCV2() but note `var.field` and
 # value of `var.threshold`
 hvg.pbmc.cv2.3 <- getTopHVGs(dec.cv2.pbmc,
-  var.field="ratio", var.threshold=1)
+    var.field = "ratio", var.threshold = 1
+)
 str(hvg.pbmc.cv2.2)
 ```
 
@@ -445,7 +457,7 @@ También podrías eliminar listas pre-definidas de genes:
 
 ```{r }
 dec.pbmc <- modelGeneVar(sce.pbmc)
-chosen <- getTopHVGs(dec.pbmc, prop=0.1)
+chosen <- getTopHVGs(dec.pbmc, prop = 0.1)
 str(chosen)
 ```
 
@@ -459,7 +471,7 @@ Después de esto tenemos varias opciones para imponer nuestra selección de HGVs
 ### Quedándonos sólo con los HGVs
 
 ```{r }
-sce.pbmc.hvg <- sce.pbmc[chosen,]
+sce.pbmc.hvg <- sce.pbmc[chosen, ]
 sce.pbmc.hvg
 ```
 
@@ -474,7 +486,7 @@ CONTRA: Los genes no-HGVs son eliminados del nnuevo objeto *SingleCellExperiment
 # Example of specifying HVGs in a downstream function
 # Performing PCA only on the chosen HVGs.
 library(scater)
-sce.pbmc <- runPCA(sce.pbmc, subset_row=chosen)
+sce.pbmc <- runPCA(sce.pbmc, subset_row = chosen)
 sce.pbmc
 ```
 
