@@ -200,13 +200,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html"><i class="fa fa-check"></i><b>4</b> Estructura e importe de datos</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#breve-repaso-de-r"><i class="fa fa-check"></i><b>4.1</b> Breve repaso de R</a></li>
-<li class="chapter" data-level="4.2" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#ejercicio-2"><i class="fa fa-check"></i><b>4.2</b> Ejercicio 2</a>
+<li class="chapter" data-level="4.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#estructura-de-singlecellexperiment"><i class="fa fa-check"></i><b>4.1</b> Estructura de <code>SingleCellExperiment</code></a></li>
+<li class="chapter" data-level="4.2" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#ejercicio-1"><i class="fa fa-check"></i><b>4.2</b> Ejercicio 1</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#extra"><i class="fa fa-check"></i><b>4.2.1</b> Extra</a></li>
+<li class="chapter" data-level="4.2.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#preguntas"><i class="fa fa-check"></i><b>4.2.1</b> Preguntas:</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#import-data"><i class="fa fa-check"></i><b>4.3</b> Import data</a></li>
-<li class="chapter" data-level="4.4" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#detalles-de-la-sesión-de-r-3"><i class="fa fa-check"></i><b>4.4</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="4.3" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#breve-repaso-de-r"><i class="fa fa-check"></i><b>4.3</b> Breve repaso de R</a></li>
+<li class="chapter" data-level="4.4" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#ejercicio-2"><i class="fa fa-check"></i><b>4.4</b> Ejercicio 2</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#extra"><i class="fa fa-check"></i><b>4.4.1</b> Extra</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#import-data"><i class="fa fa-check"></i><b>4.5</b> Import data</a></li>
+<li class="chapter" data-level="4.6" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#detalles-de-la-sesión-de-r-3"><i class="fa fa-check"></i><b>4.6</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="estructura-e-importe-de-datos.html"><a href="estructura-e-importe-de-datos.html#patrocinadores-4"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="control-de-calidad.html"><a href="control-de-calidad.html"><i class="fa fa-check"></i><b>5</b> Control de calidad</a>
@@ -519,22 +524,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="control-de-calidad" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Control de calidad</h1>
 <p>Instructor: <a href="https://comunidadbioinfo.github.io/es/authors/lcollado/">Leonardo Collado Torres</a></p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="control-de-calidad.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Paquetes de este capítulo</span></span>
-<span id="cb80-2"><a href="control-de-calidad.html#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scRNAseq&quot;</span>) <span class="do">## para descargar datos de ejemplo</span></span>
-<span id="cb80-3"><a href="control-de-calidad.html#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;AnnotationHub&quot;</span>) <span class="do">## para obtener información de genes</span></span>
-<span id="cb80-4"><a href="control-de-calidad.html#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scater&quot;</span>) <span class="do">## para gráficas y control de calidad</span></span>
-<span id="cb80-5"><a href="control-de-calidad.html#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;BiocFileCache&quot;</span>) <span class="do">## para descargar datos</span></span>
-<span id="cb80-6"><a href="control-de-calidad.html#cb80-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;DropletUtils&quot;</span>) <span class="do">## para detectar droplets</span></span>
-<span id="cb80-7"><a href="control-de-calidad.html#cb80-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Matrix&quot;</span>) <span class="do">## para leer datos en formatos comprimidos</span></span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="control-de-calidad.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Paquetes de este capítulo</span></span>
+<span id="cb81-2"><a href="control-de-calidad.html#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scRNAseq&quot;</span>) <span class="do">## para descargar datos de ejemplo</span></span>
+<span id="cb81-3"><a href="control-de-calidad.html#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;AnnotationHub&quot;</span>) <span class="do">## para obtener información de genes</span></span>
+<span id="cb81-4"><a href="control-de-calidad.html#cb81-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scater&quot;</span>) <span class="do">## para gráficas y control de calidad</span></span>
+<span id="cb81-5"><a href="control-de-calidad.html#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;BiocFileCache&quot;</span>) <span class="do">## para descargar datos</span></span>
+<span id="cb81-6"><a href="control-de-calidad.html#cb81-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;DropletUtils&quot;</span>) <span class="do">## para detectar droplets</span></span>
+<span id="cb81-7"><a href="control-de-calidad.html#cb81-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Matrix&quot;</span>) <span class="do">## para leer datos en formatos comprimidos</span></span></code></pre></div>
 <div id="diapositivas-de-peter-hickey" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Diapositivas de Peter Hickey</h2>
 <p>Ve las diapositivas <a href="https://docs.google.com/presentation/d/1pIiA7fZd1GBxaKQpzT2sPn7C6fIZxEJ8NI4p3UtoIOo/edit#slide=id.p">aquí</a></p>
 </div>
 <div id="ejercicio-entendiendo-addpercellqc" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Ejercicio: entendiendo addPerCellQC</h2>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="control-de-calidad.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Datos</span></span>
-<span id="cb81-2"><a href="control-de-calidad.html#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scRNAseq&quot;</span>)</span>
-<span id="cb81-3"><a href="control-de-calidad.html#cb81-3" aria-hidden="true" tabindex="-1"></a>sce<span class="fl">.416</span>b <span class="ot">&lt;-</span> <span class="fu">LunSpikeInData</span>(<span class="at">which =</span> <span class="st">&quot;416b&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="control-de-calidad.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Datos</span></span>
+<span id="cb82-2"><a href="control-de-calidad.html#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scRNAseq&quot;</span>)</span>
+<span id="cb82-3"><a href="control-de-calidad.html#cb82-3" aria-hidden="true" tabindex="-1"></a>sce<span class="fl">.416</span>b <span class="ot">&lt;-</span> <span class="fu">LunSpikeInData</span>(<span class="at">which =</span> <span class="st">&quot;416b&quot;</span>)</span></code></pre></div>
 <pre><code>## snapshotDate(): 2021-05-18</code></pre>
 <pre><code>## see ?scRNAseq and browseVignettes(&#39;scRNAseq&#39;) for documentation</code></pre>
 <pre><code>## downloading 1 resources</code></pre>
@@ -558,14 +563,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## retrieving 1 resource</code></pre>
 <pre><code>## loading from cache</code></pre>
 <pre><code>## require(&quot;ensembldb&quot;)</code></pre>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="control-de-calidad.html#cb105-1" aria-hidden="true" tabindex="-1"></a>sce<span class="fl">.416</span>b<span class="sc">$</span>block <span class="ot">&lt;-</span> <span class="fu">factor</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>block)</span>
-<span id="cb105-2"><a href="control-de-calidad.html#cb105-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-3"><a href="control-de-calidad.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Descarga los archivos de anotación de la base de datos de Ensembl</span></span>
-<span id="cb105-4"><a href="control-de-calidad.html#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="co"># correspondientes usando los recursos disponibles vía AnnotationHub</span></span>
-<span id="cb105-5"><a href="control-de-calidad.html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;AnnotationHub&quot;</span>)</span>
-<span id="cb105-6"><a href="control-de-calidad.html#cb105-6" aria-hidden="true" tabindex="-1"></a>ah <span class="ot">&lt;-</span> <span class="fu">AnnotationHub</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="control-de-calidad.html#cb106-1" aria-hidden="true" tabindex="-1"></a>sce<span class="fl">.416</span>b<span class="sc">$</span>block <span class="ot">&lt;-</span> <span class="fu">factor</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>block)</span>
+<span id="cb106-2"><a href="control-de-calidad.html#cb106-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-3"><a href="control-de-calidad.html#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Descarga los archivos de anotación de la base de datos de Ensembl</span></span>
+<span id="cb106-4"><a href="control-de-calidad.html#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="co"># correspondientes usando los recursos disponibles vía AnnotationHub</span></span>
+<span id="cb106-5"><a href="control-de-calidad.html#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;AnnotationHub&quot;</span>)</span>
+<span id="cb106-6"><a href="control-de-calidad.html#cb106-6" aria-hidden="true" tabindex="-1"></a>ah <span class="ot">&lt;-</span> <span class="fu">AnnotationHub</span>()</span></code></pre></div>
 <pre><code>## snapshotDate(): 2021-05-18</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="control-de-calidad.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">query</span>(ah, <span class="fu">c</span>(<span class="st">&quot;Mus musculus&quot;</span>, <span class="st">&quot;Ensembl&quot;</span>, <span class="st">&quot;v97&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="control-de-calidad.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">query</span>(ah, <span class="fu">c</span>(<span class="st">&quot;Mus musculus&quot;</span>, <span class="st">&quot;Ensembl&quot;</span>, <span class="st">&quot;v97&quot;</span>))</span></code></pre></div>
 <pre><code>## AnnotationHub with 1 record
 ## # snapshotDate(): 2021-05-18
 ## # names(): AH73905
@@ -583,26 +588,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## # $tags: c(&quot;97&quot;, &quot;AHEnsDbs&quot;, &quot;Annotation&quot;, &quot;EnsDb&quot;, &quot;Ensembl&quot;, &quot;Gene&quot;,
 ## #   &quot;Protein&quot;, &quot;Transcript&quot;) 
 ## # retrieve record with &#39;object[[&quot;AH73905&quot;]]&#39;</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="control-de-calidad.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtén la posición del cromosoma para cada gen</span></span>
-<span id="cb109-2"><a href="control-de-calidad.html#cb109-2" aria-hidden="true" tabindex="-1"></a>ens.mm.v97 <span class="ot">&lt;-</span> ah[[<span class="st">&quot;AH73905&quot;</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="control-de-calidad.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtén la posición del cromosoma para cada gen</span></span>
+<span id="cb110-2"><a href="control-de-calidad.html#cb110-2" aria-hidden="true" tabindex="-1"></a>ens.mm.v97 <span class="ot">&lt;-</span> ah[[<span class="st">&quot;AH73905&quot;</span>]]</span></code></pre></div>
 <pre><code>## loading from cache</code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="control-de-calidad.html#cb111-1" aria-hidden="true" tabindex="-1"></a>location <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(</span>
-<span id="cb111-2"><a href="control-de-calidad.html#cb111-2" aria-hidden="true" tabindex="-1"></a>    ens.mm.v97,</span>
-<span id="cb111-3"><a href="control-de-calidad.html#cb111-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">keys =</span> <span class="fu">rownames</span>(sce<span class="fl">.416</span>b),</span>
-<span id="cb111-4"><a href="control-de-calidad.html#cb111-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">keytype =</span> <span class="st">&quot;GENEID&quot;</span>,</span>
-<span id="cb111-5"><a href="control-de-calidad.html#cb111-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">&quot;SEQNAME&quot;</span></span>
-<span id="cb111-6"><a href="control-de-calidad.html#cb111-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="control-de-calidad.html#cb112-1" aria-hidden="true" tabindex="-1"></a>location <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(</span>
+<span id="cb112-2"><a href="control-de-calidad.html#cb112-2" aria-hidden="true" tabindex="-1"></a>    ens.mm.v97,</span>
+<span id="cb112-3"><a href="control-de-calidad.html#cb112-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">keys =</span> <span class="fu">rownames</span>(sce<span class="fl">.416</span>b),</span>
+<span id="cb112-4"><a href="control-de-calidad.html#cb112-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">keytype =</span> <span class="st">&quot;GENEID&quot;</span>,</span>
+<span id="cb112-5"><a href="control-de-calidad.html#cb112-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">&quot;SEQNAME&quot;</span></span>
+<span id="cb112-6"><a href="control-de-calidad.html#cb112-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Warning: Unable to map 563 of 46604 requested IDs.</code></pre>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="control-de-calidad.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identifica los genes mitocondriales</span></span>
-<span id="cb113-2"><a href="control-de-calidad.html#cb113-2" aria-hidden="true" tabindex="-1"></a>is.mito <span class="ot">&lt;-</span> <span class="fu">which</span>(location <span class="sc">==</span> <span class="st">&quot;MT&quot;</span>)</span>
-<span id="cb113-3"><a href="control-de-calidad.html#cb113-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scater&quot;</span>)</span>
-<span id="cb113-4"><a href="control-de-calidad.html#cb113-4" aria-hidden="true" tabindex="-1"></a>sce<span class="fl">.416</span>b <span class="ot">&lt;-</span> <span class="fu">addPerCellQC</span>(sce<span class="fl">.416</span>b,</span>
-<span id="cb113-5"><a href="control-de-calidad.html#cb113-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mito =</span> is.mito)</span>
-<span id="cb113-6"><a href="control-de-calidad.html#cb113-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb113-7"><a href="control-de-calidad.html#cb113-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Si quieres guarda los resultados de addPerCellQC() para responder</span></span>
-<span id="cb113-8"><a href="control-de-calidad.html#cb113-8" aria-hidden="true" tabindex="-1"></a><span class="do">## las preguntas del ejercicio. Eventualmente si necesitaremos los</span></span>
-<span id="cb113-9"><a href="control-de-calidad.html#cb113-9" aria-hidden="true" tabindex="-1"></a><span class="do">## resultados de addPerCellQC() para las secciones posteriores a este</span></span>
-<span id="cb113-10"><a href="control-de-calidad.html#cb113-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ejercicio.</span></span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="control-de-calidad.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identifica los genes mitocondriales</span></span>
+<span id="cb114-2"><a href="control-de-calidad.html#cb114-2" aria-hidden="true" tabindex="-1"></a>is.mito <span class="ot">&lt;-</span> <span class="fu">which</span>(location <span class="sc">==</span> <span class="st">&quot;MT&quot;</span>)</span>
+<span id="cb114-3"><a href="control-de-calidad.html#cb114-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scater&quot;</span>)</span>
+<span id="cb114-4"><a href="control-de-calidad.html#cb114-4" aria-hidden="true" tabindex="-1"></a>sce<span class="fl">.416</span>b <span class="ot">&lt;-</span> <span class="fu">addPerCellQC</span>(sce<span class="fl">.416</span>b,</span>
+<span id="cb114-5"><a href="control-de-calidad.html#cb114-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mito =</span> is.mito)</span>
+<span id="cb114-6"><a href="control-de-calidad.html#cb114-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb114-7"><a href="control-de-calidad.html#cb114-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Si quieres guarda los resultados de addPerCellQC() para responder</span></span>
+<span id="cb114-8"><a href="control-de-calidad.html#cb114-8" aria-hidden="true" tabindex="-1"></a><span class="do">## las preguntas del ejercicio. Eventualmente si necesitaremos los</span></span>
+<span id="cb114-9"><a href="control-de-calidad.html#cb114-9" aria-hidden="true" tabindex="-1"></a><span class="do">## resultados de addPerCellQC() para las secciones posteriores a este</span></span>
+<span id="cb114-10"><a href="control-de-calidad.html#cb114-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ejercicio.</span></span></code></pre></div>
 <ul>
 <li>¿Qué cambió en nuestro objeto <code>sce</code> después de <code>addPerCellQC</code>? <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></li>
 <li>Haz una gráfica de <em>boxplots</em> del número de genes por bloque (block) de células. <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></li>
@@ -610,18 +615,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="gráficas-sobre-medidas-de-control-de-calidad-qc" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Gráficas sobre medidas de control de calidad (QC)</h2>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="control-de-calidad.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(sce<span class="fl">.416</span>b, <span class="at">x =</span> <span class="st">&quot;block&quot;</span>, <span class="at">y =</span> <span class="st">&quot;detected&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="control-de-calidad.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(sce<span class="fl">.416</span>b, <span class="at">x =</span> <span class="st">&quot;block&quot;</span>, <span class="at">y =</span> <span class="st">&quot;detected&quot;</span>)</span></code></pre></div>
 <p><img src="05-control_calidad_files/figure-html/visualizar_qc-1.png" width="672" /></p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="control-de-calidad.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(sce<span class="fl">.416</span>b, <span class="at">x =</span> <span class="st">&quot;block&quot;</span>, <span class="at">y =</span> <span class="st">&quot;detected&quot;</span>) <span class="sc">+</span></span>
-<span id="cb115-2"><a href="control-de-calidad.html#cb115-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="control-de-calidad.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(sce<span class="fl">.416</span>b, <span class="at">x =</span> <span class="st">&quot;block&quot;</span>, <span class="at">y =</span> <span class="st">&quot;detected&quot;</span>) <span class="sc">+</span></span>
+<span id="cb116-2"><a href="control-de-calidad.html#cb116-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>()</span></code></pre></div>
 <p><img src="05-control_calidad_files/figure-html/visualizar_qc-2.png" width="672" /></p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="control-de-calidad.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(sce<span class="fl">.416</span>b,</span>
-<span id="cb116-2"><a href="control-de-calidad.html#cb116-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;block&quot;</span>,</span>
-<span id="cb116-3"><a href="control-de-calidad.html#cb116-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;detected&quot;</span>,</span>
-<span id="cb116-4"><a href="control-de-calidad.html#cb116-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">other_fields =</span> <span class="st">&quot;phenotype&quot;</span></span>
-<span id="cb116-5"><a href="control-de-calidad.html#cb116-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb116-6"><a href="control-de-calidad.html#cb116-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
-<span id="cb116-7"><a href="control-de-calidad.html#cb116-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>phenotype)</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="control-de-calidad.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(sce<span class="fl">.416</span>b,</span>
+<span id="cb117-2"><a href="control-de-calidad.html#cb117-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;block&quot;</span>,</span>
+<span id="cb117-3"><a href="control-de-calidad.html#cb117-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;detected&quot;</span>,</span>
+<span id="cb117-4"><a href="control-de-calidad.html#cb117-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">other_fields =</span> <span class="st">&quot;phenotype&quot;</span></span>
+<span id="cb117-5"><a href="control-de-calidad.html#cb117-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb117-6"><a href="control-de-calidad.html#cb117-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb117-7"><a href="control-de-calidad.html#cb117-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>phenotype)</span></code></pre></div>
 <p><img src="05-control_calidad_files/figure-html/visualizar_qc-3.png" width="672" /></p>
 <div id="ejercicio-gráficas-qc-ercc" class="section level3" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Ejercicio: gráficas QC ERCC</h3>
@@ -636,95 +641,95 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="eliminar-células-de-baja-calidad" class="section level2" number="5.4">
 <h2><span class="header-section-number">5.4</span> Eliminar células de baja calidad</h2>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="control-de-calidad.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores de límite ejemplo</span></span>
-<span id="cb117-2"><a href="control-de-calidad.html#cb117-2" aria-hidden="true" tabindex="-1"></a>qc.lib <span class="ot">&lt;-</span> sce<span class="fl">.416</span>b<span class="sc">$</span>sum <span class="sc">&lt;</span> <span class="dv">100000</span></span>
-<span id="cb117-3"><a href="control-de-calidad.html#cb117-3" aria-hidden="true" tabindex="-1"></a>qc.nexprs <span class="ot">&lt;-</span> sce<span class="fl">.416</span>b<span class="sc">$</span>detected <span class="sc">&lt;</span> <span class="dv">5000</span></span>
-<span id="cb117-4"><a href="control-de-calidad.html#cb117-4" aria-hidden="true" tabindex="-1"></a>qc.spike <span class="ot">&lt;-</span> sce<span class="fl">.416</span>b<span class="sc">$</span>altexps_ERCC_percent <span class="sc">&gt;</span> <span class="dv">10</span></span>
-<span id="cb117-5"><a href="control-de-calidad.html#cb117-5" aria-hidden="true" tabindex="-1"></a>qc.mito <span class="ot">&lt;-</span> sce<span class="fl">.416</span>b<span class="sc">$</span>subsets_Mito_percent <span class="sc">&gt;</span> <span class="dv">10</span></span>
-<span id="cb117-6"><a href="control-de-calidad.html#cb117-6" aria-hidden="true" tabindex="-1"></a>discard <span class="ot">&lt;-</span> qc.lib <span class="sc">|</span> qc.nexprs <span class="sc">|</span> qc.spike <span class="sc">|</span> qc.mito</span>
-<span id="cb117-7"><a href="control-de-calidad.html#cb117-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-8"><a href="control-de-calidad.html#cb117-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtenemos un resumen del número de células</span></span>
-<span id="cb117-9"><a href="control-de-calidad.html#cb117-9" aria-hidden="true" tabindex="-1"></a><span class="co"># eliminadas por cada filtro</span></span>
-<span id="cb117-10"><a href="control-de-calidad.html#cb117-10" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(</span>
-<span id="cb117-11"><a href="control-de-calidad.html#cb117-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">LibSize =</span> <span class="fu">sum</span>(qc.lib),</span>
-<span id="cb117-12"><a href="control-de-calidad.html#cb117-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">NExprs =</span> <span class="fu">sum</span>(qc.nexprs),</span>
-<span id="cb117-13"><a href="control-de-calidad.html#cb117-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">SpikeProp =</span> <span class="fu">sum</span>(qc.spike),</span>
-<span id="cb117-14"><a href="control-de-calidad.html#cb117-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">MitoProp =</span> <span class="fu">sum</span>(qc.mito),</span>
-<span id="cb117-15"><a href="control-de-calidad.html#cb117-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Total =</span> <span class="fu">sum</span>(discard)</span>
-<span id="cb117-16"><a href="control-de-calidad.html#cb117-16" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="control-de-calidad.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores de límite ejemplo</span></span>
+<span id="cb118-2"><a href="control-de-calidad.html#cb118-2" aria-hidden="true" tabindex="-1"></a>qc.lib <span class="ot">&lt;-</span> sce<span class="fl">.416</span>b<span class="sc">$</span>sum <span class="sc">&lt;</span> <span class="dv">100000</span></span>
+<span id="cb118-3"><a href="control-de-calidad.html#cb118-3" aria-hidden="true" tabindex="-1"></a>qc.nexprs <span class="ot">&lt;-</span> sce<span class="fl">.416</span>b<span class="sc">$</span>detected <span class="sc">&lt;</span> <span class="dv">5000</span></span>
+<span id="cb118-4"><a href="control-de-calidad.html#cb118-4" aria-hidden="true" tabindex="-1"></a>qc.spike <span class="ot">&lt;-</span> sce<span class="fl">.416</span>b<span class="sc">$</span>altexps_ERCC_percent <span class="sc">&gt;</span> <span class="dv">10</span></span>
+<span id="cb118-5"><a href="control-de-calidad.html#cb118-5" aria-hidden="true" tabindex="-1"></a>qc.mito <span class="ot">&lt;-</span> sce<span class="fl">.416</span>b<span class="sc">$</span>subsets_Mito_percent <span class="sc">&gt;</span> <span class="dv">10</span></span>
+<span id="cb118-6"><a href="control-de-calidad.html#cb118-6" aria-hidden="true" tabindex="-1"></a>discard <span class="ot">&lt;-</span> qc.lib <span class="sc">|</span> qc.nexprs <span class="sc">|</span> qc.spike <span class="sc">|</span> qc.mito</span>
+<span id="cb118-7"><a href="control-de-calidad.html#cb118-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-8"><a href="control-de-calidad.html#cb118-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtenemos un resumen del número de células</span></span>
+<span id="cb118-9"><a href="control-de-calidad.html#cb118-9" aria-hidden="true" tabindex="-1"></a><span class="co"># eliminadas por cada filtro</span></span>
+<span id="cb118-10"><a href="control-de-calidad.html#cb118-10" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(</span>
+<span id="cb118-11"><a href="control-de-calidad.html#cb118-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">LibSize =</span> <span class="fu">sum</span>(qc.lib),</span>
+<span id="cb118-12"><a href="control-de-calidad.html#cb118-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">NExprs =</span> <span class="fu">sum</span>(qc.nexprs),</span>
+<span id="cb118-13"><a href="control-de-calidad.html#cb118-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">SpikeProp =</span> <span class="fu">sum</span>(qc.spike),</span>
+<span id="cb118-14"><a href="control-de-calidad.html#cb118-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">MitoProp =</span> <span class="fu">sum</span>(qc.mito),</span>
+<span id="cb118-15"><a href="control-de-calidad.html#cb118-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Total =</span> <span class="fu">sum</span>(discard)</span>
+<span id="cb118-16"><a href="control-de-calidad.html#cb118-16" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## DataFrame with 1 row and 5 columns
 ##     LibSize    NExprs SpikeProp  MitoProp     Total
 ##   &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 ## 1         3         0        19        14        33</code></pre>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="control-de-calidad.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Usando isOutlier() para determinar los valores de corte</span></span>
-<span id="cb119-2"><a href="control-de-calidad.html#cb119-2" aria-hidden="true" tabindex="-1"></a>qc.lib2 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>sum, <span class="at">log =</span> <span class="cn">TRUE</span>, <span class="at">type =</span> <span class="st">&quot;lower&quot;</span>)</span>
-<span id="cb119-3"><a href="control-de-calidad.html#cb119-3" aria-hidden="true" tabindex="-1"></a>qc.nexprs2 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>detected,</span>
-<span id="cb119-4"><a href="control-de-calidad.html#cb119-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb119-5"><a href="control-de-calidad.html#cb119-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;lower&quot;</span></span>
-<span id="cb119-6"><a href="control-de-calidad.html#cb119-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb119-7"><a href="control-de-calidad.html#cb119-7" aria-hidden="true" tabindex="-1"></a>qc.spike2 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>altexps_ERCC_percent,</span>
-<span id="cb119-8"><a href="control-de-calidad.html#cb119-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span></span>
-<span id="cb119-9"><a href="control-de-calidad.html#cb119-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb119-10"><a href="control-de-calidad.html#cb119-10" aria-hidden="true" tabindex="-1"></a>qc.mito2 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>subsets_Mito_percent,</span>
-<span id="cb119-11"><a href="control-de-calidad.html#cb119-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span></span>
-<span id="cb119-12"><a href="control-de-calidad.html#cb119-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb119-13"><a href="control-de-calidad.html#cb119-13" aria-hidden="true" tabindex="-1"></a>discard2 <span class="ot">&lt;-</span> qc.lib2 <span class="sc">|</span> qc.nexprs2 <span class="sc">|</span> qc.spike2 <span class="sc">|</span> qc.mito2</span>
-<span id="cb119-14"><a href="control-de-calidad.html#cb119-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb119-15"><a href="control-de-calidad.html#cb119-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los límites de valores (thresholds)</span></span>
-<span id="cb119-16"><a href="control-de-calidad.html#cb119-16" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(qc.lib2, <span class="st">&quot;thresholds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="control-de-calidad.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Usando isOutlier() para determinar los valores de corte</span></span>
+<span id="cb120-2"><a href="control-de-calidad.html#cb120-2" aria-hidden="true" tabindex="-1"></a>qc.lib2 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>sum, <span class="at">log =</span> <span class="cn">TRUE</span>, <span class="at">type =</span> <span class="st">&quot;lower&quot;</span>)</span>
+<span id="cb120-3"><a href="control-de-calidad.html#cb120-3" aria-hidden="true" tabindex="-1"></a>qc.nexprs2 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>detected,</span>
+<span id="cb120-4"><a href="control-de-calidad.html#cb120-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb120-5"><a href="control-de-calidad.html#cb120-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;lower&quot;</span></span>
+<span id="cb120-6"><a href="control-de-calidad.html#cb120-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb120-7"><a href="control-de-calidad.html#cb120-7" aria-hidden="true" tabindex="-1"></a>qc.spike2 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>altexps_ERCC_percent,</span>
+<span id="cb120-8"><a href="control-de-calidad.html#cb120-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span></span>
+<span id="cb120-9"><a href="control-de-calidad.html#cb120-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb120-10"><a href="control-de-calidad.html#cb120-10" aria-hidden="true" tabindex="-1"></a>qc.mito2 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>subsets_Mito_percent,</span>
+<span id="cb120-11"><a href="control-de-calidad.html#cb120-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span></span>
+<span id="cb120-12"><a href="control-de-calidad.html#cb120-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb120-13"><a href="control-de-calidad.html#cb120-13" aria-hidden="true" tabindex="-1"></a>discard2 <span class="ot">&lt;-</span> qc.lib2 <span class="sc">|</span> qc.nexprs2 <span class="sc">|</span> qc.spike2 <span class="sc">|</span> qc.mito2</span>
+<span id="cb120-14"><a href="control-de-calidad.html#cb120-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-15"><a href="control-de-calidad.html#cb120-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los límites de valores (thresholds)</span></span>
+<span id="cb120-16"><a href="control-de-calidad.html#cb120-16" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(qc.lib2, <span class="st">&quot;thresholds&quot;</span>)</span></code></pre></div>
 <pre><code>##    lower   higher 
 ## 434082.9      Inf</code></pre>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="control-de-calidad.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(qc.nexprs2, <span class="st">&quot;thresholds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="control-de-calidad.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(qc.nexprs2, <span class="st">&quot;thresholds&quot;</span>)</span></code></pre></div>
 <pre><code>##    lower   higher 
 ## 5231.468      Inf</code></pre>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="control-de-calidad.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtenemos un resumen del número de células</span></span>
-<span id="cb123-2"><a href="control-de-calidad.html#cb123-2" aria-hidden="true" tabindex="-1"></a><span class="co"># eliminadas por cada filtro</span></span>
-<span id="cb123-3"><a href="control-de-calidad.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(</span>
-<span id="cb123-4"><a href="control-de-calidad.html#cb123-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">LibSize =</span> <span class="fu">sum</span>(qc.lib2),</span>
-<span id="cb123-5"><a href="control-de-calidad.html#cb123-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">NExprs =</span> <span class="fu">sum</span>(qc.nexprs2),</span>
-<span id="cb123-6"><a href="control-de-calidad.html#cb123-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">SpikeProp =</span> <span class="fu">sum</span>(qc.spike2),</span>
-<span id="cb123-7"><a href="control-de-calidad.html#cb123-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">MitoProp =</span> <span class="fu">sum</span>(qc.mito2),</span>
-<span id="cb123-8"><a href="control-de-calidad.html#cb123-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Total =</span> <span class="fu">sum</span>(discard2)</span>
-<span id="cb123-9"><a href="control-de-calidad.html#cb123-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="control-de-calidad.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtenemos un resumen del número de células</span></span>
+<span id="cb124-2"><a href="control-de-calidad.html#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="co"># eliminadas por cada filtro</span></span>
+<span id="cb124-3"><a href="control-de-calidad.html#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(</span>
+<span id="cb124-4"><a href="control-de-calidad.html#cb124-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">LibSize =</span> <span class="fu">sum</span>(qc.lib2),</span>
+<span id="cb124-5"><a href="control-de-calidad.html#cb124-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">NExprs =</span> <span class="fu">sum</span>(qc.nexprs2),</span>
+<span id="cb124-6"><a href="control-de-calidad.html#cb124-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">SpikeProp =</span> <span class="fu">sum</span>(qc.spike2),</span>
+<span id="cb124-7"><a href="control-de-calidad.html#cb124-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">MitoProp =</span> <span class="fu">sum</span>(qc.mito2),</span>
+<span id="cb124-8"><a href="control-de-calidad.html#cb124-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Total =</span> <span class="fu">sum</span>(discard2)</span>
+<span id="cb124-9"><a href="control-de-calidad.html#cb124-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## DataFrame with 1 row and 5 columns
 ##     LibSize    NExprs SpikeProp  MitoProp     Total
 ##   &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 ## 1         4         0         1         2         6</code></pre>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="control-de-calidad.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Más pruebas</span></span>
-<span id="cb125-2"><a href="control-de-calidad.html#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(sce<span class="fl">.416</span>b,</span>
-<span id="cb125-3"><a href="control-de-calidad.html#cb125-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;block&quot;</span>,</span>
-<span id="cb125-4"><a href="control-de-calidad.html#cb125-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;detected&quot;</span>,</span>
-<span id="cb125-5"><a href="control-de-calidad.html#cb125-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">other_fields =</span> <span class="st">&quot;phenotype&quot;</span></span>
-<span id="cb125-6"><a href="control-de-calidad.html#cb125-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb125-7"><a href="control-de-calidad.html#cb125-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
-<span id="cb125-8"><a href="control-de-calidad.html#cb125-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>phenotype)</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="control-de-calidad.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Más pruebas</span></span>
+<span id="cb126-2"><a href="control-de-calidad.html#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(sce<span class="fl">.416</span>b,</span>
+<span id="cb126-3"><a href="control-de-calidad.html#cb126-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;block&quot;</span>,</span>
+<span id="cb126-4"><a href="control-de-calidad.html#cb126-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;detected&quot;</span>,</span>
+<span id="cb126-5"><a href="control-de-calidad.html#cb126-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">other_fields =</span> <span class="st">&quot;phenotype&quot;</span></span>
+<span id="cb126-6"><a href="control-de-calidad.html#cb126-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb126-7"><a href="control-de-calidad.html#cb126-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb126-8"><a href="control-de-calidad.html#cb126-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>phenotype)</span></code></pre></div>
 <p><img src="05-control_calidad_files/figure-html/valores_qc-1.png" width="672" /></p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="control-de-calidad.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Determino el bloque (batch) de muestras</span></span>
-<span id="cb126-2"><a href="control-de-calidad.html#cb126-2" aria-hidden="true" tabindex="-1"></a>batch <span class="ot">&lt;-</span> <span class="fu">paste0</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>phenotype, <span class="st">&quot;-&quot;</span>, sce<span class="fl">.416</span>b<span class="sc">$</span>block)</span>
-<span id="cb126-3"><a href="control-de-calidad.html#cb126-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb126-4"><a href="control-de-calidad.html#cb126-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Versión de isOutlier() que toma en cuenta los bloques de muestras</span></span>
-<span id="cb126-5"><a href="control-de-calidad.html#cb126-5" aria-hidden="true" tabindex="-1"></a>qc.lib3 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>sum,</span>
-<span id="cb126-6"><a href="control-de-calidad.html#cb126-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb126-7"><a href="control-de-calidad.html#cb126-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;lower&quot;</span>,</span>
-<span id="cb126-8"><a href="control-de-calidad.html#cb126-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch =</span> batch</span>
-<span id="cb126-9"><a href="control-de-calidad.html#cb126-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb126-10"><a href="control-de-calidad.html#cb126-10" aria-hidden="true" tabindex="-1"></a>qc.nexprs3 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>detected,</span>
-<span id="cb126-11"><a href="control-de-calidad.html#cb126-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb126-12"><a href="control-de-calidad.html#cb126-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;lower&quot;</span>,</span>
-<span id="cb126-13"><a href="control-de-calidad.html#cb126-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch =</span> batch</span>
-<span id="cb126-14"><a href="control-de-calidad.html#cb126-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb126-15"><a href="control-de-calidad.html#cb126-15" aria-hidden="true" tabindex="-1"></a>qc.spike3 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>altexps_ERCC_percent,</span>
-<span id="cb126-16"><a href="control-de-calidad.html#cb126-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span>,</span>
-<span id="cb126-17"><a href="control-de-calidad.html#cb126-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch =</span> batch</span>
-<span id="cb126-18"><a href="control-de-calidad.html#cb126-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb126-19"><a href="control-de-calidad.html#cb126-19" aria-hidden="true" tabindex="-1"></a>qc.mito3 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>subsets_Mito_percent,</span>
-<span id="cb126-20"><a href="control-de-calidad.html#cb126-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span>,</span>
-<span id="cb126-21"><a href="control-de-calidad.html#cb126-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch =</span> batch</span>
-<span id="cb126-22"><a href="control-de-calidad.html#cb126-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb126-23"><a href="control-de-calidad.html#cb126-23" aria-hidden="true" tabindex="-1"></a>discard3 <span class="ot">&lt;-</span> qc.lib3 <span class="sc">|</span> qc.nexprs3 <span class="sc">|</span> qc.spike3 <span class="sc">|</span> qc.mito3</span>
-<span id="cb126-24"><a href="control-de-calidad.html#cb126-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb126-25"><a href="control-de-calidad.html#cb126-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los límites de valores (thresholds)</span></span>
-<span id="cb126-26"><a href="control-de-calidad.html#cb126-26" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(qc.lib3, <span class="st">&quot;thresholds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="control-de-calidad.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Determino el bloque (batch) de muestras</span></span>
+<span id="cb127-2"><a href="control-de-calidad.html#cb127-2" aria-hidden="true" tabindex="-1"></a>batch <span class="ot">&lt;-</span> <span class="fu">paste0</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>phenotype, <span class="st">&quot;-&quot;</span>, sce<span class="fl">.416</span>b<span class="sc">$</span>block)</span>
+<span id="cb127-3"><a href="control-de-calidad.html#cb127-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-4"><a href="control-de-calidad.html#cb127-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Versión de isOutlier() que toma en cuenta los bloques de muestras</span></span>
+<span id="cb127-5"><a href="control-de-calidad.html#cb127-5" aria-hidden="true" tabindex="-1"></a>qc.lib3 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>sum,</span>
+<span id="cb127-6"><a href="control-de-calidad.html#cb127-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb127-7"><a href="control-de-calidad.html#cb127-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;lower&quot;</span>,</span>
+<span id="cb127-8"><a href="control-de-calidad.html#cb127-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch =</span> batch</span>
+<span id="cb127-9"><a href="control-de-calidad.html#cb127-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb127-10"><a href="control-de-calidad.html#cb127-10" aria-hidden="true" tabindex="-1"></a>qc.nexprs3 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>detected,</span>
+<span id="cb127-11"><a href="control-de-calidad.html#cb127-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb127-12"><a href="control-de-calidad.html#cb127-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;lower&quot;</span>,</span>
+<span id="cb127-13"><a href="control-de-calidad.html#cb127-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch =</span> batch</span>
+<span id="cb127-14"><a href="control-de-calidad.html#cb127-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb127-15"><a href="control-de-calidad.html#cb127-15" aria-hidden="true" tabindex="-1"></a>qc.spike3 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>altexps_ERCC_percent,</span>
+<span id="cb127-16"><a href="control-de-calidad.html#cb127-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span>,</span>
+<span id="cb127-17"><a href="control-de-calidad.html#cb127-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch =</span> batch</span>
+<span id="cb127-18"><a href="control-de-calidad.html#cb127-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb127-19"><a href="control-de-calidad.html#cb127-19" aria-hidden="true" tabindex="-1"></a>qc.mito3 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce<span class="fl">.416</span>b<span class="sc">$</span>subsets_Mito_percent,</span>
+<span id="cb127-20"><a href="control-de-calidad.html#cb127-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span>,</span>
+<span id="cb127-21"><a href="control-de-calidad.html#cb127-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch =</span> batch</span>
+<span id="cb127-22"><a href="control-de-calidad.html#cb127-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb127-23"><a href="control-de-calidad.html#cb127-23" aria-hidden="true" tabindex="-1"></a>discard3 <span class="ot">&lt;-</span> qc.lib3 <span class="sc">|</span> qc.nexprs3 <span class="sc">|</span> qc.spike3 <span class="sc">|</span> qc.mito3</span>
+<span id="cb127-24"><a href="control-de-calidad.html#cb127-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-25"><a href="control-de-calidad.html#cb127-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los límites de valores (thresholds)</span></span>
+<span id="cb127-26"><a href="control-de-calidad.html#cb127-26" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(qc.lib3, <span class="st">&quot;thresholds&quot;</span>)</span></code></pre></div>
 <pre><code>##        induced CBFB-MYH11 oncogene expression-20160113
 ## lower                                         461073.1
 ## higher                                             Inf
@@ -734,7 +739,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##        wild type phenotype-20160113 wild type phenotype-20160325
 ## lower                      599794.9                     370316.5
 ## higher                          Inf                          Inf</code></pre>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="control-de-calidad.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(qc.nexprs3, <span class="st">&quot;thresholds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="control-de-calidad.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(qc.nexprs3, <span class="st">&quot;thresholds&quot;</span>)</span></code></pre></div>
 <pre><code>##        induced CBFB-MYH11 oncogene expression-20160113
 ## lower                                          5399.24
 ## higher                                             Inf
@@ -744,15 +749,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##        wild type phenotype-20160113 wild type phenotype-20160325
 ## lower                      7215.887                     7586.402
 ## higher                          Inf                          Inf</code></pre>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="control-de-calidad.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtenemos un resumen del número de células</span></span>
-<span id="cb130-2"><a href="control-de-calidad.html#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="co"># eliminadas por cada filtro</span></span>
-<span id="cb130-3"><a href="control-de-calidad.html#cb130-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(</span>
-<span id="cb130-4"><a href="control-de-calidad.html#cb130-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">LibSize =</span> <span class="fu">sum</span>(qc.lib3),</span>
-<span id="cb130-5"><a href="control-de-calidad.html#cb130-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">NExprs =</span> <span class="fu">sum</span>(qc.nexprs3),</span>
-<span id="cb130-6"><a href="control-de-calidad.html#cb130-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">SpikeProp =</span> <span class="fu">sum</span>(qc.spike3),</span>
-<span id="cb130-7"><a href="control-de-calidad.html#cb130-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">MitoProp =</span> <span class="fu">sum</span>(qc.mito3),</span>
-<span id="cb130-8"><a href="control-de-calidad.html#cb130-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Total =</span> <span class="fu">sum</span>(discard3)</span>
-<span id="cb130-9"><a href="control-de-calidad.html#cb130-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="control-de-calidad.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtenemos un resumen del número de células</span></span>
+<span id="cb131-2"><a href="control-de-calidad.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="co"># eliminadas por cada filtro</span></span>
+<span id="cb131-3"><a href="control-de-calidad.html#cb131-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(</span>
+<span id="cb131-4"><a href="control-de-calidad.html#cb131-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">LibSize =</span> <span class="fu">sum</span>(qc.lib3),</span>
+<span id="cb131-5"><a href="control-de-calidad.html#cb131-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">NExprs =</span> <span class="fu">sum</span>(qc.nexprs3),</span>
+<span id="cb131-6"><a href="control-de-calidad.html#cb131-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">SpikeProp =</span> <span class="fu">sum</span>(qc.spike3),</span>
+<span id="cb131-7"><a href="control-de-calidad.html#cb131-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">MitoProp =</span> <span class="fu">sum</span>(qc.mito3),</span>
+<span id="cb131-8"><a href="control-de-calidad.html#cb131-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Total =</span> <span class="fu">sum</span>(discard3)</span>
+<span id="cb131-9"><a href="control-de-calidad.html#cb131-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## DataFrame with 1 row and 5 columns
 ##     LibSize    NExprs SpikeProp  MitoProp     Total
 ##   &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
@@ -769,7 +774,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="datos-de-grun-et-al" class="section level2" number="5.6">
 <h2><span class="header-section-number">5.6</span> Datos de Grun et al</h2>
 <p>¿Qué patrón revela esta gráfica?</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="control-de-calidad.html#cb132-1" aria-hidden="true" tabindex="-1"></a>sce.grun <span class="ot">&lt;-</span> <span class="fu">GrunPancreasData</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="control-de-calidad.html#cb133-1" aria-hidden="true" tabindex="-1"></a>sce.grun <span class="ot">&lt;-</span> <span class="fu">GrunPancreasData</span>()</span></code></pre></div>
 <pre><code>## snapshotDate(): 2021-05-18</code></pre>
 <pre><code>## see ?scRNAseq and browseVignettes(&#39;scRNAseq&#39;) for documentation</code></pre>
 <pre><code>## downloading 1 resources</code></pre>
@@ -778,47 +783,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## snapshotDate(): 2021-05-18</code></pre>
 <pre><code>## see ?scRNAseq and browseVignettes(&#39;scRNAseq&#39;) for documentation</code></pre>
 <pre><code>## loading from cache</code></pre>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="control-de-calidad.html#cb141-1" aria-hidden="true" tabindex="-1"></a>sce.grun <span class="ot">&lt;-</span> <span class="fu">addPerCellQC</span>(sce.grun)</span>
-<span id="cb141-2"><a href="control-de-calidad.html#cb141-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb141-3"><a href="control-de-calidad.html#cb141-3" aria-hidden="true" tabindex="-1"></a><span class="do">## ¿Qué patrón revela esta gráfica?</span></span>
-<span id="cb141-4"><a href="control-de-calidad.html#cb141-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(sce.grun, <span class="at">x =</span> <span class="st">&quot;donor&quot;</span>, <span class="at">y =</span> <span class="st">&quot;altexps_ERCC_percent&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="control-de-calidad.html#cb142-1" aria-hidden="true" tabindex="-1"></a>sce.grun <span class="ot">&lt;-</span> <span class="fu">addPerCellQC</span>(sce.grun)</span>
+<span id="cb142-2"><a href="control-de-calidad.html#cb142-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-3"><a href="control-de-calidad.html#cb142-3" aria-hidden="true" tabindex="-1"></a><span class="do">## ¿Qué patrón revela esta gráfica?</span></span>
+<span id="cb142-4"><a href="control-de-calidad.html#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(sce.grun, <span class="at">x =</span> <span class="st">&quot;donor&quot;</span>, <span class="at">y =</span> <span class="st">&quot;altexps_ERCC_percent&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: Removed 10 rows containing non-finite values (stat_ydensity).</code></pre>
 <pre><code>## Warning: Removed 10 rows containing missing values (position_quasirandom).</code></pre>
 <p><img src="05-control_calidad_files/figure-html/grun_problema-1.png" width="672" /></p>
 <p>¿Cúal de las siguientes gráficas identifica mejor las células de baja calidad?</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="control-de-calidad.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="do">## isOutlier() puede ayudarnos cuando un grupo de muestras</span></span>
-<span id="cb144-2"><a href="control-de-calidad.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="do">## tuvo más problemas que el resto</span></span>
-<span id="cb144-3"><a href="control-de-calidad.html#cb144-3" aria-hidden="true" tabindex="-1"></a>discard.ercc <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce.grun<span class="sc">$</span>altexps_ERCC_percent,</span>
-<span id="cb144-4"><a href="control-de-calidad.html#cb144-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span>,</span>
-<span id="cb144-5"><a href="control-de-calidad.html#cb144-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch =</span> sce.grun<span class="sc">$</span>donor</span>
-<span id="cb144-6"><a href="control-de-calidad.html#cb144-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="control-de-calidad.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="do">## isOutlier() puede ayudarnos cuando un grupo de muestras</span></span>
+<span id="cb145-2"><a href="control-de-calidad.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="do">## tuvo más problemas que el resto</span></span>
+<span id="cb145-3"><a href="control-de-calidad.html#cb145-3" aria-hidden="true" tabindex="-1"></a>discard.ercc <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(sce.grun<span class="sc">$</span>altexps_ERCC_percent,</span>
+<span id="cb145-4"><a href="control-de-calidad.html#cb145-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span>,</span>
+<span id="cb145-5"><a href="control-de-calidad.html#cb145-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch =</span> sce.grun<span class="sc">$</span>donor</span>
+<span id="cb145-6"><a href="control-de-calidad.html#cb145-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Warning in .get_med_and_mad(metric, batch = batch, subset = subset,
 ## share.medians = share.medians, : missing values ignored during outlier detection</code></pre>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="control-de-calidad.html#cb146-1" aria-hidden="true" tabindex="-1"></a>discard.ercc2 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(</span>
-<span id="cb146-2"><a href="control-de-calidad.html#cb146-2" aria-hidden="true" tabindex="-1"></a>    sce.grun<span class="sc">$</span>altexps_ERCC_percent,</span>
-<span id="cb146-3"><a href="control-de-calidad.html#cb146-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span>,</span>
-<span id="cb146-4"><a href="control-de-calidad.html#cb146-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch =</span> sce.grun<span class="sc">$</span>donor,</span>
-<span id="cb146-5"><a href="control-de-calidad.html#cb146-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> sce.grun<span class="sc">$</span>donor <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;D17&quot;</span>, <span class="st">&quot;D2&quot;</span>, <span class="st">&quot;D7&quot;</span>)</span>
-<span id="cb146-6"><a href="control-de-calidad.html#cb146-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="control-de-calidad.html#cb147-1" aria-hidden="true" tabindex="-1"></a>discard.ercc2 <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(</span>
+<span id="cb147-2"><a href="control-de-calidad.html#cb147-2" aria-hidden="true" tabindex="-1"></a>    sce.grun<span class="sc">$</span>altexps_ERCC_percent,</span>
+<span id="cb147-3"><a href="control-de-calidad.html#cb147-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span>,</span>
+<span id="cb147-4"><a href="control-de-calidad.html#cb147-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch =</span> sce.grun<span class="sc">$</span>donor,</span>
+<span id="cb147-5"><a href="control-de-calidad.html#cb147-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> sce.grun<span class="sc">$</span>donor <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;D17&quot;</span>, <span class="st">&quot;D2&quot;</span>, <span class="st">&quot;D7&quot;</span>)</span>
+<span id="cb147-6"><a href="control-de-calidad.html#cb147-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Warning in .get_med_and_mad(metric, batch = batch, subset = subset,
 ## share.medians = share.medians, : missing values ignored during outlier detection</code></pre>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="control-de-calidad.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="do">## isOutlier() tomando en cuenta el batch</span></span>
-<span id="cb148-2"><a href="control-de-calidad.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(</span>
-<span id="cb148-3"><a href="control-de-calidad.html#cb148-3" aria-hidden="true" tabindex="-1"></a>    sce.grun,</span>
-<span id="cb148-4"><a href="control-de-calidad.html#cb148-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;donor&quot;</span>,</span>
-<span id="cb148-5"><a href="control-de-calidad.html#cb148-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;altexps_ERCC_percent&quot;</span>,</span>
-<span id="cb148-6"><a href="control-de-calidad.html#cb148-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="fu">data.frame</span>(<span class="at">discard =</span> discard.ercc)</span>
-<span id="cb148-7"><a href="control-de-calidad.html#cb148-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="control-de-calidad.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="do">## isOutlier() tomando en cuenta el batch</span></span>
+<span id="cb149-2"><a href="control-de-calidad.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(</span>
+<span id="cb149-3"><a href="control-de-calidad.html#cb149-3" aria-hidden="true" tabindex="-1"></a>    sce.grun,</span>
+<span id="cb149-4"><a href="control-de-calidad.html#cb149-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;donor&quot;</span>,</span>
+<span id="cb149-5"><a href="control-de-calidad.html#cb149-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;altexps_ERCC_percent&quot;</span>,</span>
+<span id="cb149-6"><a href="control-de-calidad.html#cb149-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="fu">data.frame</span>(<span class="at">discard =</span> discard.ercc)</span>
+<span id="cb149-7"><a href="control-de-calidad.html#cb149-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Warning: Removed 10 rows containing non-finite values (stat_ydensity).</code></pre>
 <pre><code>## Warning: Removed 10 rows containing missing values (position_quasirandom).</code></pre>
 <p><img src="05-control_calidad_files/figure-html/grun_isOutlier-1.png" width="672" /></p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="control-de-calidad.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="do">## isOutlier() tomando en cuenta batch y muestras que fallaron</span></span>
-<span id="cb151-2"><a href="control-de-calidad.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(</span>
-<span id="cb151-3"><a href="control-de-calidad.html#cb151-3" aria-hidden="true" tabindex="-1"></a>    sce.grun,</span>
-<span id="cb151-4"><a href="control-de-calidad.html#cb151-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;donor&quot;</span>,</span>
-<span id="cb151-5"><a href="control-de-calidad.html#cb151-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;altexps_ERCC_percent&quot;</span>,</span>
-<span id="cb151-6"><a href="control-de-calidad.html#cb151-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="fu">data.frame</span>(<span class="at">discard =</span> discard.ercc2)</span>
-<span id="cb151-7"><a href="control-de-calidad.html#cb151-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="control-de-calidad.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="do">## isOutlier() tomando en cuenta batch y muestras que fallaron</span></span>
+<span id="cb152-2"><a href="control-de-calidad.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(</span>
+<span id="cb152-3"><a href="control-de-calidad.html#cb152-3" aria-hidden="true" tabindex="-1"></a>    sce.grun,</span>
+<span id="cb152-4"><a href="control-de-calidad.html#cb152-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;donor&quot;</span>,</span>
+<span id="cb152-5"><a href="control-de-calidad.html#cb152-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;altexps_ERCC_percent&quot;</span>,</span>
+<span id="cb152-6"><a href="control-de-calidad.html#cb152-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="fu">data.frame</span>(<span class="at">discard =</span> discard.ercc2)</span>
+<span id="cb152-7"><a href="control-de-calidad.html#cb152-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Warning: Removed 10 rows containing non-finite values (stat_ydensity).
 
 ## Warning: Removed 10 rows containing missing values (position_quasirandom).</code></pre>
@@ -827,31 +832,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="gráficas-de-qc-extra" class="section level2" number="5.7">
 <h2><span class="header-section-number">5.7</span> Gráficas de QC extra</h2>
 <p>Otras gráficas que podemos hacer.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="control-de-calidad.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Agregamos información sobre que células</span></span>
-<span id="cb153-2"><a href="control-de-calidad.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="co"># tienen valores extremos</span></span>
-<span id="cb153-3"><a href="control-de-calidad.html#cb153-3" aria-hidden="true" tabindex="-1"></a>sce<span class="fl">.416</span>b<span class="sc">$</span>discard <span class="ot">&lt;-</span> discard2</span>
-<span id="cb153-4"><a href="control-de-calidad.html#cb153-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-5"><a href="control-de-calidad.html#cb153-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Haz esta gráfica para cada medida de</span></span>
-<span id="cb153-6"><a href="control-de-calidad.html#cb153-6" aria-hidden="true" tabindex="-1"></a><span class="co"># control de calidad (QC)</span></span>
-<span id="cb153-7"><a href="control-de-calidad.html#cb153-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(</span>
-<span id="cb153-8"><a href="control-de-calidad.html#cb153-8" aria-hidden="true" tabindex="-1"></a>    sce<span class="fl">.416</span>b,</span>
-<span id="cb153-9"><a href="control-de-calidad.html#cb153-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;block&quot;</span>,</span>
-<span id="cb153-10"><a href="control-de-calidad.html#cb153-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;sum&quot;</span>,</span>
-<span id="cb153-11"><a href="control-de-calidad.html#cb153-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;discard&quot;</span>,</span>
-<span id="cb153-12"><a href="control-de-calidad.html#cb153-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">other_fields =</span> <span class="st">&quot;phenotype&quot;</span></span>
-<span id="cb153-13"><a href="control-de-calidad.html#cb153-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb153-14"><a href="control-de-calidad.html#cb153-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>phenotype) <span class="sc">+</span></span>
-<span id="cb153-15"><a href="control-de-calidad.html#cb153-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="control-de-calidad.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Agregamos información sobre que células</span></span>
+<span id="cb154-2"><a href="control-de-calidad.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="co"># tienen valores extremos</span></span>
+<span id="cb154-3"><a href="control-de-calidad.html#cb154-3" aria-hidden="true" tabindex="-1"></a>sce<span class="fl">.416</span>b<span class="sc">$</span>discard <span class="ot">&lt;-</span> discard2</span>
+<span id="cb154-4"><a href="control-de-calidad.html#cb154-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-5"><a href="control-de-calidad.html#cb154-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Haz esta gráfica para cada medida de</span></span>
+<span id="cb154-6"><a href="control-de-calidad.html#cb154-6" aria-hidden="true" tabindex="-1"></a><span class="co"># control de calidad (QC)</span></span>
+<span id="cb154-7"><a href="control-de-calidad.html#cb154-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(</span>
+<span id="cb154-8"><a href="control-de-calidad.html#cb154-8" aria-hidden="true" tabindex="-1"></a>    sce<span class="fl">.416</span>b,</span>
+<span id="cb154-9"><a href="control-de-calidad.html#cb154-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;block&quot;</span>,</span>
+<span id="cb154-10"><a href="control-de-calidad.html#cb154-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;sum&quot;</span>,</span>
+<span id="cb154-11"><a href="control-de-calidad.html#cb154-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;discard&quot;</span>,</span>
+<span id="cb154-12"><a href="control-de-calidad.html#cb154-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">other_fields =</span> <span class="st">&quot;phenotype&quot;</span></span>
+<span id="cb154-13"><a href="control-de-calidad.html#cb154-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb154-14"><a href="control-de-calidad.html#cb154-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>phenotype) <span class="sc">+</span></span>
+<span id="cb154-15"><a href="control-de-calidad.html#cb154-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>()</span></code></pre></div>
 <p><img src="05-control_calidad_files/figure-html/qc_extra_416b-1.png" width="672" /></p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="control-de-calidad.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Otra gráfica de diagnóstico útil</span></span>
-<span id="cb154-2"><a href="control-de-calidad.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(</span>
-<span id="cb154-3"><a href="control-de-calidad.html#cb154-3" aria-hidden="true" tabindex="-1"></a>    sce<span class="fl">.416</span>b,</span>
-<span id="cb154-4"><a href="control-de-calidad.html#cb154-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;sum&quot;</span>,</span>
-<span id="cb154-5"><a href="control-de-calidad.html#cb154-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;subsets_Mito_percent&quot;</span>,</span>
-<span id="cb154-6"><a href="control-de-calidad.html#cb154-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;discard&quot;</span>,</span>
-<span id="cb154-7"><a href="control-de-calidad.html#cb154-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">other_fields =</span> <span class="fu">c</span>(<span class="st">&quot;block&quot;</span>, <span class="st">&quot;phenotype&quot;</span>)</span>
-<span id="cb154-8"><a href="control-de-calidad.html#cb154-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb154-9"><a href="control-de-calidad.html#cb154-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(block <span class="sc">~</span> phenotype)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="control-de-calidad.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Otra gráfica de diagnóstico útil</span></span>
+<span id="cb155-2"><a href="control-de-calidad.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotColData</span>(</span>
+<span id="cb155-3"><a href="control-de-calidad.html#cb155-3" aria-hidden="true" tabindex="-1"></a>    sce<span class="fl">.416</span>b,</span>
+<span id="cb155-4"><a href="control-de-calidad.html#cb155-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;sum&quot;</span>,</span>
+<span id="cb155-5"><a href="control-de-calidad.html#cb155-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;subsets_Mito_percent&quot;</span>,</span>
+<span id="cb155-6"><a href="control-de-calidad.html#cb155-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;discard&quot;</span>,</span>
+<span id="cb155-7"><a href="control-de-calidad.html#cb155-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">other_fields =</span> <span class="fu">c</span>(<span class="st">&quot;block&quot;</span>, <span class="st">&quot;phenotype&quot;</span>)</span>
+<span id="cb155-8"><a href="control-de-calidad.html#cb155-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb155-9"><a href="control-de-calidad.html#cb155-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(block <span class="sc">~</span> phenotype)</span></code></pre></div>
 <p><img src="05-control_calidad_files/figure-html/qc_extra_416b-2.png" width="672" /></p>
 </div>
 <div id="ejercicio-ercc-grun-et-al" class="section level2" number="5.8">
@@ -876,82 +881,82 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Opciones algorítmicas para detecar los droplets vacíos. Fuente: <a href="https://doi.org/10.1186/s13059-019-1662-y">Lun et al, <em>Genome Biology</em>, 2019</a>.
 </p>
 </div>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="control-de-calidad.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Descarguemos los datos</span></span>
-<span id="cb155-2"><a href="control-de-calidad.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;BiocFileCache&quot;</span>)</span>
-<span id="cb155-3"><a href="control-de-calidad.html#cb155-3" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
-<span id="cb155-4"><a href="control-de-calidad.html#cb155-4" aria-hidden="true" tabindex="-1"></a>raw.path <span class="ot">&lt;-</span></span>
-<span id="cb155-5"><a href="control-de-calidad.html#cb155-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bfcrpath</span>(</span>
-<span id="cb155-6"><a href="control-de-calidad.html#cb155-6" aria-hidden="true" tabindex="-1"></a>        bfc,</span>
-<span id="cb155-7"><a href="control-de-calidad.html#cb155-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">file.path</span>(</span>
-<span id="cb155-8"><a href="control-de-calidad.html#cb155-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;http://cf.10xgenomics.com/samples&quot;</span>,</span>
-<span id="cb155-9"><a href="control-de-calidad.html#cb155-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz&quot;</span></span>
-<span id="cb155-10"><a href="control-de-calidad.html#cb155-10" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb155-11"><a href="control-de-calidad.html#cb155-11" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="control-de-calidad.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Descarguemos los datos</span></span>
+<span id="cb156-2"><a href="control-de-calidad.html#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;BiocFileCache&quot;</span>)</span>
+<span id="cb156-3"><a href="control-de-calidad.html#cb156-3" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
+<span id="cb156-4"><a href="control-de-calidad.html#cb156-4" aria-hidden="true" tabindex="-1"></a>raw.path <span class="ot">&lt;-</span></span>
+<span id="cb156-5"><a href="control-de-calidad.html#cb156-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bfcrpath</span>(</span>
+<span id="cb156-6"><a href="control-de-calidad.html#cb156-6" aria-hidden="true" tabindex="-1"></a>        bfc,</span>
+<span id="cb156-7"><a href="control-de-calidad.html#cb156-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">file.path</span>(</span>
+<span id="cb156-8"><a href="control-de-calidad.html#cb156-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;http://cf.10xgenomics.com/samples&quot;</span>,</span>
+<span id="cb156-9"><a href="control-de-calidad.html#cb156-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz&quot;</span></span>
+<span id="cb156-10"><a href="control-de-calidad.html#cb156-10" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb156-11"><a href="control-de-calidad.html#cb156-11" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
 <pre><code>## adding rname &#39;http://cf.10xgenomics.com/samples/cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz&#39;</code></pre>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="control-de-calidad.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(raw.path, <span class="at">exdir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k&quot;</span>))</span>
-<span id="cb157-2"><a href="control-de-calidad.html#cb157-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb157-3"><a href="control-de-calidad.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Leamos los datos en R</span></span>
-<span id="cb157-4"><a href="control-de-calidad.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;DropletUtils&quot;</span>)</span>
-<span id="cb157-5"><a href="control-de-calidad.html#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Matrix&quot;</span>)</span>
-<span id="cb157-6"><a href="control-de-calidad.html#cb157-6" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k/raw_gene_bc_matrices/GRCh38&quot;</span>)</span>
-<span id="cb157-7"><a href="control-de-calidad.html#cb157-7" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">read10xCounts</span>(fname, <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb157-8"><a href="control-de-calidad.html#cb157-8" aria-hidden="true" tabindex="-1"></a>bcrank <span class="ot">&lt;-</span> <span class="fu">barcodeRanks</span>(<span class="fu">counts</span>(sce.pbmc))</span>
-<span id="cb157-9"><a href="control-de-calidad.html#cb157-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb157-10"><a href="control-de-calidad.html#cb157-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostremos solo los puntos únicos para acelerar</span></span>
-<span id="cb157-11"><a href="control-de-calidad.html#cb157-11" aria-hidden="true" tabindex="-1"></a><span class="co"># el proceso de hacer esta gráfica</span></span>
-<span id="cb157-12"><a href="control-de-calidad.html#cb157-12" aria-hidden="true" tabindex="-1"></a>uniq <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">duplicated</span>(bcrank<span class="sc">$</span>rank)</span>
-<span id="cb157-13"><a href="control-de-calidad.html#cb157-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb157-14"><a href="control-de-calidad.html#cb157-14" aria-hidden="true" tabindex="-1"></a>    bcrank<span class="sc">$</span>rank[uniq],</span>
-<span id="cb157-15"><a href="control-de-calidad.html#cb157-15" aria-hidden="true" tabindex="-1"></a>    bcrank<span class="sc">$</span>total[uniq],</span>
-<span id="cb157-16"><a href="control-de-calidad.html#cb157-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="st">&quot;xy&quot;</span>,</span>
-<span id="cb157-17"><a href="control-de-calidad.html#cb157-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Rank&quot;</span>,</span>
-<span id="cb157-18"><a href="control-de-calidad.html#cb157-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Total UMI count&quot;</span>,</span>
-<span id="cb157-19"><a href="control-de-calidad.html#cb157-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex.lab =</span> <span class="fl">1.2</span></span>
-<span id="cb157-20"><a href="control-de-calidad.html#cb157-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="control-de-calidad.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(raw.path, <span class="at">exdir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k&quot;</span>))</span>
+<span id="cb158-2"><a href="control-de-calidad.html#cb158-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-3"><a href="control-de-calidad.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Leamos los datos en R</span></span>
+<span id="cb158-4"><a href="control-de-calidad.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;DropletUtils&quot;</span>)</span>
+<span id="cb158-5"><a href="control-de-calidad.html#cb158-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Matrix&quot;</span>)</span>
+<span id="cb158-6"><a href="control-de-calidad.html#cb158-6" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k/raw_gene_bc_matrices/GRCh38&quot;</span>)</span>
+<span id="cb158-7"><a href="control-de-calidad.html#cb158-7" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">read10xCounts</span>(fname, <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb158-8"><a href="control-de-calidad.html#cb158-8" aria-hidden="true" tabindex="-1"></a>bcrank <span class="ot">&lt;-</span> <span class="fu">barcodeRanks</span>(<span class="fu">counts</span>(sce.pbmc))</span>
+<span id="cb158-9"><a href="control-de-calidad.html#cb158-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-10"><a href="control-de-calidad.html#cb158-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostremos solo los puntos únicos para acelerar</span></span>
+<span id="cb158-11"><a href="control-de-calidad.html#cb158-11" aria-hidden="true" tabindex="-1"></a><span class="co"># el proceso de hacer esta gráfica</span></span>
+<span id="cb158-12"><a href="control-de-calidad.html#cb158-12" aria-hidden="true" tabindex="-1"></a>uniq <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">duplicated</span>(bcrank<span class="sc">$</span>rank)</span>
+<span id="cb158-13"><a href="control-de-calidad.html#cb158-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb158-14"><a href="control-de-calidad.html#cb158-14" aria-hidden="true" tabindex="-1"></a>    bcrank<span class="sc">$</span>rank[uniq],</span>
+<span id="cb158-15"><a href="control-de-calidad.html#cb158-15" aria-hidden="true" tabindex="-1"></a>    bcrank<span class="sc">$</span>total[uniq],</span>
+<span id="cb158-16"><a href="control-de-calidad.html#cb158-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="st">&quot;xy&quot;</span>,</span>
+<span id="cb158-17"><a href="control-de-calidad.html#cb158-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Rank&quot;</span>,</span>
+<span id="cb158-18"><a href="control-de-calidad.html#cb158-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Total UMI count&quot;</span>,</span>
+<span id="cb158-19"><a href="control-de-calidad.html#cb158-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex.lab =</span> <span class="fl">1.2</span></span>
+<span id="cb158-20"><a href="control-de-calidad.html#cb158-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Warning in xy.coords(x, y, xlabel, ylabel, log): 1 y value &lt;= 0 omitted from
 ## logarithmic plot</code></pre>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="control-de-calidad.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(</span>
-<span id="cb159-2"><a href="control-de-calidad.html#cb159-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">h =</span> <span class="fu">metadata</span>(bcrank)<span class="sc">$</span>inflection,</span>
-<span id="cb159-3"><a href="control-de-calidad.html#cb159-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;darkgreen&quot;</span>,</span>
-<span id="cb159-4"><a href="control-de-calidad.html#cb159-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="dv">2</span></span>
-<span id="cb159-5"><a href="control-de-calidad.html#cb159-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb159-6"><a href="control-de-calidad.html#cb159-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(</span>
-<span id="cb159-7"><a href="control-de-calidad.html#cb159-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">h =</span> <span class="fu">metadata</span>(bcrank)<span class="sc">$</span>knee,</span>
-<span id="cb159-8"><a href="control-de-calidad.html#cb159-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
-<span id="cb159-9"><a href="control-de-calidad.html#cb159-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="dv">2</span></span>
-<span id="cb159-10"><a href="control-de-calidad.html#cb159-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb159-11"><a href="control-de-calidad.html#cb159-11" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
-<span id="cb159-12"><a href="control-de-calidad.html#cb159-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;bottomleft&quot;</span>,</span>
-<span id="cb159-13"><a href="control-de-calidad.html#cb159-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Inflection&quot;</span>, <span class="st">&quot;Knee&quot;</span>),</span>
-<span id="cb159-14"><a href="control-de-calidad.html#cb159-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>),</span>
-<span id="cb159-15"><a href="control-de-calidad.html#cb159-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="dv">2</span>,</span>
-<span id="cb159-16"><a href="control-de-calidad.html#cb159-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex =</span> <span class="fl">1.2</span></span>
-<span id="cb159-17"><a href="control-de-calidad.html#cb159-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="control-de-calidad.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(</span>
+<span id="cb160-2"><a href="control-de-calidad.html#cb160-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">h =</span> <span class="fu">metadata</span>(bcrank)<span class="sc">$</span>inflection,</span>
+<span id="cb160-3"><a href="control-de-calidad.html#cb160-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;darkgreen&quot;</span>,</span>
+<span id="cb160-4"><a href="control-de-calidad.html#cb160-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="dv">2</span></span>
+<span id="cb160-5"><a href="control-de-calidad.html#cb160-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb160-6"><a href="control-de-calidad.html#cb160-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(</span>
+<span id="cb160-7"><a href="control-de-calidad.html#cb160-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">h =</span> <span class="fu">metadata</span>(bcrank)<span class="sc">$</span>knee,</span>
+<span id="cb160-8"><a href="control-de-calidad.html#cb160-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb160-9"><a href="control-de-calidad.html#cb160-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="dv">2</span></span>
+<span id="cb160-10"><a href="control-de-calidad.html#cb160-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb160-11"><a href="control-de-calidad.html#cb160-11" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb160-12"><a href="control-de-calidad.html#cb160-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;bottomleft&quot;</span>,</span>
+<span id="cb160-13"><a href="control-de-calidad.html#cb160-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Inflection&quot;</span>, <span class="st">&quot;Knee&quot;</span>),</span>
+<span id="cb160-14"><a href="control-de-calidad.html#cb160-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>),</span>
+<span id="cb160-15"><a href="control-de-calidad.html#cb160-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="dv">2</span>,</span>
+<span id="cb160-16"><a href="control-de-calidad.html#cb160-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex =</span> <span class="fl">1.2</span></span>
+<span id="cb160-17"><a href="control-de-calidad.html#cb160-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="05-control_calidad_files/figure-html/pbmc_qc-1.png" width="672" />
 Encontremos los <em>droplets</em> vacíos usando <code>emptyDrops()</code>.</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="control-de-calidad.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Usemos DropletUtils para encontrar los droplets</span></span>
-<span id="cb160-2"><a href="control-de-calidad.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb160-3"><a href="control-de-calidad.html#cb160-3" aria-hidden="true" tabindex="-1"></a>e.out <span class="ot">&lt;-</span> <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc))</span>
-<span id="cb160-4"><a href="control-de-calidad.html#cb160-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb160-5"><a href="control-de-calidad.html#cb160-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Revisa ?emptyDrops para una explicación de porque hay valores NA</span></span>
-<span id="cb160-6"><a href="control-de-calidad.html#cb160-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(e.out<span class="sc">$</span>FDR <span class="sc">&lt;=</span> <span class="fl">0.001</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="control-de-calidad.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Usemos DropletUtils para encontrar los droplets</span></span>
+<span id="cb161-2"><a href="control-de-calidad.html#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb161-3"><a href="control-de-calidad.html#cb161-3" aria-hidden="true" tabindex="-1"></a>e.out <span class="ot">&lt;-</span> <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc))</span>
+<span id="cb161-4"><a href="control-de-calidad.html#cb161-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-5"><a href="control-de-calidad.html#cb161-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Revisa ?emptyDrops para una explicación de porque hay valores NA</span></span>
+<span id="cb161-6"><a href="control-de-calidad.html#cb161-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(e.out<span class="sc">$</span>FDR <span class="sc">&lt;=</span> <span class="fl">0.001</span>)</span></code></pre></div>
 <pre><code>##    Mode   FALSE    TRUE    NA&#39;s 
 ## logical     989    4300  731991</code></pre>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="control-de-calidad.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb162-2"><a href="control-de-calidad.html#cb162-2" aria-hidden="true" tabindex="-1"></a>limit <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb162-3"><a href="control-de-calidad.html#cb162-3" aria-hidden="true" tabindex="-1"></a>all.out <span class="ot">&lt;-</span></span>
-<span id="cb162-4"><a href="control-de-calidad.html#cb162-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc), <span class="at">lower =</span> limit, <span class="at">test.ambient =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb162-5"><a href="control-de-calidad.html#cb162-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb162-6"><a href="control-de-calidad.html#cb162-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Idealmente, este histograma debería verse uniforme.</span></span>
-<span id="cb162-7"><a href="control-de-calidad.html#cb162-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Picos grandes cerca de cero indican que los _barcodes_</span></span>
-<span id="cb162-8"><a href="control-de-calidad.html#cb162-8" aria-hidden="true" tabindex="-1"></a><span class="co"># con un número total de cuentas menor a &quot;lower&quot; no son</span></span>
-<span id="cb162-9"><a href="control-de-calidad.html#cb162-9" aria-hidden="true" tabindex="-1"></a><span class="co"># de origen ambiental.</span></span>
-<span id="cb162-10"><a href="control-de-calidad.html#cb162-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(all.out<span class="sc">$</span>PValue[all.out<span class="sc">$</span>Total <span class="sc">&lt;=</span> limit <span class="sc">&amp;</span></span>
-<span id="cb162-11"><a href="control-de-calidad.html#cb162-11" aria-hidden="true" tabindex="-1"></a>    all.out<span class="sc">$</span>Total <span class="sc">&gt;</span> <span class="dv">0</span>],</span>
-<span id="cb162-12"><a href="control-de-calidad.html#cb162-12" aria-hidden="true" tabindex="-1"></a><span class="at">xlab =</span> <span class="st">&quot;P-value&quot;</span>,</span>
-<span id="cb162-13"><a href="control-de-calidad.html#cb162-13" aria-hidden="true" tabindex="-1"></a><span class="at">main =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb162-14"><a href="control-de-calidad.html#cb162-14" aria-hidden="true" tabindex="-1"></a><span class="at">col =</span> <span class="st">&quot;grey80&quot;</span></span>
-<span id="cb162-15"><a href="control-de-calidad.html#cb162-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="control-de-calidad.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb163-2"><a href="control-de-calidad.html#cb163-2" aria-hidden="true" tabindex="-1"></a>limit <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb163-3"><a href="control-de-calidad.html#cb163-3" aria-hidden="true" tabindex="-1"></a>all.out <span class="ot">&lt;-</span></span>
+<span id="cb163-4"><a href="control-de-calidad.html#cb163-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc), <span class="at">lower =</span> limit, <span class="at">test.ambient =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb163-5"><a href="control-de-calidad.html#cb163-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-6"><a href="control-de-calidad.html#cb163-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Idealmente, este histograma debería verse uniforme.</span></span>
+<span id="cb163-7"><a href="control-de-calidad.html#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Picos grandes cerca de cero indican que los _barcodes_</span></span>
+<span id="cb163-8"><a href="control-de-calidad.html#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="co"># con un número total de cuentas menor a &quot;lower&quot; no son</span></span>
+<span id="cb163-9"><a href="control-de-calidad.html#cb163-9" aria-hidden="true" tabindex="-1"></a><span class="co"># de origen ambiental.</span></span>
+<span id="cb163-10"><a href="control-de-calidad.html#cb163-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(all.out<span class="sc">$</span>PValue[all.out<span class="sc">$</span>Total <span class="sc">&lt;=</span> limit <span class="sc">&amp;</span></span>
+<span id="cb163-11"><a href="control-de-calidad.html#cb163-11" aria-hidden="true" tabindex="-1"></a>    all.out<span class="sc">$</span>Total <span class="sc">&gt;</span> <span class="dv">0</span>],</span>
+<span id="cb163-12"><a href="control-de-calidad.html#cb163-12" aria-hidden="true" tabindex="-1"></a><span class="at">xlab =</span> <span class="st">&quot;P-value&quot;</span>,</span>
+<span id="cb163-13"><a href="control-de-calidad.html#cb163-13" aria-hidden="true" tabindex="-1"></a><span class="at">main =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb163-14"><a href="control-de-calidad.html#cb163-14" aria-hidden="true" tabindex="-1"></a><span class="at">col =</span> <span class="st">&quot;grey80&quot;</span></span>
+<span id="cb163-15"><a href="control-de-calidad.html#cb163-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="05-control_calidad_files/figure-html/emptyDrops-1.png" width="672" /></p>
 </div>
 <div id="ejercicio-detección-de-droplets-vacíos" class="section level2" number="5.10">
@@ -965,19 +970,19 @@ Encontremos los <em>droplets</em> vacíos usando <code>emptyDrops()</code>.</p>
 <div id="filtrado-de-expresión-mitocondrial-adicional" class="section level2" number="5.11">
 <h2><span class="header-section-number">5.11</span> Filtrado de expresión mitocondrial adicional</h2>
 <p>Después de filtar los droplets, el filtrado por expresión mitocondrial nos va a ayudar a eliminar células de baja calidad.</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="control-de-calidad.html#cb163-1" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="fu">which</span>(e.out<span class="sc">$</span>FDR <span class="sc">&lt;=</span> <span class="fl">0.001</span>)]</span>
-<span id="cb163-2"><a href="control-de-calidad.html#cb163-2" aria-hidden="true" tabindex="-1"></a>is.mito <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;^MT-&quot;</span>, <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>Symbol)</span>
-<span id="cb163-3"><a href="control-de-calidad.html#cb163-3" aria-hidden="true" tabindex="-1"></a>sce.pmbc <span class="ot">&lt;-</span> <span class="fu">addPerCellQC</span>(sce.pbmc, <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">MT =</span> is.mito))</span>
-<span id="cb163-4"><a href="control-de-calidad.html#cb163-4" aria-hidden="true" tabindex="-1"></a>discard.mito <span class="ot">&lt;-</span></span>
-<span id="cb163-5"><a href="control-de-calidad.html#cb163-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">isOutlier</span>(sce.pmbc<span class="sc">$</span>subsets_MT_percent, <span class="at">type =</span> <span class="st">&quot;higher&quot;</span>)</span>
-<span id="cb163-6"><a href="control-de-calidad.html#cb163-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb163-7"><a href="control-de-calidad.html#cb163-7" aria-hidden="true" tabindex="-1"></a>    sce.pmbc<span class="sc">$</span>sum,</span>
-<span id="cb163-8"><a href="control-de-calidad.html#cb163-8" aria-hidden="true" tabindex="-1"></a>    sce.pmbc<span class="sc">$</span>subsets_MT_percent,</span>
-<span id="cb163-9"><a href="control-de-calidad.html#cb163-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="st">&quot;x&quot;</span>,</span>
-<span id="cb163-10"><a href="control-de-calidad.html#cb163-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Total count&quot;</span>,</span>
-<span id="cb163-11"><a href="control-de-calidad.html#cb163-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Mitochondrial %&quot;</span></span>
-<span id="cb163-12"><a href="control-de-calidad.html#cb163-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb163-13"><a href="control-de-calidad.html#cb163-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">attr</span>(discard.mito, <span class="st">&quot;thresholds&quot;</span>)[<span class="st">&quot;higher&quot;</span>], <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="control-de-calidad.html#cb164-1" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="fu">which</span>(e.out<span class="sc">$</span>FDR <span class="sc">&lt;=</span> <span class="fl">0.001</span>)]</span>
+<span id="cb164-2"><a href="control-de-calidad.html#cb164-2" aria-hidden="true" tabindex="-1"></a>is.mito <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;^MT-&quot;</span>, <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>Symbol)</span>
+<span id="cb164-3"><a href="control-de-calidad.html#cb164-3" aria-hidden="true" tabindex="-1"></a>sce.pmbc <span class="ot">&lt;-</span> <span class="fu">addPerCellQC</span>(sce.pbmc, <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">MT =</span> is.mito))</span>
+<span id="cb164-4"><a href="control-de-calidad.html#cb164-4" aria-hidden="true" tabindex="-1"></a>discard.mito <span class="ot">&lt;-</span></span>
+<span id="cb164-5"><a href="control-de-calidad.html#cb164-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">isOutlier</span>(sce.pmbc<span class="sc">$</span>subsets_MT_percent, <span class="at">type =</span> <span class="st">&quot;higher&quot;</span>)</span>
+<span id="cb164-6"><a href="control-de-calidad.html#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb164-7"><a href="control-de-calidad.html#cb164-7" aria-hidden="true" tabindex="-1"></a>    sce.pmbc<span class="sc">$</span>sum,</span>
+<span id="cb164-8"><a href="control-de-calidad.html#cb164-8" aria-hidden="true" tabindex="-1"></a>    sce.pmbc<span class="sc">$</span>subsets_MT_percent,</span>
+<span id="cb164-9"><a href="control-de-calidad.html#cb164-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">log =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb164-10"><a href="control-de-calidad.html#cb164-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Total count&quot;</span>,</span>
+<span id="cb164-11"><a href="control-de-calidad.html#cb164-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Mitochondrial %&quot;</span></span>
+<span id="cb164-12"><a href="control-de-calidad.html#cb164-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb164-13"><a href="control-de-calidad.html#cb164-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">attr</span>(discard.mito, <span class="st">&quot;thresholds&quot;</span>)[<span class="st">&quot;higher&quot;</span>], <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="05-control_calidad_files/figure-html/pbmc_chrMT_ayuda-1.png" width="672" /></p>
 </div>
 <div id="ejercicio-avanzado" class="section level2" number="5.12">
@@ -994,14 +999,14 @@ Encontremos los <em>droplets</em> vacíos usando <code>emptyDrops()</code>.</p>
 </div>
 <div id="discusión-conviene-eliminar-datos" class="section level2" number="5.13">
 <h2><span class="header-section-number">5.13</span> Discusión ¿Conviene eliminar datos?</h2>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="control-de-calidad.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminemos las células de calidad baja</span></span>
-<span id="cb164-2"><a href="control-de-calidad.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="co"># al quedarnos con las columnas del objeto sce que NO</span></span>
-<span id="cb164-3"><a href="control-de-calidad.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="co"># queremos descartar (eso hace el !)</span></span>
-<span id="cb164-4"><a href="control-de-calidad.html#cb164-4" aria-hidden="true" tabindex="-1"></a>filtered <span class="ot">&lt;-</span> sce<span class="fl">.416</span>b[, <span class="sc">!</span>discard2]</span>
-<span id="cb164-5"><a href="control-de-calidad.html#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternativamente, podemos marcar</span></span>
-<span id="cb164-6"><a href="control-de-calidad.html#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="co"># las células de baja calidad</span></span>
-<span id="cb164-7"><a href="control-de-calidad.html#cb164-7" aria-hidden="true" tabindex="-1"></a>marked <span class="ot">&lt;-</span> sce<span class="fl">.416</span>b</span>
-<span id="cb164-8"><a href="control-de-calidad.html#cb164-8" aria-hidden="true" tabindex="-1"></a>marked<span class="sc">$</span>discard <span class="ot">&lt;-</span> discard2</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="control-de-calidad.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminemos las células de calidad baja</span></span>
+<span id="cb165-2"><a href="control-de-calidad.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="co"># al quedarnos con las columnas del objeto sce que NO</span></span>
+<span id="cb165-3"><a href="control-de-calidad.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="co"># queremos descartar (eso hace el !)</span></span>
+<span id="cb165-4"><a href="control-de-calidad.html#cb165-4" aria-hidden="true" tabindex="-1"></a>filtered <span class="ot">&lt;-</span> sce<span class="fl">.416</span>b[, <span class="sc">!</span>discard2]</span>
+<span id="cb165-5"><a href="control-de-calidad.html#cb165-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternativamente, podemos marcar</span></span>
+<span id="cb165-6"><a href="control-de-calidad.html#cb165-6" aria-hidden="true" tabindex="-1"></a><span class="co"># las células de baja calidad</span></span>
+<span id="cb165-7"><a href="control-de-calidad.html#cb165-7" aria-hidden="true" tabindex="-1"></a>marked <span class="ot">&lt;-</span> sce<span class="fl">.416</span>b</span>
+<span id="cb165-8"><a href="control-de-calidad.html#cb165-8" aria-hidden="true" tabindex="-1"></a>marked<span class="sc">$</span>discard <span class="ot">&lt;-</span> discard2</span></code></pre></div>
 <ul>
 <li>¿Cúal de estos objetos es más grande? <a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a></li>
 <li>¿Cúal prefieres usar? <a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a></li>
@@ -1030,44 +1035,44 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 <li><a href="http://bioconductor.org/packages/release/bioc/html/iSEE.html" class="uri">http://bioconductor.org/packages/release/bioc/html/iSEE.html</a></li>
 <li><a href="http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html" class="uri">http://bioconductor.org/packages/release/bioc/vignettes/iSEE/inst/doc/basic.html</a></li>
 </ul>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="control-de-calidad.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Hagamos un objeto sencillo de tipo RangedSummarizedExperiment</span></span>
-<span id="cb165-2"><a href="control-de-calidad.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SummarizedExperiment&quot;</span>)</span>
-<span id="cb165-3"><a href="control-de-calidad.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="do">## ?SummarizedExperiment</span></span>
-<span id="cb165-4"><a href="control-de-calidad.html#cb165-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-5"><a href="control-de-calidad.html#cb165-5" aria-hidden="true" tabindex="-1"></a><span class="do">## De los ejemplos en la ayuda oficial</span></span>
-<span id="cb165-6"><a href="control-de-calidad.html#cb165-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Creamos los datos para nuestro objeto de tipo SummarizedExperiment</span></span>
-<span id="cb165-7"><a href="control-de-calidad.html#cb165-7" aria-hidden="true" tabindex="-1"></a><span class="do">## para 200 genes a lo largo de 6 muestras</span></span>
-<span id="cb165-8"><a href="control-de-calidad.html#cb165-8" aria-hidden="true" tabindex="-1"></a>nrows <span class="ot">&lt;-</span> <span class="dv">200</span></span>
-<span id="cb165-9"><a href="control-de-calidad.html#cb165-9" aria-hidden="true" tabindex="-1"></a>ncols <span class="ot">&lt;-</span> <span class="dv">6</span></span>
-<span id="cb165-10"><a href="control-de-calidad.html#cb165-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-11"><a href="control-de-calidad.html#cb165-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Números al azar de cuentas</span></span>
-<span id="cb165-12"><a href="control-de-calidad.html#cb165-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20210223</span>)</span>
-<span id="cb165-13"><a href="control-de-calidad.html#cb165-13" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(nrows <span class="sc">*</span> ncols, <span class="dv">1</span>, <span class="fl">1e4</span>), nrows)</span>
-<span id="cb165-14"><a href="control-de-calidad.html#cb165-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-15"><a href="control-de-calidad.html#cb165-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de nuestros genes</span></span>
-<span id="cb165-16"><a href="control-de-calidad.html#cb165-16" aria-hidden="true" tabindex="-1"></a>rowRanges <span class="ot">&lt;-</span> <span class="fu">GRanges</span>(</span>
-<span id="cb165-17"><a href="control-de-calidad.html#cb165-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr2&quot;</span>), <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">150</span>)),</span>
-<span id="cb165-18"><a href="control-de-calidad.html#cb165-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">IRanges</span>(<span class="fu">floor</span>(<span class="fu">runif</span>(<span class="dv">200</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>)), <span class="at">width =</span> <span class="dv">100</span>),</span>
-<span id="cb165-19"><a href="control-de-calidad.html#cb165-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">strand =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;+&quot;</span>, <span class="st">&quot;-&quot;</span>), <span class="dv">200</span>, <span class="cn">TRUE</span>),</span>
-<span id="cb165-20"><a href="control-de-calidad.html#cb165-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">feature_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;ID%03d&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>)</span>
-<span id="cb165-21"><a href="control-de-calidad.html#cb165-21" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb165-22"><a href="control-de-calidad.html#cb165-22" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rowRanges) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;gene_&quot;</span>, <span class="fu">seq_len</span>(<span class="fu">length</span>(rowRanges)))</span>
-<span id="cb165-23"><a href="control-de-calidad.html#cb165-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-24"><a href="control-de-calidad.html#cb165-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de nuestras muestras</span></span>
-<span id="cb165-25"><a href="control-de-calidad.html#cb165-25" aria-hidden="true" tabindex="-1"></a>colData <span class="ot">&lt;-</span> <span class="fu">DataFrame</span>(</span>
-<span id="cb165-26"><a href="control-de-calidad.html#cb165-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">Treatment =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;ChIP&quot;</span>, <span class="st">&quot;Input&quot;</span>), <span class="dv">3</span>),</span>
-<span id="cb165-27"><a href="control-de-calidad.html#cb165-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">row.names =</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb165-28"><a href="control-de-calidad.html#cb165-28" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb165-29"><a href="control-de-calidad.html#cb165-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-30"><a href="control-de-calidad.html#cb165-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Juntamos ahora toda la información en un solo objeto de R</span></span>
-<span id="cb165-31"><a href="control-de-calidad.html#cb165-31" aria-hidden="true" tabindex="-1"></a>rse <span class="ot">&lt;-</span> <span class="fu">SummarizedExperiment</span>(</span>
-<span id="cb165-32"><a href="control-de-calidad.html#cb165-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">assays =</span> <span class="fu">SimpleList</span>(<span class="at">counts =</span> counts),</span>
-<span id="cb165-33"><a href="control-de-calidad.html#cb165-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">rowRanges =</span> rowRanges,</span>
-<span id="cb165-34"><a href="control-de-calidad.html#cb165-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">colData =</span> colData</span>
-<span id="cb165-35"><a href="control-de-calidad.html#cb165-35" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb165-36"><a href="control-de-calidad.html#cb165-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-37"><a href="control-de-calidad.html#cb165-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Exploremos el objeto resultante</span></span>
-<span id="cb165-38"><a href="control-de-calidad.html#cb165-38" aria-hidden="true" tabindex="-1"></a>rse</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="control-de-calidad.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Hagamos un objeto sencillo de tipo RangedSummarizedExperiment</span></span>
+<span id="cb166-2"><a href="control-de-calidad.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SummarizedExperiment&quot;</span>)</span>
+<span id="cb166-3"><a href="control-de-calidad.html#cb166-3" aria-hidden="true" tabindex="-1"></a><span class="do">## ?SummarizedExperiment</span></span>
+<span id="cb166-4"><a href="control-de-calidad.html#cb166-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-5"><a href="control-de-calidad.html#cb166-5" aria-hidden="true" tabindex="-1"></a><span class="do">## De los ejemplos en la ayuda oficial</span></span>
+<span id="cb166-6"><a href="control-de-calidad.html#cb166-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Creamos los datos para nuestro objeto de tipo SummarizedExperiment</span></span>
+<span id="cb166-7"><a href="control-de-calidad.html#cb166-7" aria-hidden="true" tabindex="-1"></a><span class="do">## para 200 genes a lo largo de 6 muestras</span></span>
+<span id="cb166-8"><a href="control-de-calidad.html#cb166-8" aria-hidden="true" tabindex="-1"></a>nrows <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb166-9"><a href="control-de-calidad.html#cb166-9" aria-hidden="true" tabindex="-1"></a>ncols <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb166-10"><a href="control-de-calidad.html#cb166-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-11"><a href="control-de-calidad.html#cb166-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Números al azar de cuentas</span></span>
+<span id="cb166-12"><a href="control-de-calidad.html#cb166-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20210223</span>)</span>
+<span id="cb166-13"><a href="control-de-calidad.html#cb166-13" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(nrows <span class="sc">*</span> ncols, <span class="dv">1</span>, <span class="fl">1e4</span>), nrows)</span>
+<span id="cb166-14"><a href="control-de-calidad.html#cb166-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-15"><a href="control-de-calidad.html#cb166-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de nuestros genes</span></span>
+<span id="cb166-16"><a href="control-de-calidad.html#cb166-16" aria-hidden="true" tabindex="-1"></a>rowRanges <span class="ot">&lt;-</span> <span class="fu">GRanges</span>(</span>
+<span id="cb166-17"><a href="control-de-calidad.html#cb166-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr2&quot;</span>), <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">150</span>)),</span>
+<span id="cb166-18"><a href="control-de-calidad.html#cb166-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">IRanges</span>(<span class="fu">floor</span>(<span class="fu">runif</span>(<span class="dv">200</span>, <span class="fl">1e5</span>, <span class="fl">1e6</span>)), <span class="at">width =</span> <span class="dv">100</span>),</span>
+<span id="cb166-19"><a href="control-de-calidad.html#cb166-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">strand =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;+&quot;</span>, <span class="st">&quot;-&quot;</span>), <span class="dv">200</span>, <span class="cn">TRUE</span>),</span>
+<span id="cb166-20"><a href="control-de-calidad.html#cb166-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">feature_id =</span> <span class="fu">sprintf</span>(<span class="st">&quot;ID%03d&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>)</span>
+<span id="cb166-21"><a href="control-de-calidad.html#cb166-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb166-22"><a href="control-de-calidad.html#cb166-22" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rowRanges) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;gene_&quot;</span>, <span class="fu">seq_len</span>(<span class="fu">length</span>(rowRanges)))</span>
+<span id="cb166-23"><a href="control-de-calidad.html#cb166-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-24"><a href="control-de-calidad.html#cb166-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de nuestras muestras</span></span>
+<span id="cb166-25"><a href="control-de-calidad.html#cb166-25" aria-hidden="true" tabindex="-1"></a>colData <span class="ot">&lt;-</span> <span class="fu">DataFrame</span>(</span>
+<span id="cb166-26"><a href="control-de-calidad.html#cb166-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">Treatment =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;ChIP&quot;</span>, <span class="st">&quot;Input&quot;</span>), <span class="dv">3</span>),</span>
+<span id="cb166-27"><a href="control-de-calidad.html#cb166-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">row.names =</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb166-28"><a href="control-de-calidad.html#cb166-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb166-29"><a href="control-de-calidad.html#cb166-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-30"><a href="control-de-calidad.html#cb166-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Juntamos ahora toda la información en un solo objeto de R</span></span>
+<span id="cb166-31"><a href="control-de-calidad.html#cb166-31" aria-hidden="true" tabindex="-1"></a>rse <span class="ot">&lt;-</span> <span class="fu">SummarizedExperiment</span>(</span>
+<span id="cb166-32"><a href="control-de-calidad.html#cb166-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">assays =</span> <span class="fu">SimpleList</span>(<span class="at">counts =</span> counts),</span>
+<span id="cb166-33"><a href="control-de-calidad.html#cb166-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">rowRanges =</span> rowRanges,</span>
+<span id="cb166-34"><a href="control-de-calidad.html#cb166-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">colData =</span> colData</span>
+<span id="cb166-35"><a href="control-de-calidad.html#cb166-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb166-36"><a href="control-de-calidad.html#cb166-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-37"><a href="control-de-calidad.html#cb166-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Exploremos el objeto resultante</span></span>
+<span id="cb166-38"><a href="control-de-calidad.html#cb166-38" aria-hidden="true" tabindex="-1"></a>rse</span></code></pre></div>
 <pre><code>## class: RangedSummarizedExperiment 
 ## dim: 200 6 
 ## metadata(0):
@@ -1076,19 +1081,19 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 ## rowData names(1): feature_id
 ## colnames(6): A B ... E F
 ## colData names(1): Treatment</code></pre>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="control-de-calidad.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Explora el objeto rse de forma interactiva</span></span>
-<span id="cb167-2"><a href="control-de-calidad.html#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
-<span id="cb167-3"><a href="control-de-calidad.html#cb167-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
-<span id="cb167-4"><a href="control-de-calidad.html#cb167-4" aria-hidden="true" tabindex="-1"></a>    iSEE<span class="sc">::</span><span class="fu">iSEE</span>(rse)</span>
-<span id="cb167-5"><a href="control-de-calidad.html#cb167-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="control-de-calidad.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Explora el objeto rse de forma interactiva</span></span>
+<span id="cb168-2"><a href="control-de-calidad.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;iSEE&quot;</span>)</span>
+<span id="cb168-3"><a href="control-de-calidad.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
+<span id="cb168-4"><a href="control-de-calidad.html#cb168-4" aria-hidden="true" tabindex="-1"></a>    iSEE<span class="sc">::</span><span class="fu">iSEE</span>(rse)</span>
+<span id="cb168-5"><a href="control-de-calidad.html#cb168-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div id="ejercicio-isee-con-sce.416b" class="section level3" number="5.14.1">
 <h3><span class="header-section-number">5.14.1</span> Ejercicio iSEE con sce.416b</h3>
 <p>Repitamos la imagen que hicimos anteriormente.</p>
 <p><a href="https://comunidadbioinfo.github.io/cdsb2021_scRNAseq/control-de-calidad.html#gr%C3%A1ficas-sobre-medidas-de-control-de-calidad-qc"><img src="https://comunidadbioinfo.github.io/cdsb2021_scRNAseq/05-control_calidad_files/figure-html/visualizar_qc-3.png"/></a></p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="control-de-calidad.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Explora el objeto sce.416b de forma interactiva</span></span>
-<span id="cb168-2"><a href="control-de-calidad.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
-<span id="cb168-3"><a href="control-de-calidad.html#cb168-3" aria-hidden="true" tabindex="-1"></a>    iSEE<span class="sc">::</span><span class="fu">iSEE</span>(sce<span class="fl">.416</span>b, <span class="at">appTitle =</span> <span class="st">&quot;sce.416b&quot;</span>)</span>
-<span id="cb168-4"><a href="control-de-calidad.html#cb168-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="control-de-calidad.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Explora el objeto sce.416b de forma interactiva</span></span>
+<span id="cb169-2"><a href="control-de-calidad.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
+<span id="cb169-3"><a href="control-de-calidad.html#cb169-3" aria-hidden="true" tabindex="-1"></a>    iSEE<span class="sc">::</span><span class="fu">iSEE</span>(sce<span class="fl">.416</span>b, <span class="at">appTitle =</span> <span class="st">&quot;sce.416b&quot;</span>)</span>
+<span id="cb169-4"><a href="control-de-calidad.html#cb169-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="datos-de-libd-de-tran-et-al" class="section level3" number="5.14.2">
 <h3><span class="header-section-number">5.14.2</span> Datos de LIBD de Tran et al</h3>
@@ -1109,14 +1114,14 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 </div>
 <div id="detalles-de-la-sesión-de-r-4" class="section level2" number="5.15">
 <h2><span class="header-section-number">5.15</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="control-de-calidad.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb169-2"><a href="control-de-calidad.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-10 07:28:25 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="control-de-calidad.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="control-de-calidad.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb170-2"><a href="control-de-calidad.html#cb170-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-10 09:15:18 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="control-de-calidad.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 185.128   4.246 210.943</code></pre>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="control-de-calidad.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb173-2"><a href="control-de-calidad.html#cb173-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+## 215.992   4.868 227.951</code></pre>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="control-de-calidad.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb174-2"><a href="control-de-calidad.html#cb174-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)

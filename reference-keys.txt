@@ -27,6 +27,9 @@ comunidad
 introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca-1
 detalles-de-la-sesión-de-r-2
 estructura-e-importe-de-datos
+estructura-de-singlecellexperiment
+ejercicio-1
+preguntas
 breve-repaso-de-r
 ejercicio-2
 extra
@@ -123,11 +126,11 @@ visualizando-con-pca
 retos-y-resumen-de-la-visualización-con-pca
 visualización-con-t-sne
 retos-de-la-visualización-con-t-sne
-preguntas
+preguntas-1
 continuando
 visualización-con-umap
 retos-de-la-visualización-con-umap
-preguntas-1
+preguntas-2
 continuando-1
 interpretando-las-gráficas
 resumen-y-recomendaciones
