@@ -214,6 +214,37 @@ Aquí están las listas de canciones por si desean escuchar algo de música mien
 
 Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2021_scRNAseq')` o revisalos en línea vía [**comunidadbioinfo.github.io/cdsb2021_scRNAseq**](http://comunidadbioinfo.github.io/cdsb2021_scRNAseq).
 
+### Durante el curso {-}
+
+Durante el curso estaremos actualizando el material, así que les recomendamos que usen RStudio para crear un nuevo proyecto que esté configurado con `git`/`GitHub`, para que con un simple `Pull` puedan actualizar los archivos del curso en su computadora. Para que funcione bien esto, les recomendamos que no editen los archivos que descarguen. Eso mejor háganlo en sus notas.
+
+Primero, en RStudio seleccionen `File` y luego `New Project ...`. Les saldrá la siguiente ventana donde tienen que escoger la opción de control de versiones.
+
+<div class="figure">
+<img src="img/clone_version_control.png" alt="Al crear un nuevo proyecto, seleccionen la opción de _Version Control_ (la tercera)." width="60%" />
+<p class="caption">(\#fig:unnamed-chunk-1)Al crear un nuevo proyecto, seleccionen la opción de _Version Control_ (la tercera).</p>
+</div>
+
+A continuación, seleccionen la opción de `Git`.
+
+<div class="figure">
+<img src="img/clone_choose_git.png" alt="Selecciona la opción de `Git` (la primera)." width="60%" />
+<p class="caption">(\#fig:unnamed-chunk-2)Selecciona la opción de `Git` (la primera).</p>
+</div>
+
+En la venta para especificar los detalles de `git`, 
+
+* Específica el siguiente URL del repositorio `https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq.git`
+* El nombre del directorio se llenará de forma automática. No tienes que cambiarlo.
+* Especifíca el subdirectorio de donde quieres que guarde este proyecto. Te conviene ponerlo en tu Desktop o algún lugar que no sea adentro de otro proyecto de RStudio.
+* Selecciona la opción de _Open in new session_ para que te abra una nueva ventana de RStudio si así lo prefieres.
+
+
+<div class="figure">
+<img src="img/clone_add_info.png" alt="Especifica que el _Repository URL_ es `https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq.git`." width="60%" />
+<p class="caption">(\#fig:unnamed-chunk-3)Especifica que el _Repository URL_ es `https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq.git`.</p>
+</div>
+
 ## Fuentes {-}
 
 El material de este curso está basado en el:
@@ -637,7 +668,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-10 14:15:39.
+Fecha de la última actualización de esta página: 2021-08-10 14:39:52.
 
 ## Licencia  {-}
 

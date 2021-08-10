@@ -146,7 +146,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#pre-requisitos"><i class="fa fa-check"></i>Pre-requisitos</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#horario"><i class="fa fa-check"></i>Horario</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#música-para-ejercicios"><i class="fa fa-check"></i>Música para ejercicios</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#materiales"><i class="fa fa-check"></i>Materiales</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#materiales"><i class="fa fa-check"></i>Materiales</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#durante-el-curso"><i class="fa fa-check"></i>Durante el curso</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#fuentes"><i class="fa fa-check"></i>Fuentes</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#zoom"><i class="fa fa-check"></i>Zoom</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#organizadores"><i class="fa fa-check"></i>Organizadores</a></li>
@@ -833,20 +836,20 @@ Están almacenadas en la seccion de <strong>meta-data</strong> del objeto Seurat
 <pre><code>## Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
 ## To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
 ## This message will be shown once per session</code></pre>
-<pre><code>## 14:46:30 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>## 14:46:30 Read 2638 rows and found 10 numeric columns</code></pre>
-<pre><code>## 14:46:30 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>## 14:46:30 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>## 15:09:12 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>## 15:09:12 Read 2638 rows and found 10 numeric columns</code></pre>
+<pre><code>## 15:09:12 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>## 15:09:12 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 <pre><code>## 0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
 <pre><code>## [----|----|----|----|----|----|----|----|----|----|</code></pre>
 <pre><code>## **************************************************|
-## 14:46:30 Writing NN index file to temp file /tmp/Rtmpsw4wlz/file469ebc5bf3
-## 14:46:30 Searching Annoy index using 1 thread, search_k = 3000
-## 14:46:31 Annoy recall = 100%
-## 14:46:32 Commencing smooth kNN distance calibration using 1 thread
-## 14:46:32 Initializing from normalized Laplacian + noise
-## 14:46:33 Commencing optimization for 500 epochs, with 105124 positive edges
-## 14:46:36 Optimization finished</code></pre>
+## 15:09:12 Writing NN index file to temp file /tmp/Rtmp6CahdP/file46c2e07878f
+## 15:09:12 Searching Annoy index using 1 thread, search_k = 3000
+## 15:09:13 Annoy recall = 100%
+## 15:09:13 Commencing smooth kNN distance calibration using 1 thread
+## 15:09:14 Initializing from normalized Laplacian + noise
+## 15:09:14 Commencing optimization for 500 epochs, with 105124 positive edges
+## 15:09:18 Optimization finished</code></pre>
 <div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="introducción-a-seurat.html#cb566-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that you can set `label = TRUE` or use the LabelClusters function to help label</span></span>
 <span id="cb566-2"><a href="introducción-a-seurat.html#cb566-2" aria-hidden="true" tabindex="-1"></a><span class="co"># individual clusters</span></span>
 <span id="cb566-3"><a href="introducción-a-seurat.html#cb566-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(pbmc, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>)</span></code></pre></div>
@@ -964,10 +967,10 @@ Como otra opción para acelerar estos cálculos, se puede configurar el número 
 <h2><span class="header-section-number">13.15</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="introducción-a-seurat.html#cb592-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb592-2"><a href="introducción-a-seurat.html#cb592-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-10 14:47:21 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-10 15:09:58 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="introducción-a-seurat.html#cb594-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 200.481  15.166 146.046</code></pre>
+## 192.482  14.927 139.436</code></pre>
 <div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="introducción-a-seurat.html#cb596-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb596-2"><a href="introducción-a-seurat.html#cb596-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
