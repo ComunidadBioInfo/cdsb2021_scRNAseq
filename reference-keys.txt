@@ -113,6 +113,21 @@ coeficiente-de-variación
 visualizando-el-coeficiente-de-variación
 genes-por-coeficiente-de-variación
 varianza-de-los-log-counts-vs-coeficiente-de-variación
+importando-un-dataset-con-factores-experimentales
+procesándolo
+considerando-factores-experimentales
+seleccionando-genes-altamante-variables-high-variable-genes-hvgs
+seleccionando-hvgs-sobre-la-métrica-de-varianza
+estrategias-para-seleccionar-x
+seleccionando-hvgs-sobre-su-significancia-estadística
+seleccionando-genes-por-arriba-de-la-tendencia
+seleccionando-genes-de-interés-a-priori
+poniendo-todo-junto
+quedándonos-sólo-con-los-hgvs
+especificando-los-hgvs
+witchcraft-brujería
+resumen-y-recomendaciones
+recomendaciones-para-empezar
 detalles-de-la-sesión-de-r-6
 reducción-de-dimensiones
 diapositivas-de-peter-hickey-2
@@ -141,7 +156,7 @@ retos-de-la-visualización-con-umap
 preguntas-2
 continuando-1
 interpretando-las-gráficas
-resumen-y-recomendaciones
+resumen-y-recomendaciones-1
 donde-estamos
 detalles-de-la-sesión-de-r-7
 clustering
@@ -167,7 +182,7 @@ evaluando-la-separación-de-los-clusters
 otros-métodos-de-clustering
 evaluando-estabilidad-de-los-clusters
 subclustering
-resumen-y-recomendaciones-1
+resumen-y-recomendaciones-2
 donde-estamos-1
 detalles-de-la-sesión-de-r-8
 identificación-de-genes-marcadores
@@ -211,7 +226,7 @@ problemas-estadísticos
 invalidez-de-p-values
 naturaleza-de-la-replicación
 comentarios-adicionales
-resumen-y-recomendaciones-2
+resumen-y-recomendaciones-3
 detalles-de-la-sesión-de-r-9
 anotación-de-clusters-de-células
 diapositivas-de-peter-hickey-5
@@ -236,7 +251,7 @@ resumen-de-la-anotación-basada-en-una-referencia-e.g.-singler
 asignando-las-etiquetas-de-tipos-celulares-a-partir-de-marcadores
 gene-set-enrichment-analysis
 calculando-las-actividades-de-los-conjuntos-de-genes
-resumen-y-recomendaciones-3
+resumen-y-recomendaciones-4
 detalles-de-la-sesión-de-r-10
 análisis-de-expresión-diferencial
 detalles-de-la-sesión-de-r-11
