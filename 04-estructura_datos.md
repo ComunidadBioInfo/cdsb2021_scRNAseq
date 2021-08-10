@@ -101,11 +101,11 @@ sce
 
 ```r
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(sce)
+lobstr::obj_size(sce) / 1024^2 ## En MB
 ```
 
 ```
-## 40,118,840 B
+## 38.26031 B
 ```
 
 ```r
@@ -197,11 +197,11 @@ sce
 
 ```r
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(sce)
+lobstr::obj_size(sce) / 1024^2 ## En MB
 ```
 
 ```
-## 111,705,024 B
+## 106.5302 B
 ```
 
 ```r
@@ -286,11 +286,11 @@ assayNames(sce) # solo nos dará los nombres de los assays
 ```r
 #      assay(sce, "counts_100")[110:115, 1:3]
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(sce)
+lobstr::obj_size(sce) / 1024^2 ## En MB
 ```
 
 ```
-## 183,289,088 B
+## 174.7981 B
 ```
 
 ```r
@@ -573,11 +573,11 @@ sce
 
 ```r
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(sce)
+lobstr::obj_size(sce) / 1024^2 ## En MB
 ```
 
 ```
-## 41,393,928 B
+## 39.47633 B
 ```
 
 ```r
@@ -585,11 +585,11 @@ lobstr::obj_size(sce)
 sce <- scater::logNormCounts(sce)
 
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(sce)
+lobstr::obj_size(sce) / 1024^2 ## En MB
 ```
 
 ```
-## 112,980,184 B
+## 107.7463 B
 ```
 
 ```r
@@ -674,11 +674,11 @@ rowData(sce)
 
 ```r
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(sce)
+lobstr::obj_size(sce) / 1024^2 ## En MB
 ```
 
 ```
-## 113,726,208 B
+## 108.4578 B
 ```
 
 ```r
@@ -742,11 +742,11 @@ rowData(sce)
 
 ```r
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(sce)
+lobstr::obj_size(sce) / 1024^2 ## En MB
 ```
 
 ```
-## 114,099,264 B
+## 108.8135 B
 ```
 
 ```r
@@ -855,13 +855,13 @@ reducedDim(sce, "PCA")[1:6, 1:3]
 ```
 
 ```
-##                                             PC1        PC2       PC3
-## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1  18.717668 -27.598132  5.939654
-## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1   2.480705 -27.564583  4.916567
-## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1  42.034018  -7.552435 12.126964
-## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  -8.494303  31.833727 15.760853
-## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1 -49.737390   4.226795  6.123169
-## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 -44.528081  -3.215503 10.384939
+##                                             PC1        PC2        PC3
+## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -18.717668 -27.598132  -5.939654
+## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1  -2.480705 -27.564583  -4.916567
+## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -42.034018  -7.552435 -12.126964
+## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1   8.494303  31.833727 -15.760853
+## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1  49.737390   4.226795  -6.123169
+## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1  44.528081  -3.215503 -10.384939
 ```
 
 ```r
@@ -896,13 +896,13 @@ head(reducedDim(sce, "TSNE"))
 ```
 
 ```
-##                                            [,1]        [,2]
-## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1  6.5866895  0.03631613
-## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1  0.8470477  2.94444815
-## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1  8.2373872  1.16237542
-## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  3.4333575 -2.65810618
-## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1 -9.0630778 -4.10064550
-## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 -8.6522527 -5.33613059
+##                                            [,1]      [,2]
+## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -1.9324215  5.458351
+## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -1.6410262  1.252046
+## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -0.2840272  7.675641
+## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  4.6443467  1.441611
+## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1 -2.1354986 -8.389812
+## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 -1.0113985 -9.085531
 ```
 
 ```r
@@ -919,13 +919,13 @@ head(reducedDim(sce, "UMAP"))
 ```
 
 ```
-##                                            [,1]      [,2]
-## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -1.5703640 -3.581467
-## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -0.1952625 -2.831508
-## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -0.6072289 -3.927193
-## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  0.4053853 -1.640465
-## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1  1.0855169 -1.561844
-## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1  0.8702458 -1.436179
+##                                           [,1]       [,2]
+## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 1.3050263 -2.2719512
+## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 1.2718075 -1.2115163
+## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 0.9324768 -2.6626939
+## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1 1.2343250  0.3802519
+## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1 1.8709973  1.1184082
+## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 1.4901810  0.6183546
 ```
 
 ```r
@@ -998,11 +998,11 @@ sce
 
 ```r
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(sce)
+lobstr::obj_size(sce) / 1024^2 ## En MB
 ```
 
 ```
-## 114,186,272 B
+## 108.8965 B
 ```
 
 ```r
@@ -1036,11 +1036,11 @@ ncol(altExp(sce.subset))
 
 ```r
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(sce.subset)
+lobstr::obj_size(sce.subset) / 1024^2 ## En MB
 ```
 
 ```
-## 12,578,128 B
+## 11.99544 B
 ```
 
 ```r
@@ -1406,11 +1406,11 @@ sce.pbmc
 
 ```r
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(sce.pbmc)
+lobstr::obj_size(sce.pbmc) / 1024^2 ## En MB
 ```
 
 ```
-## 130,223,664 B
+## 124.191 B
 ```
 
 ```r
@@ -1437,11 +1437,11 @@ sce.pbmc
 
 ```r
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(sce.pbmc)
+lobstr::obj_size(sce.pbmc) / 1024^2 ## En MB
 ```
 
 ```
-## 130,534,176 B
+## 124.4871 B
 ```
 
 ```r
@@ -1527,11 +1527,11 @@ sce.sis_seq
 
 ```r
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(sce.sis_seq)
+lobstr::obj_size(sce.sis_seq) / 1024^2 ## En MB
 ```
 
 ```
-## 31,299,864 B
+## 29.84988 B
 ```
 
 ```r
@@ -1640,11 +1640,11 @@ lun.sce
 
 ```r
 ## ¿Qué tan grande es el objeto de R?
-lobstr::obj_size(lun.sce)
+lobstr::obj_size(lun.sce) / 1024^2 ## En MB
 ```
 
 ```
-## 22,541,704 B
+## 21.49744 B
 ```
 
 ## Detalles de la sesión de R
@@ -1656,7 +1656,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-10 13:51:40 UTC"
+## [1] "2021-08-10 14:17:55 UTC"
 ```
 
 ```r
@@ -1665,7 +1665,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##  76.641   4.231 102.882
+##  86.260   4.680 133.352
 ```
 
 ```r
