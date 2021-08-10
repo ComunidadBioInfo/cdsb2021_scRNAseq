@@ -13,7 +13,7 @@ Contenido adaptado de [CDSB2020: Introducción a scRNA-seq, estructura e importe
 
 <img src="https://support.10xgenomics.com/img/cellranger-workflows/1sample-1GEM-1flowcell.png"/>
 
-* [`cellranger count`](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/count) procesa los datos crudos de FASTQ y genera los archivos que podemos leer en R usando `DropletUtils::read10xCounts()`
+* [`cellranger count`](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/count) procesa los datos crudos de FASTQ y genera los archivos que podemos leer en R usando `DropletUtils::read10xCounts()`.
 
 ### scPipe
 
@@ -879,12 +879,12 @@ reducedDim(sce, "PCA")[1:6, 1:3]
 
 ```
 ##                                             PC1        PC2        PC3
-## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1  18.717668 -27.598132  -5.939654
-## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1   2.480705 -27.564583  -4.916567
-## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1  42.034018  -7.552435 -12.126964
-## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  -8.494303  31.833727 -15.760853
-## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1 -49.737390   4.226795  -6.123169
-## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 -44.528081  -3.215503 -10.384939
+## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1  18.717668  27.598132  -5.939654
+## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1   2.480705  27.564583  -4.916567
+## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1  42.034018   7.552435 -12.126964
+## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  -8.494303 -31.833727 -15.760853
+## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1 -49.737390  -4.226795  -6.123169
+## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 -44.528081   3.215503 -10.384939
 ```
 
 ```r
@@ -919,13 +919,13 @@ head(reducedDim(sce, "TSNE"))
 ```
 
 ```
-##                                            [,1]        [,2]
-## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1  2.8884389  7.18059636
-## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1  3.3107014 -0.01273421
-## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1  4.6397623  7.90627261
-## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1 -0.9633677  4.52995515
-## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1 -6.7670785 -8.26333742
-## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 -8.1111991 -7.95473145
+##                                             [,1]       [,2]
+## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -3.78293149 -2.4351026
+## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -0.07936124 -3.7546409
+## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -6.15884424 -3.0451000
+## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1 -7.24781460  0.9987922
+## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1  7.68317555  7.5958799
+## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1  8.98069857  7.4254634
 ```
 
 ```r
@@ -943,12 +943,12 @@ head(reducedDim(sce, "UMAP"))
 
 ```
 ##                                            [,1]      [,2]
-## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -1.0773978 -4.698993
-## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -0.5662666 -3.428038
-## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -1.0864513 -4.777298
-## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  0.0361438 -2.744583
-## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1  0.3549859 -1.848561
-## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1  0.3355737 -2.419730
+## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -2.0896585 -2.108924
+## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -0.9133623 -1.654822
+## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -1.9098632 -2.873307
+## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  0.8387704 -2.030793
+## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1  1.3906900 -1.891456
+## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1  1.2369366 -2.063646
 ```
 
 ```r
@@ -1679,7 +1679,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-10 16:51:26 UTC"
+## [1] "2021-08-10 17:35:09 UTC"
 ```
 
 ```r
@@ -1688,7 +1688,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##  78.107   4.076 127.059
+##  69.138   3.849 108.558
 ```
 
 ```r
