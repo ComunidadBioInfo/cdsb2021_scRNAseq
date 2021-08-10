@@ -1,6 +1,276 @@
 # Estructura e importe de datos
 
-TODO
+Instructoras: [Elisa Márquez Zavala](https://twitter.com/naielisha), [Citlali Gil Aguillon](http://twitter.com/argininaa)
+
+Contenido adaptado de [CDSB2020: Introducción a scRNA-seq, estructura e importe de datos
+](https://comunidadbioinfo.github.io/cdsb2020/scRNAseq/02-data-infrastructure-and-import.html#1) de [Leonardo Collado Torres](https://github.com/lcolladotor) 
+
+## Breve repaso de R
+```{r}
+# Creamos un data.frame
+df <- data.frame(x = c(TRUE, FALSE, NA, NA), y = c(12, 34, 56, 78))
+row.names(df) <- letters[1:4]
+
+df 
+
+# Para acceder a los nombres de las columnas
+colnames(df)
+
+# Para acceder a los nombres de las filas
+rownames(df)
+
+# Podemos sacar información booleana
+df$y < 20
+
+# Y podemos acceder al mismo data.frame con la información booleana
+
+df[df$y<40,]
+
+## %in% (dentro de)
+bool_info <- rownames(df) %in% c('a','c','z')
+df[bool_info,]
+
+## & (y)  
+bool_info <- df$y < 50 & df$y > 20
+df[bool_info,]
+ 
+## | (o)
+bool_info <- df$y < 20 | df$y > 60
+df[bool_info,]
+
+```
+
+
+## Ejercicio 2
+
+```{r, eval = FALSE}
+
+library("SingleCellExperiment")
+library("scRNAseq")
+
+# Mini muestreo del set de datos usado en: https://bioconductor.org/books/release/OSCA/zeisel-mouse-brain-strt-seq.html#introduction-5
+
+archivo_cuentas <- "https://raw.githubusercontent.com/emarquezz/minidataset_osca/main/min_sce.csv"
+archivo_rowData <-"https://raw.githubusercontent.com/emarquezz/minidataset_osca/main/rowD.csv"
+archivo_colData <- "https://raw.githubusercontent.com/emarquezz/minidataset_osca/main/colD.csv"
+
+
+counts <- read.csv(archivo_cuentas, row.names = 1, header= TRUE, check.names=F)
+col.data <- DataFrame(read.csv(archivo_colData, row.names = 1, header= TRUE, check.names=F)) 
+row.data <- read.csv(archivo_rowData, row.names = 1, header= TRUE, check.names=F)
+```
+
+
+* Crea un objeto SingleCellExperiment
+
+```{r, echo =FALSE, eval=FALSE}
+sce <- SingleCellExperiment(
+  assays = list(counts = counts),
+  colData = col.data,
+  rowData = row.data)
+
+sce <- scater::logNormCounts(sce)
+
+sce
+```
+  - ¿Cuántos genes tenemos?
+
+  - ¿Qué información tenemos en el rowData? 
+
+* Extraigan los datos de los genes que nos interesan (objeto ´int_gen´)
+  - Pasen el mouse sobre los siguientes textos para ver recomendaciones:
+  - [Recomendación 1](## "Recuerda que puedes acceder con booleanos")
+  
+  
+  - [Recomendación 2](## "Recuerda que puedes utilizar el operador %in%")
+  
+  
+  - [Recomendación 3](## "Esto es como el ejercicio 'Using **rowData** for subsetting'")
+
+```{r, echo =TRUE, eval=FALSE}
+int_gen <-  c("Angpt1","Chic2","Mir503","Magee2","Nenf","Eps15l1","Hsf2bp","Gnptg","Vegfb","Atmin","Gad1","Gad2","Slc32a1","Dner","Slc2a13","Slc6a1","Nrxn3")
+```
+
+* Creen un objeto llamado ´min_sce´ con los datos de los genes
+
+```{r, echo =FALSE, eval=FALSE}
+bool_data <- rownames(rowData(sce))
+min_sce <- sce[ bool_data %in% int_gen,]
+```
+
+  - ¿Cuáles son parte del tejido ´interneurons´ o del tejido ´pyramidal CA1´ ? (del objeto ´min_sce´) 
+
+
+  - [Recomendación 1](## "Recuerda que puedes acceder con booleanos")
+  
+  
+  - [Recomendación 2](## "Recuerda que puedes utilizar el operador |")
+  
+  
+  - [Recomendación 3](## "Esto es como el ejercicio 'Using **colData** for subsetting'")
+
+
+* Con este subconjunto, crea el objeto tej_min_sce
+
+```{r, echo =FALSE, eval=FALSE}
+tej_int <- min_sce$level1class == "interneurons"
+tej_pyr <- min_sce$level1class == "pyramidal CA1"
+
+
+tej_min_sce <- min_sce[, tej_int | tej_pyr]
+```
+
+* Una vez que tengan el objeto ´SingleCellExperiment´ llamado ´tej_min_sce´, corran el siguiente código.
+```{r, eval= FALSE}
+library("scater")
+
+plotHeatmap(object= tej_min_sce, features=rownames(tej_min_sce), order_columns_by="level1class")
+```
+
+### Extra
+
+* Realiza los mismos pasos, pero ahora los genes que buscamos no tienen el nombre usual de gen (Gad1), sino su Ensembl gene IDs
+
+```{r, eval= FALSE}
+int_gen <-  c("ENSMUSG00000071076","ENSMUSG00000002076","ENSMUSG00000024962","ENSMUSG00000031224","ENSMSG00000036560","ENSMUSG00000037499","ENSMUSG00000006276","ENSMUSG00000035521","ENSMUSG00000047388","ENSMUSG0000051079","ENSMUSG00000076122","ENSMUSG00000029229","ENSMUSG00000022309","ENSMUSG00000036766","ENSMUSG00000070880","ENSMUSG00000026787","ENSMUSG00000066392","ENSMUSG00000036298","ENSMUSG00000037771","ENSMUSG00000030310")
+
+```
+
+## Import data
+
+* Diapositivas de Peter Hickey
+
+Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1X9qP3wNlnn3BMUQhuZwAo4vCV76c33X_M-UnHxkPZpE/edit)
+
+```{r eval=FALSE, echo=TRUE}
+# Descarga datos de ejemplo procesados con CellRanger
+# Paréntesis: al usar BiocFileCache solo tenemos que descargar
+#             los datos una vez.
+library('BiocFileCache')
+bfc <- BiocFileCache()
+pbmc.url <-
+    paste0(
+        "http://cf.10xgenomics.com/samples/cell-vdj/",
+        "3.1.0/vdj_v1_hs_pbmc3/",
+        "vdj_v1_hs_pbmc3_filtered_feature_bc_matrix.tar.gz"
+    )
+pbmc.data <- bfcrpath(bfc, pbmc.url)
+
+# Extrae los archivos en un directorio temporal
+untar(pbmc.data, exdir = tempdir())
+
+# Enumera los archivos que descargamos y que extrajimos
+# Estos son los archivos típicos de CellRanger
+pbmc.dir <- file.path(tempdir(),
+    "filtered_feature_bc_matrix")
+list.files(pbmc.dir)
+
+# Importa los datos como un objeto de tipo SingleCellExperiment
+library('DropletUtils')
+sce.pbmc <- read10xCounts(pbmc.dir)
+# Revisa el objeto que acabamos de construir
+sce.pbmc
+
+## ¿Qué tan grande es el objeto de R?
+pryr::object_size(sce.pbmc)
+
+# Almacena la información de CITE-seq como un experimento alternativo
+sce.pbmc <- splitAltExps(sce.pbmc, rowData(sce.pbmc)$Type)
+# Revisa el objeto que acabamos de actualizar
+sce.pbmc
+
+## ¿Qué tan grande es el objeto de R?
+pryr::object_size(sce.pbmc)
+
+# Descarga datos de ejemplo procesados con scPipe
+library('BiocFileCache')
+bfc <- BiocFileCache()
+sis_seq.url <-
+    "https://github.com/LuyiTian/SIS-seq_script/archive/master.zip"
+sis_seq.data <- bfcrpath(bfc, sis_seq.url)
+
+# Extrae los archivos en un directorio temporal
+unzip(sis_seq.data, exdir = tempdir())
+
+# Enumera (algunos de) los archivos que descargamos y extrajimos
+# Estos son los archivos típicos de scPipe
+sis_seq.dir <- file.path(tempdir(),
+    "SIS-seq_script-master",
+    "data",
+    "BcorKO_scRNAseq",
+    "RPI10")
+list.files(sis_seq.dir)
+
+# Importa los datos como un objeto de tipo SingleCellExperiment
+library('scPipe')
+sce.sis_seq <- create_sce_by_dir(sis_seq.dir)
+# Revisa el objeto que acabamos de construir
+sce.sis_seq
+
+## ¿Qué tan grande es el objeto de R?
+pryr::object_size(sce.sis_seq)
+
+# Descarga un ejemplo de un montón de archivos
+library('BiocFileCache')
+bfc <- BiocFileCache()
+lun_counts.url <-
+    paste0(
+        "https://www.ebi.ac.uk/arrayexpress/files/",
+        "E-MTAB-5522/E-MTAB-5522.processed.1.zip"
+    )
+lun_counts.data <- bfcrpath(bfc, lun_counts.url)
+lun_coldata.url <-
+    paste0("https://www.ebi.ac.uk/arrayexpress/files/",
+        "E-MTAB-5522/E-MTAB-5522.sdrf.txt")
+lun_coldata.data <- bfcrpath(bfc, lun_coldata.url)
+
+# Extrae los archivos en un directorio temporal
+lun_counts.dir <- tempfile("lun_counts.")
+unzip(lun_counts.data, exdir = lun_counts.dir)
+
+# Enumera los archivos que descargamos y extrajimos
+list.files(lun_counts.dir)
+
+# Lee la matriz de cuentas (para una placa)
+lun.counts <- read.delim(
+    file.path(lun_counts.dir, "counts_Calero_20160113.tsv"),
+    header = TRUE,
+    row.names = 1,
+    check.names = FALSE
+)
+# Almacena la información de la longitud de los genes para después
+gene.lengths <- lun.counts$Length
+# Convierte los datos de cuentas de genez a una matriz (quitamos las longitudes)
+lun.counts <- as.matrix(lun.counts[, -1])
+
+# Lee la información de las muestras (células)
+lun.coldata <- read.delim(lun_coldata.data,
+    check.names = FALSE,
+    stringsAsFactors = FALSE)
+library('S4Vectors')
+lun.coldata <- as(lun.coldata, "DataFrame")
+
+# Pon en orden la información de las muestras para que
+# sea idéntico al orden en la matriz de cuentas
+m <- match(colnames(lun.counts),
+    lun.coldata$`Source Name`)
+lun.coldata <- lun.coldata[m,]
+
+# Construye la tabla de información de los genes
+lun.rowdata <- DataFrame(Length = gene.lengths)
+
+# Construye el objeto de SingleCellExperiment
+lun.sce <- SingleCellExperiment(
+    assays = list(assays = lun.counts),
+    colData = lun.coldata,
+    rowData = lun.rowdata
+)
+# Revisa el objeto que acabamos de construir
+lun.sce
+
+## ¿Qué tan grande es el objeto de R?
+pryr::object_size(lun.sce)
+```
 
 ## Detalles de la sesión de R
 
