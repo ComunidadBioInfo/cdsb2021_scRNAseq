@@ -37,6 +37,10 @@ breve-repaso-de-r
 ejercicio-2
 respuestas
 extra
+preprocesamiento-de-datos
+cell-ranger
+scpipe
+etc
 import-data
 detalles-de-la-sesión-de-r-3
 control-de-calidad
