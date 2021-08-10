@@ -219,6 +219,34 @@ Aquí están las listas de canciones por si desean escuchar algo de música mien
 
 Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2021_scRNAseq')` o revisalos en línea vía [**comunidadbioinfo.github.io/cdsb2021_scRNAseq**](http://comunidadbioinfo.github.io/cdsb2021_scRNAseq).
 
+### Durante el curso {-}
+
+Durante el curso estaremos actualizando el material, así que les recomendamos que usen RStudio para crear un nuevo proyecto que esté configurado con `git`/`GitHub`, para que con un simple `Pull` puedan actualizar los archivos del curso en su computadora. Para que funcione bien esto, les recomendamos que no editen los archivos que descarguen. Eso mejor háganlo en sus notas.
+
+Primero, en RStudio seleccionen `File` y luego `New Project ...`. Les saldrá la siguiente ventana donde tienen que escoger la opción de control de versiones.
+
+```{r echo=FALSE, fig.cap="Al crear un nuevo proyecto, seleccionen la opción de _Version Control_ (la tercera).", out.width="60%"}
+knitr::include_graphics("img/clone_version_control.png")
+```
+
+A continuación, seleccionen la opción de `Git`.
+
+```{r echo=FALSE, fig.cap="Selecciona la opción de `Git` (la primera).", out.width="60%"}
+knitr::include_graphics("img/clone_choose_git.png")
+```
+
+En la venta para especificar los detalles de `git`, 
+
+* Específica el siguiente URL del repositorio `https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq.git`
+* El nombre del directorio se llenará de forma automática. No tienes que cambiarlo.
+* Especifíca el subdirectorio de donde quieres que guarde este proyecto. Te conviene ponerlo en tu Desktop o algún lugar que no sea adentro de otro proyecto de RStudio.
+* Selecciona la opción de _Open in new session_ para que te abra una nueva ventana de RStudio si así lo prefieres.
+
+
+```{r echo=FALSE, fig.cap="Especifica que el _Repository URL_ es `https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq.git`.", out.width="60%"}
+knitr::include_graphics("img/clone_add_info.png")
+```
+
 ## Fuentes {-}
 
 El material de este curso está basado en el:

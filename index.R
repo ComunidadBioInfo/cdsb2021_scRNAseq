@@ -23,6 +23,18 @@ cat(paste0(
 ))
 
 
+## ----echo=FALSE, fig.cap="Al crear un nuevo proyecto, seleccionen la opción de _Version Control_ (la tercera).", out.width="60%"----
+knitr::include_graphics("img/clone_version_control.png")
+
+
+## ----echo=FALSE, fig.cap="Selecciona la opción de `Git` (la primera).", out.width="60%"--------------
+knitr::include_graphics("img/clone_choose_git.png")
+
+
+## ----echo=FALSE, fig.cap="Especifica que el _Repository URL_ es `https://github.com/ComunidadBioInfo/cdsb2021_scRNAseq.git`.", out.width="60%"----
+knitr::include_graphics("img/clone_add_info.png")
+
+
 ## ----session_info------------------------------------------------------------------------------------
 options(width = 120)
 pkgs <- installed.packages()[, "Package"]
