@@ -96,7 +96,7 @@ Metadata de las Células.
 Se puede acceder a los metadatos a nivel de celda con el operador de extracción `[[ ]]` extract o usando `$sigil`. Extraer con `$sigil` significa que solo se puede extraer un bit de metadatos a la vez, aunque se ha habilitado el autocompletado de pestañas, lo que lo hace ideal para uso interactivo. La adición de metadatos a nivel de celda se puede configurar usando el operador de extracción único `[[ ]]` también, o usando `AddMetaData`. 
 
 ```{r, warning=FALSE, message=FALSE}
-colnames(x = pbmc[[]])
+#colnames(x = pbmc[[]])
 #head(x = pbmc[[c('nUMI', 'percent.mito')]])
 #head(x = pbmc[[c('nUMI', 'percent.mito')]])
 # Passing `drop = TRUE` will turn the meta data into a names vector
