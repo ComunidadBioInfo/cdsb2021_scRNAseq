@@ -238,6 +238,8 @@ dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
 library(scRNAseq)
 sce.416b <- LunSpikeInData(which = "416b")
 sce.416b$block <- factor(sce.416b$block)
+
+sce.416b
 ```
 
 Este dataset consiste de células de una línea celular de células inmortalizadas mieloides progenitoras de ratón utilizando SmartSeq2
