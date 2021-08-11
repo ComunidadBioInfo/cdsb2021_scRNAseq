@@ -239,7 +239,7 @@ summary(deconv.sf.zeisel)
 
 Si obtienes factores negativos intenta variar el número de clusters, checa si incrementar el número de células por cluster te dan factores positivos.
 
-## Transformación logatítmica
+## Transformación logarítmica
 
 ### Motivación
 
@@ -273,7 +273,7 @@ sce.zeisel <- scater::logNormCounts(sce.zeisel)
 assayNames(sce.zeisel)
 ```
 
-### Ejercicio: Transformación logatítmica
+### Ejercicio: Transformación logarítmica
 
 - ¿Qué es una pseudo-cuenta?
 
@@ -505,7 +505,7 @@ abline(a = -.2, b = 0.95, col = "red")
 abline(a = 0.08, b = 1, col = "red")
 ```
 
-### Ejercicio: Transformación logatítmica
+### Ejercicio: Transformación logarítmica
 
 - ¿Qué es una pseudo-cuenta?
 
