@@ -121,7 +121,7 @@ El enfoque más simple para cuantificar la variación _per-feature_ es simplemen
 ### Un enfoque más sofisticado
 
 1. Calcular la varianza de los _log-counts_ para cada gen (ignorando grupos experimentales)
-2. Modelar la relación de la media de la varianza de los _log-counts_ para estimar la variación _técnica_
+2. Modelar la relación entre la media y la varianza de los _log-counts_ para estimar la variación _técnica_
 3. Estimar la varianza _biológica_ sustrayendo la varianza _técnica_ de la varianza total
 4. Ordenar los genes de la variable de mayor-a-menor biológicamente
 
@@ -176,7 +176,7 @@ El coeficiente de variación de las cuentas al cuadrado (CV<sup>2</sup>) es una 
 
 * 👉 Se calcula usando las cuentas en lugar de los _log-counts_
 
-* 🤓 CV es la tasa de la desviación estándar a la media y está muy relacionada con el parámetro de _dispersión_ de la distribución binomial negativa usada en edgeR y DESeq2
+* 🤓 CV es el _ratio_ de la desviación estándar a la media y está muy relacionada con el parámetro de _dispersión_ de la distribución binomial negativa usada en edgeR y DESeq2
 
 
 
@@ -225,8 +225,8 @@ dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
 **Generalmente se usa la varianza de los _log-counts_** 
 
 * Ambas son medidas efectivas para cuantificar la variación en la expresión génica 
-* CV<sup>2</sup> tiende a tener otorgar rangos altos en abundancias bajas de genes altamente variables 
-	- Éstos son dirigidos por una sobreregulación en subpoblaciones raras 
+* CV<sup>2</sup> tiende a tener otorgar rangos altos a genes altamente variables (HGVs) con bajos niveles de expresión
+  - Éstos son dirigidos por una sobreregulación en subpoblaciones raras 
   - Puede asignar un alto rango a genes que no son de nuestro interés con varianza baja absoluta	
 * La variación descrita por el CV<sup>2</sup> de las cuentas es menos relevante para los procedimientos que operan en los _log-counts_
 
