@@ -255,6 +255,7 @@ Descripción [aquí](https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2
 
 ```{r, warning=FALSE, message=FALSE  }
 # gene-annotation
+# agregando simbolo y cromosoma
 library(AnnotationHub)
 ens.mm.v97 <- AnnotationHub()[["AH73905"]]
 rowData(sce.416b)$ENSEMBL <- rownames(sce.416b)
@@ -276,6 +277,8 @@ rownames(sce.416b) <- uniquifyFeatureNames(
 
 ```{r }
 # quality-control
+# obteniendo metricas de QC para los datos completos, el subset de mitocondrial y para cada altExp
+# eliminando los outliers por batch
 mito <- which(rowData(sce.416b)$SEQNAME == "MT")
 stats <- perCellQCMetrics(sce.416b, subsets = list(Mt = mito))
 qc <- quickPerCellQC(stats,
@@ -285,6 +288,7 @@ qc <- quickPerCellQC(stats,
 sce.416b <- sce.416b[, !qc$discard]
 
 # normalization
+# calculamos factores de tamaño y normalizacion
 library(scran)
 sce.416b <- computeSumFactors(sce.416b)
 sce.416b <- logNormCounts(sce.416b)
