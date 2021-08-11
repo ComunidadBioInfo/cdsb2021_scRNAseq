@@ -474,7 +474,22 @@ dec.spike.416b[order(dec.spike.416b$bio,
 
 # En la presencia de spike-ins
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
+plot(dec.spike.416b$mean, dec.spike.416b$total,
+  xlab="Mean of log-expression",
+  ylab="Variance of log-expression")
+fit.spike.416b <- metadata(dec.spike.416b)
+points(fit.spike.416b$mean, fit.spike.416b$var, 
+  col="red", pch=16)
+curve(fit.spike.416b$trend(x), col="dodgerblue", 
+  add=TRUE, lwd=2)
+```
+
+---
+
+# En la presencia de spike-ins
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 plot(dec.spike.416b$mean, dec.spike.416b$total,
   xlab="Mean of log-expression",
   ylab="Variance of log-expression")
@@ -505,7 +520,7 @@ dec.pois.pbmc[order(dec.pois.pbmc$bio,decreasing=TRUE),]
 
 # En la ausencia de spike-ins
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, fig.show='hide'}
 plot(dec.pois.pbmc$mean, dec.pois.pbmc$total, 
   pch=16, xlab="Mean of log-expression",
   ylab="Variance of log-expression")
@@ -517,6 +532,18 @@ curve(metadata(dec.pois.pbmc)$trend(x),
 🤔 Necesitas considerar si tales genes son “interesantes” o no en tu dataset de interés
 
 ---
+
+# En la ausencia de spike-ins
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+plot(dec.pois.pbmc$mean, dec.pois.pbmc$total, 
+  pch=16, xlab="Mean of log-expression",
+  ylab="Variance of log-expression")
+curve(metadata(dec.pois.pbmc)$trend(x),
+  col="dodgerblue", add=TRUE)
+```
+
+___
 
 La presentación fue hecha con el paquete de R [**xaringan**](https://github.com/yihui/xaringan) y configurada con [**xaringanthemer**](https://github.com/gadenbuie/xaringanthemer).
 
