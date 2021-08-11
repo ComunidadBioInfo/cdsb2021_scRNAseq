@@ -834,7 +834,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-11 15:18:43 UTC"
+## [1] "2021-08-11 21:42:10 UTC"
 ```
 
 ```r
@@ -843,7 +843,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 206.733   3.898 217.664
+## 181.998   3.547 194.845
 ```
 
 ```r
@@ -958,7 +958,7 @@ sessioninfo::session_info()
 ##  lattice                  0.20-44  2021-05-02 [3] CRAN (R 4.1.0)
 ##  lazyeval                 0.2.2    2019-03-15 [1] RSPM (R 4.1.0)
 ##  lifecycle                1.0.0    2021-02-15 [2] RSPM (R 4.1.0)
-##  limma                    3.48.2   2021-08-08 [1] Bioconductor  
+##  limma                    3.48.3   2021-08-10 [1] Bioconductor  
 ##  locfit                   1.5-9.4  2020-03-25 [1] RSPM (R 4.1.0)
 ##  magrittr                 2.0.1    2020-11-17 [2] RSPM (R 4.1.0)
 ##  Matrix                 * 1.3-4    2021-06-01 [3] RSPM (R 4.1.0)

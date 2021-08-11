@@ -471,7 +471,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  lazyeval                 0.2.2      2019-03-15 [1] RSPM (R 4.1.0)
 ##  leiden                   0.3.9      2021-07-27 [1] RSPM (R 4.1.0)
 ##  lifecycle                1.0.0      2021-02-15 [2] RSPM (R 4.1.0)
-##  limma                    3.48.2     2021-08-08 [1] Bioconductor  
+##  limma                    3.48.3     2021-08-10 [1] Bioconductor  
 ##  listenv                  0.8.0      2019-12-05 [1] RSPM (R 4.1.0)
 ##  littler                  0.3.13     2021-07-24 [2] RSPM (R 4.1.0)
 ##  lmtest                   0.9-38     2020-09-09 [1] RSPM (R 4.1.0)
@@ -668,7 +668,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-11 15:13:03.
+Fecha de la última actualización de esta página: 2021-08-11 21:36:47.
 
 ## Licencia  {-}
 

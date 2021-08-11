@@ -264,7 +264,7 @@ summary(deconv.sf.zeisel)
 
 Si obtienes factores negativos intenta variar el número de clusters, checa si incrementar el número de células por cluster te dan factores positivos.
 
-## Transformación logatítmica
+## Transformación logarítmica
 
 ### Motivación
 
@@ -328,7 +328,7 @@ assayNames(sce.zeisel)
 ## [1] "counts"    "logcounts"
 ```
 
-### Ejercicio: Transformación logatítmica
+### Ejercicio: Transformación logarítmica
 
 - ¿Qué es una pseudo-cuenta?
 
@@ -674,7 +674,7 @@ abline(a = 0.08, b = 1, col = "red")
 
 <img src="06-normalizacion_files/figure-html/unnamed-chunk-25-1.png" width="672" />
 
-### Ejercicio: Transformación logatítmica
+### Ejercicio: Transformación logarítmica
 
 - ¿Qué es una pseudo-cuenta?
 
@@ -724,7 +724,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-11 15:20:08 UTC"
+## [1] "2021-08-11 21:43:35 UTC"
 ```
 
 ```r
@@ -733,7 +733,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##  76.737   5.075  85.081
+##  73.700   5.029  84.521
 ```
 
 ```r
@@ -854,7 +854,7 @@ sessioninfo::session_info()
 ##  lazyeval                 0.2.2    2019-03-15 [1] RSPM (R 4.1.0)
 ##  leiden                   0.3.9    2021-07-27 [1] RSPM (R 4.1.0)
 ##  lifecycle                1.0.0    2021-02-15 [2] RSPM (R 4.1.0)
-##  limma                    3.48.2   2021-08-08 [1] Bioconductor  
+##  limma                    3.48.3   2021-08-10 [1] Bioconductor  
 ##  listenv                  0.8.0    2019-12-05 [1] RSPM (R 4.1.0)
 ##  lmtest                   0.9-38   2020-09-09 [1] RSPM (R 4.1.0)
 ##  locfit                   1.5-9.4  2020-03-25 [1] RSPM (R 4.1.0)

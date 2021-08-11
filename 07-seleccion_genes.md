@@ -117,9 +117,66 @@ sce.pbmc <- logNormCounts(sce.pbmc)
 
 ### Preguntas de repaso
 
-* ¿Cómo determinamos cuales eran los genes mitocondriales? ^[Usando Ensembl v86 para humano]
+* ¿Cómo determinamos cuáles eran los genes mitocondriales? ^[Usando Ensembl v86 para humano]
 * ¿Cómo decidimos filtrar las células? ^[Usamos los resultados de `emptyDrops()` con un límite de 0.1% FDR y el filtro de 3 desviaciones sobre la mediana (MAD) en la expresión mitocondrial.]
 * ¿Puedes explicar como normalizamos los datos? ^[Encontramos unos clusters rápidos para las célulasy usamos esa información para calcular los factores de tamaño.]
+
+
+## Dataset ilustrativo: 416B
+
+
+```r
+library(scRNAseq)
+sce.416b <- LunSpikeInData(which = "416b")
+sce.416b$block <- factor(sce.416b$block)
+```
+
+Línea celular de células mieloides progenitoras inmortalizadas de ratón usando SmartSeq2
+[https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2.html](https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2.html) ^[Lun, A. T. L., Calero-Nieto, F. J., Haim-Vilmovsky, L., Göttgens, B. & Marioni, J. C. Assessing the reliability of spike-in normalization for analyses of single-cell RNA sequencing data. Genome Res. 27, 1795–1806 (2017)).]
+
+
+```r
+# gene-annotation
+library(AnnotationHub)
+ens.mm.v97 <- AnnotationHub()[["AH73905"]]
+rowData(sce.416b)$ENSEMBL <- rownames(sce.416b)
+rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97,
+    keys = rownames(sce.416b),
+    keytype = "GENEID", column = "SYMBOL"
+)
+rowData(sce.416b)$SEQNAME <- mapIds(ens.mm.v97,
+    keys = rownames(sce.416b),
+    keytype = "GENEID", column = "SEQNAME"
+)
+library(scater)
+rownames(sce.416b) <- uniquifyFeatureNames(
+    rowData(sce.416b)$ENSEMBL,
+    rowData(sce.416b)$SYMBOL
+)
+```
+
+
+```r
+# quality-control
+mito <- which(rowData(sce.416b)$SEQNAME == "MT")
+stats <- perCellQCMetrics(sce.416b, subsets = list(Mt = mito))
+qc <- quickPerCellQC(stats,
+    percent_subsets = c("subsets_Mt_percent", "altexps_ERCC_percent"),
+    batch = sce.416b$block
+)
+sce.416b <- sce.416b[, !qc$discard]
+
+# normalization
+library(scran)
+sce.416b <- computeSumFactors(sce.416b)
+sce.416b <- logNormCounts(sce.416b)
+```
+
+### Preguntas de repaso
+
+* ¿Cómo determinamos cuáles eran los genes mitocondriales?
+* ¿Cómo decidimos filtrar las células
+* ¿Puedes explicar cómo normalizamos los datos?
 
 ## Cuantificando la varianza por gen
 
@@ -140,7 +197,7 @@ El enfoque más simple para cuantificar la variación _per-feature_ es simplemen
 ### Un enfoque más sofisticado
 
 1. Calcular la varianza de los _log-counts_ para cada gen (ignorando grupos experimentales)
-2. Modelar la relación de la media de la varianza de los _log-counts_ para estimar la variación _técnica_
+2. Modelar la relación entre la media y la varianza de los _log-counts_ para estimar la variación _técnica_
 3. Estimar la varianza _biológica_ sustrayendo la varianza _técnica_ de la varianza total
 4. Ordenar los genes de la variable de mayor-a-menor biológicamente
 
@@ -172,7 +229,7 @@ plot(fit.pbmc$mean, fit.pbmc$var,
 curve(fit.pbmc$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
 ```
 
-<img src="07-seleccion_genes_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="07-seleccion_genes_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 #### Ejercicios
 
@@ -196,11 +253,11 @@ dec.pbmc[order(dec.pbmc$bio, decreasing = TRUE), ]
 ## DataFrame with 33694 rows and 6 columns
 ##              mean     total      tech       bio      p.value          FDR
 ##         <numeric> <numeric> <numeric> <numeric>    <numeric>    <numeric>
-## LYZ       1.95605   5.05854  0.835343   4.22320 1.10535e-270 2.17412e-266
-## S100A9    1.93416   4.53551  0.835439   3.70007 2.71038e-208 7.61579e-205
-## S100A8    1.69961   4.41084  0.824342   3.58650 4.31574e-201 9.43181e-198
-## HLA-DRA   2.09785   3.75174  0.831239   2.92050 5.93943e-132 4.86761e-129
-## CD74      2.90176   3.36879  0.793188   2.57560 4.83932e-113 2.50486e-110
+## LYZ       1.95605   5.05854  0.835343   4.22320 1.10538e-270 2.17417e-266
+## S100A9    1.93416   4.53551  0.835439   3.70007 2.71043e-208 7.61593e-205
+## S100A8    1.69961   4.41084  0.824342   3.58650 4.31581e-201 9.43197e-198
+## HLA-DRA   2.09785   3.75174  0.831239   2.92050 5.93950e-132 4.86767e-129
+## CD74      2.90176   3.36879  0.793188   2.57560 4.83937e-113 2.50488e-110
 ## ...           ...       ...       ...       ...          ...          ...
 ## TMSB4X    6.08142  0.441718  0.679215 -0.237497     0.992447            1
 ## PTMA      3.82978  0.486454  0.731275 -0.244821     0.990002            1
@@ -217,7 +274,7 @@ El coeficiente de variación de las cuentas al cuadrado (CV<sup>2</sup>) es una 
 
 * 👉 Se calcula usando las cuentas en lugar de los _log-counts_
 
-* 🤓 CV es la tasa de la desviación estándar a la media y está muy relacionada con el parámetro de _dispersión_ de la distribución binomial negativa usada en edgeR y DESeq2
+* 🤓 CV es el _ratio_ de la desviación estándar a la media y está muy relacionada con el parámetro de _dispersión_ de la distribución binomial negativa usada en edgeR y DESeq2
 
 
 
@@ -251,7 +308,7 @@ curve(fit.cv2.pbmc$trend(x),
 )
 ```
 
-<img src="07-seleccion_genes_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<img src="07-seleccion_genes_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 
 
@@ -288,41 +345,132 @@ dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
 **Generalmente se usa la varianza de los _log-counts_** 
 
 * Ambas son medidas efectivas para cuantificar la variación en la expresión génica 
-* CV<sup>2</sup> tiende a tener otorgar rangos altos en abundancias bajas de genes altamente variables 
-	- Éstos son dirigidos por una sobreregulación en subpoblaciones raras 
+* CV<sup>2</sup> tiende a tener otorgar rangos altos a genes altamente variables (HGVs) con bajos niveles de expresión
+  - Éstos son dirigidos por una sobreregulación en subpoblaciones raras 
   - Puede asignar un alto rango a genes que no son de nuestro interés con varianza baja absoluta	
 * La variación descrita por el CV<sup>2</sup> de las cuentas es menos relevante para los procedimientos que operan en los _log-counts_
 
+## Cuantificando el ruido técnico
 
+* Previamente, ajustamos una línea de tendencia a todos los genes endógenos y asumimos que la mayoría de los genes no están dominados por ruido técnico
 
-## Importando un dataset con factores experimentales
+* En la práctica, todos los genes expresados tienen algún nivel de variabilidad biológica diferente de cero (e.g., transcriptional bursting)
+
+* Esto sugiere que nuestros estimados de los componentes técnicos estarán inflados probablemente
+
+* 👉 Es mejor que pensemos estos estimados como una variación _técnica_ más la variación biológica que no es interesante
+
+* 🤔 Pero que tal si un grupo de genes a una abundancia particular es afectado por un proceso biológico?
+E.g., fuerte sobre regulación de genes específicos de un tipo celular podrían conllevar a un enriquecimiento de HVGs en abundancias altas. Esto inflaría la tendencia y compromete la detección de los genes relevantes
+
+**¿Cómo podemos evitar este problema?**
+
+Podemos revisar dos enfoques:
+
+1. Cuando tenemos spike-ins
+2. Cuando no tenemos spike-ins 
+
+### En la presencia de spike-ins
 
 
 ```r
-library(scRNAseq)
-sce.416b <- LunSpikeInData(which = "416b")
-sce.416b$block <- factor(sce.416b$block)
-
-sce.416b
+dec.spike.416b <- modelGeneVarWithSpikes(
+    sce.416b,
+    "ERCC"
+)
+# Ordering by most interesting genes for
+# inspection.
+dec.spike.416b[order(dec.spike.416b$bio,
+    decreasing = TRUE
+), ]
 ```
 
 ```
-## class: SingleCellExperiment 
-## dim: 46604 192 
-## metadata(0):
-## assays(1): counts
-## rownames(46604): ENSMUSG00000102693 ENSMUSG00000064842 ...
-##   ENSMUSG00000095742 CBFB-MYH11-mcherry
-## rowData names(1): Length
-## colnames(192): SLX-9555.N701_S502.C89V9ANXX.s_1.r_1
-##   SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 ...
-##   SLX-11312.N712_S508.H5H5YBBXX.s_8.r_1
-##   SLX-11312.N712_S517.H5H5YBBXX.s_8.r_1
-## colData names(9): Source Name cell line ... spike-in addition block
-## reducedDimNames(0):
-## mainExpName: endogenous
-## altExpNames(2): ERCC SIRV
+## DataFrame with 46604 rows and 6 columns
+##               mean     total      tech       bio      p.value          FDR
+##          <numeric> <numeric> <numeric> <numeric>    <numeric>    <numeric>
+## Lyz2       6.61097   13.8497   1.57131   12.2784 1.48993e-186 1.54156e-183
+## Ccl9       6.67846   13.1869   1.50035   11.6866 2.21856e-185 2.19979e-182
+## Top2a      5.81024   14.1787   2.54776   11.6310  3.80016e-65  1.13040e-62
+## Cd200r3    4.83180   15.5613   4.22984   11.3314  9.46221e-24  6.08574e-22
+## Ccnb2      5.97776   13.1393   2.30177   10.8375  3.68706e-69  1.20193e-66
+## ...            ...       ...       ...       ...          ...          ...
+## Rpl5-ps2   3.60625  0.612623   6.32853  -5.71590     0.999616     0.999726
+## Gm11942    3.38768  0.798570   6.51473  -5.71616     0.999459     0.999726
+## Gm12816    2.91276  0.838670   6.57364  -5.73497     0.999422     0.999726
+## Gm13623    2.72844  0.708071   6.45448  -5.74641     0.999544     0.999726
+## Rps12l1    3.15420  0.746615   6.59332  -5.84670     0.999522     0.999726
 ```
+
+* 👉 Ajusta la tendencia solo con los spike-ins (que deberían estar afectados solamente por variación técnica)
+
+
+```r
+plot(dec.spike.416b$mean, dec.spike.416b$total,
+    xlab = "Mean of log-expression",
+    ylab = "Variance of log-expression"
+)
+fit.spike.416b <- metadata(dec.spike.416b)
+points(fit.spike.416b$mean, fit.spike.416b$var,
+    col = "red", pch = 16
+)
+curve(fit.spike.416b$trend(x),
+    col = "dodgerblue",
+    add = TRUE, lwd = 2
+)
+```
+
+<img src="07-seleccion_genes_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+
+## En la ausencia de spike-ins
+
+
+```r
+set.seed(0010101)
+dec.pois.pbmc <- modelGeneVarByPoisson(sce.pbmc)
+# Ordering by most interesting genes for inspection.
+dec.pois.pbmc[order(dec.pois.pbmc$bio, decreasing = TRUE), ]
+```
+
+```
+## DataFrame with 33694 rows and 6 columns
+##              mean     total      tech        bio   p.value       FDR
+##         <numeric> <numeric> <numeric>  <numeric> <numeric> <numeric>
+## LYZ       1.95605   5.05854  0.631190    4.42735         0         0
+## S100A9    1.93416   4.53551  0.635102    3.90040         0         0
+## S100A8    1.69961   4.41084  0.671491    3.73935         0         0
+## HLA-DRA   2.09785   3.75174  0.604448    3.14730         0         0
+## CD74      2.90176   3.36879  0.444928    2.92386         0         0
+## ...           ...       ...       ...        ...       ...       ...
+## ATP5J    0.614027  0.454754  0.502701 -0.0479473  0.943718  1.000000
+## NEDD8    0.841407  0.561295  0.609895 -0.0486003  0.907530  0.997441
+## NDUFA1   0.860049  0.560222  0.616330 -0.0561074  0.935049  1.000000
+## SAP18    0.763057  0.515764  0.578890 -0.0631264  0.965173  1.000000
+## SUMO2    1.359514  0.619811  0.693247 -0.0734360  0.960991  1.000000
+```
+
+* 👉 Realiza algunas asunciones estadísticas acerca del ruido
+* 🤓 Las cuentas UMI típicamente muestran una variación cercana a Poisson si solo consideramos ruido técnico de la preparación de las librerías y la secuenciación 
+* ⚠️ modelGeneVarByPoisson() realiza simulaciones, por lo que necesitamos “ajustar la “semilla” para obtener resultados reproducibles
+* 🤓 modelGeneVarByPoisson() pueden también simular una variación binomial negativa (variación de Poisson sobredispersada)
+
+
+```r
+plot(dec.pois.pbmc$mean, dec.pois.pbmc$total,
+    pch = 16, xlab = "Mean of log-expression",
+    ylab = "Variance of log-expression"
+)
+curve(metadata(dec.pois.pbmc)$trend(x),
+    col = "dodgerblue", add = TRUE
+)
+```
+
+<img src="07-seleccion_genes_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+
+* 🤓 La línea de tendencia basada puramente en ruido técnico tiende a producir componentes “biológicos” más grandes por los genes altamente expresados, que frecuentemente incluyen los genes “house-keeping”
+* 🤔 Necesitas considerar si tales genes son “interesantes” o no en tu dataset de interés
+
+## Recordemos propiedades de los datos de sce.416b
 
 Este dataset consiste de células de una línea celular de células inmortalizadas mieloides progenitoras de ratón utilizando SmartSeq2
 
@@ -330,54 +478,7 @@ Una cantidad constante de spike-in ERCC RNA se agregó a cada lisado celular ant
 
 Descripción [aquí](https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2.html)
 
-*Lun, A. T. L., Calero-Nieto, F. J., Haim-Vilmovsky, L., Göttgens, B. & Marioni, J. C. Assessing the reliability of spike-in normalization for analyses of single-cell RNA sequencing data. Genome Res. 27, 1795–1806 (2017)*
-
-
-** Ahora vamos a procesar los datos de la forma que ya hemos aprendido: **
-
-
-```r
-# gene-annotation
-# agregando simbolo y cromosoma
-library(AnnotationHub)
-ens.mm.v97 <- AnnotationHub()[["AH73905"]]
-rowData(sce.416b)$ENSEMBL <- rownames(sce.416b)
-rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97,
-    keys = rownames(sce.416b),
-    keytype = "GENEID", column = "SYMBOL"
-)
-rowData(sce.416b)$SEQNAME <- mapIds(ens.mm.v97,
-    keys = rownames(sce.416b),
-    keytype = "GENEID", column = "SEQNAME"
-)
-library(scater)
-rownames(sce.416b) <- uniquifyFeatureNames(
-    rowData(sce.416b)$ENSEMBL,
-    rowData(sce.416b)$SYMBOL
-)
-```
-
-
-
-```r
-# quality-control
-# obteniendo metricas de QC para los datos completos, el subset de mitocondrial y para cada altExp
-# eliminando los outliers por batch
-mito <- which(rowData(sce.416b)$SEQNAME == "MT")
-stats <- perCellQCMetrics(sce.416b, subsets = list(Mt = mito))
-qc <- quickPerCellQC(stats,
-    percent_subsets = c("subsets_Mt_percent", "altexps_ERCC_percent"),
-    batch = sce.416b$block
-)
-sce.416b <- sce.416b[, !qc$discard]
-
-# normalization
-# calculamos factores de tamaño y normalizacion
-library(scran)
-sce.416b <- computeSumFactors(sce.416b)
-sce.416b <- logNormCounts(sce.416b)
-```
-
+_Lun, A. T. L., Calero-Nieto, F. J., Haim-Vilmovsky, L., Göttgens, B. & Marioni, J. C. Assessing the reliability of spike-in normalization for analyses of single-cell RNA sequencing data. Genome Res. 27, 1795–1806 (2017)_
 
 ## Considerando factores experimentales 
 
@@ -388,7 +489,6 @@ sce.416b <- logNormCounts(sce.416b)
 
 ```r
 # calculando la variacion por bloque
-library(scran)
 dec.block.416b <- modelGeneVarWithSpikes(sce.416b,
     "ERCC",
     block = sce.416b$block
@@ -406,7 +506,7 @@ dec.block.416b[order(
 ## Lyz2       6.61235   13.8619   1.58416   12.2777  0.00000e+00  0.00000e+00
 ## Ccl9       6.67841   13.2599   1.44553   11.8143  0.00000e+00  0.00000e+00
 ## Top2a      5.81275   14.0192   2.74571   11.2734 3.89855e-137 8.43398e-135
-## Cd200r3    4.83305   15.5909   4.31892   11.2719  1.17783e-54  7.00722e-53
+## Cd200r3    4.83305   15.5909   4.31892   11.2719  1.17783e-54  7.00721e-53
 ## Ccnb2      5.97999   13.0256   2.46647   10.5591 1.20380e-151 2.98405e-149
 ## ...            ...       ...       ...       ...          ...          ...
 ## Gm12816    2.91299  0.842574   6.67730  -5.83472     0.999989     0.999999
@@ -480,9 +580,15 @@ str(hvg.pbmc.var)
 
 ```r
 # Works with modelGeneVarWithSpikes() output
-# hvg.416b.var <- getTopHVGs(dec.spike.416b, n=1000)
-# str(hvg.416b.var)
+hvg.416b.var <- getTopHVGs(dec.spike.416b, n = 1000)
+str(hvg.416b.var)
+```
 
+```
+##  chr [1:1000] "Lyz2" "Ccl9" "Top2a" "Cd200r3" "Ccnb2" "Gm10736" "Hbb-bt" ...
+```
+
+```r
 # Also works with modelGeneCV2() but note `var.field`
 hvg.pbmc.cv2 <- getTopHVGs(dec.cv2.pbmc,
     var.field = "ratio", n = 1000
@@ -533,10 +639,17 @@ str(hvg.pbmc.var.2)
 
 ```r
 # Works with modelGeneVarWithSpikes() output
-# hvg.416b.var.2 <- getTopHVGs(dec.spike.416b,
-#  fdr.threshold=0.05)
-# str(hvg.416b.var.2)
+hvg.416b.var.2 <- getTopHVGs(dec.spike.416b,
+    fdr.threshold = 0.05
+)
+str(hvg.416b.var.2)
+```
 
+```
+##  chr [1:2568] "Lyz2" "Ccl9" "Top2a" "Cd200r3" "Ccnb2" "Gm10736" "Hbb-bt" ...
+```
+
+```r
 # Also works with modelGeneCV2() but note `var.field`
 hvg.pbmc.cv2.2 <- getTopHVGs(dec.cv2.pbmc,
     var.field = "ratio", fdr.threshold = 0.05
@@ -576,10 +689,17 @@ str(hvg.pbmc.var.3)
 
 ```r
 # Works with modelGeneVarWithSpikes() output
-# hvg.416b.var.3 <- getTopHVGs(dec.spike.416b,
-#  var.threshold=0)
-# str(hvg.416b.var.3)
+hvg.416b.var.3 <- getTopHVGs(dec.spike.416b,
+    var.threshold = 0
+)
+str(hvg.416b.var.3)
+```
 
+```
+##  chr [1:11087] "Lyz2" "Ccl9" "Top2a" "Cd200r3" "Ccnb2" "Gm10736" "Hbb-bt" ...
+```
+
+```r
 # Also works with modelGeneCV2() but note `var.field` and
 # value of `var.threshold`
 hvg.pbmc.cv2.3 <- getTopHVGs(dec.cv2.pbmc,
@@ -776,7 +896,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-11 15:22:40 UTC"
+## [1] "2021-08-11 21:45:58 UTC"
 ```
 
 ```r
@@ -785,7 +905,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 145.608   4.318 151.362
+## 135.429   4.086 142.690
 ```
 
 ```r
@@ -884,7 +1004,7 @@ sessioninfo::session_info()
 ##  lattice                  0.20-44  2021-05-02 [3] CRAN (R 4.1.0)
 ##  lazyeval                 0.2.2    2019-03-15 [1] RSPM (R 4.1.0)
 ##  lifecycle                1.0.0    2021-02-15 [2] RSPM (R 4.1.0)
-##  limma                    3.48.2   2021-08-08 [1] Bioconductor  
+##  limma                    3.48.3   2021-08-10 [1] Bioconductor  
 ##  locfit                   1.5-9.4  2020-03-25 [1] RSPM (R 4.1.0)
 ##  magrittr                 2.0.1    2020-11-17 [2] RSPM (R 4.1.0)
 ##  Matrix                 * 1.3-4    2021-06-01 [3] RSPM (R 4.1.0)

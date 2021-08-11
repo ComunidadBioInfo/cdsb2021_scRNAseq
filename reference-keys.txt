@@ -77,9 +77,9 @@ puntos-finales
 normalización-por-decircunvolución-deconvolution
 ejercicios-deconvolution
 puntos-finales-1
-transformación-logatítmica
+transformación-logarítmica
 motivación-1
-ejercicio-transformación-logatítmica
+ejercicio-transformación-logarítmica
 otras-normalizaciones
 seurat
 notas-finales
@@ -87,7 +87,7 @@ ejercicio-conceptos-básicos-1
 ejercicio-qc-1
 ejercicio-library-size-1
 ejercicios-deconvolution-1
-ejercicio-transformación-logatítmica-1
+ejercicio-transformación-logarítmica-1
 adicionales
 agradecimientos
 detalles-de-la-sesión-de-r-5
@@ -100,6 +100,8 @@ descargar-datos
 anotación
 control-de-calidad-1
 preguntas-de-repaso
+dataset-ilustrativo-416b
+preguntas-de-repaso-1
 cuantificando-la-varianza-por-gen
 varianza-de-los-log-counts
 enfoque-simple
@@ -113,7 +115,10 @@ coeficiente-de-variación
 visualizando-el-coeficiente-de-variación
 genes-por-coeficiente-de-variación
 varianza-de-los-log-counts-vs-coeficiente-de-variación
-importando-un-dataset-con-factores-experimentales
+cuantificando-el-ruido-técnico
+en-la-presencia-de-spike-ins
+en-la-ausencia-de-spike-ins
+recordemos-propiedades-de-los-datos-de-sce.416b
 considerando-factores-experimentales
 seleccionando-genes-altamante-variables-high-variable-genes-hvgs
 seleccionando-hvgs-sobre-la-métrica-de-varianza
