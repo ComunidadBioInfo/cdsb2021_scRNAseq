@@ -116,7 +116,7 @@ sce.pbmc$cluster <- factor(clust)
 
 ¿Algunos de estos genes están asociados con los resultados de _clustering_?
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 # Is gene 1 associated with the clustering?
 plotExpression(sce.pbmc,
     features = rownames(sce.pbmc)[1],
@@ -124,7 +124,7 @@ plotExpression(sce.pbmc,
 )
 ```
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 # Is gene 2 associated with the clustering?
 plotExpression(sce.pbmc,
     features = rownames(sce.pbmc)[2],
@@ -132,7 +132,7 @@ plotExpression(sce.pbmc,
 )
 ```
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 # Is gene 2512 associated with the clustering?
 plotExpression(sce.pbmc,
     features = rownames(sce.pbmc)[2512],
@@ -141,8 +141,8 @@ plotExpression(sce.pbmc,
 ```
 
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-# Is gene 2512 associated with the clustering?
+```{r, warning=FALSE, message=FALSE}
+# Is gene CD3E associated with the clustering?
 plotExpression(sce.pbmc,
     features = "CD3E",
     x = "cluster", colour_by = "cluster"
@@ -172,7 +172,7 @@ plotExpression(sce.pbmc,
 
 ### Pruebas pareadas
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 plotExpression(sce.pbmc,
     features = "CD3E",
     x = "cluster", colour_by = "cluster"
@@ -243,7 +243,7 @@ chosen <- "9"
 interesting <- markers.pbmc[[chosen]]
 ```
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 plotExpression(sce.pbmc, rownames(interesting)[1:4],
     x = "cluster", colour_by = "cluster"
 )
@@ -447,7 +447,7 @@ interesting.binom <- markers.pbmc.binom[[chosen]]
 
 ### Visualizando genes marcadores de la prueba bionomial
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 top.genes <- head(rownames(interesting.binom))
 plotExpression(sce.pbmc, x = "cluster", features = top.genes)
 ```

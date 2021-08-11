@@ -197,7 +197,7 @@ pred <- SingleR(
 * ❓ ¿Cómo usaríamos las etiquetas "finas" con SingleR?
 
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 plotScoreHeatmap(pred)
 ```
 
@@ -273,6 +273,8 @@ pheatmap(log2(tab + 10),
 
 ```{r, warning=FALSE, message=FALSE}
 plotTSNE(sce.pbmc, colour_by = "labels", text_by = "labels")
+
+plotTSNE(sce.pbmc, colour_by = "cluster", text_by = "labels")
 ```
 
 

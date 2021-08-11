@@ -1,8 +1,8 @@
 
 # Selección de genes
 
-Instructora: [**Yalbi I. Balderas-Martínez**](http://Yalbibalderas.github.io/)
-Instructora: [**Laura Gómez-Romero**](https://comunidadbioinfo.github.io/es/authors/lgomez/)
+* Instructora: [**Yalbi I. Balderas-Martínez**](http://Yalbibalderas.github.io/)
+* Instructora: [**Laura Gómez-Romero**](https://comunidadbioinfo.github.io/es/authors/lgomez/)
 
 ## Diapositivas de Peter Hickey
 
@@ -196,7 +196,7 @@ dec.cv2.pbmc <- modelGeneCV2(sce.pbmc)
 
 ### Visualizando el coeficiente de variación
 
-```{r, warning=FALSE, message=FALSE, echo = FALSE}
+```{r, warning=FALSE, message=FALSE}
 # Visualicemos la relación con la media
 fit.cv2.pbmc <- metadata(dec.cv2.pbmc)
 plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2,
@@ -498,6 +498,7 @@ sce.pbmc
 Mantiene el objeto *SingleCellExperiment* original y especifica los genes para usar en funciones posteriores mediante un argumento adicional como **subset_row**
 
 **PRO:** Es útil si el análisis usa varios conjuntos de HGVs en diferentes pasos
+
 **CONTRA:** Podría ser inconveniente especificar repetidamente el mismo conjunto de HGVs en diferentes pasos
 
 
