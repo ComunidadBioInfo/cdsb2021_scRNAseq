@@ -374,6 +374,7 @@ sce.416b <- logNormCounts(sce.416b)
 
 
 ```r
+# calculando la variacion por bloque
 library(scran)
 dec.block.416b <- modelGeneVarWithSpikes(sce.416b,
     "ERCC",
@@ -598,6 +599,7 @@ También podrías eliminar listas pre-definidas de genes:
 
 
 ```r
+# Elegimos el 10% de los genes con con componente biologico de variacion mayor
 dec.pbmc <- modelGeneVar(sce.pbmc)
 chosen <- getTopHVGs(dec.pbmc, prop = 0.1)
 str(chosen)
@@ -761,7 +763,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-11 03:23:23 UTC"
+## [1] "2021-08-11 03:31:04 UTC"
 ```
 
 ```r
@@ -770,7 +772,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 156.748   4.083 164.111
+## 148.972   3.789 156.295
 ```
 
 ```r
