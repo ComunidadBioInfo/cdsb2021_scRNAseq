@@ -1,4 +1,4 @@
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------------
 ## Cargar paquetes de R
 library("BiocFileCache") ## para descargar datos
 library("dplyr") ## para filtar datos
@@ -6,7 +6,7 @@ library("Seurat") ## paquete principal de este capítulo
 library("patchwork") ## para graficar imágenes juntas
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 # Usemos datos de pbmc3k tal y como lo hacen en
 # https://satijalab.org/seurat/articles/pbmc3k_tutorial.html
 # pero con nuestro propio código
@@ -25,46 +25,35 @@ pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 3
 pbmc
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 str(pbmc)
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
-# dim(x = pbmc)
-# head(x = rownames(x = pbmc))
-# head(x = colnames(x = pbmc))
+## ----------------------------------------------------------------------------------------------------------
+dim(pbmc)
+head(rownames(pbmc))
+head(colnames(pbmc))
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
-# names(x = pbmc)
-# pbmc[['RNA']]
+## ----------------------------------------------------------------------------------------------------------
+names(pbmc)
+pbmc[["RNA"]]
 # pbmc[['tsne']]
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
-# GetAssayData(object = pbmc, slot = 'scale.data')[1:3, 1:3]
+## ----------------------------------------------------------------------------------------------------------
+GetAssayData(object = pbmc, slot = "data")[1:3, 1:3]
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
-# colnames(x = pbmc[[]])
-# head(x = pbmc[[c('nUMI', 'percent.mito')]])
-# head(x = pbmc[[c('nUMI', 'percent.mito')]])
+## ----------------------------------------------------------------------------------------------------------
+head(pbmc@meta.data)
+head(pbmc[[c("nCount_RNA", "nFeature_RNA")]])
 # Passing `drop = TRUE` will turn the meta data into a names vector
 # with each entry being named for the cell it corresponds to
-# head(x = pbmc[['res.0.6', drop = TRUE]])
+head(pbmc[["nCount_RNA", drop = TRUE]])
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
-# dim(x = rna)
-# head(x = rownames(x = rna))
-# head(x = colnames(x = rna))
-
-
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
-# GetAssayData(object = pbmc, slot = 'scale.data')[1:3, 1:3]
-
-
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 pbmc.data[c("CD3D", "TCL1A", "MS4A1"), 1:30]
 dense.size <- object.size(as.matrix(pbmc.data))
 dense.size
@@ -73,11 +62,11 @@ sparse.size
 dense.size / sparse.size
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^MT-")
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 VlnPlot(pbmc, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 
 plot1 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "percent.mt")
@@ -85,20 +74,20 @@ plot2 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA"
 plot1 + plot2
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 # Filter
 pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------------------
+## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------------
 head(pbmc@meta.data, 5)
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
 
 
-## ---- fig.width = 14, fig.height = 7------------------------------------------------------
+## ---- fig.width = 14, fig.height = 7-----------------------------------------------------------------------
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
 
 # Identify the 10 most highly variable genes
@@ -111,28 +100,28 @@ plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
 plot1 + plot2
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 all.genes <- rownames(pbmc)
 pbmc <- ScaleData(pbmc, features = all.genes)
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 print(pbmc[["pca"]], dims = 1:5, nfeatures = 5)
 
 VizDimLoadings(pbmc, dims = 1:2, reduction = "pca")
 DimPlot(pbmc, reduction = "pca")
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 DimHeatmap(pbmc, dims = 1, cells = 500, balanced = TRUE)
 DimHeatmap(pbmc, dims = 1:15, cells = 500, balanced = TRUE)
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 # NOTE: This process can take a long time for big datasets, comment out for expediency. More
 # approximate techniques such as those implemented in ElbowPlot() can be used to reduce
 # computation time
@@ -140,20 +129,20 @@ pbmc <- JackStraw(pbmc, num.replicate = 100)
 pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 JackStrawPlot(pbmc, dims = 1:15)
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 ElbowPlot(pbmc)
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 pbmc <- FindNeighbors(pbmc, dims = 1:10)
 pbmc <- FindClusters(pbmc, resolution = 0.5)
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 # If you haven't installed UMAP, you can do so via reticulate::py_install(packages = 'umap-learn')
 pbmc <- RunUMAP(pbmc, dims = 1:10)
 
@@ -162,13 +151,13 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 DimPlot(pbmc, reduction = "umap")
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 if (interactive()) {
     saveRDS(pbmc, file = "pbmc_tutorial.rds")
 }
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 # find all markers of cluster 2
 cluster2.markers <- FindMarkers(pbmc, ident.1 = 2, min.pct = 0.25)
 head(cluster2.markers, n = 5)
@@ -185,11 +174,11 @@ pbmc.markers %>%
     top_n(n = 2, wt = avg_log2FC)
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 cluster0.markers <- FindMarkers(pbmc, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 VlnPlot(pbmc, features = c("MS4A1", "CD79A"))
 
 ## you can plot raw counts as well
@@ -208,7 +197,7 @@ pbmc.markers %>%
 DoHeatmap(pbmc, features = top10$gene) + NoLegend()
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 new.cluster.ids <- c(
     "Naive CD4 T", "CD14+ Mono", "Memory CD4 T", "B", "CD8 T", "FCGR3A+ Mono",
     "NK", "DC", "Platelet"
@@ -219,13 +208,13 @@ pbmc <- RenameIdents(pbmc, new.cluster.ids)
 DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 if (interactive()) {
     saveRDS(pbmc, file = "pbmc3k_final.rds")
 }
 
 
-## -----------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------
 ## Información de la sesión de R
 Sys.time()
 proc.time()
