@@ -518,7 +518,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="12" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html"><i class="fa fa-check"></i><b>12</b> Análisis de expresión diferencial</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#detalles-de-la-sesión-de-r-11"><i class="fa fa-check"></i><b>12.1</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="12.1" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#diapositivas-de-peter-hickey-6"><i class="fa fa-check"></i><b>12.1</b> Diapositivas de Peter Hickey</a></li>
+<li class="chapter" data-level="12.2" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#section"><i class="fa fa-check"></i><b>12.2</b> </a></li>
+<li class="chapter" data-level="12.3" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#detalles-de-la-sesión-de-r-11"><i class="fa fa-check"></i><b>12.3</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#patrocinadores-12"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html"><i class="fa fa-check"></i><b>13</b> Introducción a Seurat</a>
@@ -680,7 +682,7 @@ Do you want to learn how to analyze <a href="https://twitter.com/hashtag/scRNAse
 <span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># El anterior comando debe mostrar que estás usando la versión 3.13</span></span>
 <span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="index.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Instala los paquetes de R que necesitamos</span></span></code></pre></div>
-<pre><code>## BiocManager::install(c(&quot;batchelor&quot;, &quot;BiocFileCache&quot;, &quot;BiocSingular&quot;, &quot;bluster&quot;, &quot;celldex&quot;, &quot;cowplot&quot;, &quot;dplyr&quot;, &quot;DropletUtils&quot;, &quot;EnsDb.Hsapiens.v86&quot;, &quot;ExperimentHub&quot;, &quot;fossil&quot;, &quot;gert&quot;, &quot;gh&quot;, &quot;here&quot;, &quot;iSEE&quot;, &quot;kableExtra&quot;, &quot;lobstr&quot;, &quot;org.Mm.eg.db&quot;, &quot;patchwork&quot;, &quot;PCAtools&quot;, &quot;pheatmap&quot;, &quot;plotly&quot;, &quot;postcards&quot;, &quot;pryr&quot;, &quot;RColorBrewer&quot;, &quot;Rtsne&quot;, &quot;scater&quot;, &quot;scPipe&quot;, &quot;scran&quot;, &quot;scRNAseq&quot;, &quot;sessioninfo&quot;, &quot;Seurat&quot;, &quot;SingleCellExperiment&quot;, &quot;SingleR&quot;, &quot;suncalc&quot;, &quot;TENxPBMCData&quot;, &quot;usethis&quot;, &quot;uwot&quot;))</code></pre>
+<pre><code>## BiocManager::install(c(&quot;batchelor&quot;, &quot;BiocFileCache&quot;, &quot;BiocSingular&quot;, &quot;bluster&quot;, &quot;celldex&quot;, &quot;cowplot&quot;, &quot;dplyr&quot;, &quot;DropletUtils&quot;, &quot;EnsDb.Hsapiens.v86&quot;, &quot;ExperimentHub&quot;, &quot;fossil&quot;, &quot;gert&quot;, &quot;gh&quot;, &quot;here&quot;, &quot;iSEE&quot;, &quot;kableExtra&quot;, &quot;lobstr&quot;, &quot;MouseGastrulationData&quot;, &quot;org.Mm.eg.db&quot;, &quot;patchwork&quot;, &quot;PCAtools&quot;, &quot;pheatmap&quot;, &quot;plotly&quot;, &quot;postcards&quot;, &quot;pryr&quot;, &quot;RColorBrewer&quot;, &quot;Rtsne&quot;, &quot;scater&quot;, &quot;scPipe&quot;, &quot;scran&quot;, &quot;scRNAseq&quot;, &quot;sessioninfo&quot;, &quot;Seurat&quot;, &quot;SingleCellExperiment&quot;, &quot;SingleR&quot;, &quot;suncalc&quot;, &quot;TENxPBMCData&quot;, &quot;usethis&quot;, &quot;uwot&quot;))</code></pre>
 </div>
 <div id="horario" class="section level2 unnumbered">
 <h2>Horario</h2>
@@ -1076,6 +1078,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ##  brew                     1.0-6      2011-04-13 [2] RSPM (R 4.1.0)
 ##  brio                     1.1.2      2021-04-23 [2] RSPM (R 4.1.0)
 ##  bslib                    0.2.5.1    2021-05-18 [1] RSPM (R 4.1.0)
+##  BumpyMatrix              1.0.1      2021-07-04 [1] Bioconductor  
 ##  cachem                   1.0.5      2021-05-15 [2] RSPM (R 4.1.0)
 ##  Cairo                    1.5-12.2   2020-07-07 [1] RSPM (R 4.1.0)
 ##  callr                    3.7.0      2021-04-20 [2] RSPM (R 4.1.0)
@@ -1212,6 +1215,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ##  locfdr                   1.1-8      2015-07-15 [1] RSPM (R 4.1.0)
 ##  locfit                   1.5-9.4    2020-03-25 [1] RSPM (R 4.1.0)
 ##  lubridate                1.7.10     2021-02-26 [1] RSPM (R 4.1.0)
+##  magick                   2.7.2      2021-05-02 [1] RSPM (R 4.1.0)
 ##  magrittr                 2.0.1      2020-11-17 [2] RSPM (R 4.1.0)
 ##  maps                     3.3.0      2018-04-03 [1] RSPM (R 4.1.0)
 ##  markdown                 1.1        2019-08-07 [2] RSPM (R 4.1.0)
@@ -1227,6 +1231,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ##  mgcv                     1.8-36     2021-06-01 [3] RSPM (R 4.1.0)
 ##  mime                     0.11       2021-06-23 [2] RSPM (R 4.1.0)
 ##  miniUI                   0.1.1.1    2018-05-18 [1] RSPM (R 4.1.0)
+##  MouseGastrulationData    1.6.0      2021-05-20 [1] Bioconductor  
 ##  munsell                  0.5.0      2018-06-12 [1] RSPM (R 4.1.0)
 ##  nlme                     3.1-152    2021-02-04 [3] CRAN (R 4.1.0)
 ##  NMF                      0.23.0     2020-08-01 [1] RSPM (R 4.1.0)
@@ -1344,6 +1349,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ##  sp                       1.4-5      2021-01-10 [1] RSPM (R 4.1.0)
 ##  sparseMatrixStats        1.4.2      2021-08-08 [1] Bioconductor  
 ##  spatial                  7.3-14     2021-05-03 [3] CRAN (R 4.1.0)
+##  SpatialExperiment        1.2.1      2021-06-10 [1] Bioconductor  
 ##  spatstat.core            2.3-0      2021-07-16 [1] RSPM (R 4.1.0)
 ##  spatstat.data            2.1-0      2021-03-21 [1] RSPM (R 4.1.0)
 ##  spatstat.geom            2.2-2      2021-07-12 [1] RSPM (R 4.1.0)
@@ -1399,7 +1405,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ## [1] /__w/_temp/Library
 ## [2] /usr/local/lib/R/site-library
 ## [3] /usr/local/lib/R/library</code></pre>
-<p>Fecha de la última actualización de esta página: 2021-08-11 21:36:47.</p>
+<p>Fecha de la última actualización de esta página: 2021-08-11 23:21:50.</p>
 </div>
 <div id="licencia" class="section level2 unnumbered">
 <h2>Licencia</h2>

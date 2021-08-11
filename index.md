@@ -144,7 +144,7 @@ BiocManager::version()
 
 
 ```
-## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "celldex", "cowplot", "dplyr", "DropletUtils", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "lobstr", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "postcards", "pryr", "RColorBrewer", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "SingleR", "suncalc", "TENxPBMCData", "usethis", "uwot"))
+## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "celldex", "cowplot", "dplyr", "DropletUtils", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "lobstr", "MouseGastrulationData", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "postcards", "pryr", "RColorBrewer", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "SingleR", "suncalc", "TENxPBMCData", "usethis", "uwot"))
 ```
 
 
@@ -343,6 +343,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  brew                     1.0-6      2011-04-13 [2] RSPM (R 4.1.0)
 ##  brio                     1.1.2      2021-04-23 [2] RSPM (R 4.1.0)
 ##  bslib                    0.2.5.1    2021-05-18 [1] RSPM (R 4.1.0)
+##  BumpyMatrix              1.0.1      2021-07-04 [1] Bioconductor  
 ##  cachem                   1.0.5      2021-05-15 [2] RSPM (R 4.1.0)
 ##  Cairo                    1.5-12.2   2020-07-07 [1] RSPM (R 4.1.0)
 ##  callr                    3.7.0      2021-04-20 [2] RSPM (R 4.1.0)
@@ -479,6 +480,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  locfdr                   1.1-8      2015-07-15 [1] RSPM (R 4.1.0)
 ##  locfit                   1.5-9.4    2020-03-25 [1] RSPM (R 4.1.0)
 ##  lubridate                1.7.10     2021-02-26 [1] RSPM (R 4.1.0)
+##  magick                   2.7.2      2021-05-02 [1] RSPM (R 4.1.0)
 ##  magrittr                 2.0.1      2020-11-17 [2] RSPM (R 4.1.0)
 ##  maps                     3.3.0      2018-04-03 [1] RSPM (R 4.1.0)
 ##  markdown                 1.1        2019-08-07 [2] RSPM (R 4.1.0)
@@ -494,6 +496,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  mgcv                     1.8-36     2021-06-01 [3] RSPM (R 4.1.0)
 ##  mime                     0.11       2021-06-23 [2] RSPM (R 4.1.0)
 ##  miniUI                   0.1.1.1    2018-05-18 [1] RSPM (R 4.1.0)
+##  MouseGastrulationData    1.6.0      2021-05-20 [1] Bioconductor  
 ##  munsell                  0.5.0      2018-06-12 [1] RSPM (R 4.1.0)
 ##  nlme                     3.1-152    2021-02-04 [3] CRAN (R 4.1.0)
 ##  NMF                      0.23.0     2020-08-01 [1] RSPM (R 4.1.0)
@@ -611,6 +614,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  sp                       1.4-5      2021-01-10 [1] RSPM (R 4.1.0)
 ##  sparseMatrixStats        1.4.2      2021-08-08 [1] Bioconductor  
 ##  spatial                  7.3-14     2021-05-03 [3] CRAN (R 4.1.0)
+##  SpatialExperiment        1.2.1      2021-06-10 [1] Bioconductor  
 ##  spatstat.core            2.3-0      2021-07-16 [1] RSPM (R 4.1.0)
 ##  spatstat.data            2.1-0      2021-03-21 [1] RSPM (R 4.1.0)
 ##  spatstat.geom            2.2-2      2021-07-12 [1] RSPM (R 4.1.0)
@@ -668,7 +672,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-11 21:36:47.
+Fecha de la última actualización de esta página: 2021-08-11 23:21:50.
 
 ## Licencia  {-}
 

@@ -259,6 +259,8 @@ calculando-las-actividades-de-los-conjuntos-de-genes
 resumen-y-recomendaciones-4
 detalles-de-la-sesión-de-r-10
 análisis-de-expresión-diferencial
+diapositivas-de-peter-hickey-6
+section
 detalles-de-la-sesión-de-r-11
 introducción-a-seurat
 diapositivas

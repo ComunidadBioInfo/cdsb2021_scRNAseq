@@ -277,13 +277,18 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
 
 Para detalles sobre la seleccion de parámetros y comparaciones: [visitar esta página](https://bioconductor.org/books/release/OSCA/clustering.html#clustering-graph).
 
-<div>
-<p style = 'text-align:center;'>
-<img src="img/seurat-scran.png" width="800px">
-</p>
-</div>
 
-_Imagen comparando resultados con Bioconductor 3.11 vs Seurat._
+```r
+library("patchwork")
+
+plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster") +
+plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
+```
+
+<div class="figure">
+<img src="09-clustering_files/figure-html/unnamed-chunk-9-1.png" alt="Estilo scran vs estilo Seurat." width="960" />
+<p class="caption">Estilo scran vs estilo Seurat.</p>
+</div>
 
 ### Evaluando la separación de los clusters
 
@@ -316,7 +321,7 @@ pheatmap(log2(ratio + 1),
 )
 ```
 
-<img src="09-clustering_files/figure-html/unnamed-chunk-10-1.png" width="576" />
+<img src="09-clustering_files/figure-html/unnamed-chunk-11-1.png" width="576" />
 
 Un dataset que contiene clusters bien separados debería contener la mayoría del peso total observado en las entradas diagonales, *i.e* la mayoría de las aristas ocurren entre células del mismo cluster
 
@@ -371,7 +376,7 @@ pheatmap(coassign,
 )
 ```
 
-<img src="09-clustering_files/figure-html/unnamed-chunk-12-1.png" width="576" />
+<img src="09-clustering_files/figure-html/unnamed-chunk-13-1.png" width="576" />
 
 *Probabilidad alta de coasignación indica que X no es estable con respecto a su separación de Y.
 *Queremos altas probabilidades de coasignación en la diagonal
@@ -399,7 +404,7 @@ plotExpression(sce.pbmc,
 )
 ```
 
-<img src="09-clustering_files/figure-html/unnamed-chunk-13-1.png" width="576" />
+<img src="09-clustering_files/figure-html/unnamed-chunk-14-1.png" width="576" />
 
 *CD3E, CCR7, CD69, y CD44 son marcadores de células T de memoria*. Dentro de las  células T de memoria, ¿dónde están las subpoblaciones CD4+ y CD8+?
 
@@ -428,7 +433,7 @@ plotExpression(sce.memory,
 )
 ```
 
-<img src="09-clustering_files/figure-html/unnamed-chunk-15-1.png" width="576" />
+<img src="09-clustering_files/figure-html/unnamed-chunk-16-1.png" width="576" />
 
 Expresión de CD4 es bajo, por lo tanto, su cambio es modesto, pero la interpretación es clara
 
@@ -473,7 +478,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-11 21:53:35 UTC"
+## [1] "2021-08-11 23:39:23 UTC"
 ```
 
 ```r
@@ -482,7 +487,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 200.003   4.841 201.639
+## 209.785   5.190 211.755
 ```
 
 ```r
@@ -587,6 +592,7 @@ sessioninfo::session_info()
 ##  memoise                2.0.0    2021-01-26 [2] RSPM (R 4.1.0)
 ##  metapod                1.0.0    2021-05-19 [1] Bioconductor  
 ##  munsell                0.5.0    2018-06-12 [1] RSPM (R 4.1.0)
+##  patchwork            * 1.1.1    2020-12-17 [1] RSPM (R 4.1.0)
 ##  pheatmap             * 1.0.12   2019-01-04 [1] RSPM (R 4.1.0)
 ##  pillar                 1.6.2    2021-07-29 [2] RSPM (R 4.1.0)
 ##  pkgconfig              2.0.3    2019-09-22 [2] RSPM (R 4.1.0)

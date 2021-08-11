@@ -518,7 +518,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="12" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html"><i class="fa fa-check"></i><b>12</b> Análisis de expresión diferencial</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#detalles-de-la-sesión-de-r-11"><i class="fa fa-check"></i><b>12.1</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="12.1" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#diapositivas-de-peter-hickey-6"><i class="fa fa-check"></i><b>12.1</b> Diapositivas de Peter Hickey</a></li>
+<li class="chapter" data-level="12.2" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#section"><i class="fa fa-check"></i><b>12.2</b> </a></li>
+<li class="chapter" data-level="12.3" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#detalles-de-la-sesión-de-r-11"><i class="fa fa-check"></i><b>12.3</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#patrocinadores-12"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html"><i class="fa fa-check"></i><b>13</b> Introducción a Seurat</a>
@@ -559,17 +561,186 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="análisis-de-expresión-diferencial" class="section level1" number="12">
 <h1><span class="header-section-number">12</span> Análisis de expresión diferencial</h1>
-<p>TODO</p>
-<div id="detalles-de-la-sesión-de-r-11" class="section level2" number="12.1">
-<h2><span class="header-section-number">12.1</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="análisis-de-expresión-diferencial.html#cb548-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb548-2"><a href="análisis-de-expresión-diferencial.html#cb548-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-11 22:02:25 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="análisis-de-expresión-diferencial.html#cb550-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<p>Instructor: <a href="https://comunidadbioinfo.github.io/es/authors/lcollado/">Leonardo Collado Torres</a></p>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="análisis-de-expresión-diferencial.html#cb549-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Paquetes de este capítulo</span></span>
+<span id="cb549-2"><a href="análisis-de-expresión-diferencial.html#cb549-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;MouseGastrulationData&quot;</span>) <span class="do">## para descargar datos de ejemplo</span></span>
+<span id="cb549-3"><a href="análisis-de-expresión-diferencial.html#cb549-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scater&quot;</span>) <span class="do">## para gráficas y control de calidad</span></span>
+<span id="cb549-4"><a href="análisis-de-expresión-diferencial.html#cb549-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scran&quot;</span>) <span class="do">## para selección de genes, clustering, etc</span></span>
+<span id="cb549-5"><a href="análisis-de-expresión-diferencial.html#cb549-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;batchelor&quot;</span>) <span class="do">## para métodos de correción de batch (lote)</span></span></code></pre></div>
+<div id="diapositivas-de-peter-hickey-6" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> Diapositivas de Peter Hickey</h2>
+<p>Ve las diapositivas <a href="https://docs.google.com/presentation/d/1CRTE_1m8YHf8p6GMl-rbBpyOx2KS4UxdTC1dpvVgKEs/edit?usp=sharing">aquí</a></p>
+<p>Esas diapositivas están basadas en este <a href="https://bioconductor.org/books/release/OSCA/multi-sample-comparisons.html">capítulo de OSCA</a>.</p>
+</div>
+<div id="section" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> </h2>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="análisis-de-expresión-diferencial.html#cb550-1" aria-hidden="true" tabindex="-1"></a><span class="co">#--- loading ---#</span></span>
+<span id="cb550-2"><a href="análisis-de-expresión-diferencial.html#cb550-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MouseGastrulationData)</span>
+<span id="cb550-3"><a href="análisis-de-expresión-diferencial.html#cb550-3" aria-hidden="true" tabindex="-1"></a>sce.chimera <span class="ot">&lt;-</span> <span class="fu">WTChimeraData</span>(<span class="at">samples=</span><span class="dv">5</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## snapshotDate(): 2021-05-18</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
+<pre><code>## downloading 1 resources</code></pre>
+<pre><code>## retrieving 1 resource</code></pre>
+<pre><code>## loading from cache</code></pre>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="análisis-de-expresión-diferencial.html#cb652-1" aria-hidden="true" tabindex="-1"></a>sce.chimera</span></code></pre></div>
+<pre><code>## class: SingleCellExperiment 
+## dim: 29453 20935 
+## metadata(0):
+## assays(1): counts
+## rownames(29453): ENSMUSG00000051951 ENSMUSG00000089699 ...
+##   ENSMUSG00000095742 tomato-td
+## rowData names(2): ENSEMBL SYMBOL
+## colnames(20935): cell_9769 cell_9770 ... cell_30702 cell_30703
+## colData names(11): cell barcode ... doub.density sizeFactor
+## reducedDimNames(2): pca.corrected.E7.5 pca.corrected.E8.5
+## mainExpName: NULL
+## altExpNames(0):</code></pre>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="análisis-de-expresión-diferencial.html#cb654-1" aria-hidden="true" tabindex="-1"></a><span class="co">#--- feature-annotation ---#</span></span>
+<span id="cb654-2"><a href="análisis-de-expresión-diferencial.html#cb654-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb654-3"><a href="análisis-de-expresión-diferencial.html#cb654-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sce.chimera) <span class="ot">&lt;-</span> <span class="fu">uniquifyFeatureNames</span>(</span>
+<span id="cb654-4"><a href="análisis-de-expresión-diferencial.html#cb654-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowData</span>(sce.chimera)<span class="sc">$</span>ENSEMBL, <span class="fu">rowData</span>(sce.chimera)<span class="sc">$</span>SYMBOL)</span>
+<span id="cb654-5"><a href="análisis-de-expresión-diferencial.html#cb654-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-6"><a href="análisis-de-expresión-diferencial.html#cb654-6" aria-hidden="true" tabindex="-1"></a><span class="co">#--- quality-control ---#</span></span>
+<span id="cb654-7"><a href="análisis-de-expresión-diferencial.html#cb654-7" aria-hidden="true" tabindex="-1"></a>drop <span class="ot">&lt;-</span> sce.chimera<span class="sc">$</span>celltype.mapped <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;stripped&quot;</span>, <span class="st">&quot;Doublet&quot;</span>)</span>
+<span id="cb654-8"><a href="análisis-de-expresión-diferencial.html#cb654-8" aria-hidden="true" tabindex="-1"></a>sce.chimera <span class="ot">&lt;-</span> sce.chimera[,<span class="sc">!</span>drop]</span>
+<span id="cb654-9"><a href="análisis-de-expresión-diferencial.html#cb654-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-10"><a href="análisis-de-expresión-diferencial.html#cb654-10" aria-hidden="true" tabindex="-1"></a><span class="co">#--- normalization ---#</span></span>
+<span id="cb654-11"><a href="análisis-de-expresión-diferencial.html#cb654-11" aria-hidden="true" tabindex="-1"></a>sce.chimera <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.chimera)</span>
+<span id="cb654-12"><a href="análisis-de-expresión-diferencial.html#cb654-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-13"><a href="análisis-de-expresión-diferencial.html#cb654-13" aria-hidden="true" tabindex="-1"></a><span class="co">#--- variance-modelling ---#</span></span>
+<span id="cb654-14"><a href="análisis-de-expresión-diferencial.html#cb654-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
+<span id="cb654-15"><a href="análisis-de-expresión-diferencial.html#cb654-15" aria-hidden="true" tabindex="-1"></a>dec.chimera <span class="ot">&lt;-</span> <span class="fu">modelGeneVar</span>(sce.chimera, <span class="at">block=</span>sce.chimera<span class="sc">$</span>sample)</span>
+<span id="cb654-16"><a href="análisis-de-expresión-diferencial.html#cb654-16" aria-hidden="true" tabindex="-1"></a>chosen.hvgs <span class="ot">&lt;-</span> dec.chimera<span class="sc">$</span>bio <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb654-17"><a href="análisis-de-expresión-diferencial.html#cb654-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-18"><a href="análisis-de-expresión-diferencial.html#cb654-18" aria-hidden="true" tabindex="-1"></a><span class="co">#--- merging ---#</span></span>
+<span id="cb654-19"><a href="análisis-de-expresión-diferencial.html#cb654-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(batchelor)</span>
+<span id="cb654-20"><a href="análisis-de-expresión-diferencial.html#cb654-20" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">01001001</span>)</span>
+<span id="cb654-21"><a href="análisis-de-expresión-diferencial.html#cb654-21" aria-hidden="true" tabindex="-1"></a>merged <span class="ot">&lt;-</span> <span class="fu">correctExperiments</span>(sce.chimera, </span>
+<span id="cb654-22"><a href="análisis-de-expresión-diferencial.html#cb654-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch=</span>sce.chimera<span class="sc">$</span>sample, </span>
+<span id="cb654-23"><a href="análisis-de-expresión-diferencial.html#cb654-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset.row=</span>chosen.hvgs,</span>
+<span id="cb654-24"><a href="análisis-de-expresión-diferencial.html#cb654-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">PARAM=</span><span class="fu">FastMnnParam</span>(</span>
+<span id="cb654-25"><a href="análisis-de-expresión-diferencial.html#cb654-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">merge.order=</span><span class="fu">list</span>(</span>
+<span id="cb654-26"><a href="análisis-de-expresión-diferencial.html#cb654-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">list</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>), <span class="co"># WT (3 replicates)</span></span>
+<span id="cb654-27"><a href="análisis-de-expresión-diferencial.html#cb654-27" aria-hidden="true" tabindex="-1"></a>            <span class="fu">list</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>)  <span class="co"># td-Tomato (3 replicates)</span></span>
+<span id="cb654-28"><a href="análisis-de-expresión-diferencial.html#cb654-28" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb654-29"><a href="análisis-de-expresión-diferencial.html#cb654-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb654-30"><a href="análisis-de-expresión-diferencial.html#cb654-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb654-31"><a href="análisis-de-expresión-diferencial.html#cb654-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-32"><a href="análisis-de-expresión-diferencial.html#cb654-32" aria-hidden="true" tabindex="-1"></a><span class="co">#--- clustering ---#</span></span>
+<span id="cb654-33"><a href="análisis-de-expresión-diferencial.html#cb654-33" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(merged, <span class="at">use.dimred=</span><span class="st">&quot;corrected&quot;</span>)</span>
+<span id="cb654-34"><a href="análisis-de-expresión-diferencial.html#cb654-34" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">cluster_louvain</span>(g)</span>
+<span id="cb654-35"><a href="análisis-de-expresión-diferencial.html#cb654-35" aria-hidden="true" tabindex="-1"></a><span class="fu">colLabels</span>(merged) <span class="ot">&lt;-</span> <span class="fu">factor</span>(clusters<span class="sc">$</span>membership)</span>
+<span id="cb654-36"><a href="análisis-de-expresión-diferencial.html#cb654-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-37"><a href="análisis-de-expresión-diferencial.html#cb654-37" aria-hidden="true" tabindex="-1"></a><span class="co">#--- dimensionality-reduction ---#</span></span>
+<span id="cb654-38"><a href="análisis-de-expresión-diferencial.html#cb654-38" aria-hidden="true" tabindex="-1"></a>merged <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(merged, <span class="at">dimred=</span><span class="st">&quot;corrected&quot;</span>, <span class="at">external_neighbors=</span><span class="cn">TRUE</span>)</span>
+<span id="cb654-39"><a href="análisis-de-expresión-diferencial.html#cb654-39" aria-hidden="true" tabindex="-1"></a>merged <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(merged, <span class="at">dimred=</span><span class="st">&quot;corrected&quot;</span>, <span class="at">external_neighbors=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+<div id="detalles-de-la-sesión-de-r-11" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Detalles de la sesión de R</h2>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="análisis-de-expresión-diferencial.html#cb655-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb655-2"><a href="análisis-de-expresión-diferencial.html#cb655-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-11 23:53:17 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="análisis-de-expresión-diferencial.html#cb657-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.443   0.120   0.442</code></pre>
-<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="análisis-de-expresión-diferencial.html#cb552-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb552-2"><a href="análisis-de-expresión-diferencial.html#cb552-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+## 282.352  25.710 299.727</code></pre>
+<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="análisis-de-expresión-diferencial.html#cb659-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb659-2"><a href="análisis-de-expresión-diferencial.html#cb659-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)
@@ -583,26 +754,139 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  date     2021-08-11                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
-##  package     * version date       lib source        
-##  bookdown      0.22    2021-04-22 [1] RSPM (R 4.1.0)
-##  bslib         0.2.5.1 2021-05-18 [1] RSPM (R 4.1.0)
-##  cli           3.0.1   2021-07-17 [2] RSPM (R 4.1.0)
-##  digest        0.6.27  2020-10-24 [2] RSPM (R 4.1.0)
-##  evaluate      0.14    2019-05-28 [2] RSPM (R 4.1.0)
-##  htmltools     0.5.1.1 2021-01-22 [1] RSPM (R 4.1.0)
-##  jquerylib     0.1.4   2021-04-26 [1] RSPM (R 4.1.0)
-##  jsonlite      1.7.2   2020-12-09 [2] RSPM (R 4.1.0)
-##  knitr         1.33    2021-04-24 [2] RSPM (R 4.1.0)
-##  magrittr      2.0.1   2020-11-17 [2] RSPM (R 4.1.0)
-##  R6            2.5.0   2020-10-28 [2] RSPM (R 4.1.0)
-##  rlang         0.4.11  2021-04-30 [2] RSPM (R 4.1.0)
-##  rmarkdown     2.10    2021-08-06 [1] RSPM (R 4.1.0)
-##  sass          0.4.0   2021-05-12 [1] RSPM (R 4.1.0)
-##  sessioninfo   1.1.1   2018-11-05 [2] RSPM (R 4.1.0)
-##  stringi       1.7.3   2021-07-16 [2] RSPM (R 4.1.0)
-##  stringr       1.4.0   2019-02-10 [2] RSPM (R 4.1.0)
-##  withr         2.4.2   2021-04-18 [2] RSPM (R 4.1.0)
-##  xfun          0.25    2021-08-06 [2] RSPM (R 4.1.0)
+##  package                * version  date       lib source        
+##  AnnotationDbi            1.54.1   2021-06-08 [1] Bioconductor  
+##  AnnotationHub            3.0.1    2021-06-20 [1] Bioconductor  
+##  assertthat               0.2.1    2019-03-21 [1] RSPM (R 4.1.0)
+##  batchelor              * 1.8.0    2021-05-19 [1] Bioconductor  
+##  beachmat                 2.8.0    2021-05-19 [1] Bioconductor  
+##  beeswarm                 0.4.0    2021-06-01 [1] RSPM (R 4.1.0)
+##  Biobase                * 2.52.0   2021-05-19 [1] Bioconductor  
+##  BiocFileCache            2.0.0    2021-05-19 [1] Bioconductor  
+##  BiocGenerics           * 0.38.0   2021-05-19 [1] Bioconductor  
+##  BiocManager              1.30.16  2021-06-15 [1] RSPM (R 4.1.0)
+##  BiocNeighbors            1.10.0   2021-05-19 [1] Bioconductor  
+##  BiocParallel             1.26.1   2021-07-04 [1] Bioconductor  
+##  BiocSingular             1.8.1    2021-06-08 [1] Bioconductor  
+##  BiocVersion              3.13.1   2021-03-19 [2] Bioconductor  
+##  Biostrings               2.60.2   2021-08-05 [1] Bioconductor  
+##  bit                      4.0.4    2020-08-04 [1] RSPM (R 4.1.0)
+##  bit64                    4.0.5    2020-08-30 [1] RSPM (R 4.1.0)
+##  bitops                   1.0-7    2021-04-24 [1] RSPM (R 4.1.0)
+##  blob                     1.2.2    2021-07-23 [1] RSPM (R 4.1.0)
+##  bluster                  1.2.1    2021-05-27 [1] Bioconductor  
+##  bookdown                 0.22     2021-04-22 [1] RSPM (R 4.1.0)
+##  bslib                    0.2.5.1  2021-05-18 [1] RSPM (R 4.1.0)
+##  BumpyMatrix              1.0.1    2021-07-04 [1] Bioconductor  
+##  cachem                   1.0.5    2021-05-15 [2] RSPM (R 4.1.0)
+##  cli                      3.0.1    2021-07-17 [2] RSPM (R 4.1.0)
+##  cluster                  2.1.2    2021-04-17 [3] CRAN (R 4.1.0)
+##  colorspace               2.0-2    2021-06-24 [1] RSPM (R 4.1.0)
+##  crayon                   1.4.1    2021-02-08 [2] RSPM (R 4.1.0)
+##  curl                     4.3.2    2021-06-23 [2] RSPM (R 4.1.0)
+##  DBI                      1.1.1    2021-01-15 [1] RSPM (R 4.1.0)
+##  dbplyr                   2.1.1    2021-04-06 [1] RSPM (R 4.1.0)
+##  DelayedArray             0.18.0   2021-05-19 [1] Bioconductor  
+##  DelayedMatrixStats       1.14.2   2021-08-08 [1] Bioconductor  
+##  digest                   0.6.27   2020-10-24 [2] RSPM (R 4.1.0)
+##  dplyr                    1.0.7    2021-06-18 [1] RSPM (R 4.1.0)
+##  dqrng                    0.3.0    2021-05-01 [1] RSPM (R 4.1.0)
+##  DropletUtils             1.12.2   2021-07-22 [1] Bioconductor  
+##  edgeR                    3.34.0   2021-05-19 [1] Bioconductor  
+##  ellipsis                 0.3.2    2021-04-29 [2] RSPM (R 4.1.0)
+##  evaluate                 0.14     2019-05-28 [2] RSPM (R 4.1.0)
+##  ExperimentHub            2.0.0    2021-05-19 [1] Bioconductor  
+##  fansi                    0.5.0    2021-05-25 [2] RSPM (R 4.1.0)
+##  fastmap                  1.1.0    2021-01-25 [2] RSPM (R 4.1.0)
+##  filelock                 1.0.2    2018-10-05 [1] RSPM (R 4.1.0)
+##  generics                 0.1.0    2020-10-31 [1] RSPM (R 4.1.0)
+##  GenomeInfoDb           * 1.28.1   2021-07-01 [1] Bioconductor  
+##  GenomeInfoDbData         1.2.6    2021-07-29 [1] Bioconductor  
+##  GenomicRanges          * 1.44.0   2021-05-19 [1] Bioconductor  
+##  ggbeeswarm               0.6.0    2017-08-07 [1] RSPM (R 4.1.0)
+##  ggplot2                * 3.3.5    2021-06-25 [1] RSPM (R 4.1.0)
+##  glue                     1.4.2    2020-08-27 [2] RSPM (R 4.1.0)
+##  gridExtra                2.3      2017-09-09 [1] RSPM (R 4.1.0)
+##  gtable                   0.3.0    2019-03-25 [1] RSPM (R 4.1.0)
+##  HDF5Array                1.20.0   2021-05-19 [1] Bioconductor  
+##  htmltools                0.5.1.1  2021-01-22 [1] RSPM (R 4.1.0)
+##  httpuv                   1.6.1    2021-05-07 [1] RSPM (R 4.1.0)
+##  httr                     1.4.2    2020-07-20 [2] RSPM (R 4.1.0)
+##  igraph                   1.2.6    2020-10-06 [1] RSPM (R 4.1.0)
+##  interactiveDisplayBase   1.30.0   2021-05-19 [1] Bioconductor  
+##  IRanges                * 2.26.0   2021-05-19 [1] Bioconductor  
+##  irlba                    2.3.3    2019-02-05 [1] RSPM (R 4.1.0)
+##  jquerylib                0.1.4    2021-04-26 [1] RSPM (R 4.1.0)
+##  jsonlite                 1.7.2    2020-12-09 [2] RSPM (R 4.1.0)
+##  KEGGREST                 1.32.0   2021-05-19 [1] Bioconductor  
+##  knitr                    1.33     2021-04-24 [2] RSPM (R 4.1.0)
+##  later                    1.2.0    2021-04-23 [1] RSPM (R 4.1.0)
+##  lattice                  0.20-44  2021-05-02 [3] CRAN (R 4.1.0)
+##  lifecycle                1.0.0    2021-02-15 [2] RSPM (R 4.1.0)
+##  limma                    3.48.3   2021-08-10 [1] Bioconductor  
+##  locfit                   1.5-9.4  2020-03-25 [1] RSPM (R 4.1.0)
+##  magick                   2.7.2    2021-05-02 [1] RSPM (R 4.1.0)
+##  magrittr                 2.0.1    2020-11-17 [2] RSPM (R 4.1.0)
+##  Matrix                   1.3-4    2021-06-01 [3] RSPM (R 4.1.0)
+##  MatrixGenerics         * 1.4.2    2021-08-08 [1] Bioconductor  
+##  matrixStats            * 0.60.0   2021-07-26 [1] RSPM (R 4.1.0)
+##  memoise                  2.0.0    2021-01-26 [2] RSPM (R 4.1.0)
+##  metapod                  1.0.0    2021-05-19 [1] Bioconductor  
+##  mime                     0.11     2021-06-23 [2] RSPM (R 4.1.0)
+##  MouseGastrulationData  * 1.6.0    2021-05-20 [1] Bioconductor  
+##  munsell                  0.5.0    2018-06-12 [1] RSPM (R 4.1.0)
+##  pillar                   1.6.2    2021-07-29 [2] RSPM (R 4.1.0)
+##  pkgconfig                2.0.3    2019-09-22 [2] RSPM (R 4.1.0)
+##  png                      0.1-7    2013-12-03 [1] RSPM (R 4.1.0)
+##  promises                 1.2.0.1  2021-02-11 [1] RSPM (R 4.1.0)
+##  purrr                    0.3.4    2020-04-17 [2] RSPM (R 4.1.0)
+##  R.methodsS3              1.8.1    2020-08-26 [1] RSPM (R 4.1.0)
+##  R.oo                     1.24.0   2020-08-26 [1] RSPM (R 4.1.0)
+##  R.utils                  2.10.1   2020-08-26 [1] RSPM (R 4.1.0)
+##  R6                       2.5.0    2020-10-28 [2] RSPM (R 4.1.0)
+##  rappdirs                 0.3.3    2021-01-31 [2] RSPM (R 4.1.0)
+##  Rcpp                     1.0.7    2021-07-07 [2] RSPM (R 4.1.0)
+##  RCurl                    1.98-1.3 2021-03-16 [1] RSPM (R 4.1.0)
+##  ResidualMatrix           1.2.0    2021-05-19 [1] Bioconductor  
+##  rhdf5                    2.36.0   2021-05-19 [1] Bioconductor  
+##  rhdf5filters             1.4.0    2021-05-19 [1] Bioconductor  
+##  Rhdf5lib                 1.14.2   2021-07-06 [1] Bioconductor  
+##  rjson                    0.2.20   2018-06-08 [1] RSPM (R 4.1.0)
+##  rlang                    0.4.11   2021-04-30 [2] RSPM (R 4.1.0)
+##  rmarkdown                2.10     2021-08-06 [1] RSPM (R 4.1.0)
+##  RSQLite                  2.2.7    2021-04-22 [1] RSPM (R 4.1.0)
+##  rsvd                     1.0.5    2021-04-16 [1] RSPM (R 4.1.0)
+##  Rtsne                    0.15     2018-11-10 [1] RSPM (R 4.1.0)
+##  S4Vectors              * 0.30.0   2021-05-19 [1] Bioconductor  
+##  sass                     0.4.0    2021-05-12 [1] RSPM (R 4.1.0)
+##  ScaledMatrix             1.0.0    2021-05-19 [1] Bioconductor  
+##  scales                   1.1.1    2020-05-11 [1] RSPM (R 4.1.0)
+##  scater                 * 1.20.1   2021-06-15 [1] Bioconductor  
+##  scran                  * 1.20.1   2021-05-24 [1] Bioconductor  
+##  scuttle                * 1.2.1    2021-08-05 [1] Bioconductor  
+##  sessioninfo              1.1.1    2018-11-05 [2] RSPM (R 4.1.0)
+##  shiny                    1.6.0    2021-01-25 [1] RSPM (R 4.1.0)
+##  SingleCellExperiment   * 1.14.1   2021-05-21 [1] Bioconductor  
+##  sparseMatrixStats        1.4.2    2021-08-08 [1] Bioconductor  
+##  SpatialExperiment      * 1.2.1    2021-06-10 [1] Bioconductor  
+##  statmod                  1.4.36   2021-05-10 [1] RSPM (R 4.1.0)
+##  stringi                  1.7.3    2021-07-16 [2] RSPM (R 4.1.0)
+##  stringr                  1.4.0    2019-02-10 [2] RSPM (R 4.1.0)
+##  SummarizedExperiment   * 1.22.0   2021-05-19 [1] Bioconductor  
+##  tibble                   3.1.3    2021-07-23 [2] RSPM (R 4.1.0)
+##  tidyselect               1.1.1    2021-04-30 [1] RSPM (R 4.1.0)
+##  utf8                     1.2.2    2021-07-24 [2] RSPM (R 4.1.0)
+##  uwot                     0.1.10   2020-12-15 [1] RSPM (R 4.1.0)
+##  vctrs                    0.3.8    2021-04-29 [2] RSPM (R 4.1.0)
+##  vipor                    0.4.5    2017-03-22 [1] RSPM (R 4.1.0)
+##  viridis                  0.6.1    2021-05-11 [1] RSPM (R 4.1.0)
+##  viridisLite              0.4.0    2021-04-13 [1] RSPM (R 4.1.0)
+##  withr                    2.4.2    2021-04-18 [2] RSPM (R 4.1.0)
+##  xfun                     0.25     2021-08-06 [2] RSPM (R 4.1.0)
+##  xtable                   1.8-4    2019-04-21 [1] RSPM (R 4.1.0)
+##  XVector                  0.32.0   2021-05-19 [1] Bioconductor  
+##  yaml                     2.2.1    2020-02-01 [2] RSPM (R 4.1.0)
+##  zlibbioc                 1.38.0   2021-05-19 [1] Bioconductor  
 ## 
 ## [1] /__w/_temp/Library
 ## [2] /usr/local/lib/R/site-library
