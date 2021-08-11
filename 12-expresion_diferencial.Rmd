@@ -8,7 +8,10 @@ library("MouseGastrulationData") ## para descargar datos de ejemplo
 library("scater") ## para gráficas y control de calidad
 library("scran") ## para selección de genes, clustering, etc
 library("batchelor") ## para métodos de correción de batch (lote)
-
+library("patchwork") ## para agrupar gráficas
+library("Polychrome") ## para muchos colores
+library("bluster") ## métodos de clustering
+library("edgeR") ## para expresión diferencial
 ```
 
 ## Diapositivas de Peter Hickey
@@ -17,16 +20,16 @@ Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1CRTE_1m8YHf8
 
 Esas diapositivas están basadas en este [capítulo de OSCA](https://bioconductor.org/books/release/OSCA/multi-sample-comparisons.html).
 
-##
+## Datos de ejemplo
 
 ```{r}
 #--- loading ---#
-library(MouseGastrulationData)
+library("MouseGastrulationData")
 sce.chimera <- WTChimeraData(samples=5:10)
 sce.chimera
 
 #--- feature-annotation ---#
-library(scater)
+library("scater")
 rownames(sce.chimera) <- uniquifyFeatureNames(
     rowData(sce.chimera)$ENSEMBL, rowData(sce.chimera)$SYMBOL)
 
@@ -38,12 +41,12 @@ sce.chimera <- sce.chimera[,!drop]
 sce.chimera <- logNormCounts(sce.chimera)
 
 #--- variance-modelling ---#
-library(scran)
+library("scran")
 dec.chimera <- modelGeneVar(sce.chimera, block=sce.chimera$sample)
 chosen.hvgs <- dec.chimera$bio > 0
 
 #--- merging ---#
-library(batchelor)
+library("batchelor")
 set.seed(01001001)
 merged <- correctExperiments(sce.chimera, 
     batch=sce.chimera$sample, 
@@ -65,6 +68,236 @@ colLabels(merged) <- factor(clusters$membership)
 merged <- runTSNE(merged, dimred="corrected", external_neighbors=TRUE)
 merged <- runUMAP(merged, dimred="corrected", external_neighbors=TRUE)
 ```
+
+### Exploremos los datos de ejemplo
+
+```{r}
+merged
+colData(merged)
+rowData(merged)
+assayNames(merged)
+```
+
+
+
+```{r}
+## Clusters vs DE por td-Tomato
+table(colLabels(merged), merged$tomato)
+
+## Clusters vs lotes de muestras (batch)
+table(colLabels(merged), merged$pool)
+```
+
+```{r, fig.width=10}
+library("patchwork")
+plotTSNE(merged, colour_by="tomato", text_by="label") +
+plotTSNE(merged, colour_by=data.frame(pool=factor(merged$pool)))
+```
+
+## Nuestros clusters vs los originales
+
+
+```{r, fig.width=10, warning = FALSE}
+## Definir colores, si no scater nos los pone en una escala
+## continua
+cols_label <- Polychrome::palette36.colors(length(unique(merged$label)))
+names(cols_label) <- unique(merged$label)
+cols_celltype.mapped <- Polychrome::palette36.colors(length(unique(merged$celltype.mapped)))
+names(cols_celltype.mapped) <- unique(merged$celltype.mapped)
+
+## Nuestros clusters vs anotación de células por los
+## autores originales
+plotTSNE(merged, colour_by="label", text_by="label") +
+    theme(legend.position = "none") +
+    scale_colour_manual(values = cols_label) +
+plotTSNE(merged, colour_by="celltype.mapped") +
+    theme(legend.position = "none") +
+    scale_colour_manual(values = cols_celltype.mapped)
+```
+
+
+```{r}
+library("bluster")
+pairwiseRand(colLabels(merged), merged$celltype.mapped, "index")
+
+by.label <- table(colLabels(merged), merged$celltype.mapped)
+pheatmap::pheatmap(log2(by.label+1), color=viridis::viridis(101))
+```
+
+## Pseudo-bulking
+
+<script async class="speakerdeck-embed" data-slide="10" data-id="dde92cd6dfc04f9589770e074915658f" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+Estas diapositivas son parte de un webinar que di con Kristen R Maynard el 2021-04-27 para BioTuring que pueden ver [desde su sitio web](https://bioturing.com/sources/webinar/60752954a433e26dd8affcbd) o en YouTube.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/S8884Kde-1U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+```{r}
+# Using 'label' and 'sample' as our two factors; each column of the output
+# corresponds to one unique combination of these two factors.
+summed <- aggregateAcrossCells(merged, 
+    id=colData(merged)[,c("celltype.mapped", "sample")])
+summed
+```
+
+## Análisis de expresión diferencial
+
+### Convertir a un objeto nuevo
+
+```{r}
+label <- "Mesenchyme"
+current <- summed[,label==summed$celltype.mapped]
+
+# Creating up a DGEList object for use in edgeR:
+library("edgeR")
+y <- DGEList(counts(current), samples=colData(current))
+y
+```
+
+### Pre-procesamiento
+
+```{r}
+discarded <- current$ncells < 10
+y <- y[,!discarded]
+summary(discarded)
+
+keep <- filterByExpr(y, group=current$tomato)
+y <- y[keep,]
+summary(keep)
+
+y <- calcNormFactors(y)
+y$samples
+```
+
+```{r}
+par(mfrow=c(2,3))
+for (i in seq_len(ncol(y))) {
+    plotMD(y, column=i)
+}
+```
+
+```{r}
+par(mfrow=c(1, 1))
+plotMDS(cpm(y, log=TRUE), 
+    col=ifelse(y$samples$tomato, "red", "blue"))
+```
+
+### Modelo estadístico
+
+```{r}
+design <- model.matrix(~factor(pool) + factor(tomato), y$samples)
+design
+```
+
+```{r}
+y <- estimateDisp(y, design)
+summary(y$trended.dispersion)
+
+plotBCV(y)
+```
+
+
+```{r}
+fit <- glmQLFit(y, design, robust=TRUE)
+summary(fit$var.prior)
+summary(fit$df.prior)
+plotQLDisp(fit)
+```
+
+```{r}
+res <- glmQLFTest(fit, coef=ncol(design))
+summary(decideTests(res))
+
+topTags(res)
+```
+
+### De forma sencilla
+
+```{r}
+# Removing all pseudo-bulk samples with 'insufficient' cells.
+summed.filt <- summed[,summed$ncells >= 10]
+
+library("scran")
+de.results <- pseudoBulkDGE(summed.filt, 
+    label=summed.filt$celltype.mapped,
+    design=~factor(pool) + tomato,
+    coef="tomatoTRUE",
+    condition=summed.filt$tomato 
+)
+```
+
+```{r}
+cur.results <- de.results[["Allantois"]]
+cur.results[order(cur.results$PValue),]
+```
+
+```{r}
+y.allantois <- metadata(cur.results)$y
+plotBCV(y.allantois)
+```
+
+```{r}
+metadata(de.results)$failed
+```
+
+
+
+```{r}
+cur.results.Mesenchyme <- de.results[["Mesenchyme"]]
+y.Mesenchyme <- metadata(cur.results.Mesenchyme)$y
+plotBCV(y.Mesenchyme)
+```
+
+
+## Análisis de abundancia diferencial
+
+```{r}
+table(merged$sample)
+
+abundances <- table(merged$celltype.mapped, merged$sample) 
+abundances <- unclass(abundances) 
+head(abundances)
+```
+
+```{r}
+# Attaching some column metadata.
+extra.info <- colData(merged)[match(colnames(abundances), merged$sample),]
+y.ab <- DGEList(abundances, samples=extra.info)
+y.ab
+```
+
+```{r}
+keep <- filterByExpr(y.ab, group=y.ab$samples$tomato)
+y.ab <- y.ab[keep,]
+summary(keep)
+```
+
+```{r}
+design <- model.matrix(~factor(pool) + factor(tomato), y.ab$samples)
+
+y.ab <- estimateDisp(y.ab, design, trend="none")
+summary(y.ab$common.dispersion)
+
+plotBCV(y.ab, cex=1)
+```
+
+```{r}
+fit.ab <- glmQLFit(y.ab, design, robust=TRUE, abundance.trend=FALSE)
+summary(fit.ab$var.prior)
+
+plotQLDisp(fit.ab, cex=1)
+```
+
+```{r}
+res <- glmQLFTest(fit.ab, coef=ncol(design))
+summary(decideTests(res))
+
+topTags(res)
+```
+
+## Comentarios sobre la interpretación
+
+
 
 
 ## Detalles de la sesión de R
