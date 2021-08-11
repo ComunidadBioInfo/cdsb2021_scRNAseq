@@ -1,4 +1,4 @@
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 # Usemos datos de pbmc4k
 library(BiocFileCache)
 bfc <- BiocFileCache()
@@ -14,7 +14,7 @@ fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
 sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 # Anotación de los genes
 library(scater)
 rownames(sce.pbmc) <- uniquifyFeatureNames(
@@ -32,7 +32,7 @@ e.out <- emptyDrops(counts(sce.pbmc))
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 # Control de calidad
 stats <- perCellQCMetrics(sce.pbmc,
     subsets = list(Mito = which(location == "MT"))
@@ -50,14 +50,14 @@ sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 ## Identificación de genes altamente variables
 set.seed(1001)
 dec.pbmc <- modelGeneVarByPoisson(sce.pbmc)
 top.pbmc <- getTopHVGs(dec.pbmc, prop = 0.1)
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 ## Reducción de dimensiones
 set.seed(10000)
 sce.pbmc <- denoisePCA(sce.pbmc,
@@ -70,14 +70,14 @@ set.seed(1000000)
 sce.pbmc <- runUMAP(sce.pbmc, dimred = "PCA")
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 # clustering
 g <- buildSNNGraph(sce.pbmc, k = 10, use.dimred = "PCA")
 clust <- igraph::cluster_walktrap(g)$membership
 sce.pbmc$cluster <- factor(clust)
 
 
-## ---- warning=FALSE, message=FALSE, eval = FALSE-----------------------------------------------------
+## ---- warning=FALSE, message=FALSE, eval = FALSE------------------------------------------
 ## # Human
 ## SingleR::BlueprintEncodeData()
 ## SingleR::DatabaseImmuneCellExpressionData()
@@ -90,14 +90,14 @@ sce.pbmc$cluster <- factor(clust)
 ## SingleR::MouseRNASeqData()
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 # if needed install celldex
 # create directory? y
 library(celldex)
 ref <- celldex::BlueprintEncodeData()
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 library(SingleR)
 pred <- SingleR(
     test = sce.pbmc, ref = ref,
@@ -105,20 +105,20 @@ pred <- SingleR(
 )
 
 
-## ---- warning=FALSE, message=FALSE, echo=FALSE-------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 plotScoreHeatmap(pred)
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 total_pruned <- sum(is.na(pred$pruned.labels))
 plotScoreHeatmap(pred, show.pruned = TRUE)
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 plotScoreDistribution(pred)
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 # install gmp, ClusterR, mbkmeans dependencies if needed
 sce.pbmc$labels <- pred$labels
 all.markers <- metadata(pred)$de.genes
@@ -133,7 +133,7 @@ plotHeatmap(sce.pbmc,
 )
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 tab <- table(Assigned = pred$pruned.labels, Cluster = sce.pbmc$cluster)
 
 library(pheatmap)
@@ -149,11 +149,13 @@ pheatmap(log2(tab + 10),
 )
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------
 plotTSNE(sce.pbmc, colour_by = "labels", text_by = "labels")
 
+plotTSNE(sce.pbmc, colour_by = "cluster", text_by = "labels")
 
-## ----------------------------------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------------------
 ## Información de la sesión de R
 Sys.time()
 proc.time()
