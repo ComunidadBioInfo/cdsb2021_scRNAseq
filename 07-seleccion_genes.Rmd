@@ -319,11 +319,9 @@ Al calcular tendencias específicas por batch se tomarán en cuenta las diferenc
 Se deben obtener estimados de los componentes biológico y técnico para cada gene específicos de cada batch, los cuales se promedian entre los batches para crear una única lista de HVGs
 
 
-<div>
-<p style = 'text-align:center;'>
-<img src="img/experimental.factor.pdf" width="800px">
-</p>
-</div>
+```{r echo=FALSE, fig.cap="Factor experimental.", out.width = "100%"}
+knitr::include_graphics("img/experimental-factor.png")
+```
 
 
 
