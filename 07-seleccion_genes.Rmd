@@ -419,8 +419,8 @@ hvg.pbmc.var <- getTopHVGs(dec.pbmc, n = 1000)
 str(hvg.pbmc.var)
 
 # Works with modelGeneVarWithSpikes() output
-# hvg.416b.var <- getTopHVGs(dec.spike.416b, n=1000)
-# str(hvg.416b.var)
+hvg.416b.var <- getTopHVGs(dec.spike.416b, n=1000)
+str(hvg.416b.var)
 
 # Also works with modelGeneCV2() but note `var.field`
 hvg.pbmc.cv2 <- getTopHVGs(dec.cv2.pbmc,
@@ -460,9 +460,9 @@ Establece un límite fijo en alguna métrica de significancia estadística. Por 
 hvg.pbmc.var.2 <- getTopHVGs(dec.pbmc, fdr.threshold = 0.05)
 str(hvg.pbmc.var.2)
 # Works with modelGeneVarWithSpikes() output
-# hvg.416b.var.2 <- getTopHVGs(dec.spike.416b,
-#  fdr.threshold=0.05)
-# str(hvg.416b.var.2)
+hvg.416b.var.2 <- getTopHVGs(dec.spike.416b,
+ fdr.threshold=0.05)
+str(hvg.416b.var.2)
 
 # Also works with modelGeneCV2() but note `var.field`
 hvg.pbmc.cv2.2 <- getTopHVGs(dec.cv2.pbmc,
@@ -492,9 +492,9 @@ hvg.pbmc.var.3 <- getTopHVGs(dec.pbmc, var.threshold = 0)
 str(hvg.pbmc.var.3)
 
 # Works with modelGeneVarWithSpikes() output
-# hvg.416b.var.3 <- getTopHVGs(dec.spike.416b,
-#  var.threshold=0)
-# str(hvg.416b.var.3)
+hvg.416b.var.3 <- getTopHVGs(dec.spike.416b,
+ var.threshold=0)
+str(hvg.416b.var.3)
 
 # Also works with modelGeneCV2() but note `var.field` and
 # value of `var.threshold`
