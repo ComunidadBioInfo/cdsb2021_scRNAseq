@@ -83,8 +83,8 @@ Se puede obtener un vector de nombres de objetos `Assay`, `DimReduc` y `Graph` c
 La extracción de objetos específicos de Assay, DimReduc o Graph se puede realizar con el operador doble `[[ ]]` extract. La adición de nuevos objetos a un objeto de Seurat también se hace con el operador doble `[[ ]]` extract; Seurat averiguará a qué parte del objeto Seurat pertenece un nuevo objeto asociado. 
 
 ```{r, warning=FALSE, message=FALSE}
-names(x = pbmc)
-pbmc[['RNA']]
+#names(x = pbmc)
+#pbmc[['RNA']]
 #pbmc[['tsne']]
 ```
 El acceso a los datos de un objeto Seurat se realiza con la función `GetAssayData`. La adición de datos de expresión a `counts`, `data`, o `scale.data` se puede hacer con `SetAssayData`. Los datos nuevos deben tener las mismas celdas en el mismo orden que los datos de la expresión actual. Los datos agregados a los recuentos o datos deben tener las mismas características que los datos de la expresión actual. 
