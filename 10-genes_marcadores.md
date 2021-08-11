@@ -122,12 +122,48 @@ sce.pbmc$cluster <- factor(clust)
 
 ¿Algunos de estos genes están asociados con los resultados de _clustering_?
 
+
+```r
+# Is gene 1 associated with the clustering?
+plotExpression(sce.pbmc,
+    features = rownames(sce.pbmc)[1],
+    x = "cluster", colour_by = "cluster"
+)
+```
+
 <img src="10-genes_marcadores_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+
+
+```r
+# Is gene 2 associated with the clustering?
+plotExpression(sce.pbmc,
+    features = rownames(sce.pbmc)[2],
+    x = "cluster", colour_by = "cluster"
+)
+```
 
 <img src="10-genes_marcadores_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
+
+```r
+# Is gene 2512 associated with the clustering?
+plotExpression(sce.pbmc,
+    features = rownames(sce.pbmc)[2512],
+    x = "cluster", colour_by = "cluster"
+)
+```
+
 <img src="10-genes_marcadores_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
+
+
+```r
+# Is gene CD3E associated with the clustering?
+plotExpression(sce.pbmc,
+    features = "CD3E",
+    x = "cluster", colour_by = "cluster"
+)
+```
 
 <img src="10-genes_marcadores_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
@@ -153,6 +189,14 @@ sce.pbmc$cluster <- factor(clust)
 ## Ejemplo ilustrativo: CD3E como gen marcador en el dataset PBMC4k 10X
 
 ### Pruebas pareadas
+
+
+```r
+plotExpression(sce.pbmc,
+    features = "CD3E",
+    x = "cluster", colour_by = "cluster"
+)
+```
 
 <img src="10-genes_marcadores_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
@@ -248,6 +292,13 @@ markers.pbmc <- findMarkers(sce.pbmc,
 ```r
 chosen <- "9"
 interesting <- markers.pbmc[[chosen]]
+```
+
+
+```r
+plotExpression(sce.pbmc, rownames(interesting)[1:4],
+    x = "cluster", colour_by = "cluster"
+)
 ```
 
 <img src="10-genes_marcadores_files/figure-html/unnamed-chunk-16-1.png" width="672" />
@@ -482,6 +533,12 @@ interesting.binom <- markers.pbmc.binom[[chosen]]
 
 ### Visualizando genes marcadores de la prueba bionomial
 
+
+```r
+top.genes <- head(rownames(interesting.binom))
+plotExpression(sce.pbmc, x = "cluster", features = top.genes)
+```
+
 <img src="10-genes_marcadores_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
 
@@ -554,7 +611,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-11 03:45:50 UTC"
+## [1] "2021-08-11 04:33:20 UTC"
 ```
 
 ```r
@@ -563,7 +620,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 364.021   4.183 365.361
+## 327.816   4.661 329.139
 ```
 
 ```r

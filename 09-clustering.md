@@ -275,13 +275,15 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
 * Pesos basados en Randos
 * Clustering Walktrap
 
-Para detalles sobre la seleccion de parámetros y comparaciones: [visitar esta página](https://osca.bioconductor.org/clustering.html#clustering-graph)
+Para detalles sobre la seleccion de parámetros y comparaciones: [visitar esta página](https://bioconductor.org/books/release/OSCA/clustering.html#clustering-graph).
 
 <div>
 <p style = 'text-align:center;'>
 <img src="img/seurat-scran.png" width="800px">
 </p>
 </div>
+
+_Imagen comparando resultados con Bioconductor 3.11 vs Seurat._
 
 ### Evaluando la separación de los clusters
 
@@ -458,7 +460,7 @@ El proceso de **subclustering** podría mejorar la resolución dentro de cluster
 
 <div>
 <p style = 'text-align:center;'>
-<img src="img/resumen-clustering.png" width="500px" heigth="400px">
+<img src="img/resumen-clustering.png" width="500px" height="400px">
 </p>
 </div>
 
@@ -471,7 +473,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-11 03:39:44 UTC"
+## [1] "2021-08-11 04:27:51 UTC"
 ```
 
 ```r
@@ -480,7 +482,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 223.643   4.561 224.993
+## 194.290   5.198 195.939
 ```
 
 ```r

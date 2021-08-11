@@ -146,9 +146,9 @@ La **información resumida sobre los objetos de `Seurat`** se puede obtener de f
 
 
 ```r
-#dim(x = pbmc)
-#head(x = rownames(x = pbmc))
-#head(x = colnames(x = pbmc))
+# dim(x = pbmc)
+# head(x = rownames(x = pbmc))
+# head(x = colnames(x = pbmc))
 ```
 
 Se puede obtener un vector de nombres de objetos `Assay`, `DimReduc` y `Graph` contenidos en un objeto Seurat mediante el uso de nombres. 
@@ -156,27 +156,27 @@ La extracción de objetos específicos de Assay, DimReduc o Graph se puede reali
 
 
 ```r
-#names(x = pbmc)
-#pbmc[['RNA']]
-#pbmc[['tsne']]
+# names(x = pbmc)
+# pbmc[['RNA']]
+# pbmc[['tsne']]
 ```
 El acceso a los datos de un objeto Seurat se realiza con la función `GetAssayData`. La adición de datos de expresión a `counts`, `data`, o `scale.data` se puede hacer con `SetAssayData`. Los datos nuevos deben tener las mismas celdas en el mismo orden que los datos de la expresión actual. Los datos agregados a los recuentos o datos deben tener las mismas características que los datos de la expresión actual. 
 
 
 ```r
-#GetAssayData(object = pbmc, slot = 'scale.data')[1:3, 1:3]
+# GetAssayData(object = pbmc, slot = 'scale.data')[1:3, 1:3]
 ```
 Metadata de las Células.  
 Se puede acceder a los metadatos a nivel de celda con el operador de extracción `[[ ]]` extract o usando `$sigil`. Extraer con `$sigil` significa que solo se puede extraer un bit de metadatos a la vez, aunque se ha habilitado el autocompletado de pestañas, lo que lo hace ideal para uso interactivo. La adición de metadatos a nivel de celda se puede configurar usando el operador de extracción único `[[ ]]` también, o usando `AddMetaData`. 
 
 
 ```r
-#colnames(x = pbmc[[]])
-#head(x = pbmc[[c('nUMI', 'percent.mito')]])
-#head(x = pbmc[[c('nUMI', 'percent.mito')]])
+# colnames(x = pbmc[[]])
+# head(x = pbmc[[c('nUMI', 'percent.mito')]])
+# head(x = pbmc[[c('nUMI', 'percent.mito')]])
 # Passing `drop = TRUE` will turn the meta data into a names vector
 # with each entry being named for the cell it corresponds to
-#head(x = pbmc[['res.0.6', drop = TRUE]])
+# head(x = pbmc[['res.0.6', drop = TRUE]])
 ```
 La **clase Assay** almacena datos de una sola celda.
 
@@ -188,15 +188,15 @@ Se puede obtener información resumida sobre los objetos de ensayo de forma ráp
 
 
 ```r
-#dim(x = rna)
-#head(x = rownames(x = rna))
-#head(x = colnames(x = rna))
+# dim(x = rna)
+# head(x = rownames(x = rna))
+# head(x = colnames(x = rna))
 ```
 El acceso a los datos de un objeto Seurat se realiza con la función `GetAssayData`. La adición de datos de expresión a `counts`, `data`, o `scale.data` se puede hacer con `SetAssayData`. Los datos nuevos deben tener las mismas celdas en el mismo orden que los datos de la expresión actual. Los datos agregados a los recuentos o datos deben tener las mismas características que los datos de la expresión actual. 
 
 
 ```r
-#GetAssayData(object = pbmc, slot = 'scale.data')[1:3, 1:3]
+# GetAssayData(object = pbmc, slot = 'scale.data')[1:3, 1:3]
 ```
 
 
@@ -414,23 +414,23 @@ pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
 ## PC_ 3 
 ## Positive:  HLA-DQA1, CD79A, CD79B, HLA-DQB1, HLA-DPB1, HLA-DPA1, CD74, MS4A1, HLA-DRB1, HLA-DRA 
 ## 	   HLA-DRB5, HLA-DQA2, TCL1A, LINC00926, HLA-DMB, HLA-DMA, CD37, HVCN1, FCRLA, IRF8 
-## 	   PLAC8, BLNK, MALAT1, SMIM14, PLD4, LAT2, IGLL5, P2RX5, SWAP70, FCGR2B 
+## 	   PLAC8, BLNK, MALAT1, SMIM14, PLD4, P2RX5, IGLL5, LAT2, SWAP70, FCGR2B 
 ## Negative:  PPBP, PF4, SDPR, SPARC, GNG11, NRGN, GP9, RGS18, TUBB1, CLU 
 ## 	   HIST1H2AC, AP001189.4, ITGA2B, CD9, TMEM40, PTCRA, CA2, ACRBP, MMD, TREML1 
 ## 	   NGFRAP1, F13A1, SEPT5, RUFY1, TSC22D1, MPP1, CMTM5, RP11-367G6.3, MYL9, GP1BA 
 ## PC_ 4 
-## Positive:  HLA-DQA1, CD79B, CD79A, MS4A1, HLA-DQB1, CD74, HLA-DPB1, HIST1H2AC, PF4, TCL1A 
-## 	   SDPR, HLA-DPA1, HLA-DRB1, HLA-DQA2, HLA-DRA, PPBP, LINC00926, GNG11, HLA-DRB5, SPARC 
-## 	   GP9, AP001189.4, CA2, PTCRA, CD9, NRGN, RGS18, GZMB, CLU, TUBB1 
+## Positive:  HLA-DQA1, CD79B, CD79A, MS4A1, HLA-DQB1, CD74, HIST1H2AC, HLA-DPB1, PF4, SDPR 
+## 	   TCL1A, HLA-DRB1, HLA-DPA1, HLA-DQA2, PPBP, HLA-DRA, LINC00926, GNG11, SPARC, HLA-DRB5 
+## 	   GP9, AP001189.4, CA2, PTCRA, CD9, NRGN, RGS18, CLU, TUBB1, GZMB 
 ## Negative:  VIM, IL7R, S100A6, IL32, S100A8, S100A4, GIMAP7, S100A10, S100A9, MAL 
 ## 	   AQP3, CD2, CD14, FYB, LGALS2, GIMAP4, ANXA1, CD27, FCN1, RBP7 
 ## 	   LYZ, S100A11, GIMAP5, MS4A6A, S100A12, FOLR3, TRABD2A, AIF1, IL8, IFI6 
 ## PC_ 5 
 ## Positive:  GZMB, NKG7, S100A8, FGFBP2, GNLY, CCL4, CST7, PRF1, GZMA, SPON2 
-## 	   GZMH, S100A9, LGALS2, CCL3, CTSW, XCL2, CD14, CLIC3, S100A12, CCL5 
-## 	   RBP7, MS4A6A, GSTP1, FOLR3, IGFBP7, TYROBP, TTC38, AKR1C3, XCL1, HOPX 
+## 	   GZMH, S100A9, LGALS2, CCL3, CTSW, XCL2, CD14, CLIC3, S100A12, RBP7 
+## 	   CCL5, MS4A6A, GSTP1, FOLR3, IGFBP7, TYROBP, TTC38, AKR1C3, XCL1, HOPX 
 ## Negative:  LTB, IL7R, CKB, VIM, MS4A7, AQP3, CYTIP, RP11-290F20.3, SIGLEC10, HMOX1 
-## 	   PTGES3, LILRB2, MAL, CD27, HN1, CD2, GDI2, ANXA5, CORO1B, TUBA1B 
+## 	   LILRB2, PTGES3, MAL, CD27, HN1, CD2, GDI2, CORO1B, ANXA5, TUBA1B 
 ## 	   FAM110A, ATP1A1, TRADD, PPA1, CCDC109B, ABRACL, CTD-2006K23.1, WARS, VMO1, FYB
 ```
 
@@ -511,7 +511,7 @@ JackStrawPlot(pbmc, dims = 1:15)
 ```
 
 ```
-## Warning: Removed 23504 rows containing missing values (geom_point).
+## Warning: Removed 23510 rows containing missing values (geom_point).
 ```
 
 <img src="13-intro_Seurat_files/figure-html/unnamed-chunk-22-1.png" width="672" />
@@ -548,10 +548,10 @@ pbmc <- FindClusters(pbmc, resolution = 0.5)
 ## Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
 ## 
 ## Number of nodes: 2638
-## Number of edges: 95965
+## Number of edges: 95927
 ## 
 ## Running Louvain algorithm...
-## Maximum modularity in 10 random starts: 0.8723
+## Maximum modularity in 10 random starts: 0.8728
 ## Number of communities: 9
 ## Elapsed time: 0 seconds
 ```
@@ -573,19 +573,19 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 ```
 
 ```
-## 03:51:10 UMAP embedding parameters a = 0.9922 b = 1.112
+## 04:38:42 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ```
-## 03:51:10 Read 2638 rows and found 10 numeric columns
+## 04:38:42 Read 2638 rows and found 10 numeric columns
 ```
 
 ```
-## 03:51:10 Using Annoy for neighbor search, n_neighbors = 30
+## 04:38:42 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ```
-## 03:51:10 Building Annoy index with metric = cosine, n_trees = 50
+## 04:38:42 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ```
@@ -598,13 +598,13 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 
 ```
 ## **************************************************|
-## 03:51:10 Writing NN index file to temp file /tmp/RtmpjIa0ce/file4996175798e
-## 03:51:10 Searching Annoy index using 1 thread, search_k = 3000
-## 03:51:11 Annoy recall = 100%
-## 03:51:11 Commencing smooth kNN distance calibration using 1 thread
-## 03:51:12 Initializing from normalized Laplacian + noise
-## 03:51:12 Commencing optimization for 500 epochs, with 105124 positive edges
-## 03:51:16 Optimization finished
+## 04:38:42 Writing NN index file to temp file /tmp/RtmpqTNGLc/file4993663d5c1
+## 04:38:42 Searching Annoy index using 1 thread, search_k = 3000
+## 04:38:43 Annoy recall = 100%
+## 04:38:43 Commencing smooth kNN distance calibration using 1 thread
+## 04:38:44 Initializing from normalized Laplacian + noise
+## 04:38:44 Commencing optimization for 500 epochs, with 105140 positive edges
+## 04:38:48 Optimization finished
 ```
 
 ```r
@@ -641,11 +641,11 @@ head(cluster2.markers, n = 5)
 
 ```
 ##             p_val avg_log2FC pct.1 pct.2    p_val_adj
-## IL32 2.593535e-91  1.2154360 0.949 0.466 3.556774e-87
-## LTB  7.994465e-87  1.2828597 0.981 0.644 1.096361e-82
-## CD3D 3.922451e-70  0.9359210 0.922 0.433 5.379250e-66
-## IL7R 1.130870e-66  1.1776027 0.748 0.327 1.550876e-62
-## LDHB 4.082189e-65  0.8837324 0.953 0.614 5.598314e-61
+## IL32 2.892340e-90  1.2013522 0.947 0.465 3.966555e-86
+## LTB  1.060121e-86  1.2695776 0.981 0.643 1.453850e-82
+## CD3D 8.794641e-71  0.9389621 0.922 0.432 1.206097e-66
+## IL7R 3.516098e-68  1.1873213 0.750 0.326 4.821977e-64
+## LDHB 1.642480e-67  0.8969774 0.954 0.614 2.252497e-63
 ```
 
 ```r
@@ -656,11 +656,11 @@ head(cluster5.markers, n = 5)
 
 ```
 ##                       p_val avg_log2FC pct.1 pct.2     p_val_adj
-## FCGR3A        2.150929e-209   4.267579 0.975 0.039 2.949784e-205
-## IFITM3        6.103366e-199   3.877105 0.975 0.048 8.370156e-195
-## CFD           8.891428e-198   3.411039 0.938 0.037 1.219370e-193
-## CD68          2.374425e-194   3.014535 0.926 0.035 3.256286e-190
-## RP11-290F20.3 9.308287e-191   2.722684 0.840 0.016 1.276538e-186
+## FCGR3A        8.246578e-205   4.261495 0.975 0.040 1.130936e-200
+## IFITM3        1.677613e-195   3.879339 0.975 0.049 2.300678e-191
+## CFD           2.401156e-193   3.405492 0.938 0.038 3.292945e-189
+## CD68          2.900384e-191   3.020484 0.926 0.035 3.977587e-187
+## RP11-290F20.3 2.513244e-186   2.720057 0.840 0.017 3.446663e-182
 ```
 
 ```r
@@ -722,24 +722,24 @@ pbmc.markers %>%
 ## # Groups:   cluster [9]
 ##        p_val avg_log2FC pct.1 pct.2 p_val_adj cluster gene    
 ##        <dbl>      <dbl> <dbl> <dbl>     <dbl> <fct>   <chr>   
-##  1 1.74e-109       1.07 0.897 0.593 2.39e-105 0       LDHB    
-##  2 1.17e- 83       1.33 0.435 0.108 1.60e- 79 0       CCR7    
+##  1 3.75e-112       1.09 0.912 0.592 5.14e-108 0       LDHB    
+##  2 9.57e- 88       1.36 0.447 0.108 1.31e- 83 0       CCR7    
 ##  3 0               5.57 0.996 0.215 0         1       S100A9  
 ##  4 0               5.48 0.975 0.121 0         1       S100A8  
-##  5 7.99e- 87       1.28 0.981 0.644 1.10e- 82 2       LTB     
-##  6 2.61e- 59       1.24 0.424 0.111 3.58e- 55 2       AQP3    
+##  5 1.06e- 86       1.27 0.981 0.643 1.45e- 82 2       LTB     
+##  6 2.97e- 58       1.23 0.42  0.111 4.07e- 54 2       AQP3    
 ##  7 0               4.31 0.936 0.041 0         3       CD79A   
 ##  8 9.48e-271       3.59 0.622 0.022 1.30e-266 3       TCL1A   
-##  9 1.17e-178       2.97 0.957 0.241 1.60e-174 4       CCL5    
-## 10 4.93e-169       3.01 0.595 0.056 6.76e-165 4       GZMK    
+##  9 5.61e-202       3.10 0.983 0.234 7.70e-198 4       CCL5    
+## 10 7.25e-165       3.00 0.577 0.055 9.95e-161 4       GZMK    
 ## 11 3.51e-184       3.31 0.975 0.134 4.82e-180 5       FCGR3A  
 ## 12 2.03e-125       3.09 1     0.315 2.78e-121 5       LST1    
-## 13 1.05e-265       4.89 0.986 0.071 1.44e-261 6       GZMB    
-## 14 6.82e-175       4.92 0.958 0.135 9.36e-171 6       GNLY    
+## 13 7.95e-269       4.83 0.961 0.068 1.09e-264 6       GZMB    
+## 14 3.13e-191       5.32 0.961 0.131 4.30e-187 6       GNLY    
 ## 15 1.48e-220       3.87 0.812 0.011 2.03e-216 7       FCER1A  
 ## 16 1.67e- 21       2.87 1     0.513 2.28e- 17 7       HLA-DPB1
-## 17 7.73e-200       7.24 1     0.01  1.06e-195 8       PF4     
-## 18 3.68e-110       8.58 1     0.024 5.05e-106 8       PPBP
+## 17 9.25e-186       7.29 1     0.011 1.27e-181 8       PF4     
+## 18 1.92e-102       8.59 1     0.024 2.63e- 98 8       PPBP
 ```
 
 Seurat tiene **varias pruebas de expresión diferencial** que se pueden configurar con el parámetro test.use (consulte nuestra viñeta DE para obtener más detalles). Por ejemplo, la **prueba ROC** devuelve el "poder de clasificación" para cualquier marcador individual (que varía de 0 - aleatorio a 1 - perfecto) .
@@ -821,7 +821,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-11 03:51:54 UTC"
+## [1] "2021-08-11 04:39:27 UTC"
 ```
 
 ```r
@@ -830,7 +830,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 230.775  13.774 158.279
+## 256.261  14.132 169.977
 ```
 
 ```r

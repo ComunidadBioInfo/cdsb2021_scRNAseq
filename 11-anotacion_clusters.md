@@ -206,6 +206,11 @@ pred <- SingleR(
 * ❓ ¿Cómo usaríamos las etiquetas "finas" con SingleR?
 
 
+
+```r
+plotScoreHeatmap(pred)
+```
+
 <img src="11-anotacion_clusters_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 * 👉 Inspeccionamos los resultados usando un heatmap de los scores por célula y por etiqueta
@@ -302,6 +307,19 @@ plotTSNE(sce.pbmc, colour_by = "labels", text_by = "labels")
 
 <img src="11-anotacion_clusters_files/figure-html/unnamed-chunk-15-1.png" width="672" />
 
+```r
+plotTSNE(sce.pbmc, colour_by = "cluster", text_by = "labels")
+```
+
+<img src="11-anotacion_clusters_files/figure-html/unnamed-chunk-15-2.png" width="672" />
+
+#### Aventura en el tiempo
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Hmm. We can&#39;t figure out why these two plots are different with the same code, though different R versions.<br><br>BioC 3.11? <a href="https://twitter.com/PeteHaitch?ref_src=twsrc%5Etfw">@PeteHaitch</a> <a href="https://t.co/8DJM6pagdj">https://t.co/8DJM6pagdj</a><br><br>BioC 3.13<a href="https://t.co/t8KiPTyU9D">https://t.co/t8KiPTyU9D</a><a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw">@Bioconductor</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/yalbi_ibm?ref_src=twsrc%5Etfw">@yalbi_ibm</a> <a href="https://twitter.com/AnaBetty2304?ref_src=twsrc%5Etfw">@AnaBetty2304</a> <a href="https://t.co/P65u7dnVCo">pic.twitter.com/P65u7dnVCo</a></p>&mdash; 🇲🇽 Leonardo Collado-Torres (@lcolladotor) <a href="https://twitter.com/lcolladotor/status/1425242252872409092?ref_src=twsrc%5Etfw">August 10, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+* https://github.com/MarioniLab/DropletUtils/issues/67
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Ok, not identical, but not bad with BioC 3.13 only<br><br>Left: BioC 3.13 with e.out from BioC 3.111<br>Middle: Pete&#39;s slides with BioC 3.11<br>Right: BioC 3.13 only<a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/OSCA?src=hash&amp;ref_src=twsrc%5Etfw">#OSCA</a> <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw">@Bioconductor</a> <a href="https://twitter.com/hashtag/DropletUtils?src=hash&amp;ref_src=twsrc%5Etfw">#DropletUtils</a> <a href="https://t.co/d41LiuXKWn">pic.twitter.com/d41LiuXKWn</a></p>&mdash; 🇲🇽 Leonardo Collado-Torres (@lcolladotor) <a href="https://twitter.com/lcolladotor/status/1425296392222822405?ref_src=twsrc%5Etfw">August 11, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Resumen de la anotación basada en una referencia (e.g., SingleR)
 
@@ -349,7 +367,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-11 03:49:15 UTC"
+## [1] "2021-08-11 04:36:36 UTC"
 ```
 
 ```r
@@ -358,7 +376,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 199.599   4.166 204.391
+## 193.572   4.407 195.041
 ```
 
 ```r

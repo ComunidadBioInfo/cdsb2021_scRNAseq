@@ -1,8 +1,8 @@
 
 # Selección de genes
 
-Instructora: [**Yalbi I. Balderas-Martínez**](http://Yalbibalderas.github.io/)
-Instructora: [**Laura Gómez-Romero**](https://comunidadbioinfo.github.io/es/authors/lgomez/)
+* Instructora: [**Yalbi I. Balderas-Martínez**](http://Yalbibalderas.github.io/)
+* Instructora: [**Laura Gómez-Romero**](https://comunidadbioinfo.github.io/es/authors/lgomez/)
 
 ## Diapositivas de Peter Hickey
 
@@ -196,11 +196,11 @@ dec.pbmc[order(dec.pbmc$bio, decreasing = TRUE), ]
 ## DataFrame with 33694 rows and 6 columns
 ##              mean     total      tech       bio      p.value          FDR
 ##         <numeric> <numeric> <numeric> <numeric>    <numeric>    <numeric>
-## LYZ       1.95605   5.05854  0.835343   4.22320 1.10538e-270 2.17417e-266
-## S100A9    1.93416   4.53551  0.835439   3.70007 2.71043e-208 7.61593e-205
-## S100A8    1.69961   4.41084  0.824342   3.58650 4.31581e-201 9.43197e-198
-## HLA-DRA   2.09785   3.75174  0.831239   2.92050 5.93950e-132 4.86767e-129
-## CD74      2.90176   3.36879  0.793188   2.57560 4.83937e-113 2.50488e-110
+## LYZ       1.95605   5.05854  0.835343   4.22320 1.10535e-270 2.17412e-266
+## S100A9    1.93416   4.53551  0.835439   3.70007 2.71038e-208 7.61579e-205
+## S100A8    1.69961   4.41084  0.824342   3.58650 4.31574e-201 9.43181e-198
+## HLA-DRA   2.09785   3.75174  0.831239   2.92050 5.93943e-132 4.86761e-129
+## CD74      2.90176   3.36879  0.793188   2.57560 4.83932e-113 2.50486e-110
 ## ...           ...       ...       ...       ...          ...          ...
 ## TMSB4X    6.08142  0.441718  0.679215 -0.237497     0.992447            1
 ## PTMA      3.82978  0.486454  0.731275 -0.244821     0.990002            1
@@ -237,6 +237,19 @@ dec.cv2.pbmc <- modelGeneCV2(sce.pbmc)
 
 
 ### Visualizando el coeficiente de variación
+
+
+```r
+# Visualicemos la relación con la media
+fit.cv2.pbmc <- metadata(dec.cv2.pbmc)
+plot(fit.cv2.pbmc$mean, fit.cv2.pbmc$cv2,
+    log = "xy"
+)
+curve(fit.cv2.pbmc$trend(x),
+    col = "dodgerblue",
+    add = TRUE, lwd = 2
+)
+```
 
 <img src="07-seleccion_genes_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
@@ -393,7 +406,7 @@ dec.block.416b[order(
 ## Lyz2       6.61235   13.8619   1.58416   12.2777  0.00000e+00  0.00000e+00
 ## Ccl9       6.67841   13.2599   1.44553   11.8143  0.00000e+00  0.00000e+00
 ## Top2a      5.81275   14.0192   2.74571   11.2734 3.89855e-137 8.43398e-135
-## Cd200r3    4.83305   15.5909   4.31892   11.2719  1.17783e-54  7.00721e-53
+## Cd200r3    4.83305   15.5909   4.31892   11.2719  1.17783e-54  7.00722e-53
 ## Ccnb2      5.97999   13.0256   2.46647   10.5591 1.20380e-151 2.98405e-149
 ## ...            ...       ...       ...       ...          ...          ...
 ## Gm12816    2.91299  0.842574   6.67730  -5.83472     0.999989     0.999999
@@ -421,10 +434,9 @@ Al calcular tendencias específicas por batch se tomarán en cuenta las diferenc
 Se deben obtener estimados de los componentes biológico y técnico para cada gene específicos de cada batch, los cuales se promedian entre los batches para crear una única lista de HVGs
 
 
-<div>
-<p style = 'text-align:center;'>
-<img src="img/experimental.factor.pdf" width="800px">
-</p>
+<div class="figure">
+<img src="img/experimental-factor.png" alt="Factor experimental." width="100%" />
+<p class="caption">Factor experimental.</p>
 </div>
 
 
@@ -673,6 +685,7 @@ sce.pbmc
 Mantiene el objeto *SingleCellExperiment* original y especifica los genes para usar en funciones posteriores mediante un argumento adicional como **subset_row**
 
 **PRO:** Es útil si el análisis usa varios conjuntos de HGVs en diferentes pasos
+
 **CONTRA:** Podría ser inconveniente especificar repetidamente el mismo conjunto de HGVs en diferentes pasos
 
 
@@ -763,7 +776,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-11 03:31:04 UTC"
+## [1] "2021-08-11 04:20:10 UTC"
 ```
 
 ```r
@@ -772,7 +785,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 148.972   3.789 156.295
+## 135.009   4.017 137.922
 ```
 
 ```r
