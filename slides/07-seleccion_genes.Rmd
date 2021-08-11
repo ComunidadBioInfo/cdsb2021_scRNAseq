@@ -181,6 +181,90 @@ sce.pbmc <- logNormCounts(sce.pbmc)
 
 class: inverse center middle
 
+# Preguntas de repaso
+
+* ¿Cómo determinamos cuáles eran los genes mitocondriales?
+* ¿Cómo decidimos filtrar las células
+* ¿Puedes explicar cómo normalizamos los datos?
+
+---
+
+class: inverse center middle
+
+# Dataset ilustrativo: 416B
+
+---
+
+# Dataset ilustrativo: 416B
+
+```{r, warning=FALSE, message=FALSE}
+library(scRNAseq)
+sce.416b <- LunSpikeInData(which="416b") 
+sce.416b$block <- factor(sce.416b$block)
+```
+
+Línea celular de células mieloides progenitoras inmortalizadas de ratón usando SmartSeq2
+[https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2.html](https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2.html)
+
+.footnote[Lun, A. T. L., Calero-Nieto, F. J., Haim-Vilmovsky, L., Göttgens, B. & Marioni, J. C. Assessing the reliability of spike-in normalization for analyses of single-cell RNA sequencing data. Genome Res. 27, 1795–1806 (2017))]
+
+---
+
+# Dataset ilustrativo: 416B
+
+```{r, warning=FALSE, message=FALSE}
+# gene-annotation
+library(AnnotationHub)
+ens.mm.v97 <- AnnotationHub()[["AH73905"]]
+rowData(sce.416b)$ENSEMBL <- rownames(sce.416b)
+rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97, 
+  keys=rownames(sce.416b),
+  keytype="GENEID", column="SYMBOL")
+rowData(sce.416b)$SEQNAME <- mapIds(ens.mm.v97,
+  keys=rownames(sce.416b),
+  keytype="GENEID", column="SEQNAME")
+library(scater)
+rownames(sce.416b) <- uniquifyFeatureNames(rowData(sce.416b)$ENSEMBL, 
+  rowData(sce.416b)$SYMBOL)
+```
+
+.footnote[Lun, A. T. L., Calero-Nieto, F. J., Haim-Vilmovsky, L., Göttgens, B. & Marioni, J. C. Assessing the reliability of spike-in normalization for analyses of single-cell RNA sequencing data. Genome Res. 27, 1795–1806 (2017))]
+
+---
+
+# Dataset ilustrativo: 416B
+
+```{r, warning=FALSE, message=FALSE}
+# quality-control
+mito <- which(rowData(sce.416b)$SEQNAME=="MT")
+stats <- perCellQCMetrics(sce.416b, subsets=list(Mt=mito))
+qc <- quickPerCellQC(stats,
+  percent_subsets=c("subsets_Mt_percent", "altexps_ERCC_percent"),
+  batch=sce.416b$block)
+sce.416b <- sce.416b[,!qc$discard]
+
+# normalization
+library(scran)
+sce.416b <- computeSumFactors(sce.416b)
+sce.416b <- logNormCounts(sce.416b)
+```
+
+.footnote[Lun, A. T. L., Calero-Nieto, F. J., Haim-Vilmovsky, L., Göttgens, B. & Marioni, J. C. Assessing the reliability of spike-in normalization for analyses of single-cell RNA sequencing data. Genome Res. 27, 1795–1806 (2017))]
+
+---
+
+class: inverse center middle
+
+# Preguntas de repaso
+
+* ¿Cómo determinamos cuáles eran los genes mitocondriales?
+* ¿Cómo decidimos filtrar las células
+* ¿Puedes explicar cómo normalizamos los datos?
+
+---
+
+class: inverse center middle
+
 # Cuantificando la varianza por gen
 
 ---
@@ -202,7 +286,7 @@ El enfoque más simple para cuantificar la variación _per-feature_ es simplemen
 
 ### Un enfoque más sofisticado:
 1. Calcular la varianza de los _log-counts_ para cada gen (ignorando grupos experimentales)
-2. Modelar la relación de la media de la varianza de los _log-counts_ para estimar la variación _técnica_
+2. Modelar la relación entre la media y la varianza de los _log-counts_ para estimar la variación _técnica_
 3. Estimar la varianza _biológica_ sustrayendo la varianza _técnica_ de la varianza total
 4. Ordenar los genes de la variable de mayor-a-menor biológicamente
 
@@ -225,7 +309,7 @@ dec.pbmc <- modelGeneVar(sce.pbmc)
 # Varianza de los _log-counts_
 
 ```{r, warning=FALSE, message=FALSE, fig.show="hide"}
-# Visualizing the fit
+# Visualizing the fit - relación entre la media y la varianza
 fit.pbmc <- metadata(dec.pbmc)
 plot(fit.pbmc$mean, fit.pbmc$var,
     xlab = "Mean of log-expression",
@@ -266,7 +350,7 @@ El coeficiente de variación de las cuentas al cuadrado (CV<sup>2</sup>) es una 
 
 * 👉 Se calcula usando las cuentas en lugar de los _log-counts_
 
-* 🤓 CV es la tasa de la desviación estándar a la media y está muy relacionada con el parámetro de _dispersión_ de la distribución binomial negativa usada en edgeR y DESeq2
+* 🤓 CV es el _ratio_ de la desviación estándar a la media y está muy relacionada con el parámetro de _dispersión_ de la distribución binomial negativa usada en edgeR y DESeq2
 
 ---
 
@@ -331,10 +415,106 @@ dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
 **Generalmente se usa la varianza de los _log-counts_** 
 
 * Ambas son medidas efectivas para cuantificar la variación en la expresión génica 
-* CV<sup>2</sup> tiende a tener otorgar rangos altos en abundancias bajas de genes altamente variables 
+* CV<sup>2</sup> tiende a tener otorgar rangos altos a genes bajos niveles de expresión (HGVs) 
 	- Éstos son dirigidos por una sobreregulación en subpoblaciones raras 
   - Puede asignar un alto rango a genes que no son de nuestro interés con varianza baja absoluta	
 * La variación descrita por el CV<sup>2</sup> de las cuentas es menos relevante para los procedimientos que operan en los _log-counts_
+
+---
+
+class: inverse center middle
+
+# Cuantificando el ruido técnico
+
+---
+
+# Cuantificando el ruido técnico
+
+* Previamente, ajustamos una línea de tendencia a todos los genes endógenos y asumimos que la mayoría de los genes no están dominados por ruido técnico
+
+* En la práctica, todos los genes expresados tienen algún nivel de variabilidad biológica diferente de cero (e.g., transcriptional bursting)
+
+* Esto sugiere que nuestros estimados de los componentes técnicos estarán inflados probablemente
+
+---
+
+# Cuantificando el ruido técnico
+
+* 👉 Es mejor que pensemos estos estimados como una variación _técnica_ más la variación biológica que no es interesante
+
+* 🤔 Pero que tal si un grupo de genes a una abundancia particular es afectado por un proceso biológico?
+E.g., fuerte sobre regulación de genes específicos de un tipo celular podrían conllevar a un enriquecimiento de HVGs en abundancias altas. Esto inflaría la tendencia y compromete la detección de los genes relevantes
+
+**¿Cómo podemos evitar este problema?**
+
+---
+
+# ¿Cómo podemos evitar este problema y mejor estimar la variación técnica?
+
+Podemos revisar dos enfoques:
+1. Cuando tenemos spike-ins
+2. Cuando no tenemos spike-ins 
+
+---
+
+# En la presencia de spike-ins
+
+```{r, warning=FALSE, message=FALSE}
+dec.spike.416b <- modelGeneVarWithSpikes(sce.416b, 
+  "ERCC")
+# Ordering by most interesting genes for 
+# inspection.
+dec.spike.416b[order(dec.spike.416b$bio, 
+  decreasing=TRUE),]
+```
+
+👉 Ajusta la tendencia solo con los spike-ins (que deberían estar afectados solamente por variación técnica)
+
+---
+
+# En la presencia de spike-ins
+
+```{r, warning=FALSE, message=FALSE}
+plot(dec.spike.416b$mean, dec.spike.416b$total,
+  xlab="Mean of log-expression",
+  ylab="Variance of log-expression")
+fit.spike.416b <- metadata(dec.spike.416b)
+points(fit.spike.416b$mean, fit.spike.416b$var, 
+  col="red", pch=16)
+curve(fit.spike.416b$trend(x), col="dodgerblue", 
+  add=TRUE, lwd=2)
+```
+
+---
+
+# En la ausencia de spike-ins
+
+```{r, warning=FALSE, message=FALSE}
+set.seed(0010101)
+dec.pois.pbmc <- modelGeneVarByPoisson(sce.pbmc)
+# Ordering by most interesting genes for inspection.
+dec.pois.pbmc[order(dec.pois.pbmc$bio,decreasing=TRUE),]
+```
+
+* 👉 Realiza algunas asunciones estadísticas acerca del ruido
+* 🤓 Las cuentas UMI típicamente muestran una variación cercana a Poisson si solo consideramos ruido técnico de la preparación de las librerías y la secuenciación 
+* ⚠️ modelGeneVarByPoisson() realiza simulaciones, por lo que necesitamos “ajustar la “semilla” para obtener resultados reproducibles
+* 🤓 modelGeneVarByPoisson() pueden también simular una variación binomial negativa (variación de Poisson sobredispersada)
+
+---
+
+# En la ausencia de spike-ins
+
+```{r, warning=FALSE, message=FALSE}
+plot(dec.pois.pbmc$mean, dec.pois.pbmc$total, 
+  pch=16, xlab="Mean of log-expression",
+  ylab="Variance of log-expression")
+curve(metadata(dec.pois.pbmc)$trend(x),
+  col="dodgerblue", add=TRUE)
+```
+
+🤓 La línea de tendencia basada puramente en ruido técnico tiende a producir componentes “biológicos” más grandes por los genes altamente expresados, que frecuentemente incluyen los genes “house-keeping”
+🤔 Necesitas considerar si tales genes son “interesantes” o no en tu dataset de interés
 
 ---
 
