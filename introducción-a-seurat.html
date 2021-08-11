@@ -650,54 +650,81 @@ La función Read10X() lee en la salida de cellranger de 10X (de donde se obtuvie
 ##   ..@ commands    : list()
 ##   ..@ tools       : list()</code></pre>
 <ul>
-<li>¿Cómo accedemos a cada slot?
-Clase <strong>Seurat</strong>.<br />
-La <strong>información resumida sobre los objetos de <code>Seurat</code></strong> se puede obtener de forma rápida y sencilla mediante las funciones estándar de R. La forma / dimensiones del objeto se pueden encontrar usando las funciones <code>dim</code>, <code>ncol</code> y <code>nrow</code>; Los nombres de celda y característica se pueden encontrar usando las funciones <code>colnames</code> y <code>rownames</code>, respectivamente, o la función <code>dimnames</code>. Se puede obtener un vector de nombres de objetos Assay, DimReduc y Graph contenidos en un objeto Seurat mediante el uso de nombres.</li>
+<li>¿Cómo accedemos a cada slot?</li>
 </ul>
-<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="introducción-a-seurat.html#cb552-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dim(x = pbmc)</span></span>
-<span id="cb552-2"><a href="introducción-a-seurat.html#cb552-2" aria-hidden="true" tabindex="-1"></a><span class="co"># head(x = rownames(x = pbmc))</span></span>
-<span id="cb552-3"><a href="introducción-a-seurat.html#cb552-3" aria-hidden="true" tabindex="-1"></a><span class="co"># head(x = colnames(x = pbmc))</span></span></code></pre></div>
-<p>Se puede obtener un vector de nombres de objetos <code>Assay</code>, <code>DimReduc</code> y <code>Graph</code> contenidos en un objeto Seurat mediante el uso de nombres.
-La extracción de objetos específicos de Assay, DimReduc o Graph se puede realizar con el operador doble <code>[[ ]]</code> extract. La adición de nuevos objetos a un objeto de Seurat también se hace con el operador doble <code>[[ ]]</code> extract; Seurat averiguará a qué parte del objeto Seurat pertenece un nuevo objeto asociado.</p>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="introducción-a-seurat.html#cb553-1" aria-hidden="true" tabindex="-1"></a><span class="co"># names(x = pbmc)</span></span>
-<span id="cb553-2"><a href="introducción-a-seurat.html#cb553-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pbmc[[&#39;RNA&#39;]]</span></span>
-<span id="cb553-3"><a href="introducción-a-seurat.html#cb553-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pbmc[[&#39;tsne&#39;]]</span></span></code></pre></div>
-<p>El acceso a los datos de un objeto Seurat se realiza con la función <code>GetAssayData</code>. La adición de datos de expresión a <code>counts</code>, <code>data</code>, o <code>scale.data</code> se puede hacer con <code>SetAssayData</code>. Los datos nuevos deben tener las mismas celdas en el mismo orden que los datos de la expresión actual. Los datos agregados a los recuentos o datos deben tener las mismas características que los datos de la expresión actual.</p>
-<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="introducción-a-seurat.html#cb554-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GetAssayData(object = pbmc, slot = &#39;scale.data&#39;)[1:3, 1:3]</span></span></code></pre></div>
-<p>Metadata de las Células.<br />
-Se puede acceder a los metadatos a nivel de celda con el operador de extracción <code>[[ ]]</code> extract o usando <code>$sigil</code>. Extraer con <code>$sigil</code> significa que solo se puede extraer un bit de metadatos a la vez, aunque se ha habilitado el autocompletado de pestañas, lo que lo hace ideal para uso interactivo. La adición de metadatos a nivel de celda se puede configurar usando el operador de extracción único <code>[[ ]]</code> también, o usando <code>AddMetaData</code>.</p>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="introducción-a-seurat.html#cb555-1" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames(x = pbmc[[]])</span></span>
-<span id="cb555-2"><a href="introducción-a-seurat.html#cb555-2" aria-hidden="true" tabindex="-1"></a><span class="co"># head(x = pbmc[[c(&#39;nUMI&#39;, &#39;percent.mito&#39;)]])</span></span>
-<span id="cb555-3"><a href="introducción-a-seurat.html#cb555-3" aria-hidden="true" tabindex="-1"></a><span class="co"># head(x = pbmc[[c(&#39;nUMI&#39;, &#39;percent.mito&#39;)]])</span></span>
-<span id="cb555-4"><a href="introducción-a-seurat.html#cb555-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Passing `drop = TRUE` will turn the meta data into a names vector</span></span>
-<span id="cb555-5"><a href="introducción-a-seurat.html#cb555-5" aria-hidden="true" tabindex="-1"></a><span class="co"># with each entry being named for the cell it corresponds to</span></span>
-<span id="cb555-6"><a href="introducción-a-seurat.html#cb555-6" aria-hidden="true" tabindex="-1"></a><span class="co"># head(x = pbmc[[&#39;res.0.6&#39;, drop = TRUE]])</span></span></code></pre></div>
+<p>Clase <strong>Seurat</strong>.</p>
+<p>La <strong>información resumida sobre los objetos de <code>Seurat</code></strong> se puede obtener de forma rápida y sencilla mediante las funciones estándar de R. La forma / dimensiones del objeto se pueden encontrar usando las funciones <code>dim()</code>, <code>ncol()</code> y <code>nrow()</code>; Los nombres de celda y característica se pueden encontrar usando las funciones <code>colnames()</code> y <code>rownames()</code>, respectivamente, o la función <code>dimnames()</code>. Se puede obtener un vector de nombres de objetos <code>Assay</code>, <code>DimReduc</code> y <code>Graph</code> contenidos en un objeto Seurat mediante el uso de nombres.</p>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="introducción-a-seurat.html#cb552-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(pbmc)</span></code></pre></div>
+<pre><code>## [1] 13714  2700</code></pre>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="introducción-a-seurat.html#cb554-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rownames</span>(pbmc))</span></code></pre></div>
+<pre><code>## [1] &quot;AL627309.1&quot;    &quot;AP006222.2&quot;    &quot;RP11-206L10.2&quot; &quot;RP11-206L10.9&quot;
+## [5] &quot;LINC00115&quot;     &quot;NOC2L&quot;</code></pre>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="introducción-a-seurat.html#cb556-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">colnames</span>(pbmc))</span></code></pre></div>
+<pre><code>## [1] &quot;AAACATACAACCAC-1&quot; &quot;AAACATTGAGCTAC-1&quot; &quot;AAACATTGATCAGC-1&quot; &quot;AAACCGTGCTTCCG-1&quot;
+## [5] &quot;AAACCGTGTATGCG-1&quot; &quot;AAACGCACTGGTAC-1&quot;</code></pre>
+<p>Se puede obtener un vector de nombres de objetos <code>Assay</code>, <code>DimReduc</code> y <code>Graph</code> contenidos en un objeto Seurat mediante el uso de nombres.</p>
+<p>La extracción de objetos específicos de <code>Assay</code>, <code>DimReduc</code> o <code>Graph</code> se puede realizar con el operador doble <code>[[ ]]</code> extract. La adición de nuevos objetos a un objeto de Seurat también se hace con el operador doble <code>[[ ]]</code> extract; Seurat averiguará a qué parte del objeto Seurat pertenece un nuevo objeto asociado.</p>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="introducción-a-seurat.html#cb558-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pbmc)</span></code></pre></div>
+<pre><code>## [1] &quot;RNA&quot;</code></pre>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="introducción-a-seurat.html#cb560-1" aria-hidden="true" tabindex="-1"></a>pbmc[[<span class="st">&quot;RNA&quot;</span>]]</span></code></pre></div>
+<pre><code>## Assay data with 13714 features for 2700 cells
+## First 10 features:
+##  AL627309.1, AP006222.2, RP11-206L10.2, RP11-206L10.9, LINC00115, NOC2L,
+## KLHL17, PLEKHN1, RP11-54O7.17, HES4</code></pre>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="introducción-a-seurat.html#cb562-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pbmc[[&#39;tsne&#39;]]</span></span></code></pre></div>
+<p>El acceso a los datos de un objeto Seurat se realiza con la función <code>GetAssayData()</code>. La adición de datos de expresión a <code>counts</code>, <code>data</code>, o <code>scale.data</code> se puede hacer con <code>SetAssayData()</code>. Los datos nuevos deben tener las mismas celdas en el mismo orden que los datos de la expresión actual. Los datos agregados a los recuentos o datos deben tener las mismas características que los datos de la expresión actual.</p>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="introducción-a-seurat.html#cb563-1" aria-hidden="true" tabindex="-1"></a><span class="fu">GetAssayData</span>(<span class="at">object =</span> pbmc, <span class="at">slot =</span> <span class="st">&quot;data&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div>
+<pre><code>## 3 x 3 sparse Matrix of class &quot;dgCMatrix&quot;
+##               AAACATACAACCAC-1 AAACATTGAGCTAC-1 AAACATTGATCAGC-1
+## AL627309.1                   .                .                .
+## AP006222.2                   .                .                .
+## RP11-206L10.2                .                .                .</code></pre>
+<p>Metadata de las Células.</p>
+<p>Se puede acceder a los metadatos a nivel de celda con el operador de extracción <code>[[ ]]</code> extract o usando <code>$sigil</code>. Extraer con <code>$sigil</code> significa que solo se puede extraer un bit de metadatos a la vez, aunque se ha habilitado el autocompletado de pestañas, lo que lo hace ideal para uso interactivo. La adición de metadatos a nivel de celda se puede configurar usando el operador de extracción único <code>[[ ]]</code> también, o usando <code>AddMetaData</code>.</p>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="introducción-a-seurat.html#cb565-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pbmc<span class="sc">@</span>meta.data)</span></code></pre></div>
+<pre><code>##                  orig.ident nCount_RNA nFeature_RNA
+## AAACATACAACCAC-1     pbmc3k       2419          779
+## AAACATTGAGCTAC-1     pbmc3k       4903         1352
+## AAACATTGATCAGC-1     pbmc3k       3147         1129
+## AAACCGTGCTTCCG-1     pbmc3k       2639          960
+## AAACCGTGTATGCG-1     pbmc3k        980          521
+## AAACGCACTGGTAC-1     pbmc3k       2163          781</code></pre>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="introducción-a-seurat.html#cb567-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pbmc[[<span class="fu">c</span>(<span class="st">&quot;nCount_RNA&quot;</span>, <span class="st">&quot;nFeature_RNA&quot;</span>)]])</span></code></pre></div>
+<pre><code>##                  nCount_RNA nFeature_RNA
+## AAACATACAACCAC-1       2419          779
+## AAACATTGAGCTAC-1       4903         1352
+## AAACATTGATCAGC-1       3147         1129
+## AAACCGTGCTTCCG-1       2639          960
+## AAACCGTGTATGCG-1        980          521
+## AAACGCACTGGTAC-1       2163          781</code></pre>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="introducción-a-seurat.html#cb569-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Passing `drop = TRUE` will turn the meta data into a names vector</span></span>
+<span id="cb569-2"><a href="introducción-a-seurat.html#cb569-2" aria-hidden="true" tabindex="-1"></a><span class="co"># with each entry being named for the cell it corresponds to</span></span>
+<span id="cb569-3"><a href="introducción-a-seurat.html#cb569-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pbmc[[<span class="st">&quot;nCount_RNA&quot;</span>, <span class="at">drop =</span> <span class="cn">TRUE</span>]])</span></code></pre></div>
+<pre><code>## AAACATACAACCAC-1 AAACATTGAGCTAC-1 AAACATTGATCAGC-1 AAACCGTGCTTCCG-1 
+##             2419             4903             3147             2639 
+## AAACCGTGTATGCG-1 AAACGCACTGGTAC-1 
+##              980             2163</code></pre>
 <p>La <strong>clase Assay</strong> almacena datos de una sola celda.</p>
-<p>Para los experimentos típicos de scRNA-seq, un objeto Seurat tendrá un único ensayo (“RNA”). Este ensayo también almacenará múltiples ‘transformaciones’ de los datos, incluidos recuentos sin procesar (ranura <span class="citation">@counts</span>), datos normalizados (ranura <span class="citation">@data</span>) y datos escalados para la reducción dimensional (ranura @ scale.data).</p>
+<p>Para los experimentos típicos de scRNA-seq, un objeto Seurat tendrá un único ensayo (“RNA”). Este ensayo también almacenará múltiples ‘transformaciones’ de los datos, incluidos recuentos sin procesar (ranura <code>@counts</code>), datos normalizados (ranura <code>@data</code>) y datos escalados para la reducción dimensional (ranura <code>@scale.data</code>).</p>
 <p>Para experimentos más complejos, un objeto podría contener múltiples ensayos. Estos podrían incluir tipos de datos multimodales (etiquetas derivadas de anticuerpos CITE-seq, ADT) o mediciones imputadas / corregidas por lotes. Cada uno de esos ensayos tiene la opción de almacenar también las mismas transformaciones de datos.</p>
-<p>Se puede obtener información resumida sobre los objetos de ensayo de forma rápida y sencilla utilizando funciones R estándar. La forma / dimensiones del objeto se pueden encontrar usando las funciones <code>dim</code>, <code>ncol</code> y <code>nrow</code>; Los nombres de celda y característica se pueden encontrar usando las funciones <code>colnames</code> y <code>rownames</code>, respectivamente, o la función <code>dimnames</code>.</p>
-<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="introducción-a-seurat.html#cb556-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dim(x = rna)</span></span>
-<span id="cb556-2"><a href="introducción-a-seurat.html#cb556-2" aria-hidden="true" tabindex="-1"></a><span class="co"># head(x = rownames(x = rna))</span></span>
-<span id="cb556-3"><a href="introducción-a-seurat.html#cb556-3" aria-hidden="true" tabindex="-1"></a><span class="co"># head(x = colnames(x = rna))</span></span></code></pre></div>
-<p>El acceso a los datos de un objeto Seurat se realiza con la función <code>GetAssayData</code>. La adición de datos de expresión a <code>counts</code>, <code>data</code>, o <code>scale.data</code> se puede hacer con <code>SetAssayData</code>. Los datos nuevos deben tener las mismas celdas en el mismo orden que los datos de la expresión actual. Los datos agregados a los recuentos o datos deben tener las mismas características que los datos de la expresión actual.</p>
-<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="introducción-a-seurat.html#cb557-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GetAssayData(object = pbmc, slot = &#39;scale.data&#39;)[1:3, 1:3]</span></span></code></pre></div>
 <ul>
 <li>¿Cómo se ven los datos en una matriz de recuento?</li>
 </ul>
 <p>Examinemos algunos genes en las primeras treinta células. Los valores en la matriz representan ceros (no se detectan moléculas). Dado que la mayoría de los valores en una matriz scRNA-seq son 0, Seurat utiliza una representación de <strong>matriz dispersa (<em>sparse matrix</em>)</strong> siempre que sea posible. Esto da como resultado un ahorro significativo de memoria y velocidad.</p>
-<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="introducción-a-seurat.html#cb558-1" aria-hidden="true" tabindex="-1"></a>pbmc.data[<span class="fu">c</span>(<span class="st">&quot;CD3D&quot;</span>, <span class="st">&quot;TCL1A&quot;</span>, <span class="st">&quot;MS4A1&quot;</span>), <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>]</span></code></pre></div>
-<pre><code>## 3 x 30 sparse Matrix of class &quot;dgCMatrix&quot;
-##                                                                    
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="introducción-a-seurat.html#cb571-1" aria-hidden="true" tabindex="-1"></a>pbmc.data[<span class="fu">c</span>(<span class="st">&quot;CD3D&quot;</span>, <span class="st">&quot;TCL1A&quot;</span>, <span class="st">&quot;MS4A1&quot;</span>), <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>]</span></code></pre></div>
+<pre><code>## 3 x 30 sparse Matrix of class &quot;dgCMatrix&quot;</code></pre>
+<pre><code>##    [[ suppressing 30 column names &#39;AAACATACAACCAC-1&#39;, &#39;AAACATTGAGCTAC-1&#39;, &#39;AAACATTGATCAGC-1&#39; ... ]]</code></pre>
+<pre><code>##                                                                    
 ## CD3D  4 . 10 . . 1 2 3 1 . . 2 7 1 . . 1 3 . 2  3 . . . . . 3 4 1 5
 ## TCL1A . .  . . . . . . 1 . . . . . . . . . . .  . 1 . . . . . . . .
 ## MS4A1 . 6  . . . . . . 1 1 1 . . . . . . . . . 36 1 2 . . 2 . . . .</code></pre>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="introducción-a-seurat.html#cb560-1" aria-hidden="true" tabindex="-1"></a>dense.size <span class="ot">&lt;-</span> <span class="fu">object.size</span>(<span class="fu">as.matrix</span>(pbmc.data))</span>
-<span id="cb560-2"><a href="introducción-a-seurat.html#cb560-2" aria-hidden="true" tabindex="-1"></a>dense.size</span></code></pre></div>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="introducción-a-seurat.html#cb575-1" aria-hidden="true" tabindex="-1"></a>dense.size <span class="ot">&lt;-</span> <span class="fu">object.size</span>(<span class="fu">as.matrix</span>(pbmc.data))</span>
+<span id="cb575-2"><a href="introducción-a-seurat.html#cb575-2" aria-hidden="true" tabindex="-1"></a>dense.size</span></code></pre></div>
 <pre><code>## 709591472 bytes</code></pre>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="introducción-a-seurat.html#cb562-1" aria-hidden="true" tabindex="-1"></a>sparse.size <span class="ot">&lt;-</span> <span class="fu">object.size</span>(pbmc.data)</span>
-<span id="cb562-2"><a href="introducción-a-seurat.html#cb562-2" aria-hidden="true" tabindex="-1"></a>sparse.size</span></code></pre></div>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="introducción-a-seurat.html#cb577-1" aria-hidden="true" tabindex="-1"></a>sparse.size <span class="ot">&lt;-</span> <span class="fu">object.size</span>(pbmc.data)</span>
+<span id="cb577-2"><a href="introducción-a-seurat.html#cb577-2" aria-hidden="true" tabindex="-1"></a>sparse.size</span></code></pre></div>
 <pre><code>## 29905192 bytes</code></pre>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="introducción-a-seurat.html#cb564-1" aria-hidden="true" tabindex="-1"></a>dense.size <span class="sc">/</span> sparse.size</span></code></pre></div>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="introducción-a-seurat.html#cb579-1" aria-hidden="true" tabindex="-1"></a>dense.size <span class="sc">/</span> sparse.size</span></code></pre></div>
 <pre><code>## 23.7 bytes</code></pre>
 <p>¡EN ESTE CASO UNA MATRIZ NO DISPERSA OCUPA ~ 24 VECES MAS ESPACIO!</p>
 </div>
@@ -718,22 +745,22 @@ Se puede acceder a los metadatos a nivel de celda con el operador de extracción
 </ul></li>
 </ul>
 <p>El operador <code>[[</code> puede agregar columnas a los metadatos del objeto. Este es un gran lugar para almacenar estadísticas de control de calidad. Entonces calculamos y añadimos la cantidad de lecturas que corresponden al genoma mitocondrial.</p>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="introducción-a-seurat.html#cb566-1" aria-hidden="true" tabindex="-1"></a>pbmc[[<span class="st">&quot;percent.mt&quot;</span>]] <span class="ot">&lt;-</span> <span class="fu">PercentageFeatureSet</span>(pbmc, <span class="at">pattern =</span> <span class="st">&quot;^MT-&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="introducción-a-seurat.html#cb581-1" aria-hidden="true" tabindex="-1"></a>pbmc[[<span class="st">&quot;percent.mt&quot;</span>]] <span class="ot">&lt;-</span> <span class="fu">PercentageFeatureSet</span>(pbmc, <span class="at">pattern =</span> <span class="st">&quot;^MT-&quot;</span>)</span></code></pre></div>
 <p>Visualizamos las métricas de control de calidad mencionadas anteriormente como un diagrama de violín. Ademas vemos la correlación entre el numero de moléculas de RNA detectadas en cada célula con el número de genes únicos y con el porcentaje de lecturas que corresponden a mtADN.</p>
-<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="introducción-a-seurat.html#cb567-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VlnPlot</span>(pbmc, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;nFeature_RNA&quot;</span>, <span class="st">&quot;nCount_RNA&quot;</span>, <span class="st">&quot;percent.mt&quot;</span>), <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="introducción-a-seurat.html#cb568-1" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">FeatureScatter</span>(pbmc, <span class="at">feature1 =</span> <span class="st">&quot;nCount_RNA&quot;</span>, <span class="at">feature2 =</span> <span class="st">&quot;percent.mt&quot;</span>)</span>
-<span id="cb568-2"><a href="introducción-a-seurat.html#cb568-2" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> <span class="fu">FeatureScatter</span>(pbmc, <span class="at">feature1 =</span> <span class="st">&quot;nCount_RNA&quot;</span>, <span class="at">feature2 =</span> <span class="st">&quot;nFeature_RNA&quot;</span>)</span>
-<span id="cb568-3"><a href="introducción-a-seurat.html#cb568-3" aria-hidden="true" tabindex="-1"></a>plot1 <span class="sc">+</span> plot2</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="introducción-a-seurat.html#cb582-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VlnPlot</span>(pbmc, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;nFeature_RNA&quot;</span>, <span class="st">&quot;nCount_RNA&quot;</span>, <span class="st">&quot;percent.mt&quot;</span>), <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="introducción-a-seurat.html#cb583-1" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">FeatureScatter</span>(pbmc, <span class="at">feature1 =</span> <span class="st">&quot;nCount_RNA&quot;</span>, <span class="at">feature2 =</span> <span class="st">&quot;percent.mt&quot;</span>)</span>
+<span id="cb583-2"><a href="introducción-a-seurat.html#cb583-2" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> <span class="fu">FeatureScatter</span>(pbmc, <span class="at">feature1 =</span> <span class="st">&quot;nCount_RNA&quot;</span>, <span class="at">feature2 =</span> <span class="st">&quot;nFeature_RNA&quot;</span>)</span>
+<span id="cb583-3"><a href="introducción-a-seurat.html#cb583-3" aria-hidden="true" tabindex="-1"></a>plot1 <span class="sc">+</span> plot2</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
 <p>Finalmente filtramos aquellas células que se salen de los estándares de cada uno de los parámetros.</p>
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="introducción-a-seurat.html#cb569-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter</span></span>
-<span id="cb569-2"><a href="introducción-a-seurat.html#cb569-2" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">subset</span>(pbmc, <span class="at">subset =</span> nFeature_RNA <span class="sc">&gt;</span> <span class="dv">200</span> <span class="sc">&amp;</span> nFeature_RNA <span class="sc">&lt;</span> <span class="dv">2500</span> <span class="sc">&amp;</span> percent.mt <span class="sc">&lt;</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="introducción-a-seurat.html#cb584-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter</span></span>
+<span id="cb584-2"><a href="introducción-a-seurat.html#cb584-2" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">subset</span>(pbmc, <span class="at">subset =</span> nFeature_RNA <span class="sc">&gt;</span> <span class="dv">200</span> <span class="sc">&amp;</span> nFeature_RNA <span class="sc">&lt;</span> <span class="dv">2500</span> <span class="sc">&amp;</span> percent.mt <span class="sc">&lt;</span> <span class="dv">5</span>)</span></code></pre></div>
 <ul>
-<li>¿Dónde se almacenan la métricas de QC en Seurat?
-Están almacenadas en la seccion de <strong>meta-data</strong> del objeto Seurat.</li>
+<li>¿Dónde se almacenan la métricas de QC en Seurat?</li>
 </ul>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="introducción-a-seurat.html#cb570-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pbmc<span class="sc">@</span>meta.data, <span class="dv">5</span>)</span></code></pre></div>
+<p>Están almacenadas en la seccion de <code>@meta.data</code> del objeto Seurat.</p>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="introducción-a-seurat.html#cb585-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pbmc<span class="sc">@</span>meta.data, <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##                  orig.ident nCount_RNA nFeature_RNA percent.mt
 ## AAACATACAACCAC-1     pbmc3k       2419          779  3.0177759
 ## AAACATTGAGCTAC-1     pbmc3k       4903         1352  3.7935958
@@ -744,29 +771,29 @@ Están almacenadas en la seccion de <strong>meta-data</strong> del objeto Seurat
 <div id="normalización" class="section level2" number="13.5">
 <h2><span class="header-section-number">13.5</span> Normalización</h2>
 <p>De forma predeterminada, se emplea un método de normalización de escala global <strong>“LogNormalize”</strong> que normaliza las medidas de expresión de características para cada célula por la expresión total, multiplica esto por un factor de escala (10.000 por defecto) y transforma el resultado en logaritmos. Los valores normalizados se almacenan en pbmc <code>[["RNA"]]@data</code>.</p>
-<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="introducción-a-seurat.html#cb572-1" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(pbmc, <span class="at">normalization.method =</span> <span class="st">&quot;LogNormalize&quot;</span>, <span class="at">scale.factor =</span> <span class="dv">10000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="introducción-a-seurat.html#cb587-1" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(pbmc, <span class="at">normalization.method =</span> <span class="st">&quot;LogNormalize&quot;</span>, <span class="at">scale.factor =</span> <span class="dv">10000</span>)</span></code></pre></div>
 </div>
 <div id="detección-de-genes-caractersticas-altamente-variables" class="section level2" number="13.6">
 <h2><span class="header-section-number">13.6</span> Detección de genes (caractersticas) altamente variables</h2>
 <p>A continuación, calculamos un subconjunto de <strong>características que exhiben una alta variación de célula a célula en el conjunto de datos</strong> (es decir, están altamente expresadas en algunas células y poco expresadas en otras). El equipo de Seurat y otros equipos han descubierto que centrarse en estos genes en el análisis posterior ayuda a resaltar la señal biológica en conjuntos de datos unicelulares.</p>
 <p>El procedimiento en Seurat mejora a comparación de las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola célula, y se implementa en la función <code>FindVariableFeatures()</code>. De forma predeterminada, <strong>se devuelven 2000 características por conjunto de datos</strong> (aunque se puede modificar). Estos se utilizarán en análisis posteriores, como PCA.</p>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="introducción-a-seurat.html#cb573-1" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">FindVariableFeatures</span>(pbmc, <span class="at">selection.method =</span> <span class="st">&quot;vst&quot;</span>, <span class="at">nfeatures =</span> <span class="dv">2000</span>)</span>
-<span id="cb573-2"><a href="introducción-a-seurat.html#cb573-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb573-3"><a href="introducción-a-seurat.html#cb573-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify the 10 most highly variable genes</span></span>
-<span id="cb573-4"><a href="introducción-a-seurat.html#cb573-4" aria-hidden="true" tabindex="-1"></a>top10 <span class="ot">&lt;-</span> <span class="fu">head</span>(<span class="fu">VariableFeatures</span>(pbmc), <span class="dv">10</span>)</span>
-<span id="cb573-5"><a href="introducción-a-seurat.html#cb573-5" aria-hidden="true" tabindex="-1"></a>top10</span></code></pre></div>
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="introducción-a-seurat.html#cb588-1" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">FindVariableFeatures</span>(pbmc, <span class="at">selection.method =</span> <span class="st">&quot;vst&quot;</span>, <span class="at">nfeatures =</span> <span class="dv">2000</span>)</span>
+<span id="cb588-2"><a href="introducción-a-seurat.html#cb588-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb588-3"><a href="introducción-a-seurat.html#cb588-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify the 10 most highly variable genes</span></span>
+<span id="cb588-4"><a href="introducción-a-seurat.html#cb588-4" aria-hidden="true" tabindex="-1"></a>top10 <span class="ot">&lt;-</span> <span class="fu">head</span>(<span class="fu">VariableFeatures</span>(pbmc), <span class="dv">10</span>)</span>
+<span id="cb588-5"><a href="introducción-a-seurat.html#cb588-5" aria-hidden="true" tabindex="-1"></a>top10</span></code></pre></div>
 <pre><code>##  [1] &quot;PPBP&quot;   &quot;LYZ&quot;    &quot;S100A9&quot; &quot;IGLL5&quot;  &quot;GNLY&quot;   &quot;FTL&quot;    &quot;PF4&quot;    &quot;FTH1&quot;  
 ##  [9] &quot;GNG11&quot;  &quot;S100A8&quot;</code></pre>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="introducción-a-seurat.html#cb575-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot variable features with and without labels</span></span>
-<span id="cb575-2"><a href="introducción-a-seurat.html#cb575-2" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">VariableFeaturePlot</span>(pbmc)</span>
-<span id="cb575-3"><a href="introducción-a-seurat.html#cb575-3" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> <span class="fu">LabelPoints</span>(<span class="at">plot =</span> plot1, <span class="at">points =</span> top10, <span class="at">repel =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="introducción-a-seurat.html#cb590-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot variable features with and without labels</span></span>
+<span id="cb590-2"><a href="introducción-a-seurat.html#cb590-2" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">VariableFeaturePlot</span>(pbmc)</span>
+<span id="cb590-3"><a href="introducción-a-seurat.html#cb590-3" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> <span class="fu">LabelPoints</span>(<span class="at">plot =</span> plot1, <span class="at">points =</span> top10, <span class="at">repel =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## When using repel, set xnudge and ynudge to 0 for optimal results</code></pre>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="introducción-a-seurat.html#cb577-1" aria-hidden="true" tabindex="-1"></a>plot1 <span class="sc">+</span> plot2</span></code></pre></div>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="introducción-a-seurat.html#cb592-1" aria-hidden="true" tabindex="-1"></a>plot1 <span class="sc">+</span> plot2</span></code></pre></div>
 <pre><code>## Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
 <pre><code>## Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-16-1.png" width="1344" /></p>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-14-1.png" width="1344" /></p>
 </div>
 <div id="escalar-los-datos" class="section level2" number="13.7">
 <h2><span class="header-section-number">13.7</span> Escalar los datos</h2>
@@ -779,14 +806,14 @@ Están almacenadas en la seccion de <strong>meta-data</strong> del objeto Seurat
 </ul></li>
 </ul>
 <p>Los resultados de esto se almacenan en pbmc <code>[["RNA"]]@scale.data</code>.</p>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="introducción-a-seurat.html#cb582-1" aria-hidden="true" tabindex="-1"></a>all.genes <span class="ot">&lt;-</span> <span class="fu">rownames</span>(pbmc)</span>
-<span id="cb582-2"><a href="introducción-a-seurat.html#cb582-2" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">ScaleData</span>(pbmc, <span class="at">features =</span> all.genes)</span></code></pre></div>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="introducción-a-seurat.html#cb597-1" aria-hidden="true" tabindex="-1"></a>all.genes <span class="ot">&lt;-</span> <span class="fu">rownames</span>(pbmc)</span>
+<span id="cb597-2"><a href="introducción-a-seurat.html#cb597-2" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">ScaleData</span>(pbmc, <span class="at">features =</span> all.genes)</span></code></pre></div>
 <pre><code>## Centering and scaling data matrix</code></pre>
 </div>
 <div id="reducción-dimensional-lineal" class="section level2" number="13.8">
 <h2><span class="header-section-number">13.8</span> Reducción dimensional lineal</h2>
 <p>A continuación, realizamos <strong>PCA</strong> sobre los datos escalados. De forma predeterminada, solo las características variables determinadas previamente se utilizan como entrada, pero se pueden definir mediante el argumento de características si desea elegir un subconjunto diferente.</p>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="introducción-a-seurat.html#cb584-1" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">RunPCA</span>(pbmc, <span class="at">features =</span> <span class="fu">VariableFeatures</span>(<span class="at">object =</span> pbmc))</span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="introducción-a-seurat.html#cb599-1" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">RunPCA</span>(pbmc, <span class="at">features =</span> <span class="fu">VariableFeatures</span>(<span class="at">object =</span> pbmc))</span></code></pre></div>
 <pre><code>## PC_ 1 
 ## Positive:  CST3, TYROBP, LST1, AIF1, FTL, FTH1, LYZ, FCN1, S100A9, TYMP 
 ##     FCER1G, CFD, LGALS1, S100A8, CTSS, LGALS2, SERPINA1, IFITM3, SPI1, CFP 
@@ -824,7 +851,7 @@ Están almacenadas en la seccion de <strong>meta-data</strong> del objeto Seurat
 ##     FAM110A, ATP1A1, TRADD, PPA1, CCDC109B, ABRACL, CTD-2006K23.1, WARS, VMO1, FYB</code></pre>
 <p>Seurat proporciona varias formas útiles de visualizar tanto las células como las características que definen el PCA, incluidas <code>VizDimReduction()</code>, <code>DimPlot()</code> y <code>DimHeatmap()</code>.</p>
 <p>Puedes examinar y visualizar los resultados de PCA de diferentes formas.</p>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="introducción-a-seurat.html#cb586-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pbmc[[<span class="st">&quot;pca&quot;</span>]], <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">nfeatures =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="introducción-a-seurat.html#cb601-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pbmc[[<span class="st">&quot;pca&quot;</span>]], <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">nfeatures =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## PC_ 1 
 ## Positive:  CST3, TYROBP, LST1, AIF1, FTL 
 ## Negative:  MALAT1, LTB, IL32, IL7R, CD2 
@@ -840,39 +867,39 @@ Están almacenadas en la seccion de <strong>meta-data</strong> del objeto Seurat
 ## PC_ 5 
 ## Positive:  GZMB, NKG7, S100A8, FGFBP2, GNLY 
 ## Negative:  LTB, IL7R, CKB, VIM, MS4A7</code></pre>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="introducción-a-seurat.html#cb588-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VizDimLoadings</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">reduction =</span> <span class="st">&quot;pca&quot;</span>)</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="introducción-a-seurat.html#cb589-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(pbmc, <span class="at">reduction =</span> <span class="st">&quot;pca&quot;</span>)</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="introducción-a-seurat.html#cb603-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VizDimLoadings</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">reduction =</span> <span class="st">&quot;pca&quot;</span>)</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="introducción-a-seurat.html#cb604-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(pbmc, <span class="at">reduction =</span> <span class="st">&quot;pca&quot;</span>)</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
 <p>En particular, <code>DimHeatmap()</code> permite una fácil exploración de las fuentes primarias de heterogeneidad en un conjunto de datos y puede ser útil cuando se intenta decidir qué PC incluir para análisis posteriores posteriores. Tanto las células como las características se ordenan de acuerdo con sus puntajes de PCA. Establecer <code>cells</code> en un número traza las células “extremas” en ambos extremos del espectro, lo que acelera drásticamente el trazado de grandes conjuntos de datos. Aunque claramente es un análisis supervisado, consideramos que esta es una herramienta valiosa para explorar conjuntos de características correlacionadas.</p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="introducción-a-seurat.html#cb590-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimHeatmap</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span>, <span class="at">cells =</span> <span class="dv">500</span>, <span class="at">balanced =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
-<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="introducción-a-seurat.html#cb591-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimHeatmap</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">cells =</span> <span class="dv">500</span>, <span class="at">balanced =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="introducción-a-seurat.html#cb605-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimHeatmap</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span>, <span class="at">cells =</span> <span class="dv">500</span>, <span class="at">balanced =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="introducción-a-seurat.html#cb606-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimHeatmap</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">cells =</span> <span class="dv">500</span>, <span class="at">balanced =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-18-2.png" width="672" /></p>
 </div>
 <div id="determinar-la-dimensionalidad-del-conjunto-de-datos" class="section level2" number="13.9">
 <h2><span class="header-section-number">13.9</span> Determinar la dimensionalidad del conjunto de datos</h2>
 <p>Para superar el extenso ruido técnico en cualquier característica única para los datos de scRNA-seq, Seurat agrupa las células en función de sus puntuaciones de PCA, y cada PC representa esencialmente una “metafunción” que combina información en un conjunto de características correlacionadas. Por lo tanto, los componentes principales principales representan una compresión sólida del conjunto de datos. <strong>Sin embargo, ¿cuántos componentes deberíamos elegir incluir? 10? 20? 100?</strong></p>
 <p>En Macosko et al, implementamos una prueba de remuestreo inspirada en el <strong>procedimiento JackStraw</strong>. Permutamos aleatoriamente un subconjunto de los datos (1% por defecto) y volvemos a ejecutar PCA, construyendo una “distribución nula” de puntuaciones de características, y repetimos este procedimiento. Identificamos PC “importantes” como aquellas que tienen un gran enriquecimiento de características de bajo valor p. </p>
-<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="introducción-a-seurat.html#cb592-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: This process can take a long time for big datasets, comment out for expediency. More</span></span>
-<span id="cb592-2"><a href="introducción-a-seurat.html#cb592-2" aria-hidden="true" tabindex="-1"></a><span class="co"># approximate techniques such as those implemented in ElbowPlot() can be used to reduce</span></span>
-<span id="cb592-3"><a href="introducción-a-seurat.html#cb592-3" aria-hidden="true" tabindex="-1"></a><span class="co"># computation time</span></span>
-<span id="cb592-4"><a href="introducción-a-seurat.html#cb592-4" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">JackStraw</span>(pbmc, <span class="at">num.replicate =</span> <span class="dv">100</span>)</span>
-<span id="cb592-5"><a href="introducción-a-seurat.html#cb592-5" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">ScoreJackStraw</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="introducción-a-seurat.html#cb607-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: This process can take a long time for big datasets, comment out for expediency. More</span></span>
+<span id="cb607-2"><a href="introducción-a-seurat.html#cb607-2" aria-hidden="true" tabindex="-1"></a><span class="co"># approximate techniques such as those implemented in ElbowPlot() can be used to reduce</span></span>
+<span id="cb607-3"><a href="introducción-a-seurat.html#cb607-3" aria-hidden="true" tabindex="-1"></a><span class="co"># computation time</span></span>
+<span id="cb607-4"><a href="introducción-a-seurat.html#cb607-4" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">JackStraw</span>(pbmc, <span class="at">num.replicate =</span> <span class="dv">100</span>)</span>
+<span id="cb607-5"><a href="introducción-a-seurat.html#cb607-5" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">ScoreJackStraw</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span></code></pre></div>
 <p>La función <code>JackStrawPlot()</code> proporciona una herramienta de visualización para comparar la distribución de los <em>p-values</em> para cada PC con una distribución uniforme (línea discontinua). Las PC “significativas” mostrarán un gran enriquecimiento de funciones con valores p bajos (curva sólida por encima de la línea discontinua). En este caso, parece que hay una fuerte caída en la importancia después de los primeros 10-12 PCs.</p>
-<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="introducción-a-seurat.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="fu">JackStrawPlot</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="introducción-a-seurat.html#cb608-1" aria-hidden="true" tabindex="-1"></a><span class="fu">JackStrawPlot</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>)</span></code></pre></div>
 <pre><code>## Warning: Removed 23510 rows containing missing values (geom_point).</code></pre>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>Un método heurístico alternativo genera un <strong>“diagrama de codo (Elbow Plot)”</strong>: una clasificación de componentes principales basada en el porcentaje de varianza explicada por cada uno (función <code>ElbowPlot()</code>). En este ejemplo, podemos observar un “codo” alrededor de PC9-10, lo que sugiere que la mayor parte de la señal verdadera se captura en las primeras 10 PC.</p>
-<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="introducción-a-seurat.html#cb595-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ElbowPlot</span>(pbmc)</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="introducción-a-seurat.html#cb610-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ElbowPlot</span>(pbmc)</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 <div id="clustering-3" class="section level2" number="13.10">
 <h2><span class="header-section-number">13.10</span> Clustering</h2>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="introducción-a-seurat.html#cb596-1" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">FindNeighbors</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="introducción-a-seurat.html#cb611-1" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">FindNeighbors</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## Computing nearest neighbor graph</code></pre>
 <pre><code>## Computing SNN</code></pre>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="introducción-a-seurat.html#cb599-1" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">FindClusters</span>(pbmc, <span class="at">resolution =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="introducción-a-seurat.html#cb614-1" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">FindClusters</span>(pbmc, <span class="at">resolution =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <pre><code>## Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
 ## 
 ## Number of nodes: 2638
@@ -886,33 +913,33 @@ Están almacenadas en la seccion de <strong>meta-data</strong> del objeto Seurat
 <div id="reducción-dimensional-no-lineal-umaptsne" class="section level2" number="13.11">
 <h2><span class="header-section-number">13.11</span> Reducción dimensional no lineal (UMAP/tSNE)</h2>
 <p>Seurat ofrece varias técnicas de reducción dimensional no lineal, como <strong>tSNE</strong> y <strong>UMAP</strong>, para visualizar y explorar estos conjuntos de datos. El objetivo de estos algoritmos es aprender la variedad subyacente de los datos para colocar células similares juntas en un espacio de baja dimensión. Las células dentro de los grupos basados en gráficos determinados anteriormente deben ubicarse conjuntamente en estos gráficos de reducción de dimensión. Como entrada para UMAP y tSNE, sugerimos usar las mismas PC como entrada para el análisis de agrupamiento.</p>
-<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="introducción-a-seurat.html#cb601-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If you haven&#39;t installed UMAP, you can do so via reticulate::py_install(packages = &#39;umap-learn&#39;)</span></span>
-<span id="cb601-2"><a href="introducción-a-seurat.html#cb601-2" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">RunUMAP</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="introducción-a-seurat.html#cb616-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If you haven&#39;t installed UMAP, you can do so via reticulate::py_install(packages = &#39;umap-learn&#39;)</span></span>
+<span id="cb616-2"><a href="introducción-a-seurat.html#cb616-2" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">RunUMAP</span>(pbmc, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
 ## To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
 ## This message will be shown once per session</code></pre>
-<pre><code>## 04:38:42 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>## 04:38:42 Read 2638 rows and found 10 numeric columns</code></pre>
-<pre><code>## 04:38:42 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>## 04:38:42 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>## 05:02:26 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>## 05:02:26 Read 2638 rows and found 10 numeric columns</code></pre>
+<pre><code>## 05:02:26 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>## 05:02:26 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 <pre><code>## 0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
 <pre><code>## [----|----|----|----|----|----|----|----|----|----|</code></pre>
 <pre><code>## **************************************************|
-## 04:38:42 Writing NN index file to temp file /tmp/RtmpqTNGLc/file4993663d5c1
-## 04:38:42 Searching Annoy index using 1 thread, search_k = 3000
-## 04:38:43 Annoy recall = 100%
-## 04:38:43 Commencing smooth kNN distance calibration using 1 thread
-## 04:38:44 Initializing from normalized Laplacian + noise
-## 04:38:44 Commencing optimization for 500 epochs, with 105140 positive edges
-## 04:38:48 Optimization finished</code></pre>
-<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="introducción-a-seurat.html#cb610-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that you can set `label = TRUE` or use the LabelClusters function to help label</span></span>
-<span id="cb610-2"><a href="introducción-a-seurat.html#cb610-2" aria-hidden="true" tabindex="-1"></a><span class="co"># individual clusters</span></span>
-<span id="cb610-3"><a href="introducción-a-seurat.html#cb610-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(pbmc, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>)</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+## 05:02:27 Writing NN index file to temp file /tmp/Rtmpavjzwz/file49e72f0f7c7
+## 05:02:27 Searching Annoy index using 1 thread, search_k = 3000
+## 05:02:28 Annoy recall = 100%
+## 05:02:28 Commencing smooth kNN distance calibration using 1 thread
+## 05:02:28 Initializing from normalized Laplacian + noise
+## 05:02:29 Commencing optimization for 500 epochs, with 105140 positive edges
+## 05:02:33 Optimization finished</code></pre>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="introducción-a-seurat.html#cb625-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that you can set `label = TRUE` or use the LabelClusters function to help label</span></span>
+<span id="cb625-2"><a href="introducción-a-seurat.html#cb625-2" aria-hidden="true" tabindex="-1"></a><span class="co"># individual clusters</span></span>
+<span id="cb625-3"><a href="introducción-a-seurat.html#cb625-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(pbmc, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>)</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <p>Puede guardar el objeto en este punto para que se pueda volver a cargar fácilmente sin tener que volver a ejecutar los pasos computacionalmente intensivos realizados anteriormente o compartir fácilmente con los colaboradores.</p>
-<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="introducción-a-seurat.html#cb611-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
-<span id="cb611-2"><a href="introducción-a-seurat.html#cb611-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(pbmc, <span class="at">file =</span> <span class="st">&quot;pbmc_tutorial.rds&quot;</span>)</span>
-<span id="cb611-3"><a href="introducción-a-seurat.html#cb611-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="introducción-a-seurat.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
+<span id="cb626-2"><a href="introducción-a-seurat.html#cb626-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(pbmc, <span class="at">file =</span> <span class="st">&quot;pbmc_tutorial.rds&quot;</span>)</span>
+<span id="cb626-3"><a href="introducción-a-seurat.html#cb626-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="caracteristicas-diferencialmente-expresadas-biomarcadores-de-los-clusters" class="section level2" number="13.12">
 <h2><span class="header-section-number">13.12</span> Caracteristicas diferencialmente expresadas (biomarcadores de los clusters)</h2>
@@ -920,27 +947,27 @@ Están almacenadas en la seccion de <strong>meta-data</strong> del objeto Seurat
 <p>El argumento min.pct requiere que se detecte una característica en un porcentaje mínimo en cualquiera de los dos grupos de células, y el argumento <code>thresh.test</code> requiere que una característica se exprese diferencialmente (en promedio) en alguna cantidad entre los dos grupos. Puede establecer ambos en 0, pero con un aumento dramático en el tiempo, ya que esto probará una gran cantidad de características que probablemente no sean altamente discriminatorias.<br />
 - ¿Demasiado lento?<br />
 Como otra opción para acelerar estos cálculos, se puede configurar el número máximo de células por identificador. Esto reducirá la resolución de cada clase de identidad para que no tenga más células que las que se establezcan. Si bien generalmente habrá una pérdida de potencia, los aumentos de velocidad pueden ser significativos y es probable que las características expresadas de manera más diferencial aún se eleven a la cima.</p>
-<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="introducción-a-seurat.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find all markers of cluster 2</span></span>
-<span id="cb612-2"><a href="introducción-a-seurat.html#cb612-2" aria-hidden="true" tabindex="-1"></a>cluster2.markers <span class="ot">&lt;-</span> <span class="fu">FindMarkers</span>(pbmc, <span class="at">ident.1 =</span> <span class="dv">2</span>, <span class="at">min.pct =</span> <span class="fl">0.25</span>)</span>
-<span id="cb612-3"><a href="introducción-a-seurat.html#cb612-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cluster2.markers, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="introducción-a-seurat.html#cb627-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find all markers of cluster 2</span></span>
+<span id="cb627-2"><a href="introducción-a-seurat.html#cb627-2" aria-hidden="true" tabindex="-1"></a>cluster2.markers <span class="ot">&lt;-</span> <span class="fu">FindMarkers</span>(pbmc, <span class="at">ident.1 =</span> <span class="dv">2</span>, <span class="at">min.pct =</span> <span class="fl">0.25</span>)</span>
+<span id="cb627-3"><a href="introducción-a-seurat.html#cb627-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cluster2.markers, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##             p_val avg_log2FC pct.1 pct.2    p_val_adj
 ## IL32 2.892340e-90  1.2013522 0.947 0.465 3.966555e-86
 ## LTB  1.060121e-86  1.2695776 0.981 0.643 1.453850e-82
 ## CD3D 8.794641e-71  0.9389621 0.922 0.432 1.206097e-66
 ## IL7R 3.516098e-68  1.1873213 0.750 0.326 4.821977e-64
 ## LDHB 1.642480e-67  0.8969774 0.954 0.614 2.252497e-63</code></pre>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="introducción-a-seurat.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find all markers distinguishing cluster 5 from clusters 0 and 3</span></span>
-<span id="cb614-2"><a href="introducción-a-seurat.html#cb614-2" aria-hidden="true" tabindex="-1"></a>cluster5.markers <span class="ot">&lt;-</span> <span class="fu">FindMarkers</span>(pbmc, <span class="at">ident.1 =</span> <span class="dv">5</span>, <span class="at">ident.2 =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>), <span class="at">min.pct =</span> <span class="fl">0.25</span>)</span>
-<span id="cb614-3"><a href="introducción-a-seurat.html#cb614-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cluster5.markers, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="introducción-a-seurat.html#cb629-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find all markers distinguishing cluster 5 from clusters 0 and 3</span></span>
+<span id="cb629-2"><a href="introducción-a-seurat.html#cb629-2" aria-hidden="true" tabindex="-1"></a>cluster5.markers <span class="ot">&lt;-</span> <span class="fu">FindMarkers</span>(pbmc, <span class="at">ident.1 =</span> <span class="dv">5</span>, <span class="at">ident.2 =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>), <span class="at">min.pct =</span> <span class="fl">0.25</span>)</span>
+<span id="cb629-3"><a href="introducción-a-seurat.html#cb629-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cluster5.markers, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##                       p_val avg_log2FC pct.1 pct.2     p_val_adj
 ## FCGR3A        8.246578e-205   4.261495 0.975 0.040 1.130936e-200
 ## IFITM3        1.677613e-195   3.879339 0.975 0.049 2.300678e-191
 ## CFD           2.401156e-193   3.405492 0.938 0.038 3.292945e-189
 ## CD68          2.900384e-191   3.020484 0.926 0.035 3.977587e-187
 ## RP11-290F20.3 2.513244e-186   2.720057 0.840 0.017 3.446663e-182</code></pre>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="introducción-a-seurat.html#cb616-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find markers for every cluster compared to all remaining cells, report only the positive</span></span>
-<span id="cb616-2"><a href="introducción-a-seurat.html#cb616-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ones</span></span>
-<span id="cb616-3"><a href="introducción-a-seurat.html#cb616-3" aria-hidden="true" tabindex="-1"></a>pbmc.markers <span class="ot">&lt;-</span> <span class="fu">FindAllMarkers</span>(pbmc, <span class="at">only.pos =</span> <span class="cn">TRUE</span>, <span class="at">min.pct =</span> <span class="fl">0.25</span>, <span class="at">logfc.threshold =</span> <span class="fl">0.25</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="introducción-a-seurat.html#cb631-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find markers for every cluster compared to all remaining cells, report only the positive</span></span>
+<span id="cb631-2"><a href="introducción-a-seurat.html#cb631-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ones</span></span>
+<span id="cb631-3"><a href="introducción-a-seurat.html#cb631-3" aria-hidden="true" tabindex="-1"></a>pbmc.markers <span class="ot">&lt;-</span> <span class="fu">FindAllMarkers</span>(pbmc, <span class="at">only.pos =</span> <span class="cn">TRUE</span>, <span class="at">min.pct =</span> <span class="fl">0.25</span>, <span class="at">logfc.threshold =</span> <span class="fl">0.25</span>)</span></code></pre></div>
 <pre><code>## Calculating cluster 0</code></pre>
 <pre><code>## Calculating cluster 1</code></pre>
 <pre><code>## Calculating cluster 2</code></pre>
@@ -950,9 +977,9 @@ Como otra opción para acelerar estos cálculos, se puede configurar el número 
 <pre><code>## Calculating cluster 6</code></pre>
 <pre><code>## Calculating cluster 7</code></pre>
 <pre><code>## Calculating cluster 8</code></pre>
-<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="introducción-a-seurat.html#cb626-1" aria-hidden="true" tabindex="-1"></a>pbmc.markers <span class="sc">%&gt;%</span></span>
-<span id="cb626-2"><a href="introducción-a-seurat.html#cb626-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb626-3"><a href="introducción-a-seurat.html#cb626-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="at">n =</span> <span class="dv">2</span>, <span class="at">wt =</span> avg_log2FC)</span></code></pre></div>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="introducción-a-seurat.html#cb641-1" aria-hidden="true" tabindex="-1"></a>pbmc.markers <span class="sc">%&gt;%</span></span>
+<span id="cb641-2"><a href="introducción-a-seurat.html#cb641-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb641-3"><a href="introducción-a-seurat.html#cb641-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="at">n =</span> <span class="dv">2</span>, <span class="at">wt =</span> avg_log2FC)</span></code></pre></div>
 <pre><code>## Registered S3 method overwritten by &#39;cli&#39;:
 ##   method     from         
 ##   print.boxx spatstat.geom</code></pre>
@@ -979,55 +1006,55 @@ Como otra opción para acelerar estos cálculos, se puede configurar el número 
 ## 17 9.25e-186       7.29 1     0.011 1.27e-181 8       PF4     
 ## 18 1.92e-102       8.59 1     0.024 2.63e- 98 8       PPBP</code></pre>
 <p>Seurat tiene <strong>varias pruebas de expresión diferencial</strong> que se pueden configurar con el parámetro test.use (consulte nuestra viñeta DE para obtener más detalles). Por ejemplo, la <strong>prueba ROC</strong> devuelve el “poder de clasificación” para cualquier marcador individual (que varía de 0 - aleatorio a 1 - perfecto) .</p>
-<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="introducción-a-seurat.html#cb629-1" aria-hidden="true" tabindex="-1"></a>cluster0.markers <span class="ot">&lt;-</span> <span class="fu">FindMarkers</span>(pbmc, <span class="at">ident.1 =</span> <span class="dv">0</span>, <span class="at">logfc.threshold =</span> <span class="fl">0.25</span>, <span class="at">test.use =</span> <span class="st">&quot;roc&quot;</span>, <span class="at">only.pos =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="introducción-a-seurat.html#cb644-1" aria-hidden="true" tabindex="-1"></a>cluster0.markers <span class="ot">&lt;-</span> <span class="fu">FindMarkers</span>(pbmc, <span class="at">ident.1 =</span> <span class="dv">0</span>, <span class="at">logfc.threshold =</span> <span class="fl">0.25</span>, <span class="at">test.use =</span> <span class="st">&quot;roc&quot;</span>, <span class="at">only.pos =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Se incluyen varias herramientas para visualizar la expresión de los marcadores. <code>VlnPlot()</code> (muestra distribuciones de probabilidad de expresión entre clústeres) y <code>FeaturePlot()</code> (visualiza la expresión de características en un gráfico tSNE o PCA) son nuestras visualizaciones más utilizadas. También sugerimos explorar <code>RidgePlot()</code>, <code>CellScatter()</code> y <code>DotPlot()</code> como métodos adicionales para ver su conjunto de datos.</p>
-<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="introducción-a-seurat.html#cb630-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VlnPlot</span>(pbmc, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;MS4A1&quot;</span>, <span class="st">&quot;CD79A&quot;</span>))</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
-<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="introducción-a-seurat.html#cb631-1" aria-hidden="true" tabindex="-1"></a><span class="do">## you can plot raw counts as well</span></span>
-<span id="cb631-2"><a href="introducción-a-seurat.html#cb631-2" aria-hidden="true" tabindex="-1"></a><span class="fu">VlnPlot</span>(pbmc, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;NKG7&quot;</span>, <span class="st">&quot;PF4&quot;</span>), <span class="at">slot =</span> <span class="st">&quot;counts&quot;</span>, <span class="at">log =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-29-2.png" width="672" /></p>
-<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="introducción-a-seurat.html#cb632-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(pbmc, <span class="at">features =</span> <span class="fu">c</span>(</span>
-<span id="cb632-2"><a href="introducción-a-seurat.html#cb632-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;MS4A1&quot;</span>, <span class="st">&quot;GNLY&quot;</span>, <span class="st">&quot;CD3E&quot;</span>, <span class="st">&quot;CD14&quot;</span>, <span class="st">&quot;FCER1A&quot;</span>, <span class="st">&quot;FCGR3A&quot;</span>, <span class="st">&quot;LYZ&quot;</span>, <span class="st">&quot;PPBP&quot;</span>,</span>
-<span id="cb632-3"><a href="introducción-a-seurat.html#cb632-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;CD8A&quot;</span></span>
-<span id="cb632-4"><a href="introducción-a-seurat.html#cb632-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-29-3.png" width="672" /></p>
-<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="introducción-a-seurat.html#cb633-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DoHeatmap() generates an expression heatmap for given cells and features. In this case, we are plotting the top 20 markers (or all markers if less than 20) for each cluster.</span></span>
-<span id="cb633-2"><a href="introducción-a-seurat.html#cb633-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb633-3"><a href="introducción-a-seurat.html#cb633-3" aria-hidden="true" tabindex="-1"></a>pbmc.markers <span class="sc">%&gt;%</span></span>
-<span id="cb633-4"><a href="introducción-a-seurat.html#cb633-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb633-5"><a href="introducción-a-seurat.html#cb633-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">wt =</span> avg_log2FC) <span class="ot">-&gt;</span> top10</span>
-<span id="cb633-6"><a href="introducción-a-seurat.html#cb633-6" aria-hidden="true" tabindex="-1"></a><span class="fu">DoHeatmap</span>(pbmc, <span class="at">features =</span> top10<span class="sc">$</span>gene) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-29-4.png" width="672" /></p>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="introducción-a-seurat.html#cb645-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VlnPlot</span>(pbmc, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;MS4A1&quot;</span>, <span class="st">&quot;CD79A&quot;</span>))</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="introducción-a-seurat.html#cb646-1" aria-hidden="true" tabindex="-1"></a><span class="do">## you can plot raw counts as well</span></span>
+<span id="cb646-2"><a href="introducción-a-seurat.html#cb646-2" aria-hidden="true" tabindex="-1"></a><span class="fu">VlnPlot</span>(pbmc, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;NKG7&quot;</span>, <span class="st">&quot;PF4&quot;</span>), <span class="at">slot =</span> <span class="st">&quot;counts&quot;</span>, <span class="at">log =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-27-2.png" width="672" /></p>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="introducción-a-seurat.html#cb647-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(pbmc, <span class="at">features =</span> <span class="fu">c</span>(</span>
+<span id="cb647-2"><a href="introducción-a-seurat.html#cb647-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;MS4A1&quot;</span>, <span class="st">&quot;GNLY&quot;</span>, <span class="st">&quot;CD3E&quot;</span>, <span class="st">&quot;CD14&quot;</span>, <span class="st">&quot;FCER1A&quot;</span>, <span class="st">&quot;FCGR3A&quot;</span>, <span class="st">&quot;LYZ&quot;</span>, <span class="st">&quot;PPBP&quot;</span>,</span>
+<span id="cb647-3"><a href="introducción-a-seurat.html#cb647-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;CD8A&quot;</span></span>
+<span id="cb647-4"><a href="introducción-a-seurat.html#cb647-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-27-3.png" width="672" /></p>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="introducción-a-seurat.html#cb648-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DoHeatmap() generates an expression heatmap for given cells and features. In this case, we are plotting the top 20 markers (or all markers if less than 20) for each cluster.</span></span>
+<span id="cb648-2"><a href="introducción-a-seurat.html#cb648-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb648-3"><a href="introducción-a-seurat.html#cb648-3" aria-hidden="true" tabindex="-1"></a>pbmc.markers <span class="sc">%&gt;%</span></span>
+<span id="cb648-4"><a href="introducción-a-seurat.html#cb648-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb648-5"><a href="introducción-a-seurat.html#cb648-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">wt =</span> avg_log2FC) <span class="ot">-&gt;</span> top10</span>
+<span id="cb648-6"><a href="introducción-a-seurat.html#cb648-6" aria-hidden="true" tabindex="-1"></a><span class="fu">DoHeatmap</span>(pbmc, <span class="at">features =</span> top10<span class="sc">$</span>gene) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-27-4.png" width="672" /></p>
 </div>
 <div id="assigning-cell-type-identity-to-clusters" class="section level2" number="13.13">
 <h2><span class="header-section-number">13.13</span> Assigning cell type identity to clusters</h2>
 <p>Podemos usar marcadores canónicos para hacer coincidir fácilmente la agrupación imparcial con los tipos de células conocidos.</p>
-<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="introducción-a-seurat.html#cb634-1" aria-hidden="true" tabindex="-1"></a>new.cluster.ids <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb634-2"><a href="introducción-a-seurat.html#cb634-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Naive CD4 T&quot;</span>, <span class="st">&quot;CD14+ Mono&quot;</span>, <span class="st">&quot;Memory CD4 T&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;CD8 T&quot;</span>, <span class="st">&quot;FCGR3A+ Mono&quot;</span>,</span>
-<span id="cb634-3"><a href="introducción-a-seurat.html#cb634-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;NK&quot;</span>, <span class="st">&quot;DC&quot;</span>, <span class="st">&quot;Platelet&quot;</span></span>
-<span id="cb634-4"><a href="introducción-a-seurat.html#cb634-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb634-5"><a href="introducción-a-seurat.html#cb634-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(new.cluster.ids) <span class="ot">&lt;-</span> <span class="fu">levels</span>(pbmc)</span>
-<span id="cb634-6"><a href="introducción-a-seurat.html#cb634-6" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">RenameIdents</span>(pbmc, new.cluster.ids)</span>
-<span id="cb634-7"><a href="introducción-a-seurat.html#cb634-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb634-8"><a href="introducción-a-seurat.html#cb634-8" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(pbmc, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span></code></pre></div>
-<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="introducción-a-seurat.html#cb649-1" aria-hidden="true" tabindex="-1"></a>new.cluster.ids <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb649-2"><a href="introducción-a-seurat.html#cb649-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Naive CD4 T&quot;</span>, <span class="st">&quot;CD14+ Mono&quot;</span>, <span class="st">&quot;Memory CD4 T&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;CD8 T&quot;</span>, <span class="st">&quot;FCGR3A+ Mono&quot;</span>,</span>
+<span id="cb649-3"><a href="introducción-a-seurat.html#cb649-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;NK&quot;</span>, <span class="st">&quot;DC&quot;</span>, <span class="st">&quot;Platelet&quot;</span></span>
+<span id="cb649-4"><a href="introducción-a-seurat.html#cb649-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb649-5"><a href="introducción-a-seurat.html#cb649-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(new.cluster.ids) <span class="ot">&lt;-</span> <span class="fu">levels</span>(pbmc)</span>
+<span id="cb649-6"><a href="introducción-a-seurat.html#cb649-6" aria-hidden="true" tabindex="-1"></a>pbmc <span class="ot">&lt;-</span> <span class="fu">RenameIdents</span>(pbmc, new.cluster.ids)</span>
+<span id="cb649-7"><a href="introducción-a-seurat.html#cb649-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb649-8"><a href="introducción-a-seurat.html#cb649-8" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(pbmc, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span></code></pre></div>
+<p><img src="13-intro_Seurat_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 </div>
 <div id="guardar-resultados" class="section level2" number="13.14">
 <h2><span class="header-section-number">13.14</span> Guardar Resultados</h2>
-<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="introducción-a-seurat.html#cb635-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
-<span id="cb635-2"><a href="introducción-a-seurat.html#cb635-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(pbmc, <span class="at">file =</span> <span class="st">&quot;pbmc3k_final.rds&quot;</span>)</span>
-<span id="cb635-3"><a href="introducción-a-seurat.html#cb635-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="introducción-a-seurat.html#cb650-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
+<span id="cb650-2"><a href="introducción-a-seurat.html#cb650-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(pbmc, <span class="at">file =</span> <span class="st">&quot;pbmc3k_final.rds&quot;</span>)</span>
+<span id="cb650-3"><a href="introducción-a-seurat.html#cb650-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="detalles-de-la-sesión-de-r-12" class="section level2" number="13.15">
 <h2><span class="header-section-number">13.15</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="introducción-a-seurat.html#cb636-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb636-2"><a href="introducción-a-seurat.html#cb636-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-11 04:39:27 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="introducción-a-seurat.html#cb638-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="introducción-a-seurat.html#cb651-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb651-2"><a href="introducción-a-seurat.html#cb651-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-11 05:03:13 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb653-1"><a href="introducción-a-seurat.html#cb653-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 256.261  14.132 169.977</code></pre>
-<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="introducción-a-seurat.html#cb640-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb640-2"><a href="introducción-a-seurat.html#cb640-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+## 182.384  11.956 131.468</code></pre>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="introducción-a-seurat.html#cb655-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb655-2"><a href="introducción-a-seurat.html#cb655-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)

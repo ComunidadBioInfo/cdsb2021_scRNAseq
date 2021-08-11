@@ -141,64 +141,132 @@ str(pbmc)
 ```
 
 - ¿Cómo accedemos a cada slot?
+
 Clase **Seurat**.  
-La **información resumida sobre los objetos de `Seurat`** se puede obtener de forma rápida y sencilla mediante las funciones estándar de R. La forma / dimensiones del objeto se pueden encontrar usando las funciones `dim`, `ncol` y `nrow`; Los nombres de celda y característica se pueden encontrar usando las funciones `colnames` y `rownames`, respectivamente, o la función `dimnames`. Se puede obtener un vector de nombres de objetos Assay, DimReduc y Graph contenidos en un objeto Seurat mediante el uso de nombres. 
+
+La **información resumida sobre los objetos de `Seurat`** se puede obtener de forma rápida y sencilla mediante las funciones estándar de R. La forma / dimensiones del objeto se pueden encontrar usando las funciones `dim()`, `ncol()` y `nrow()`; Los nombres de celda y característica se pueden encontrar usando las funciones `colnames()` y `rownames()`, respectivamente, o la función `dimnames()`. Se puede obtener un vector de nombres de objetos `Assay`, `DimReduc` y `Graph` contenidos en un objeto Seurat mediante el uso de nombres. 
 
 
 ```r
-# dim(x = pbmc)
-# head(x = rownames(x = pbmc))
-# head(x = colnames(x = pbmc))
+dim(pbmc)
+```
+
+```
+## [1] 13714  2700
+```
+
+```r
+head(rownames(pbmc))
+```
+
+```
+## [1] "AL627309.1"    "AP006222.2"    "RP11-206L10.2" "RP11-206L10.9"
+## [5] "LINC00115"     "NOC2L"
+```
+
+```r
+head(colnames(pbmc))
+```
+
+```
+## [1] "AAACATACAACCAC-1" "AAACATTGAGCTAC-1" "AAACATTGATCAGC-1" "AAACCGTGCTTCCG-1"
+## [5] "AAACCGTGTATGCG-1" "AAACGCACTGGTAC-1"
 ```
 
 Se puede obtener un vector de nombres de objetos `Assay`, `DimReduc` y `Graph` contenidos en un objeto Seurat mediante el uso de nombres. 
-La extracción de objetos específicos de Assay, DimReduc o Graph se puede realizar con el operador doble `[[ ]]` extract. La adición de nuevos objetos a un objeto de Seurat también se hace con el operador doble `[[ ]]` extract; Seurat averiguará a qué parte del objeto Seurat pertenece un nuevo objeto asociado. 
+
+La extracción de objetos específicos de `Assay`, `DimReduc` o `Graph` se puede realizar con el operador doble `[[ ]]` extract. La adición de nuevos objetos a un objeto de Seurat también se hace con el operador doble `[[ ]]` extract; Seurat averiguará a qué parte del objeto Seurat pertenece un nuevo objeto asociado. 
 
 
 ```r
-# names(x = pbmc)
-# pbmc[['RNA']]
+names(pbmc)
+```
+
+```
+## [1] "RNA"
+```
+
+```r
+pbmc[["RNA"]]
+```
+
+```
+## Assay data with 13714 features for 2700 cells
+## First 10 features:
+##  AL627309.1, AP006222.2, RP11-206L10.2, RP11-206L10.9, LINC00115, NOC2L,
+## KLHL17, PLEKHN1, RP11-54O7.17, HES4
+```
+
+```r
 # pbmc[['tsne']]
 ```
-El acceso a los datos de un objeto Seurat se realiza con la función `GetAssayData`. La adición de datos de expresión a `counts`, `data`, o `scale.data` se puede hacer con `SetAssayData`. Los datos nuevos deben tener las mismas celdas en el mismo orden que los datos de la expresión actual. Los datos agregados a los recuentos o datos deben tener las mismas características que los datos de la expresión actual. 
+
+El acceso a los datos de un objeto Seurat se realiza con la función `GetAssayData()`. La adición de datos de expresión a `counts`, `data`, o `scale.data` se puede hacer con `SetAssayData()`. Los datos nuevos deben tener las mismas celdas en el mismo orden que los datos de la expresión actual. Los datos agregados a los recuentos o datos deben tener las mismas características que los datos de la expresión actual. 
 
 
 ```r
-# GetAssayData(object = pbmc, slot = 'scale.data')[1:3, 1:3]
+GetAssayData(object = pbmc, slot = "data")[1:3, 1:3]
 ```
+
+```
+## 3 x 3 sparse Matrix of class "dgCMatrix"
+##               AAACATACAACCAC-1 AAACATTGAGCTAC-1 AAACATTGATCAGC-1
+## AL627309.1                   .                .                .
+## AP006222.2                   .                .                .
+## RP11-206L10.2                .                .                .
+```
+
 Metadata de las Células.  
+
 Se puede acceder a los metadatos a nivel de celda con el operador de extracción `[[ ]]` extract o usando `$sigil`. Extraer con `$sigil` significa que solo se puede extraer un bit de metadatos a la vez, aunque se ha habilitado el autocompletado de pestañas, lo que lo hace ideal para uso interactivo. La adición de metadatos a nivel de celda se puede configurar usando el operador de extracción único `[[ ]]` también, o usando `AddMetaData`. 
 
 
 ```r
-# colnames(x = pbmc[[]])
-# head(x = pbmc[[c('nUMI', 'percent.mito')]])
-# head(x = pbmc[[c('nUMI', 'percent.mito')]])
+head(pbmc@meta.data)
+```
+
+```
+##                  orig.ident nCount_RNA nFeature_RNA
+## AAACATACAACCAC-1     pbmc3k       2419          779
+## AAACATTGAGCTAC-1     pbmc3k       4903         1352
+## AAACATTGATCAGC-1     pbmc3k       3147         1129
+## AAACCGTGCTTCCG-1     pbmc3k       2639          960
+## AAACCGTGTATGCG-1     pbmc3k        980          521
+## AAACGCACTGGTAC-1     pbmc3k       2163          781
+```
+
+```r
+head(pbmc[[c("nCount_RNA", "nFeature_RNA")]])
+```
+
+```
+##                  nCount_RNA nFeature_RNA
+## AAACATACAACCAC-1       2419          779
+## AAACATTGAGCTAC-1       4903         1352
+## AAACATTGATCAGC-1       3147         1129
+## AAACCGTGCTTCCG-1       2639          960
+## AAACCGTGTATGCG-1        980          521
+## AAACGCACTGGTAC-1       2163          781
+```
+
+```r
 # Passing `drop = TRUE` will turn the meta data into a names vector
 # with each entry being named for the cell it corresponds to
-# head(x = pbmc[['res.0.6', drop = TRUE]])
+head(pbmc[["nCount_RNA", drop = TRUE]])
 ```
+
+```
+## AAACATACAACCAC-1 AAACATTGAGCTAC-1 AAACATTGATCAGC-1 AAACCGTGCTTCCG-1 
+##             2419             4903             3147             2639 
+## AAACCGTGTATGCG-1 AAACGCACTGGTAC-1 
+##              980             2163
+```
+
 La **clase Assay** almacena datos de una sola celda.
 
-Para los experimentos típicos de scRNA-seq, un objeto Seurat tendrá un único ensayo ("RNA"). Este ensayo también almacenará múltiples 'transformaciones' de los datos, incluidos recuentos sin procesar (ranura @counts), datos normalizados (ranura @data) y datos escalados para la reducción dimensional (ranura @ scale.data).
+Para los experimentos típicos de scRNA-seq, un objeto Seurat tendrá un único ensayo ("RNA"). Este ensayo también almacenará múltiples 'transformaciones' de los datos, incluidos recuentos sin procesar (ranura `@counts`), datos normalizados (ranura `@data`) y datos escalados para la reducción dimensional (ranura `@scale.data`).
 
 Para experimentos más complejos, un objeto podría contener múltiples ensayos. Estos podrían incluir tipos de datos multimodales (etiquetas derivadas de anticuerpos CITE-seq, ADT) o mediciones imputadas / corregidas por lotes. Cada uno de esos ensayos tiene la opción de almacenar también las mismas transformaciones de datos. 
-
-Se puede obtener información resumida sobre los objetos de ensayo de forma rápida y sencilla utilizando funciones R estándar. La forma / dimensiones del objeto se pueden encontrar usando las funciones `dim`, `ncol` y `nrow`; Los nombres de celda y característica se pueden encontrar usando las funciones `colnames` y `rownames`, respectivamente, o la función `dimnames`.
-
-
-```r
-# dim(x = rna)
-# head(x = rownames(x = rna))
-# head(x = colnames(x = rna))
-```
-El acceso a los datos de un objeto Seurat se realiza con la función `GetAssayData`. La adición de datos de expresión a `counts`, `data`, o `scale.data` se puede hacer con `SetAssayData`. Los datos nuevos deben tener las mismas celdas en el mismo orden que los datos de la expresión actual. Los datos agregados a los recuentos o datos deben tener las mismas características que los datos de la expresión actual. 
-
-
-```r
-# GetAssayData(object = pbmc, slot = 'scale.data')[1:3, 1:3]
-```
-
 
 - ¿Cómo se ven los datos en una matriz de recuento? 
 
@@ -211,6 +279,13 @@ pbmc.data[c("CD3D", "TCL1A", "MS4A1"), 1:30]
 
 ```
 ## 3 x 30 sparse Matrix of class "dgCMatrix"
+```
+
+```
+##    [[ suppressing 30 column names 'AAACATACAACCAC-1', 'AAACATTGAGCTAC-1', 'AAACATTGATCAGC-1' ... ]]
+```
+
+```
 ##                                                                    
 ## CD3D  4 . 10 . . 1 2 3 1 . . 2 7 1 . . 1 3 . 2  3 . . . . . 3 4 1 5
 ## TCL1A . .  . . . . . . 1 . . . . . . . . . . .  . 1 . . . . . . . .
@@ -271,7 +346,7 @@ Visualizamos las métricas de control de calidad mencionadas anteriormente como 
 VlnPlot(pbmc, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 ```r
 plot1 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "percent.mt")
@@ -279,7 +354,7 @@ plot2 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA"
 plot1 + plot2
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-12-2.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-10-2.png" width="672" />
 
 Finalmente filtramos aquellas células que se salen de los estándares de cada uno de los parámetros.
 
@@ -290,7 +365,8 @@ pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent
 ```
 
 - ¿Dónde se almacenan la métricas de QC en Seurat?
-Están almacenadas en la seccion de **meta-data** del objeto Seurat.
+
+Están almacenadas en la seccion de `@meta.data` del objeto Seurat.
 
 
 ```r
@@ -365,7 +441,7 @@ plot1 + plot2
 ## Warning: Removed 1 rows containing missing values (geom_point).
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-16-1.png" width="1344" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-14-1.png" width="1344" />
 
 ## Escalar los datos
 
@@ -465,13 +541,13 @@ print(pbmc[["pca"]], dims = 1:5, nfeatures = 5)
 VizDimLoadings(pbmc, dims = 1:2, reduction = "pca")
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 ```r
 DimPlot(pbmc, reduction = "pca")
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-19-2.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-17-2.png" width="672" />
 
 En particular, `DimHeatmap()` permite una fácil exploración de las fuentes primarias de heterogeneidad en un conjunto de datos y puede ser útil cuando se intenta decidir qué PC incluir para análisis posteriores posteriores. Tanto las células como las características se ordenan de acuerdo con sus puntajes de PCA. Establecer `cells` en un número traza las células "extremas" en ambos extremos del espectro, lo que acelera drásticamente el trazado de grandes conjuntos de datos. Aunque claramente es un análisis supervisado, consideramos que esta es una herramienta valiosa para explorar conjuntos de características correlacionadas. 
 
@@ -480,13 +556,13 @@ En particular, `DimHeatmap()` permite una fácil exploración de las fuentes pri
 DimHeatmap(pbmc, dims = 1, cells = 500, balanced = TRUE)
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 ```r
 DimHeatmap(pbmc, dims = 1:15, cells = 500, balanced = TRUE)
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-20-2.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-18-2.png" width="672" />
 
 ## Determinar la dimensionalidad del conjunto de datos 
 
@@ -514,7 +590,7 @@ JackStrawPlot(pbmc, dims = 1:15)
 ## Warning: Removed 23510 rows containing missing values (geom_point).
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 Un método heurístico alternativo genera un **"diagrama de codo (Elbow Plot)"**: una clasificación de componentes principales basada en el porcentaje de varianza explicada por cada uno (función `ElbowPlot()`). En este ejemplo, podemos observar un "codo" alrededor de PC9-10, lo que sugiere que la mayor parte de la señal verdadera se captura en las primeras 10 PC. 
 
@@ -523,7 +599,7 @@ Un método heurístico alternativo genera un **"diagrama de codo (Elbow Plot)"**
 ElbowPlot(pbmc)
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 ## Clustering 
 
@@ -573,19 +649,19 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 ```
 
 ```
-## 04:38:42 UMAP embedding parameters a = 0.9922 b = 1.112
+## 05:02:26 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ```
-## 04:38:42 Read 2638 rows and found 10 numeric columns
+## 05:02:26 Read 2638 rows and found 10 numeric columns
 ```
 
 ```
-## 04:38:42 Using Annoy for neighbor search, n_neighbors = 30
+## 05:02:26 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ```
-## 04:38:42 Building Annoy index with metric = cosine, n_trees = 50
+## 05:02:26 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ```
@@ -598,13 +674,13 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 
 ```
 ## **************************************************|
-## 04:38:42 Writing NN index file to temp file /tmp/RtmpqTNGLc/file4993663d5c1
-## 04:38:42 Searching Annoy index using 1 thread, search_k = 3000
-## 04:38:43 Annoy recall = 100%
-## 04:38:43 Commencing smooth kNN distance calibration using 1 thread
-## 04:38:44 Initializing from normalized Laplacian + noise
-## 04:38:44 Commencing optimization for 500 epochs, with 105140 positive edges
-## 04:38:48 Optimization finished
+## 05:02:27 Writing NN index file to temp file /tmp/Rtmpavjzwz/file49e72f0f7c7
+## 05:02:27 Searching Annoy index using 1 thread, search_k = 3000
+## 05:02:28 Annoy recall = 100%
+## 05:02:28 Commencing smooth kNN distance calibration using 1 thread
+## 05:02:28 Initializing from normalized Laplacian + noise
+## 05:02:29 Commencing optimization for 500 epochs, with 105140 positive edges
+## 05:02:33 Optimization finished
 ```
 
 ```r
@@ -613,7 +689,7 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 DimPlot(pbmc, reduction = "umap")
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 Puede guardar el objeto en este punto para que se pueda volver a cargar fácilmente sin tener que volver a ejecutar los pasos computacionalmente intensivos realizados anteriormente o compartir fácilmente con los colaboradores. 
 
@@ -756,14 +832,14 @@ Se incluyen varias herramientas para visualizar la expresión de los marcadores.
 VlnPlot(pbmc, features = c("MS4A1", "CD79A"))
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-29-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
 ```r
 ## you can plot raw counts as well
 VlnPlot(pbmc, features = c("NKG7", "PF4"), slot = "counts", log = TRUE)
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-29-2.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-27-2.png" width="672" />
 
 ```r
 FeaturePlot(pbmc, features = c(
@@ -772,7 +848,7 @@ FeaturePlot(pbmc, features = c(
 ))
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-29-3.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-27-3.png" width="672" />
 
 ```r
 # DoHeatmap() generates an expression heatmap for given cells and features. In this case, we are plotting the top 20 markers (or all markers if less than 20) for each cluster.
@@ -783,7 +859,7 @@ pbmc.markers %>%
 DoHeatmap(pbmc, features = top10$gene) + NoLegend()
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-29-4.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-27-4.png" width="672" />
 
 ## Assigning cell type identity to clusters
 
@@ -801,7 +877,7 @@ pbmc <- RenameIdents(pbmc, new.cluster.ids)
 DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-30-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-28-1.png" width="672" />
 
 ## Guardar Resultados
 
@@ -821,7 +897,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-11 04:39:27 UTC"
+## [1] "2021-08-11 05:03:13 UTC"
 ```
 
 ```r
@@ -830,7 +906,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 256.261  14.132 169.977
+## 182.384  11.956 131.468
 ```
 
 ```r

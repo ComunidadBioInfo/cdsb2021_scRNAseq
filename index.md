@@ -668,7 +668,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-11 04:11:34.
+Fecha de la última actualización de esta página: 2021-08-11 04:34:36.
 
 ## Licencia  {-}
 
