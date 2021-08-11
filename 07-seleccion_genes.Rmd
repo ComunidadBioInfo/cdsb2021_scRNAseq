@@ -249,9 +249,9 @@ Descripción [aquí](https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2
 *Lun, A. T. L., Calero-Nieto, F. J., Haim-Vilmovsky, L., Göttgens, B. & Marioni, J. C. Assessing the reliability of spike-in normalization for analyses of single-cell RNA sequencing data. Genome Res. 27, 1795–1806 (2017)*
 
 
-### Procesándolo
+** Ahora vamos a procesar los datos de la forma que ya hemos aprendido: **
 
-```{r }
+```{r, warning=FALSE, message=FALSE  }
 # gene-annotation
 library(AnnotationHub)
 ens.mm.v97 <- AnnotationHub()[["AH73905"]]
@@ -309,7 +309,7 @@ dec.block.416b[order(
 
 Al calcular tendencias específicas por batch se tomarán en cuenta las diferencias en la relación media-varianza entre batches
 
-Se deben obtener estimados de los componentes biológico y técnico para cada gene específicos de cada batch, los caules se promedian entre los batches para crear una única lista de HVGs
+Se deben obtener estimados de los componentes biológico y técnico para cada gene específicos de cada batch, los cuales se promedian entre los batches para crear una única lista de HVGs
 
 
 <div>
@@ -327,7 +327,7 @@ Hasta ahora hemos ordenado los genes del más al menos **interesantemente variab
 
 *¿Qué tanto debemos de bajar en la lista para seleccionar nuestros HVGs?*
 
-Elegir un subset más grande:
+Para responder esta pregunta debemos tomar en cuenta lo siguiente: elegir un subset más grande:
 
 - Reduce el riesgo de desechar señal biológica
 - Incrementa el ruido por la inclusión de genes irrelevantes
@@ -339,11 +339,11 @@ Discutiremos algunas estrategias para seleccionar HVGs
 
 ### Seleccionando HVGs sobre la métrica de varianza
 
-La estrategia más simple es seleccionar los top-X genes con los valores más grandes para la métrica relevante de varianza, *por ejemplo, la varianza biológica más grande calculada con `scran::modelGeneVar()`*
+La estrategia más simple es seleccionar los **top-X genes** con los valores más grandes para la métrica relevante de varianza, *por ejemplo, la varianza biológica más grande calculada con `scran::modelGeneVar()`*
 
-Pro: El usuario puede controlar directamente el número de HVGs
+**Pro**: El usuario puede controlar directamente el número de HVGs
 
-Contra: ¿Qué valor de X se debe usar?
+**Contra**: ¿Qué valor de X se debe usar?
 
 
 ```{r }
@@ -365,25 +365,26 @@ str(hvg.pbmc.cv2)
 
 #### Estrategias para seleccionar X
 
-Asume que, por ejemplo, no más del 5% de los genes están diferencialmente expresados entre las célula de nuestra población:
+Asume que, por ejemplo, no más del 5% de los genes están diferencialmente expresados entre las células de nuestra población:
 
  - *Establece X como el 5% de los genes*
  
-Normalmente no conocemos el número de genes diferecialmente expresados desde antes, por lo tanto, solo hemos cambiado un número arbitrario por otro número arbitrario
+Normalmente no conocemos el número de genes diferencialmente expresados desde antes, por lo tanto, solo hemos cambiado un número arbitrario por otro número arbitrario
  
-Si decides utilizar los top-X HGVs, elige un valor de X y procede con el resto del análisis con la intención de regresar más adelante y probar otros valores, en vez de dedicarle mucho esfuerzo a encontrar el valor óptimo
+**RECOMENDACIÓN**: Si decides utilizar los top-X HGVs, elige un valor de X y procede con el resto del análisis con la intención de regresar más adelante y probar otros valores, en vez de dedicarle mucho esfuerzo a encontrar el valor óptimo
 
 
-### Seleccionando HVGs sobre su significancia estadística
+### Seleccionando HVGs de acuerdo a su significancia estadística
 
-Establece un límite fijo en alguna métrica de significancia estadística:
-
-* algunos de los métodos reportan un p-valor para cada gene, entonces selecciona todos los genes con un p-valor ajustado menor que 0.05
+Establece un límite fijo en alguna métrica de significancia estadística. Por ejemplo: algunos de los métodos reportan un p-valor para cada gene, entonces selecciona todos los genes con un p-valor ajustado menor que 0.05
 
 **Recuerda que las pruebas estadísticas siempre dependen del tamaño de la muestra**
 
+**Ventajas:** 
 * Fácil de implementar
-* Menos predecible qe la estrategia de los top-X
+* Menos predecible que la estrategia de los top-X
+
+**Desventajas:**
 * Podría priorizar genes con significancia estadística fuerte en vez de significancia biológica fuerte
 
 
@@ -404,16 +405,18 @@ str(hvg.pbmc.cv2.2)
 ```
 
 
-### Seleccionando genes por arriba de la tendencia
+### Seleccionando genes por arriba de la tendencia media-varianza
 
 Selecciona todos los genes con **una varianza biológica positiva**
 
 Este es un extremo del equilibrio sesgo-varianza que minimiza el sesgo con el costo de maximizar el ruido
 
-* Le da a la estructura secundaria de la población una oportunidad de manifestarse
-* Se captura más ruido, lo cual puede reducir la resolución de poblaciones bien separadas enmascarando la señal secundaria que intentamos preservar
+Si seguimos esta aproximación, estamos:
 
-Mejor preparado para datasets altamente heterogeneos que contienen muchos tipos celulares diferentes
+* Dándole a la estructura secundaria de la población una oportunidad de manifestarse
+* Capturando más ruido, lo cual puede reducir la resolución de poblaciones bien separadas enmascarando la señal secundaria que intentamos preservar
+
+Funciona mejor si tenemos datasets altamente heterogeneos que contienen muchos tipos celulares diferentes
 
 
 ```{r }
@@ -434,22 +437,18 @@ hvg.pbmc.cv2.3 <- getTopHVGs(dec.cv2.pbmc,
 str(hvg.pbmc.cv2.2)
 ```
 
-### Seleccionando genes de interés a priori
+### Seleccionando genes de interés *a priori*
 
-Una estrategia contundente pero efecta es usar sets predefinidos de genes de interés
+Una estrategia contundente es usar sets predefinidos de genes de interés. No hay vergüenza en aprovechar el conocimiento biológivo previo
 
-No hay vergüenza en aprovechar el conocimiento biológivo previo
-
-*Contra*: Limita nuestra capacidad de descubrir aspectos nuevos o inesperados de la variación
-
-*Considera esta como una estrategia complementaria a otros tipo de estrategias de selección de HGVs*
+Sin embargo, limita nuestra capacidad de descubrir aspectos nuevos o inesperados de la variación. Por lo tanto, considera esta como una estrategia complementaria a otros tipo de estrategias de selección de HGVs
 
 
 También podrías eliminar listas pre-definidas de genes:
 
 * Genes de proteínas ribosomales o genes mitocondriales son conocidos por encontrarse dentro de los genes *más variables* y por interferir con análisis posteriores
  
- *Tampoco hay que pecar de prevacido*, espera a que estos genes demuestren ser problemáticos para removerlos
+ Sin embargo, tampoco hay que pecar de prevacido, espera a que estos genes demuestren ser problemáticos para removerlos
  
 
 ## Poniendo todo junto
@@ -475,9 +474,9 @@ sce.pbmc.hvg <- sce.pbmc[chosen, ]
 sce.pbmc.hvg
 ```
 
-PRO: Te aseguras de que los métodos posteriores **sólo** usen estos genes para sus cálculos
+**PRO:** Te aseguras de que los métodos posteriores **sólo** usen estos genes para sus cálculos
 
-CONTRA: Los genes no-HGVs son eliminados del nnuevo objeto *SingleCellExperiment*, lo cual hace menos conveniente la interrogación del dataset completo sobre genes que no son HGVs
+**CONTRA:** Los genes no-HGVs son eliminados del nuevo objeto *SingleCellExperiment*, lo cual hace menos conveniente la interrogación del dataset completo sobre genes que no son HGVs
 
 
 ### Especificando los HGVs
@@ -492,8 +491,8 @@ sce.pbmc
 
 Mantiene el objeto *SingleCellExperiment* original y especifica los genes para usar en funciones posteriores mediante un argumento adicional como **subset_row**
 
-PRO: Es útil si el análisis usa varios conjuntos de HGVs en diferentes pasos
-CONTRA: Podría ser inconveniente especificar repetidamente el mismo conjunto de HGVs en diferentes pasos
+**PRO:** Es útil si el análisis usa varios conjuntos de HGVs en diferentes pasos
+**CONTRA:** Podría ser inconveniente especificar repetidamente el mismo conjunto de HGVs en diferentes pasos
 
 
 ### Witchcraft (Brujería)
@@ -507,9 +506,9 @@ altExp(sce.pbmc.hvg, "original")
 
 Utilizando el sistema de "experimento alternartivo" en la clase *SingleCellExperiment*
 
-PRO: Evita algunos problemas a largo plazo cuando el dataset original no está sincronizado con el conjunto filtrado por HVGs
+**PRO:** Evita algunos problemas a largo plazo cuando el dataset original no está sincronizado con el conjunto filtrado por HVGs
 
-CONTRA: Ralentiza todos los análisis subsecuentes
+**CONTRA:** Ralentiza todos los análisis subsecuentes
 
 
 ## Resumen y recomendaciones
