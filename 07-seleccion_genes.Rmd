@@ -107,7 +107,7 @@ sce.pbmc <- logNormCounts(sce.pbmc)
 
 ```{r, warning=FALSE, message=FALSE}
 library(scRNAseq)
-sce.416b <- LunSpikeInData(which="416b") 
+sce.416b <- LunSpikeInData(which = "416b")
 sce.416b$block <- factor(sce.416b$block)
 ```
 
@@ -119,25 +119,30 @@ Línea celular de células mieloides progenitoras inmortalizadas de ratón usand
 library(AnnotationHub)
 ens.mm.v97 <- AnnotationHub()[["AH73905"]]
 rowData(sce.416b)$ENSEMBL <- rownames(sce.416b)
-rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97, 
-  keys=rownames(sce.416b),
-  keytype="GENEID", column="SYMBOL")
+rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97,
+    keys = rownames(sce.416b),
+    keytype = "GENEID", column = "SYMBOL"
+)
 rowData(sce.416b)$SEQNAME <- mapIds(ens.mm.v97,
-  keys=rownames(sce.416b),
-  keytype="GENEID", column="SEQNAME")
+    keys = rownames(sce.416b),
+    keytype = "GENEID", column = "SEQNAME"
+)
 library(scater)
-rownames(sce.416b) <- uniquifyFeatureNames(rowData(sce.416b)$ENSEMBL, 
-  rowData(sce.416b)$SYMBOL)
+rownames(sce.416b) <- uniquifyFeatureNames(
+    rowData(sce.416b)$ENSEMBL,
+    rowData(sce.416b)$SYMBOL
+)
 ```
 
 ```{r, warning=FALSE, message=FALSE}
 # quality-control
-mito <- which(rowData(sce.416b)$SEQNAME=="MT")
-stats <- perCellQCMetrics(sce.416b, subsets=list(Mt=mito))
+mito <- which(rowData(sce.416b)$SEQNAME == "MT")
+stats <- perCellQCMetrics(sce.416b, subsets = list(Mt = mito))
 qc <- quickPerCellQC(stats,
-  percent_subsets=c("subsets_Mt_percent", "altexps_ERCC_percent"),
-  batch=sce.416b$block)
-sce.416b <- sce.416b[,!qc$discard]
+    percent_subsets = c("subsets_Mt_percent", "altexps_ERCC_percent"),
+    batch = sce.416b$block
+)
+sce.416b <- sce.416b[, !qc$discard]
 
 # normalization
 library(scran)
@@ -302,25 +307,32 @@ Podemos revisar dos enfoques:
 ### En la presencia de spike-ins
 
 ```{r, warning=FALSE, message=FALSE}
-dec.spike.416b <- modelGeneVarWithSpikes(sce.416b, 
-  "ERCC")
-# Ordering by most interesting genes for 
+dec.spike.416b <- modelGeneVarWithSpikes(
+    sce.416b,
+    "ERCC"
+)
+# Ordering by most interesting genes for
 # inspection.
-dec.spike.416b[order(dec.spike.416b$bio, 
-  decreasing=TRUE),]
+dec.spike.416b[order(dec.spike.416b$bio,
+    decreasing = TRUE
+), ]
 ```
 
 * 👉 Ajusta la tendencia solo con los spike-ins (que deberían estar afectados solamente por variación técnica)
 
 ```{r, warning=FALSE, message=FALSE}
 plot(dec.spike.416b$mean, dec.spike.416b$total,
-  xlab="Mean of log-expression",
-  ylab="Variance of log-expression")
+    xlab = "Mean of log-expression",
+    ylab = "Variance of log-expression"
+)
 fit.spike.416b <- metadata(dec.spike.416b)
-points(fit.spike.416b$mean, fit.spike.416b$var, 
-  col="red", pch=16)
-curve(fit.spike.416b$trend(x), col="dodgerblue", 
-  add=TRUE, lwd=2)
+points(fit.spike.416b$mean, fit.spike.416b$var,
+    col = "red", pch = 16
+)
+curve(fit.spike.416b$trend(x),
+    col = "dodgerblue",
+    add = TRUE, lwd = 2
+)
 ```
 
 ## En la ausencia de spike-ins
@@ -329,7 +341,7 @@ curve(fit.spike.416b$trend(x), col="dodgerblue",
 set.seed(0010101)
 dec.pois.pbmc <- modelGeneVarByPoisson(sce.pbmc)
 # Ordering by most interesting genes for inspection.
-dec.pois.pbmc[order(dec.pois.pbmc$bio,decreasing=TRUE),]
+dec.pois.pbmc[order(dec.pois.pbmc$bio, decreasing = TRUE), ]
 ```
 
 * 👉 Realiza algunas asunciones estadísticas acerca del ruido
@@ -338,11 +350,13 @@ dec.pois.pbmc[order(dec.pois.pbmc$bio,decreasing=TRUE),]
 * 🤓 modelGeneVarByPoisson() pueden también simular una variación binomial negativa (variación de Poisson sobredispersada)
 
 ```{r, warning=FALSE, message=FALSE}
-plot(dec.pois.pbmc$mean, dec.pois.pbmc$total, 
-  pch=16, xlab="Mean of log-expression",
-  ylab="Variance of log-expression")
+plot(dec.pois.pbmc$mean, dec.pois.pbmc$total,
+    pch = 16, xlab = "Mean of log-expression",
+    ylab = "Variance of log-expression"
+)
 curve(metadata(dec.pois.pbmc)$trend(x),
-  col="dodgerblue", add=TRUE)
+    col = "dodgerblue", add = TRUE
+)
 ```
 
 * 🤓 La línea de tendencia basada puramente en ruido técnico tiende a producir componentes “biológicos” más grandes por los genes altamente expresados, que frecuentemente incluyen los genes “house-keeping”
@@ -419,7 +433,7 @@ hvg.pbmc.var <- getTopHVGs(dec.pbmc, n = 1000)
 str(hvg.pbmc.var)
 
 # Works with modelGeneVarWithSpikes() output
-hvg.416b.var <- getTopHVGs(dec.spike.416b, n=1000)
+hvg.416b.var <- getTopHVGs(dec.spike.416b, n = 1000)
 str(hvg.416b.var)
 
 # Also works with modelGeneCV2() but note `var.field`
@@ -461,7 +475,8 @@ hvg.pbmc.var.2 <- getTopHVGs(dec.pbmc, fdr.threshold = 0.05)
 str(hvg.pbmc.var.2)
 # Works with modelGeneVarWithSpikes() output
 hvg.416b.var.2 <- getTopHVGs(dec.spike.416b,
- fdr.threshold=0.05)
+    fdr.threshold = 0.05
+)
 str(hvg.416b.var.2)
 
 # Also works with modelGeneCV2() but note `var.field`
@@ -493,7 +508,8 @@ str(hvg.pbmc.var.3)
 
 # Works with modelGeneVarWithSpikes() output
 hvg.416b.var.3 <- getTopHVGs(dec.spike.416b,
- var.threshold=0)
+    var.threshold = 0
+)
 str(hvg.416b.var.3)
 
 # Also works with modelGeneCV2() but note `var.field` and
