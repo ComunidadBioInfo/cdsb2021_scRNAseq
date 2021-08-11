@@ -1,6 +1,71 @@
 # Análisis de expresión diferencial
 
-TODO
+Instructor: [Leonardo Collado Torres](https://comunidadbioinfo.github.io/es/authors/lcollado/)
+
+```{r cargar_paquetes, message = FALSE}
+## Paquetes de este capítulo
+library("MouseGastrulationData") ## para descargar datos de ejemplo
+library("scater") ## para gráficas y control de calidad
+library("scran") ## para selección de genes, clustering, etc
+library("batchelor") ## para métodos de correción de batch (lote)
+
+```
+
+## Diapositivas de Peter Hickey
+
+Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1CRTE_1m8YHf8p6GMl-rbBpyOx2KS4UxdTC1dpvVgKEs/edit?usp=sharing)
+
+Esas diapositivas están basadas en este [capítulo de OSCA](https://bioconductor.org/books/release/OSCA/multi-sample-comparisons.html).
+
+##
+
+```{r}
+#--- loading ---#
+library(MouseGastrulationData)
+sce.chimera <- WTChimeraData(samples=5:10)
+sce.chimera
+
+#--- feature-annotation ---#
+library(scater)
+rownames(sce.chimera) <- uniquifyFeatureNames(
+    rowData(sce.chimera)$ENSEMBL, rowData(sce.chimera)$SYMBOL)
+
+#--- quality-control ---#
+drop <- sce.chimera$celltype.mapped %in% c("stripped", "Doublet")
+sce.chimera <- sce.chimera[,!drop]
+
+#--- normalization ---#
+sce.chimera <- logNormCounts(sce.chimera)
+
+#--- variance-modelling ---#
+library(scran)
+dec.chimera <- modelGeneVar(sce.chimera, block=sce.chimera$sample)
+chosen.hvgs <- dec.chimera$bio > 0
+
+#--- merging ---#
+library(batchelor)
+set.seed(01001001)
+merged <- correctExperiments(sce.chimera, 
+    batch=sce.chimera$sample, 
+    subset.row=chosen.hvgs,
+    PARAM=FastMnnParam(
+        merge.order=list(
+            list(1,3,5), # WT (3 replicates)
+            list(2,4,6)  # td-Tomato (3 replicates)
+        )
+    )
+)
+
+#--- clustering ---#
+g <- buildSNNGraph(merged, use.dimred="corrected")
+clusters <- igraph::cluster_louvain(g)
+colLabels(merged) <- factor(clusters$membership)
+
+#--- dimensionality-reduction ---#
+merged <- runTSNE(merged, dimred="corrected", external_neighbors=TRUE)
+merged <- runUMAP(merged, dimred="corrected", external_neighbors=TRUE)
+```
+
 
 ## Detalles de la sesión de R
 
