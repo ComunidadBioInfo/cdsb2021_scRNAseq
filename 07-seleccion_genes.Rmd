@@ -98,9 +98,58 @@ sce.pbmc <- logNormCounts(sce.pbmc)
 
 ### Preguntas de repaso
 
-* ¿Cómo determinamos cuales eran los genes mitocondriales? ^[Usando Ensembl v86 para humano]
+* ¿Cómo determinamos cuáles eran los genes mitocondriales? ^[Usando Ensembl v86 para humano]
 * ¿Cómo decidimos filtrar las células? ^[Usamos los resultados de `emptyDrops()` con un límite de 0.1% FDR y el filtro de 3 desviaciones sobre la mediana (MAD) en la expresión mitocondrial.]
 * ¿Puedes explicar como normalizamos los datos? ^[Encontramos unos clusters rápidos para las célulasy usamos esa información para calcular los factores de tamaño.]
+
+
+## Dataset ilustrativo: 416B
+
+```{r, warning=FALSE, message=FALSE}
+library(scRNAseq)
+sce.416b <- LunSpikeInData(which="416b") 
+sce.416b$block <- factor(sce.416b$block)
+```
+
+Línea celular de células mieloides progenitoras inmortalizadas de ratón usando SmartSeq2
+[https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2.html](https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2.html) ^[Lun, A. T. L., Calero-Nieto, F. J., Haim-Vilmovsky, L., Göttgens, B. & Marioni, J. C. Assessing the reliability of spike-in normalization for analyses of single-cell RNA sequencing data. Genome Res. 27, 1795–1806 (2017)).]
+
+```{r, warning=FALSE, message=FALSE}
+# gene-annotation
+library(AnnotationHub)
+ens.mm.v97 <- AnnotationHub()[["AH73905"]]
+rowData(sce.416b)$ENSEMBL <- rownames(sce.416b)
+rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97, 
+  keys=rownames(sce.416b),
+  keytype="GENEID", column="SYMBOL")
+rowData(sce.416b)$SEQNAME <- mapIds(ens.mm.v97,
+  keys=rownames(sce.416b),
+  keytype="GENEID", column="SEQNAME")
+library(scater)
+rownames(sce.416b) <- uniquifyFeatureNames(rowData(sce.416b)$ENSEMBL, 
+  rowData(sce.416b)$SYMBOL)
+```
+
+```{r, warning=FALSE, message=FALSE}
+# quality-control
+mito <- which(rowData(sce.416b)$SEQNAME=="MT")
+stats <- perCellQCMetrics(sce.416b, subsets=list(Mt=mito))
+qc <- quickPerCellQC(stats,
+  percent_subsets=c("subsets_Mt_percent", "altexps_ERCC_percent"),
+  batch=sce.416b$block)
+sce.416b <- sce.416b[,!qc$discard]
+
+# normalization
+library(scran)
+sce.416b <- computeSumFactors(sce.416b)
+sce.416b <- logNormCounts(sce.416b)
+```
+
+### Preguntas de repaso
+
+* ¿Cómo determinamos cuáles eran los genes mitocondriales?
+* ¿Cómo decidimos filtrar las células
+* ¿Puedes explicar cómo normalizamos los datos?
 
 ## Cuantificando la varianza por gen
 
@@ -230,17 +279,76 @@ dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
   - Puede asignar un alto rango a genes que no son de nuestro interés con varianza baja absoluta	
 * La variación descrita por el CV<sup>2</sup> de las cuentas es menos relevante para los procedimientos que operan en los _log-counts_
 
+## Cuantificando el ruido técnico
 
+* Previamente, ajustamos una línea de tendencia a todos los genes endógenos y asumimos que la mayoría de los genes no están dominados por ruido técnico
 
-## Importando un dataset con factores experimentales
+* En la práctica, todos los genes expresados tienen algún nivel de variabilidad biológica diferente de cero (e.g., transcriptional bursting)
 
-```{r, warning=FALSE, message=FALSE }
-library(scRNAseq)
-sce.416b <- LunSpikeInData(which = "416b")
-sce.416b$block <- factor(sce.416b$block)
+* Esto sugiere que nuestros estimados de los componentes técnicos estarán inflados probablemente
 
-sce.416b
+* 👉 Es mejor que pensemos estos estimados como una variación _técnica_ más la variación biológica que no es interesante
+
+* 🤔 Pero que tal si un grupo de genes a una abundancia particular es afectado por un proceso biológico?
+E.g., fuerte sobre regulación de genes específicos de un tipo celular podrían conllevar a un enriquecimiento de HVGs en abundancias altas. Esto inflaría la tendencia y compromete la detección de los genes relevantes
+
+**¿Cómo podemos evitar este problema?**
+
+Podemos revisar dos enfoques:
+
+1. Cuando tenemos spike-ins
+2. Cuando no tenemos spike-ins 
+
+### En la presencia de spike-ins
+
+```{r, warning=FALSE, message=FALSE}
+dec.spike.416b <- modelGeneVarWithSpikes(sce.416b, 
+  "ERCC")
+# Ordering by most interesting genes for 
+# inspection.
+dec.spike.416b[order(dec.spike.416b$bio, 
+  decreasing=TRUE),]
 ```
+
+* 👉 Ajusta la tendencia solo con los spike-ins (que deberían estar afectados solamente por variación técnica)
+
+```{r, warning=FALSE, message=FALSE}
+plot(dec.spike.416b$mean, dec.spike.416b$total,
+  xlab="Mean of log-expression",
+  ylab="Variance of log-expression")
+fit.spike.416b <- metadata(dec.spike.416b)
+points(fit.spike.416b$mean, fit.spike.416b$var, 
+  col="red", pch=16)
+curve(fit.spike.416b$trend(x), col="dodgerblue", 
+  add=TRUE, lwd=2)
+```
+
+## En la ausencia de spike-ins
+
+```{r, warning=FALSE, message=FALSE}
+set.seed(0010101)
+dec.pois.pbmc <- modelGeneVarByPoisson(sce.pbmc)
+# Ordering by most interesting genes for inspection.
+dec.pois.pbmc[order(dec.pois.pbmc$bio,decreasing=TRUE),]
+```
+
+* 👉 Realiza algunas asunciones estadísticas acerca del ruido
+* 🤓 Las cuentas UMI típicamente muestran una variación cercana a Poisson si solo consideramos ruido técnico de la preparación de las librerías y la secuenciación 
+* ⚠️ modelGeneVarByPoisson() realiza simulaciones, por lo que necesitamos “ajustar la “semilla” para obtener resultados reproducibles
+* 🤓 modelGeneVarByPoisson() pueden también simular una variación binomial negativa (variación de Poisson sobredispersada)
+
+```{r, warning=FALSE, message=FALSE}
+plot(dec.pois.pbmc$mean, dec.pois.pbmc$total, 
+  pch=16, xlab="Mean of log-expression",
+  ylab="Variance of log-expression")
+curve(metadata(dec.pois.pbmc)$trend(x),
+  col="dodgerblue", add=TRUE)
+```
+
+* 🤓 La línea de tendencia basada puramente en ruido técnico tiende a producir componentes “biológicos” más grandes por los genes altamente expresados, que frecuentemente incluyen los genes “house-keeping”
+* 🤔 Necesitas considerar si tales genes son “interesantes” o no en tu dataset de interés
+
+## Recordemos propiedades de los datos de sce.416b
 
 Este dataset consiste de células de una línea celular de células inmortalizadas mieloides progenitoras de ratón utilizando SmartSeq2
 
@@ -248,52 +356,7 @@ Una cantidad constante de spike-in ERCC RNA se agregó a cada lisado celular ant
 
 Descripción [aquí](https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2.html)
 
-*Lun, A. T. L., Calero-Nieto, F. J., Haim-Vilmovsky, L., Göttgens, B. & Marioni, J. C. Assessing the reliability of spike-in normalization for analyses of single-cell RNA sequencing data. Genome Res. 27, 1795–1806 (2017)*
-
-
-** Ahora vamos a procesar los datos de la forma que ya hemos aprendido: **
-
-```{r, warning=FALSE, message=FALSE  }
-# gene-annotation
-# agregando simbolo y cromosoma
-library(AnnotationHub)
-ens.mm.v97 <- AnnotationHub()[["AH73905"]]
-rowData(sce.416b)$ENSEMBL <- rownames(sce.416b)
-rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97,
-    keys = rownames(sce.416b),
-    keytype = "GENEID", column = "SYMBOL"
-)
-rowData(sce.416b)$SEQNAME <- mapIds(ens.mm.v97,
-    keys = rownames(sce.416b),
-    keytype = "GENEID", column = "SEQNAME"
-)
-library(scater)
-rownames(sce.416b) <- uniquifyFeatureNames(
-    rowData(sce.416b)$ENSEMBL,
-    rowData(sce.416b)$SYMBOL
-)
-```
-
-
-```{r }
-# quality-control
-# obteniendo metricas de QC para los datos completos, el subset de mitocondrial y para cada altExp
-# eliminando los outliers por batch
-mito <- which(rowData(sce.416b)$SEQNAME == "MT")
-stats <- perCellQCMetrics(sce.416b, subsets = list(Mt = mito))
-qc <- quickPerCellQC(stats,
-    percent_subsets = c("subsets_Mt_percent", "altexps_ERCC_percent"),
-    batch = sce.416b$block
-)
-sce.416b <- sce.416b[, !qc$discard]
-
-# normalization
-# calculamos factores de tamaño y normalizacion
-library(scran)
-sce.416b <- computeSumFactors(sce.416b)
-sce.416b <- logNormCounts(sce.416b)
-```
-
+_Lun, A. T. L., Calero-Nieto, F. J., Haim-Vilmovsky, L., Göttgens, B. & Marioni, J. C. Assessing the reliability of spike-in normalization for analyses of single-cell RNA sequencing data. Genome Res. 27, 1795–1806 (2017)_
 
 ## Considerando factores experimentales 
 
@@ -303,7 +366,6 @@ sce.416b <- logNormCounts(sce.416b)
 
 ```{r }
 # calculando la variacion por bloque
-library(scran)
 dec.block.416b <- modelGeneVarWithSpikes(sce.416b,
     "ERCC",
     block = sce.416b$block
