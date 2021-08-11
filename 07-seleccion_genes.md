@@ -196,11 +196,11 @@ dec.pbmc[order(dec.pbmc$bio, decreasing = TRUE), ]
 ## DataFrame with 33694 rows and 6 columns
 ##              mean     total      tech       bio      p.value          FDR
 ##         <numeric> <numeric> <numeric> <numeric>    <numeric>    <numeric>
-## LYZ       1.95605   5.05854  0.835343   4.22320 1.10535e-270 2.17412e-266
-## S100A9    1.93416   4.53551  0.835439   3.70007 2.71038e-208 7.61579e-205
-## S100A8    1.69961   4.41084  0.824342   3.58650 4.31574e-201 9.43181e-198
-## HLA-DRA   2.09785   3.75174  0.831239   2.92050 5.93943e-132 4.86761e-129
-## CD74      2.90176   3.36879  0.793188   2.57560 4.83932e-113 2.50486e-110
+## LYZ       1.95605   5.05854  0.835343   4.22320 1.10538e-270 2.17417e-266
+## S100A9    1.93416   4.53551  0.835439   3.70007 2.71043e-208 7.61593e-205
+## S100A8    1.69961   4.41084  0.824342   3.58650 4.31581e-201 9.43197e-198
+## HLA-DRA   2.09785   3.75174  0.831239   2.92050 5.93950e-132 4.86767e-129
+## CD74      2.90176   3.36879  0.793188   2.57560 4.83937e-113 2.50488e-110
 ## ...           ...       ...       ...       ...          ...          ...
 ## TMSB4X    6.08142  0.441718  0.679215 -0.237497     0.992447            1
 ## PTMA      3.82978  0.486454  0.731275 -0.244821     0.990002            1
@@ -289,6 +289,26 @@ dec.cv2.pbmc[order(dec.cv2.pbmc$ratio,
 library(scRNAseq)
 sce.416b <- LunSpikeInData(which = "416b")
 sce.416b$block <- factor(sce.416b$block)
+
+sce.416b
+```
+
+```
+## class: SingleCellExperiment 
+## dim: 46604 192 
+## metadata(0):
+## assays(1): counts
+## rownames(46604): ENSMUSG00000102693 ENSMUSG00000064842 ...
+##   ENSMUSG00000095742 CBFB-MYH11-mcherry
+## rowData names(1): Length
+## colnames(192): SLX-9555.N701_S502.C89V9ANXX.s_1.r_1
+##   SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 ...
+##   SLX-11312.N712_S508.H5H5YBBXX.s_8.r_1
+##   SLX-11312.N712_S517.H5H5YBBXX.s_8.r_1
+## colData names(9): Source Name cell line ... spike-in addition block
+## reducedDimNames(0):
+## mainExpName: endogenous
+## altExpNames(2): ERCC SIRV
 ```
 
 Este dataset consiste de células de una línea celular de células inmortalizadas mieloides progenitoras de ratón utilizando SmartSeq2
@@ -300,61 +320,23 @@ Descripción [aquí](https://osca.bioconductor.org/lun-416b-cell-line-smart-seq2
 *Lun, A. T. L., Calero-Nieto, F. J., Haim-Vilmovsky, L., Göttgens, B. & Marioni, J. C. Assessing the reliability of spike-in normalization for analyses of single-cell RNA sequencing data. Genome Res. 27, 1795–1806 (2017)*
 
 
-### Procesándolo
+** Ahora vamos a procesar los datos de la forma que ya hemos aprendido: **
 
 
 ```r
 # gene-annotation
+# agregando simbolo y cromosoma
 library(AnnotationHub)
-```
-
-```
-## 
-## Attaching package: 'AnnotationHub'
-```
-
-```
-## The following object is masked from 'package:Biobase':
-## 
-##     cache
-```
-
-```r
 ens.mm.v97 <- AnnotationHub()[["AH73905"]]
-```
-
-```
-## snapshotDate(): 2021-05-18
-```
-
-```
-## loading from cache
-```
-
-```r
 rowData(sce.416b)$ENSEMBL <- rownames(sce.416b)
 rowData(sce.416b)$SYMBOL <- mapIds(ens.mm.v97,
     keys = rownames(sce.416b),
     keytype = "GENEID", column = "SYMBOL"
 )
-```
-
-```
-## Warning: Unable to map 563 of 46604 requested IDs.
-```
-
-```r
 rowData(sce.416b)$SEQNAME <- mapIds(ens.mm.v97,
     keys = rownames(sce.416b),
     keytype = "GENEID", column = "SEQNAME"
 )
-```
-
-```
-## Warning: Unable to map 563 of 46604 requested IDs.
-```
-
-```r
 library(scater)
 rownames(sce.416b) <- uniquifyFeatureNames(
     rowData(sce.416b)$ENSEMBL,
@@ -366,6 +348,8 @@ rownames(sce.416b) <- uniquifyFeatureNames(
 
 ```r
 # quality-control
+# obteniendo metricas de QC para los datos completos, el subset de mitocondrial y para cada altExp
+# eliminando los outliers por batch
 mito <- which(rowData(sce.416b)$SEQNAME == "MT")
 stats <- perCellQCMetrics(sce.416b, subsets = list(Mt = mito))
 qc <- quickPerCellQC(stats,
@@ -375,6 +359,7 @@ qc <- quickPerCellQC(stats,
 sce.416b <- sce.416b[, !qc$discard]
 
 # normalization
+# calculamos factores de tamaño y normalizacion
 library(scran)
 sce.416b <- computeSumFactors(sce.416b)
 sce.416b <- logNormCounts(sce.416b)
@@ -407,7 +392,7 @@ dec.block.416b[order(
 ## Lyz2       6.61235   13.8619   1.58416   12.2777  0.00000e+00  0.00000e+00
 ## Ccl9       6.67841   13.2599   1.44553   11.8143  0.00000e+00  0.00000e+00
 ## Top2a      5.81275   14.0192   2.74571   11.2734 3.89855e-137 8.43398e-135
-## Cd200r3    4.83305   15.5909   4.31892   11.2719  1.17783e-54  7.00722e-53
+## Cd200r3    4.83305   15.5909   4.31892   11.2719  1.17783e-54  7.00721e-53
 ## Ccnb2      5.97999   13.0256   2.46647   10.5591 1.20380e-151 2.98405e-149
 ## ...            ...       ...       ...       ...          ...          ...
 ## Gm12816    2.91299  0.842574   6.67730  -5.83472     0.999989     0.999999
@@ -432,7 +417,7 @@ dec.block.416b[order(
 
 Al calcular tendencias específicas por batch se tomarán en cuenta las diferencias en la relación media-varianza entre batches
 
-Se deben obtener estimados de los componentes biológico y técnico para cada gene específicos de cada batch, los caules se promedian entre los batches para crear una única lista de HVGs
+Se deben obtener estimados de los componentes biológico y técnico para cada gene específicos de cada batch, los cuales se promedian entre los batches para crear una única lista de HVGs
 
 
 <div>
@@ -450,7 +435,7 @@ Hasta ahora hemos ordenado los genes del más al menos **interesantemente variab
 
 *¿Qué tanto debemos de bajar en la lista para seleccionar nuestros HVGs?*
 
-Elegir un subset más grande:
+Para responder esta pregunta debemos tomar en cuenta lo siguiente: elegir un subset más grande:
 
 - Reduce el riesgo de desechar señal biológica
 - Incrementa el ruido por la inclusión de genes irrelevantes
@@ -462,11 +447,11 @@ Discutiremos algunas estrategias para seleccionar HVGs
 
 ### Seleccionando HVGs sobre la métrica de varianza
 
-La estrategia más simple es seleccionar los top-X genes con los valores más grandes para la métrica relevante de varianza, *por ejemplo, la varianza biológica más grande calculada con `scran::modelGeneVar()`*
+La estrategia más simple es seleccionar los **top-X genes** con los valores más grandes para la métrica relevante de varianza, *por ejemplo, la varianza biológica más grande calculada con `scran::modelGeneVar()`*
 
-Pro: El usuario puede controlar directamente el número de HVGs
+**Pro**: El usuario puede controlar directamente el número de HVGs
 
-Contra: ¿Qué valor de X se debe usar?
+**Contra**: ¿Qué valor de X se debe usar?
 
 
 
@@ -499,25 +484,26 @@ str(hvg.pbmc.cv2)
 
 #### Estrategias para seleccionar X
 
-Asume que, por ejemplo, no más del 5% de los genes están diferencialmente expresados entre las célula de nuestra población:
+Asume que, por ejemplo, no más del 5% de los genes están diferencialmente expresados entre las células de nuestra población:
 
  - *Establece X como el 5% de los genes*
  
-Normalmente no conocemos el número de genes diferecialmente expresados desde antes, por lo tanto, solo hemos cambiado un número arbitrario por otro número arbitrario
+Normalmente no conocemos el número de genes diferencialmente expresados desde antes, por lo tanto, solo hemos cambiado un número arbitrario por otro número arbitrario
  
-Si decides utilizar los top-X HGVs, elige un valor de X y procede con el resto del análisis con la intención de regresar más adelante y probar otros valores, en vez de dedicarle mucho esfuerzo a encontrar el valor óptimo
+**RECOMENDACIÓN**: Si decides utilizar los top-X HGVs, elige un valor de X y procede con el resto del análisis con la intención de regresar más adelante y probar otros valores, en vez de dedicarle mucho esfuerzo a encontrar el valor óptimo
 
 
-### Seleccionando HVGs sobre su significancia estadística
+### Seleccionando HVGs de acuerdo a su significancia estadística
 
-Establece un límite fijo en alguna métrica de significancia estadística:
-
-* algunos de los métodos reportan un p-valor para cada gene, entonces selecciona todos los genes con un p-valor ajustado menor que 0.05
+Establece un límite fijo en alguna métrica de significancia estadística. Por ejemplo: algunos de los métodos reportan un p-valor para cada gene, entonces selecciona todos los genes con un p-valor ajustado menor que 0.05
 
 **Recuerda que las pruebas estadísticas siempre dependen del tamaño de la muestra**
 
+**Ventajas:** 
 * Fácil de implementar
-* Menos predecible qe la estrategia de los top-X
+* Menos predecible que la estrategia de los top-X
+
+**Desventajas:**
 * Podría priorizar genes con significancia estadística fuerte en vez de significancia biológica fuerte
 
 
@@ -550,16 +536,18 @@ str(hvg.pbmc.cv2.2)
 ```
 
 
-### Seleccionando genes por arriba de la tendencia
+### Seleccionando genes por arriba de la tendencia media-varianza
 
 Selecciona todos los genes con **una varianza biológica positiva**
 
 Este es un extremo del equilibrio sesgo-varianza que minimiza el sesgo con el costo de maximizar el ruido
 
-* Le da a la estructura secundaria de la población una oportunidad de manifestarse
-* Se captura más ruido, lo cual puede reducir la resolución de poblaciones bien separadas enmascarando la señal secundaria que intentamos preservar
+Si seguimos esta aproximación, estamos:
 
-Mejor preparado para datasets altamente heterogeneos que contienen muchos tipos celulares diferentes
+* Dándole a la estructura secundaria de la población una oportunidad de manifestarse
+* Capturando más ruido, lo cual puede reducir la resolución de poblaciones bien separadas enmascarando la señal secundaria que intentamos preservar
+
+Funciona mejor si tenemos datasets altamente heterogeneos que contienen muchos tipos celulares diferentes
 
 
 
@@ -591,22 +579,18 @@ str(hvg.pbmc.cv2.2)
 ##  chr [1:1972] "PPBP" "PRTFDC1" "HIST1H2AC" "FAM81B" "PF4" "GNG11" ...
 ```
 
-### Seleccionando genes de interés a priori
+### Seleccionando genes de interés *a priori*
 
-Una estrategia contundente pero efecta es usar sets predefinidos de genes de interés
+Una estrategia contundente es usar sets predefinidos de genes de interés. No hay vergüenza en aprovechar el conocimiento biológivo previo
 
-No hay vergüenza en aprovechar el conocimiento biológivo previo
-
-*Contra*: Limita nuestra capacidad de descubrir aspectos nuevos o inesperados de la variación
-
-*Considera esta como una estrategia complementaria a otros tipo de estrategias de selección de HGVs*
+Sin embargo, limita nuestra capacidad de descubrir aspectos nuevos o inesperados de la variación. Por lo tanto, considera esta como una estrategia complementaria a otros tipo de estrategias de selección de HGVs
 
 
 También podrías eliminar listas pre-definidas de genes:
 
 * Genes de proteínas ribosomales o genes mitocondriales son conocidos por encontrarse dentro de los genes *más variables* y por interferir con análisis posteriores
  
- *Tampoco hay que pecar de prevacido*, espera a que estos genes demuestren ser problemáticos para removerlos
+ Sin embargo, tampoco hay que pecar de prevacido, espera a que estos genes demuestren ser problemáticos para removerlos
  
 
 ## Poniendo todo junto
@@ -653,9 +637,9 @@ sce.pbmc.hvg
 ## altExpNames(0):
 ```
 
-PRO: Te aseguras de que los métodos posteriores **sólo** usen estos genes para sus cálculos
+**PRO:** Te aseguras de que los métodos posteriores **sólo** usen estos genes para sus cálculos
 
-CONTRA: Los genes no-HGVs son eliminados del nnuevo objeto *SingleCellExperiment*, lo cual hace menos conveniente la interrogación del dataset completo sobre genes que no son HGVs
+**CONTRA:** Los genes no-HGVs son eliminados del nuevo objeto *SingleCellExperiment*, lo cual hace menos conveniente la interrogación del dataset completo sobre genes que no son HGVs
 
 
 ### Especificando los HGVs
@@ -686,8 +670,8 @@ sce.pbmc
 
 Mantiene el objeto *SingleCellExperiment* original y especifica los genes para usar en funciones posteriores mediante un argumento adicional como **subset_row**
 
-PRO: Es útil si el análisis usa varios conjuntos de HGVs en diferentes pasos
-CONTRA: Podría ser inconveniente especificar repetidamente el mismo conjunto de HGVs en diferentes pasos
+**PRO:** Es útil si el análisis usa varios conjuntos de HGVs en diferentes pasos
+**CONTRA:** Podría ser inconveniente especificar repetidamente el mismo conjunto de HGVs en diferentes pasos
 
 
 ### Witchcraft (Brujería)
@@ -735,9 +719,9 @@ altExp(sce.pbmc.hvg, "original")
 
 Utilizando el sistema de "experimento alternartivo" en la clase *SingleCellExperiment*
 
-PRO: Evita algunos problemas a largo plazo cuando el dataset original no está sincronizado con el conjunto filtrado por HVGs
+**PRO:** Evita algunos problemas a largo plazo cuando el dataset original no está sincronizado con el conjunto filtrado por HVGs
 
-CONTRA: Ralentiza todos los análisis subsecuentes
+**CONTRA:** Ralentiza todos los análisis subsecuentes
 
 
 ## Resumen y recomendaciones
@@ -777,7 +761,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-10 20:09:25 UTC"
+## [1] "2021-08-11 03:23:23 UTC"
 ```
 
 ```r
@@ -786,7 +770,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 150.708   4.454 153.811
+## 156.748   4.083 164.111
 ```
 
 ```r
@@ -805,7 +789,7 @@ sessioninfo::session_info()
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-10                  
+##  date     2021-08-11                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package                * version  date       lib source        

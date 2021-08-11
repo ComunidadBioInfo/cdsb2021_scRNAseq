@@ -326,17 +326,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.6.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#genes-por-coeficiente-de-variación"><i class="fa fa-check"></i><b>7.6.3</b> Genes por coeficiente de variación</a></li>
 </ul></li>
 <li class="chapter" data-level="7.7" data-path="selección-de-genes.html"><a href="selección-de-genes.html#varianza-de-los-log-counts-vs-coeficiente-de-variación"><i class="fa fa-check"></i><b>7.7</b> Varianza de los <em>log-counts</em> vs coeficiente de variación</a></li>
-<li class="chapter" data-level="7.8" data-path="selección-de-genes.html"><a href="selección-de-genes.html#importando-un-dataset-con-factores-experimentales"><i class="fa fa-check"></i><b>7.8</b> Importando un dataset con factores experimentales</a>
-<ul>
-<li class="chapter" data-level="7.8.1" data-path="selección-de-genes.html"><a href="selección-de-genes.html#procesándolo"><i class="fa fa-check"></i><b>7.8.1</b> Procesándolo</a></li>
-</ul></li>
+<li class="chapter" data-level="7.8" data-path="selección-de-genes.html"><a href="selección-de-genes.html#importando-un-dataset-con-factores-experimentales"><i class="fa fa-check"></i><b>7.8</b> Importando un dataset con factores experimentales</a></li>
 <li class="chapter" data-level="7.9" data-path="selección-de-genes.html"><a href="selección-de-genes.html#considerando-factores-experimentales"><i class="fa fa-check"></i><b>7.9</b> Considerando factores experimentales</a></li>
 <li class="chapter" data-level="7.10" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-altamante-variables-high-variable-genes-hvgs"><i class="fa fa-check"></i><b>7.10</b> Seleccionando genes altamante variables (high-variable genes, HVGs)</a>
 <ul>
 <li class="chapter" data-level="7.10.1" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-sobre-la-métrica-de-varianza"><i class="fa fa-check"></i><b>7.10.1</b> Seleccionando HVGs sobre la métrica de varianza</a></li>
-<li class="chapter" data-level="7.10.2" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-sobre-su-significancia-estadística"><i class="fa fa-check"></i><b>7.10.2</b> Seleccionando HVGs sobre su significancia estadística</a></li>
-<li class="chapter" data-level="7.10.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-por-arriba-de-la-tendencia"><i class="fa fa-check"></i><b>7.10.3</b> Seleccionando genes por arriba de la tendencia</a></li>
-<li class="chapter" data-level="7.10.4" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-de-interés-a-priori"><i class="fa fa-check"></i><b>7.10.4</b> Seleccionando genes de interés a priori</a></li>
+<li class="chapter" data-level="7.10.2" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-de-acuerdo-a-su-significancia-estadística"><i class="fa fa-check"></i><b>7.10.2</b> Seleccionando HVGs de acuerdo a su significancia estadística</a></li>
+<li class="chapter" data-level="7.10.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-por-arriba-de-la-tendencia-media-varianza"><i class="fa fa-check"></i><b>7.10.3</b> Seleccionando genes por arriba de la tendencia media-varianza</a></li>
+<li class="chapter" data-level="7.10.4" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-de-interés-a-priori"><i class="fa fa-check"></i><b>7.10.4</b> Seleccionando genes de interés <em>a priori</em></a></li>
 </ul></li>
 <li class="chapter" data-level="7.11" data-path="selección-de-genes.html"><a href="selección-de-genes.html#poniendo-todo-junto"><i class="fa fa-check"></i><b>7.11</b> Poniendo todo junto</a>
 <ul>
@@ -556,14 +553,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>TODO</p>
 <div id="detalles-de-la-sesión-de-r-11" class="section level2" number="12.1">
 <h2><span class="header-section-number">12.1</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="análisis-de-expresión-diferencial.html#cb536-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb536-2"><a href="análisis-de-expresión-diferencial.html#cb536-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-10 20:27:32 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="análisis-de-expresión-diferencial.html#cb538-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="análisis-de-expresión-diferencial.html#cb527-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb527-2"><a href="análisis-de-expresión-diferencial.html#cb527-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-11 03:42:46 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="análisis-de-expresión-diferencial.html#cb529-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.436   0.138   0.440</code></pre>
-<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="análisis-de-expresión-diferencial.html#cb540-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb540-2"><a href="análisis-de-expresión-diferencial.html#cb540-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+##   0.445   0.105   0.429</code></pre>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="análisis-de-expresión-diferencial.html#cb531-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb531-2"><a href="análisis-de-expresión-diferencial.html#cb531-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)
@@ -574,7 +571,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-10                  
+##  date     2021-08-11                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package     * version date       lib source        

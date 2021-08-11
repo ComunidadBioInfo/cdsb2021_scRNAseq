@@ -249,7 +249,7 @@ usethis::use_github()
 ```
 
 
-Creen su templado usando `postcards`. Va a crear un archivo `index.Rmd`
+Creen su templado usando `postcards` corriendo **una** de las 4 líneas (la que tenga el templado que más les gustó). Va a crear un archivo `index.Rmd`
 
 
 ```r
@@ -347,7 +347,7 @@ Otra manera de hacer es vía línea de comandos, primero pueden agregar los arch
 gert::git_commit_all("mensaje sobre el commit")
 
 ## Subimos los archivos a github
-gert::git_push
+gert::git_push()
 ```
 
 * <span style="color:DodgerBlue">**(extra)** </span>. Pueden copiar y pegar emojis en sus páginas o utilizar [fontawesome](https://github.com/rstudio/fontawesome) para agregar diferentes símbolos (como github o twitter):
@@ -399,7 +399,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-10 20:00:06 UTC"
+## [1] "2021-08-11 03:12:55 UTC"
 ```
 
 ```r
@@ -408,7 +408,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.633   0.134   0.639
+##   0.640   0.122   0.648
 ```
 
 ```r
@@ -427,7 +427,7 @@ sessioninfo::session_info()
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-10                  
+##  date     2021-08-11                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package     * version date       lib source        

@@ -326,17 +326,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.6.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#genes-por-coeficiente-de-variación"><i class="fa fa-check"></i><b>7.6.3</b> Genes por coeficiente de variación</a></li>
 </ul></li>
 <li class="chapter" data-level="7.7" data-path="selección-de-genes.html"><a href="selección-de-genes.html#varianza-de-los-log-counts-vs-coeficiente-de-variación"><i class="fa fa-check"></i><b>7.7</b> Varianza de los <em>log-counts</em> vs coeficiente de variación</a></li>
-<li class="chapter" data-level="7.8" data-path="selección-de-genes.html"><a href="selección-de-genes.html#importando-un-dataset-con-factores-experimentales"><i class="fa fa-check"></i><b>7.8</b> Importando un dataset con factores experimentales</a>
-<ul>
-<li class="chapter" data-level="7.8.1" data-path="selección-de-genes.html"><a href="selección-de-genes.html#procesándolo"><i class="fa fa-check"></i><b>7.8.1</b> Procesándolo</a></li>
-</ul></li>
+<li class="chapter" data-level="7.8" data-path="selección-de-genes.html"><a href="selección-de-genes.html#importando-un-dataset-con-factores-experimentales"><i class="fa fa-check"></i><b>7.8</b> Importando un dataset con factores experimentales</a></li>
 <li class="chapter" data-level="7.9" data-path="selección-de-genes.html"><a href="selección-de-genes.html#considerando-factores-experimentales"><i class="fa fa-check"></i><b>7.9</b> Considerando factores experimentales</a></li>
 <li class="chapter" data-level="7.10" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-altamante-variables-high-variable-genes-hvgs"><i class="fa fa-check"></i><b>7.10</b> Seleccionando genes altamante variables (high-variable genes, HVGs)</a>
 <ul>
 <li class="chapter" data-level="7.10.1" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-sobre-la-métrica-de-varianza"><i class="fa fa-check"></i><b>7.10.1</b> Seleccionando HVGs sobre la métrica de varianza</a></li>
-<li class="chapter" data-level="7.10.2" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-sobre-su-significancia-estadística"><i class="fa fa-check"></i><b>7.10.2</b> Seleccionando HVGs sobre su significancia estadística</a></li>
-<li class="chapter" data-level="7.10.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-por-arriba-de-la-tendencia"><i class="fa fa-check"></i><b>7.10.3</b> Seleccionando genes por arriba de la tendencia</a></li>
-<li class="chapter" data-level="7.10.4" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-de-interés-a-priori"><i class="fa fa-check"></i><b>7.10.4</b> Seleccionando genes de interés a priori</a></li>
+<li class="chapter" data-level="7.10.2" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-de-acuerdo-a-su-significancia-estadística"><i class="fa fa-check"></i><b>7.10.2</b> Seleccionando HVGs de acuerdo a su significancia estadística</a></li>
+<li class="chapter" data-level="7.10.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-por-arriba-de-la-tendencia-media-varianza"><i class="fa fa-check"></i><b>7.10.3</b> Seleccionando genes por arriba de la tendencia media-varianza</a></li>
+<li class="chapter" data-level="7.10.4" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-de-interés-a-priori"><i class="fa fa-check"></i><b>7.10.4</b> Seleccionando genes de interés <em>a priori</em></a></li>
 </ul></li>
 <li class="chapter" data-level="7.11" data-path="selección-de-genes.html"><a href="selección-de-genes.html#poniendo-todo-junto"><i class="fa fa-check"></i><b>7.11</b> Poniendo todo junto</a>
 <ul>
@@ -1024,7 +1021,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-10                  
+##  date     2021-08-11                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package                * version    date       lib source        
@@ -1074,7 +1071,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ##  Cairo                    1.5-12.2   2020-07-07 [1] RSPM (R 4.1.0)
 ##  callr                    3.7.0      2021-04-20 [2] RSPM (R 4.1.0)
 ##  caTools                  1.18.2     2021-03-28 [1] RSPM (R 4.1.0)
-##  cdsb2021scRNAseq         0.99.0     2021-08-10 [1] local         
+##  cdsb2021scRNAseq         0.99.0     2021-08-11 [1] local         
 ##  celldex                  1.2.0      2021-05-20 [1] Bioconductor  
 ##  circlize                 0.4.13     2021-06-09 [1] RSPM (R 4.1.0)
 ##  class                    7.3-19     2021-05-03 [3] CRAN (R 4.1.0)
@@ -1393,7 +1390,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ## [1] /__w/_temp/Library
 ## [2] /usr/local/lib/R/site-library
 ## [3] /usr/local/lib/R/library</code></pre>
-<p>Fecha de la última actualización de esta página: 2021-08-10 20:00:05.</p>
+<p>Fecha de la última actualización de esta página: 2021-08-11 03:12:54.</p>
 </div>
 <div id="licencia" class="section level2 unnumbered">
 <h2>Licencia</h2>

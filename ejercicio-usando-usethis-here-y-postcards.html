@@ -326,17 +326,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.6.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#genes-por-coeficiente-de-variación"><i class="fa fa-check"></i><b>7.6.3</b> Genes por coeficiente de variación</a></li>
 </ul></li>
 <li class="chapter" data-level="7.7" data-path="selección-de-genes.html"><a href="selección-de-genes.html#varianza-de-los-log-counts-vs-coeficiente-de-variación"><i class="fa fa-check"></i><b>7.7</b> Varianza de los <em>log-counts</em> vs coeficiente de variación</a></li>
-<li class="chapter" data-level="7.8" data-path="selección-de-genes.html"><a href="selección-de-genes.html#importando-un-dataset-con-factores-experimentales"><i class="fa fa-check"></i><b>7.8</b> Importando un dataset con factores experimentales</a>
-<ul>
-<li class="chapter" data-level="7.8.1" data-path="selección-de-genes.html"><a href="selección-de-genes.html#procesándolo"><i class="fa fa-check"></i><b>7.8.1</b> Procesándolo</a></li>
-</ul></li>
+<li class="chapter" data-level="7.8" data-path="selección-de-genes.html"><a href="selección-de-genes.html#importando-un-dataset-con-factores-experimentales"><i class="fa fa-check"></i><b>7.8</b> Importando un dataset con factores experimentales</a></li>
 <li class="chapter" data-level="7.9" data-path="selección-de-genes.html"><a href="selección-de-genes.html#considerando-factores-experimentales"><i class="fa fa-check"></i><b>7.9</b> Considerando factores experimentales</a></li>
 <li class="chapter" data-level="7.10" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-altamante-variables-high-variable-genes-hvgs"><i class="fa fa-check"></i><b>7.10</b> Seleccionando genes altamante variables (high-variable genes, HVGs)</a>
 <ul>
 <li class="chapter" data-level="7.10.1" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-sobre-la-métrica-de-varianza"><i class="fa fa-check"></i><b>7.10.1</b> Seleccionando HVGs sobre la métrica de varianza</a></li>
-<li class="chapter" data-level="7.10.2" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-sobre-su-significancia-estadística"><i class="fa fa-check"></i><b>7.10.2</b> Seleccionando HVGs sobre su significancia estadística</a></li>
-<li class="chapter" data-level="7.10.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-por-arriba-de-la-tendencia"><i class="fa fa-check"></i><b>7.10.3</b> Seleccionando genes por arriba de la tendencia</a></li>
-<li class="chapter" data-level="7.10.4" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-de-interés-a-priori"><i class="fa fa-check"></i><b>7.10.4</b> Seleccionando genes de interés a priori</a></li>
+<li class="chapter" data-level="7.10.2" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-de-acuerdo-a-su-significancia-estadística"><i class="fa fa-check"></i><b>7.10.2</b> Seleccionando HVGs de acuerdo a su significancia estadística</a></li>
+<li class="chapter" data-level="7.10.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-por-arriba-de-la-tendencia-media-varianza"><i class="fa fa-check"></i><b>7.10.3</b> Seleccionando genes por arriba de la tendencia media-varianza</a></li>
+<li class="chapter" data-level="7.10.4" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-de-interés-a-priori"><i class="fa fa-check"></i><b>7.10.4</b> Seleccionando genes de interés <em>a priori</em></a></li>
 </ul></li>
 <li class="chapter" data-level="7.11" data-path="selección-de-genes.html"><a href="selección-de-genes.html#poniendo-todo-junto"><i class="fa fa-check"></i><b>7.11</b> Poniendo todo junto</a>
 <ul>
@@ -734,7 +731,7 @@ button_git
 </p>
 </div>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb35-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code></pre></div>
-<p>Creen su templado usando <code>postcards</code>. Va a crear un archivo <code>index.Rmd</code></p>
+<p>Creen su templado usando <code>postcards</code> corriendo <strong>una</strong> de las 4 líneas (la que tenga el templado que más les gustó). Va a crear un archivo <code>index.Rmd</code></p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Solo uno de estos, de acuerdo al templado que más les gustó</span></span>
 <span id="cb36-2"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb36-2" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla&quot;</span>)</span>
 <span id="cb36-3"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb36-3" aria-hidden="true" tabindex="-1"></a>postcards<span class="sc">::</span><span class="fu">create_postcard</span>(<span class="at">template =</span> <span class="st">&quot;jolla-blue&quot;</span>)</span>
@@ -812,7 +809,7 @@ Otra manera de hacer es vía línea de comandos, primero pueden agregar los arch
 <span id="cb38-2"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb38-2" aria-hidden="true" tabindex="-1"></a>gert<span class="sc">::</span><span class="fu">git_commit_all</span>(<span class="st">&quot;mensaje sobre el commit&quot;</span>)</span>
 <span id="cb38-3"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-4"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Subimos los archivos a github</span></span>
-<span id="cb38-5"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb38-5" aria-hidden="true" tabindex="-1"></a>gert<span class="sc">::</span>git_push</span></code></pre></div>
+<span id="cb38-5"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb38-5" aria-hidden="true" tabindex="-1"></a>gert<span class="sc">::</span><span class="fu">git_push</span>()</span></code></pre></div>
 <ul>
 <li><p><span style="color:DodgerBlue"><strong>(extra)</strong> </span>. Pueden copiar y pegar emojis en sus páginas o utilizar <a href="https://github.com/rstudio/fontawesome">fontawesome</a> para agregar diferentes símbolos (como github o twitter):</p>
 <ul>
@@ -856,10 +853,10 @@ tfawesome
 <h2><span class="header-section-number">2.5</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb41-2"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-10 20:00:06 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-11 03:12:55 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.633   0.134   0.639</code></pre>
+##   0.640   0.122   0.648</code></pre>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb45-2"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb45-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -872,7 +869,7 @@ tfawesome
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-10                  
+##  date     2021-08-11                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package     * version date       lib source        

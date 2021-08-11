@@ -140,6 +140,66 @@ str(pbmc)
 ##   ..@ tools       : list()
 ```
 
+- ¿Cómo accedemos a cada slot?
+Clase **Seurat**.  
+La **información resumida sobre los objetos de `Seurat`** se puede obtener de forma rápida y sencilla mediante las funciones estándar de R. La forma / dimensiones del objeto se pueden encontrar usando las funciones `dim`, `ncol` y `nrow`; Los nombres de celda y característica se pueden encontrar usando las funciones `colnames` y `rownames`, respectivamente, o la función `dimnames`. Se puede obtener un vector de nombres de objetos Assay, DimReduc y Graph contenidos en un objeto Seurat mediante el uso de nombres. 
+
+
+```r
+#dim(x = pbmc)
+#head(x = rownames(x = pbmc))
+#head(x = colnames(x = pbmc))
+```
+
+Se puede obtener un vector de nombres de objetos `Assay`, `DimReduc` y `Graph` contenidos en un objeto Seurat mediante el uso de nombres. 
+La extracción de objetos específicos de Assay, DimReduc o Graph se puede realizar con el operador doble `[[ ]]` extract. La adición de nuevos objetos a un objeto de Seurat también se hace con el operador doble `[[ ]]` extract; Seurat averiguará a qué parte del objeto Seurat pertenece un nuevo objeto asociado. 
+
+
+```r
+#names(x = pbmc)
+#pbmc[['RNA']]
+#pbmc[['tsne']]
+```
+El acceso a los datos de un objeto Seurat se realiza con la función `GetAssayData`. La adición de datos de expresión a `counts`, `data`, o `scale.data` se puede hacer con `SetAssayData`. Los datos nuevos deben tener las mismas celdas en el mismo orden que los datos de la expresión actual. Los datos agregados a los recuentos o datos deben tener las mismas características que los datos de la expresión actual. 
+
+
+```r
+#GetAssayData(object = pbmc, slot = 'scale.data')[1:3, 1:3]
+```
+Metadata de las Células.  
+Se puede acceder a los metadatos a nivel de celda con el operador de extracción `[[ ]]` extract o usando `$sigil`. Extraer con `$sigil` significa que solo se puede extraer un bit de metadatos a la vez, aunque se ha habilitado el autocompletado de pestañas, lo que lo hace ideal para uso interactivo. La adición de metadatos a nivel de celda se puede configurar usando el operador de extracción único `[[ ]]` también, o usando `AddMetaData`. 
+
+
+```r
+#colnames(x = pbmc[[]])
+#head(x = pbmc[[c('nUMI', 'percent.mito')]])
+#head(x = pbmc[[c('nUMI', 'percent.mito')]])
+# Passing `drop = TRUE` will turn the meta data into a names vector
+# with each entry being named for the cell it corresponds to
+#head(x = pbmc[['res.0.6', drop = TRUE]])
+```
+La **clase Assay** almacena datos de una sola celda.
+
+Para los experimentos típicos de scRNA-seq, un objeto Seurat tendrá un único ensayo ("RNA"). Este ensayo también almacenará múltiples 'transformaciones' de los datos, incluidos recuentos sin procesar (ranura @counts), datos normalizados (ranura @data) y datos escalados para la reducción dimensional (ranura @ scale.data).
+
+Para experimentos más complejos, un objeto podría contener múltiples ensayos. Estos podrían incluir tipos de datos multimodales (etiquetas derivadas de anticuerpos CITE-seq, ADT) o mediciones imputadas / corregidas por lotes. Cada uno de esos ensayos tiene la opción de almacenar también las mismas transformaciones de datos. 
+
+Se puede obtener información resumida sobre los objetos de ensayo de forma rápida y sencilla utilizando funciones R estándar. La forma / dimensiones del objeto se pueden encontrar usando las funciones `dim`, `ncol` y `nrow`; Los nombres de celda y característica se pueden encontrar usando las funciones `colnames` y `rownames`, respectivamente, o la función `dimnames`.
+
+
+```r
+#dim(x = rna)
+#head(x = rownames(x = rna))
+#head(x = colnames(x = rna))
+```
+El acceso a los datos de un objeto Seurat se realiza con la función `GetAssayData`. La adición de datos de expresión a `counts`, `data`, o `scale.data` se puede hacer con `SetAssayData`. Los datos nuevos deben tener las mismas celdas en el mismo orden que los datos de la expresión actual. Los datos agregados a los recuentos o datos deben tener las mismas características que los datos de la expresión actual. 
+
+
+```r
+#GetAssayData(object = pbmc, slot = 'scale.data')[1:3, 1:3]
+```
+
+
 - ¿Cómo se ven los datos en una matriz de recuento? 
 
 Examinemos algunos genes en las primeras treinta células. Los valores en la matriz representan ceros (no se detectan moléculas). Dado que la mayoría de los valores en una matriz scRNA-seq son 0, Seurat utiliza una representación de **matriz dispersa (*sparse matrix*)** siempre que sea posible. Esto da como resultado un ahorro significativo de memoria y velocidad.  
@@ -211,7 +271,7 @@ Visualizamos las métricas de control de calidad mencionadas anteriormente como 
 VlnPlot(pbmc, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 ```r
 plot1 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "percent.mt")
@@ -219,7 +279,7 @@ plot2 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA"
 plot1 + plot2
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-6-2.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-12-2.png" width="672" />
 
 Finalmente filtramos aquellas células que se salen de los estándares de cada uno de los parámetros.
 
@@ -259,7 +319,7 @@ pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor 
 
 A continuación, calculamos un subconjunto de **características que exhiben una alta variación de célula a célula en el conjunto de datos** (es decir, están altamente expresadas en algunas células y poco expresadas en otras). El equipo de Seurat y otros equipos han descubierto que centrarse en estos genes en el análisis posterior ayuda a resaltar la señal biológica en conjuntos de datos unicelulares.
 
-Nuestro procedimiento en Seurat se describe en detalle aquí y mejora las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola célula, y se implementa en la función `FindVariableFeatures()`. De forma predeterminada, **devolvemos 2000 características por conjunto de datos** (aunque se puede modificar). Estos se utilizarán en análisis posteriores, como PCA. 
+El procedimiento en Seurat mejora a comparación de las versiones anteriores al modelar directamente la relación de varianza media inherente a los datos de una sola célula, y se implementa en la función `FindVariableFeatures()`. De forma predeterminada, **se devuelven 2000 características por conjunto de datos** (aunque se puede modificar). Estos se utilizarán en análisis posteriores, como PCA. 
 
 
 ```r
@@ -305,7 +365,7 @@ plot1 + plot2
 ## Warning: Removed 1 rows containing missing values (geom_point).
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-10-1.png" width="1344" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-16-1.png" width="1344" />
 
 ## Escalar los datos
 
@@ -354,23 +414,23 @@ pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
 ## PC_ 3 
 ## Positive:  HLA-DQA1, CD79A, CD79B, HLA-DQB1, HLA-DPB1, HLA-DPA1, CD74, MS4A1, HLA-DRB1, HLA-DRA 
 ## 	   HLA-DRB5, HLA-DQA2, TCL1A, LINC00926, HLA-DMB, HLA-DMA, CD37, HVCN1, FCRLA, IRF8 
-## 	   PLAC8, BLNK, MALAT1, SMIM14, PLD4, P2RX5, IGLL5, LAT2, SWAP70, FCGR2B 
+## 	   PLAC8, BLNK, MALAT1, SMIM14, PLD4, LAT2, IGLL5, P2RX5, SWAP70, FCGR2B 
 ## Negative:  PPBP, PF4, SDPR, SPARC, GNG11, NRGN, GP9, RGS18, TUBB1, CLU 
 ## 	   HIST1H2AC, AP001189.4, ITGA2B, CD9, TMEM40, PTCRA, CA2, ACRBP, MMD, TREML1 
 ## 	   NGFRAP1, F13A1, SEPT5, RUFY1, TSC22D1, MPP1, CMTM5, RP11-367G6.3, MYL9, GP1BA 
 ## PC_ 4 
-## Positive:  HLA-DQA1, CD79B, CD79A, MS4A1, HLA-DQB1, CD74, HIST1H2AC, HLA-DPB1, PF4, SDPR 
-## 	   TCL1A, HLA-DRB1, HLA-DPA1, HLA-DQA2, PPBP, HLA-DRA, LINC00926, GNG11, SPARC, HLA-DRB5 
-## 	   GP9, AP001189.4, CA2, PTCRA, CD9, NRGN, RGS18, CLU, TUBB1, GZMB 
+## Positive:  HLA-DQA1, CD79B, CD79A, MS4A1, HLA-DQB1, CD74, HLA-DPB1, HIST1H2AC, PF4, TCL1A 
+## 	   SDPR, HLA-DPA1, HLA-DRB1, HLA-DQA2, HLA-DRA, PPBP, LINC00926, GNG11, HLA-DRB5, SPARC 
+## 	   GP9, AP001189.4, CA2, PTCRA, CD9, NRGN, RGS18, GZMB, CLU, TUBB1 
 ## Negative:  VIM, IL7R, S100A6, IL32, S100A8, S100A4, GIMAP7, S100A10, S100A9, MAL 
 ## 	   AQP3, CD2, CD14, FYB, LGALS2, GIMAP4, ANXA1, CD27, FCN1, RBP7 
 ## 	   LYZ, S100A11, GIMAP5, MS4A6A, S100A12, FOLR3, TRABD2A, AIF1, IL8, IFI6 
 ## PC_ 5 
 ## Positive:  GZMB, NKG7, S100A8, FGFBP2, GNLY, CCL4, CST7, PRF1, GZMA, SPON2 
-## 	   GZMH, S100A9, LGALS2, CCL3, CTSW, XCL2, CD14, CLIC3, S100A12, RBP7 
-## 	   CCL5, MS4A6A, GSTP1, FOLR3, IGFBP7, TYROBP, TTC38, AKR1C3, XCL1, HOPX 
+## 	   GZMH, S100A9, LGALS2, CCL3, CTSW, XCL2, CD14, CLIC3, S100A12, CCL5 
+## 	   RBP7, MS4A6A, GSTP1, FOLR3, IGFBP7, TYROBP, TTC38, AKR1C3, XCL1, HOPX 
 ## Negative:  LTB, IL7R, CKB, VIM, MS4A7, AQP3, CYTIP, RP11-290F20.3, SIGLEC10, HMOX1 
-## 	   LILRB2, PTGES3, MAL, CD27, HN1, CD2, GDI2, CORO1B, ANXA5, TUBA1B 
+## 	   PTGES3, LILRB2, MAL, CD27, HN1, CD2, GDI2, ANXA5, CORO1B, TUBA1B 
 ## 	   FAM110A, ATP1A1, TRADD, PPA1, CCDC109B, ABRACL, CTD-2006K23.1, WARS, VMO1, FYB
 ```
 
@@ -405,13 +465,13 @@ print(pbmc[["pca"]], dims = 1:5, nfeatures = 5)
 VizDimLoadings(pbmc, dims = 1:2, reduction = "pca")
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-19-1.png" width="672" />
 
 ```r
 DimPlot(pbmc, reduction = "pca")
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-13-2.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-19-2.png" width="672" />
 
 En particular, `DimHeatmap()` permite una fácil exploración de las fuentes primarias de heterogeneidad en un conjunto de datos y puede ser útil cuando se intenta decidir qué PC incluir para análisis posteriores posteriores. Tanto las células como las características se ordenan de acuerdo con sus puntajes de PCA. Establecer `cells` en un número traza las células "extremas" en ambos extremos del espectro, lo que acelera drásticamente el trazado de grandes conjuntos de datos. Aunque claramente es un análisis supervisado, consideramos que esta es una herramienta valiosa para explorar conjuntos de características correlacionadas. 
 
@@ -420,13 +480,13 @@ En particular, `DimHeatmap()` permite una fácil exploración de las fuentes pri
 DimHeatmap(pbmc, dims = 1, cells = 500, balanced = TRUE)
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 ```r
 DimHeatmap(pbmc, dims = 1:15, cells = 500, balanced = TRUE)
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-14-2.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-20-2.png" width="672" />
 
 ## Determinar la dimensionalidad del conjunto de datos 
 
@@ -451,10 +511,10 @@ JackStrawPlot(pbmc, dims = 1:15)
 ```
 
 ```
-## Warning: Removed 23510 rows containing missing values (geom_point).
+## Warning: Removed 23504 rows containing missing values (geom_point).
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 
 Un método heurístico alternativo genera un **"diagrama de codo (Elbow Plot)"**: una clasificación de componentes principales basada en el porcentaje de varianza explicada por cada uno (función `ElbowPlot()`). En este ejemplo, podemos observar un "codo" alrededor de PC9-10, lo que sugiere que la mayor parte de la señal verdadera se captura en las primeras 10 PC. 
 
@@ -463,7 +523,7 @@ Un método heurístico alternativo genera un **"diagrama de codo (Elbow Plot)"**
 ElbowPlot(pbmc)
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 ## Clustering 
 
@@ -488,10 +548,10 @@ pbmc <- FindClusters(pbmc, resolution = 0.5)
 ## Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
 ## 
 ## Number of nodes: 2638
-## Number of edges: 95927
+## Number of edges: 95965
 ## 
 ## Running Louvain algorithm...
-## Maximum modularity in 10 random starts: 0.8728
+## Maximum modularity in 10 random starts: 0.8723
 ## Number of communities: 9
 ## Elapsed time: 0 seconds
 ```
@@ -513,19 +573,19 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 ```
 
 ```
-## 20:29:05 UMAP embedding parameters a = 0.9922 b = 1.112
+## 03:44:50 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ```
-## 20:29:05 Read 2638 rows and found 10 numeric columns
+## 03:44:50 Read 2638 rows and found 10 numeric columns
 ```
 
 ```
-## 20:29:05 Using Annoy for neighbor search, n_neighbors = 30
+## 03:44:50 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ```
-## 20:29:05 Building Annoy index with metric = cosine, n_trees = 50
+## 03:44:50 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ```
@@ -538,13 +598,13 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 
 ```
 ## **************************************************|
-## 20:29:06 Writing NN index file to temp file /tmp/Rtmp9lkFro/file4745ee8ce63
-## 20:29:06 Searching Annoy index using 1 thread, search_k = 3000
-## 20:29:07 Annoy recall = 100%
-## 20:29:07 Commencing smooth kNN distance calibration using 1 thread
-## 20:29:08 Initializing from normalized Laplacian + noise
-## 20:29:08 Commencing optimization for 500 epochs, with 105140 positive edges
-## 20:29:12 Optimization finished
+## 03:44:50 Writing NN index file to temp file /tmp/RtmpFc4gYz/file49e3f113e6
+## 03:44:50 Searching Annoy index using 1 thread, search_k = 3000
+## 03:44:51 Annoy recall = 100%
+## 03:44:51 Commencing smooth kNN distance calibration using 1 thread
+## 03:44:52 Initializing from normalized Laplacian + noise
+## 03:44:52 Commencing optimization for 500 epochs, with 105124 positive edges
+## 03:44:56 Optimization finished
 ```
 
 ```r
@@ -553,7 +613,7 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 DimPlot(pbmc, reduction = "umap")
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-25-1.png" width="672" />
 
 Puede guardar el objeto en este punto para que se pueda volver a cargar fácilmente sin tener que volver a ejecutar los pasos computacionalmente intensivos realizados anteriormente o compartir fácilmente con los colaboradores. 
 
@@ -581,11 +641,11 @@ head(cluster2.markers, n = 5)
 
 ```
 ##             p_val avg_log2FC pct.1 pct.2    p_val_adj
-## IL32 2.892340e-90  1.2013522 0.947 0.465 3.966555e-86
-## LTB  1.060121e-86  1.2695776 0.981 0.643 1.453850e-82
-## CD3D 8.794641e-71  0.9389621 0.922 0.432 1.206097e-66
-## IL7R 3.516098e-68  1.1873213 0.750 0.326 4.821977e-64
-## LDHB 1.642480e-67  0.8969774 0.954 0.614 2.252497e-63
+## IL32 2.593535e-91  1.2154360 0.949 0.466 3.556774e-87
+## LTB  7.994465e-87  1.2828597 0.981 0.644 1.096361e-82
+## CD3D 3.922451e-70  0.9359210 0.922 0.433 5.379250e-66
+## IL7R 1.130870e-66  1.1776027 0.748 0.327 1.550876e-62
+## LDHB 4.082189e-65  0.8837324 0.953 0.614 5.598314e-61
 ```
 
 ```r
@@ -596,11 +656,11 @@ head(cluster5.markers, n = 5)
 
 ```
 ##                       p_val avg_log2FC pct.1 pct.2     p_val_adj
-## FCGR3A        8.246578e-205   4.261495 0.975 0.040 1.130936e-200
-## IFITM3        1.677613e-195   3.879339 0.975 0.049 2.300678e-191
-## CFD           2.401156e-193   3.405492 0.938 0.038 3.292945e-189
-## CD68          2.900384e-191   3.020484 0.926 0.035 3.977587e-187
-## RP11-290F20.3 2.513244e-186   2.720057 0.840 0.017 3.446663e-182
+## FCGR3A        2.150929e-209   4.267579 0.975 0.039 2.949784e-205
+## IFITM3        6.103366e-199   3.877105 0.975 0.048 8.370156e-195
+## CFD           8.891428e-198   3.411039 0.938 0.037 1.219370e-193
+## CD68          2.374425e-194   3.014535 0.926 0.035 3.256286e-190
+## RP11-290F20.3 9.308287e-191   2.722684 0.840 0.016 1.276538e-186
 ```
 
 ```r
@@ -662,24 +722,24 @@ pbmc.markers %>%
 ## # Groups:   cluster [9]
 ##        p_val avg_log2FC pct.1 pct.2 p_val_adj cluster gene    
 ##        <dbl>      <dbl> <dbl> <dbl>     <dbl> <fct>   <chr>   
-##  1 3.75e-112       1.09 0.912 0.592 5.14e-108 0       LDHB    
-##  2 9.57e- 88       1.36 0.447 0.108 1.31e- 83 0       CCR7    
+##  1 1.74e-109       1.07 0.897 0.593 2.39e-105 0       LDHB    
+##  2 1.17e- 83       1.33 0.435 0.108 1.60e- 79 0       CCR7    
 ##  3 0               5.57 0.996 0.215 0         1       S100A9  
 ##  4 0               5.48 0.975 0.121 0         1       S100A8  
-##  5 1.06e- 86       1.27 0.981 0.643 1.45e- 82 2       LTB     
-##  6 2.97e- 58       1.23 0.42  0.111 4.07e- 54 2       AQP3    
+##  5 7.99e- 87       1.28 0.981 0.644 1.10e- 82 2       LTB     
+##  6 2.61e- 59       1.24 0.424 0.111 3.58e- 55 2       AQP3    
 ##  7 0               4.31 0.936 0.041 0         3       CD79A   
 ##  8 9.48e-271       3.59 0.622 0.022 1.30e-266 3       TCL1A   
-##  9 5.61e-202       3.10 0.983 0.234 7.70e-198 4       CCL5    
-## 10 7.25e-165       3.00 0.577 0.055 9.95e-161 4       GZMK    
+##  9 1.17e-178       2.97 0.957 0.241 1.60e-174 4       CCL5    
+## 10 4.93e-169       3.01 0.595 0.056 6.76e-165 4       GZMK    
 ## 11 3.51e-184       3.31 0.975 0.134 4.82e-180 5       FCGR3A  
 ## 12 2.03e-125       3.09 1     0.315 2.78e-121 5       LST1    
-## 13 7.95e-269       4.83 0.961 0.068 1.09e-264 6       GZMB    
-## 14 3.13e-191       5.32 0.961 0.131 4.30e-187 6       GNLY    
+## 13 1.05e-265       4.89 0.986 0.071 1.44e-261 6       GZMB    
+## 14 6.82e-175       4.92 0.958 0.135 9.36e-171 6       GNLY    
 ## 15 1.48e-220       3.87 0.812 0.011 2.03e-216 7       FCER1A  
 ## 16 1.67e- 21       2.87 1     0.513 2.28e- 17 7       HLA-DPB1
-## 17 9.25e-186       7.29 1     0.011 1.27e-181 8       PF4     
-## 18 1.92e-102       8.59 1     0.024 2.63e- 98 8       PPBP
+## 17 7.73e-200       7.24 1     0.01  1.06e-195 8       PF4     
+## 18 3.68e-110       8.58 1     0.024 5.05e-106 8       PPBP
 ```
 
 Seurat tiene **varias pruebas de expresión diferencial** que se pueden configurar con el parámetro test.use (consulte nuestra viñeta DE para obtener más detalles). Por ejemplo, la **prueba ROC** devuelve el "poder de clasificación" para cualquier marcador individual (que varía de 0 - aleatorio a 1 - perfecto) .
@@ -696,14 +756,14 @@ Se incluyen varias herramientas para visualizar la expresión de los marcadores.
 VlnPlot(pbmc, features = c("MS4A1", "CD79A"))
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-29-1.png" width="672" />
 
 ```r
 ## you can plot raw counts as well
 VlnPlot(pbmc, features = c("NKG7", "PF4"), slot = "counts", log = TRUE)
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-23-2.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-29-2.png" width="672" />
 
 ```r
 FeaturePlot(pbmc, features = c(
@@ -712,7 +772,7 @@ FeaturePlot(pbmc, features = c(
 ))
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-23-3.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-29-3.png" width="672" />
 
 ```r
 # DoHeatmap() generates an expression heatmap for given cells and features. In this case, we are plotting the top 20 markers (or all markers if less than 20) for each cluster.
@@ -723,7 +783,7 @@ pbmc.markers %>%
 DoHeatmap(pbmc, features = top10$gene) + NoLegend()
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-23-4.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-29-4.png" width="672" />
 
 ## Assigning cell type identity to clusters
 
@@ -741,7 +801,7 @@ pbmc <- RenameIdents(pbmc, new.cluster.ids)
 DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
 ```
 
-<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+<img src="13-intro_Seurat_files/figure-html/unnamed-chunk-30-1.png" width="672" />
 
 ## Guardar Resultados
 
@@ -761,7 +821,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-10 20:29:56 UTC"
+## [1] "2021-08-11 03:45:40 UTC"
 ```
 
 ```r
@@ -770,7 +830,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 204.203  10.943 143.789
+## 254.647  15.290 173.818
 ```
 
 ```r
@@ -789,7 +849,7 @@ sessioninfo::session_info()
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-10                  
+##  date     2021-08-11                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package         * version date       lib source        
