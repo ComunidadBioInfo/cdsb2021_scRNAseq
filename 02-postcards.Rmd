@@ -232,7 +232,7 @@ usethis::use_github()
 ```
 
 
-Creen su templado usando `postcards`. Va a crear un archivo `index.Rmd`
+Creen su templado usando `postcards` corriendo **una** de las 4 líneas (la que tenga el templado que más les gustó). Va a crear un archivo `index.Rmd`
 
 ```{r postcards_create, eval = FALSE}
 ## Solo uno de estos, de acuerdo al templado que más les gustó
@@ -323,7 +323,7 @@ Otra manera de hacer es vía línea de comandos, primero pueden agregar los arch
 gert::git_commit_all("mensaje sobre el commit")
 
 ## Subimos los archivos a github
-gert::git_push
+gert::git_push()
 ```
 
 * <span style="color:DodgerBlue">**(extra)** </span>. Pueden copiar y pegar emojis en sus páginas o utilizar [fontawesome](https://github.com/rstudio/fontawesome) para agregar diferentes símbolos (como github o twitter):
