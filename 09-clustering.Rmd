@@ -265,13 +265,12 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
 
 Para detalles sobre la seleccion de parámetros y comparaciones: [visitar esta página](https://bioconductor.org/books/release/OSCA/clustering.html#clustering-graph).
 
-<div>
-<p style = 'text-align:center;'>
-<img src="img/seurat-scran.png" width="800px">
-</p>
-</div>
+```{r, fig.cap = "Estilo scran vs estilo Seurat.", fig.width=10}
+library("patchwork")
 
-_Imagen comparando resultados con Bioconductor 3.11 vs Seurat._
+plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster") +
+plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
+```
 
 ### Evaluando la separación de los clusters
 
