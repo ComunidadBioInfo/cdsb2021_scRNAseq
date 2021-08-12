@@ -39,7 +39,7 @@ class: inverse
 
 ]
 
-.footnote[Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2020')` o revisalos en l??nea v??a [**comunidadbioinfo.github.io/cdsb2020**](http://comunidadbioinfo.github.io/cdsb2020).]
+.footnote[Descarga los materiales con `usethis::use_course('comunidadbioinfo/cdsb2020')` o revisalos en línea vía [**comunidadbioinfo.github.io/cdsb2020**](http://comunidadbioinfo.github.io/cdsb2020).]
 
 ```{css, echo = FALSE}
 /* From https://github.com/yihui/xaringan/issues/147  */

@@ -72,14 +72,14 @@ pre {
 
 # Diapositivas de Peter Hickey
 
-Contenido adapatado de: [aqu??](https://docs.google.com/presentation/d/12CjvQ1beZVeCcMQqD6ptzd9YUHbHOksvy3lt_rvWyRs/edit)
+Contenido adapatado de: [aquí](https://docs.google.com/presentation/d/12CjvQ1beZVeCcMQqD6ptzd9YUHbHOksvy3lt_rvWyRs/edit)
 
 Plantilla desarrollada por: "[Leonardo Collado-Torres](http://lcolladotor.github.io/)"
 
 
 ---
 
-# Motivaci??n
+# Motivación
 
 El siguiente paso en el análisis de scRNA-seq usualmente consiste en identificar grupos de células "similares"
 
@@ -127,7 +127,7 @@ Estudio de tipos celulares en el cerebro de ratón (oligodendrocitos, microglia,
 
 Descripción [aquí](https://osca.bioconductor.org/zeisel-mouse-brain-strt-seq.html)
 
-*Zeisel, A. et al. Brain structure. Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq. Science 347, 1138???1142 (2015)*
+*Zeisel, A. et al. Brain structure. Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq. Science 347, 1138-1142 (2015)*
 
 ---
 
@@ -266,7 +266,7 @@ top.pbmc <- getTopHVGs(dec.pbmc, prop = 0.1)
 
 PCA es el arma principal de la reducción de dimensionalidad
 
-**PCA descubre las combinaciones (lineales) de "features" que capturan la cantidad m??s grande de variación**
+**PCA descubre las combinaciones (lineales) de "features" que capturan la cantidad más grande de variación**
 
 In PCA, la primer combinación lineal (componente principal) se elige tal que permite capturar la mayor varianza a través de las células. El siguiente PC se elige tal que es "ortogonal" al primero y captura la cantidad más grande de la variación restante, y así sucesivamente...
 
@@ -383,7 +383,7 @@ reducedDim(sce.zeisel, "PCA_clusters") <- reducedDim(
 
 ---
 
-# Usando el ruido t??cnico
+# Usando el ruido técnico
 ```{r, warning=FALSE, message=FALSE }
 library(scran)
 set.seed(111001001)
@@ -406,7 +406,7 @@ Por default, denoisePCA() realiza algunas simulaciones, por lo tanto necesitamos
 dim(reducedDim(denoised.pbmc, "PCA"))
 ```
 
-La dimensionalidad del output es el límite inferior para el número de PCs requeridos para explicar toda la variación biológica. Lo que significa que cualquier número menor de PCs definitivamente descartar?? algún aspecto de la señal biológica
+La dimensionalidad del output es el límite inferior para el número de PCs requeridos para explicar toda la variación biológica. Lo que significa que cualquier número menor de PCs definitivamente descartará algún aspecto de la señal biológica
 
 **Esto no grantiza que los PCs retenidos capturen toda la señal biológica**
 
@@ -493,7 +493,7 @@ plotReducedDim(sce.zeisel,
 - Usualmente no es satisfactoria paara visualizar la naturaleza compleja de los datos de scRNA-seq
 ---
 
-# Visualizaci??n con t-SNE
+# Visualizacin con t-SNE
 
 ```{r, fig.dim = c(5, 4) }
 set.seed(00101001101)
@@ -539,7 +539,7 @@ plotReducedDim(sce.zeisel,
 </p>
 </div>
 
-El siguiente [foro](http://distill.pub/2016/misread-tsne/) discute la selecci??n de par??metros para t-SNE con cierta profundidad
+El siguiente [foro](http://distill.pub/2016/misread-tsne/) discute la seleccin de parámetros para t-SNE con cierta profundidad
 
 ---
 
@@ -655,7 +655,7 @@ class: middle
 
 .center[
 
-# ??Gracias!
+# ¡Gracias!
 
 Las diapositivias fueron hechas con el paquete de R [**xaringan**](https://github.com/yihui/xaringan) y configuradas con [**xaringanthemer**](https://github.com/gadenbuie/xaringanthemer).
 
@@ -663,7 +663,7 @@ Este curso está basado en el libro [**Orchestrating Single Cell Analysis with B
 
 Puedes encontrar los archivos para este taller en  [comunidadbioinfo/cdsb2020](https://github.com/comunidadbioinfo/cdsb2021). 
 
-Instructor: [**Laura G??mez-Romero**](http://lgomez.github.io/).
+Instructor: [**Laura Gómez-Romero**](http://lgomez.github.io/).
 
 ]
 
