@@ -327,12 +327,13 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster") +
 
 
 ```r
-g.num <- buildSNNGraph(sce.pbmc, use.dimred="PCA", type="number")
-g.jaccard <- buildSNNGraph(sce.pbmc, use.dimred="PCA", type="jaccard")
-g.none <- buildKNNGraph(sce.pbmc, use.dimred="PCA")
+g.num <- buildSNNGraph(sce.pbmc, use.dimred = "PCA", type = "number")
+g.jaccard <- buildSNNGraph(sce.pbmc, use.dimred = "PCA", type = "jaccard")
+g.none <- buildKNNGraph(sce.pbmc, use.dimred = "PCA")
 ```
 
 **Distintos métodos de clustering**
+
 
 ```r
 clust.louvain <- igraph::cluster_louvain(g)$membership
@@ -534,7 +535,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-12 04:07:57 UTC"
+## [1] "2021-08-12 07:55:41 UTC"
 ```
 
 ```r
@@ -543,7 +544,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 248.698   6.943 250.171
+## 214.755   5.215 216.714
 ```
 
 ```r
