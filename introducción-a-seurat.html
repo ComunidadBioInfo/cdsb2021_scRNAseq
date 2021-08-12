@@ -948,20 +948,20 @@ La función Read10X() lee en la salida de cellranger de 10X (de donde se obtuvie
 <pre><code>## Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
 ## To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
 ## This message will be shown once per session</code></pre>
-<pre><code>## 08:27:19 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>## 08:27:19 Read 2638 rows and found 10 numeric columns</code></pre>
-<pre><code>## 08:27:19 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>## 08:27:19 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>## 22:54:46 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>## 22:54:46 Read 2638 rows and found 10 numeric columns</code></pre>
+<pre><code>## 22:54:46 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>## 22:54:46 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 <pre><code>## 0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
 <pre><code>## [----|----|----|----|----|----|----|----|----|----|</code></pre>
 <pre><code>## **************************************************|
-## 08:27:20 Writing NN index file to temp file /tmp/RtmpwVM83g/file4a71733b0e6
-## 08:27:20 Searching Annoy index using 1 thread, search_k = 3000
-## 08:27:21 Annoy recall = 100%
-## 08:27:21 Commencing smooth kNN distance calibration using 1 thread
-## 08:27:22 Initializing from normalized Laplacian + noise
-## 08:27:22 Commencing optimization for 500 epochs, with 105124 positive edges
-## 08:27:25 Optimization finished</code></pre>
+## 22:54:46 Writing NN index file to temp file /tmp/RtmpBvHzhu/file49d2fc2426d
+## 22:54:46 Searching Annoy index using 1 thread, search_k = 3000
+## 22:54:47 Annoy recall = 100%
+## 22:54:48 Commencing smooth kNN distance calibration using 1 thread
+## 22:54:48 Initializing from normalized Laplacian + noise
+## 22:54:48 Commencing optimization for 500 epochs, with 105124 positive edges
+## 22:54:52 Optimization finished</code></pre>
 <div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="introducción-a-seurat.html#cb730-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that you can set `label = TRUE` or use the LabelClusters function to help label</span></span>
 <span id="cb730-2"><a href="introducción-a-seurat.html#cb730-2" aria-hidden="true" tabindex="-1"></a><span class="co"># individual clusters</span></span>
 <span id="cb730-3"><a href="introducción-a-seurat.html#cb730-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(pbmc, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>)</span></code></pre></div>
@@ -1079,10 +1079,10 @@ Como otra opción para acelerar estos cálculos, se puede configurar el número 
 <h2><span class="header-section-number">13.15</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb756-1"><a href="introducción-a-seurat.html#cb756-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb756-2"><a href="introducción-a-seurat.html#cb756-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-12 08:28:05 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-12 22:55:33 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="introducción-a-seurat.html#cb758-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 169.198  12.626 125.777</code></pre>
+## 252.018  13.893 168.281</code></pre>
 <div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="introducción-a-seurat.html#cb760-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb760-2"><a href="introducción-a-seurat.html#cb760-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
