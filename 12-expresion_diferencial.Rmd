@@ -78,7 +78,7 @@ _Pijuan-Sala, B. et al. A single-cell molecular map of mouse gastrulation and ea
 ```{r}
 #--- loading ---#
 library("MouseGastrulationData")
-sce.chimera <- WTChimeraData(samples=5:10)
+sce.chimera <- WTChimeraData(samples = 5:10)
 sce.chimera
 ```
 
@@ -86,7 +86,7 @@ sce.chimera
 ```{r}
 ## Exploremos los datos
 sapply(colData(sce.chimera)[, -(1:2)], function(x) {
-    x <- if(is.character(x) || is.integer(x)) factor(x) else x
+    x <- if (is.character(x) || is.integer(x)) factor(x) else x
     summary(x)
 })
 ```
@@ -119,42 +119,43 @@ length(unique(sce.chimera$celltype.mapped))
 #--- feature-annotation ---#
 library("scater")
 rownames(sce.chimera) <- uniquifyFeatureNames(
-    rowData(sce.chimera)$ENSEMBL, rowData(sce.chimera)$SYMBOL)
+    rowData(sce.chimera)$ENSEMBL, rowData(sce.chimera)$SYMBOL
+)
 
 #--- quality-control ---#
 drop <- sce.chimera$celltype.mapped %in% c("stripped", "Doublet")
-sce.chimera <- sce.chimera[,!drop]
+sce.chimera <- sce.chimera[, !drop]
 
 #--- normalization ---#
 sce.chimera <- logNormCounts(sce.chimera)
 
 #--- variance-modelling ---#
 library("scran")
-dec.chimera <- modelGeneVar(sce.chimera, block=sce.chimera$sample)
+dec.chimera <- modelGeneVar(sce.chimera, block = sce.chimera$sample)
 chosen.hvgs <- dec.chimera$bio > 0
 
 #--- merging ---#
 library("batchelor")
 set.seed(01001001)
-merged <- correctExperiments(sce.chimera, 
-    batch=sce.chimera$sample, 
-    subset.row=chosen.hvgs,
-    PARAM=FastMnnParam(
-        merge.order=list(
-            list(1,3,5), # WT (3 replicates)
-            list(2,4,6)  # td-Tomato (3 replicates)
+merged <- correctExperiments(sce.chimera,
+    batch = sce.chimera$sample,
+    subset.row = chosen.hvgs,
+    PARAM = FastMnnParam(
+        merge.order = list(
+            list(1, 3, 5), # WT (3 replicates)
+            list(2, 4, 6) # td-Tomato (3 replicates)
         )
     )
 )
 
 #--- clustering ---#
-g <- buildSNNGraph(merged, use.dimred="corrected")
+g <- buildSNNGraph(merged, use.dimred = "corrected")
 clusters <- igraph::cluster_louvain(g)
 colLabels(merged) <- factor(clusters$membership)
 
 #--- dimensionality-reduction ---#
-merged <- runTSNE(merged, dimred="corrected", external_neighbors=TRUE)
-merged <- runUMAP(merged, dimred="corrected", external_neighbors=TRUE)
+merged <- runTSNE(merged, dimred = "corrected", external_neighbors = TRUE)
+merged <- runUMAP(merged, dimred = "corrected", external_neighbors = TRUE)
 ```
 
 ### Exploremos los datos de ejemplo
@@ -177,8 +178,8 @@ table(colLabels(merged), merged$pool)
   
 ```{r, fig.width=10}
 library("patchwork")
-plotTSNE(merged, colour_by="tomato", text_by="label") +
-plotTSNE(merged, colour_by=data.frame(pool=factor(merged$pool)))
+plotTSNE(merged, colour_by = "tomato", text_by = "label") +
+    plotTSNE(merged, colour_by = data.frame(pool = factor(merged$pool)))
 ```
 
 ### Nuestros clusters vs los originales
@@ -197,10 +198,10 @@ names(cols_celltype.mapped) <- unique(merged$celltype.mapped)
 
 ## Nuestros clusters vs anotación de células por los
 ## autores originales
-plotTSNE(merged, colour_by="label", text_by="label") +
+plotTSNE(merged, colour_by = "label", text_by = "label") +
     theme(legend.position = "none") +
     scale_colour_manual(values = cols_label) +
-plotTSNE(merged, colour_by="celltype.mapped") +
+    plotTSNE(merged, colour_by = "celltype.mapped") +
     theme(legend.position = "none") +
     scale_colour_manual(values = cols_celltype.mapped)
 ```
@@ -216,7 +217,7 @@ library("bluster")
 pairwiseRand(colLabels(merged), merged$celltype.mapped, "index")
 
 by.label <- table(colLabels(merged), merged$celltype.mapped)
-pheatmap::pheatmap(log2(by.label+1), color=viridis::viridis(101))
+pheatmap::pheatmap(log2(by.label + 1), color = viridis::viridis(101))
 ```
 
 * Por eso es más fácil combinar datos de varios lotes de secuenciación y hacer un solo clustering en vez de varios y tener que identificar que clusters de una muestra corresponden a los de otra
@@ -263,7 +264,8 @@ Estas diapositivas son parte de un webinar que di con [Kristen R Maynard](https:
 # Using 'label' and 'sample' as our two factors; each column of the output
 # corresponds to one unique combination of these two factors.
 summed <- aggregateAcrossCells(merged,
-    id = colData(merged)[, c("celltype.mapped", "sample")])
+    id = colData(merged)[, c("celltype.mapped", "sample")]
+)
 summed
 
 dim(merged)
@@ -287,7 +289,7 @@ with(colData(merged), length(unique(celltype.mapped)) * length(unique(sample)))
 
 ```{r}
 label <- "Mesenchyme"
-current <- summed[,label==summed$celltype.mapped]
+current <- summed[, label == summed$celltype.mapped]
 dim(current)
 ```
 
@@ -300,7 +302,7 @@ dim(current)
 ```{r}
 # Creating up a DGEList object for use in edgeR:
 library("edgeR")
-y <- DGEList(counts(current), samples=colData(current))
+y <- DGEList(counts(current), samples = colData(current))
 y
 ```
 
@@ -313,15 +315,15 @@ y
 
 ```{r}
 discarded <- current$ncells < 10
-y <- y[,!discarded]
+y <- y[, !discarded]
 summary(discarded)
 ```
 
 * A continuación eliminaremos genes que tengan bajos nivels de expresión
 
 ```{r}
-keep <- filterByExpr(y, group=current$tomato)
-y <- y[keep,]
+keep <- filterByExpr(y, group = current$tomato)
+y <- y[keep, ]
 summary(keep)
 ```
 
@@ -338,18 +340,19 @@ y$samples
 * Podemos visualizar los cambios de expresión para todos los genes, una muestra a la vez
 
 ```{r}
-par(mfrow=c(2,3))
+par(mfrow = c(2, 3))
 for (i in seq_len(ncol(y))) {
-    plotMD(y, column=i)
+    plotMD(y, column = i)
 }
 ```
 
 * Podemos usar técnicas de reducción de dimensiones como `MDS` y `PCA` para explorar la variación entre nuestras muestras (ya no células)
 
 ```{r}
-par(mfrow=c(1, 1))
-plotMDS(cpm(y, log=TRUE), 
-    col=ifelse(y$samples$tomato, "red", "blue"))
+par(mfrow = c(1, 1))
+plotMDS(cpm(y, log = TRUE),
+    col = ifelse(y$samples$tomato, "red", "blue")
+)
 ```
 
 ### Modelo estadístico
@@ -360,14 +363,14 @@ plotMDS(cpm(y, log=TRUE),
   - Como empezamos con las cuentas desde cero, tenemos que tomar en cuenta la variación por lote de secuenciación
 
 ```{r}
-design <- model.matrix(~factor(pool) + factor(tomato), y$samples)
+design <- model.matrix(~ factor(pool) + factor(tomato), y$samples)
 design
 ```
 
 * Si queremos explorar nuestro modelo estadístico de forma interactiva, podemos usar [`ExploreModelMatrix`](https://bioconductor.org/packages/ExploreModelMatrix) por [Charlotte Soneson](https://twitter.com/CSoneson) y [Michael Love](https://twitter.com/mikelove). Charlotte es de las autoras de `iSEE`.
 
 ```{r}
-if(interactive()) {
+if (interactive()) {
     ExploreModelMatrix::ExploreModelMatrix(y$samples[, c("pool", "tomato")], ~ factor(pool) + factor(tomato))
 }
 ```
@@ -380,7 +383,7 @@ summary(y$trended.dispersion)
 
 plotBCV(y)
 
-fit <- glmQLFit(y, design, robust=TRUE)
+fit <- glmQLFit(y, design, robust = TRUE)
 summary(fit$var.prior)
 summary(fit$df.prior)
 plotQLDisp(fit)
@@ -389,7 +392,7 @@ plotQLDisp(fit)
 * Ahora si podemos correr nuestro modelo estádistico
 
 ```{r}
-res <- glmQLFTest(fit, coef=ncol(design))
+res <- glmQLFTest(fit, coef = ncol(design))
 summary(decideTests(res))
 
 topTags(res)
@@ -406,14 +409,14 @@ topTags(res)
 
 ```{r}
 # Removing all pseudo-bulk samples with 'insufficient' cells.
-summed.filt <- summed[,summed$ncells >= 10]
+summed.filt <- summed[, summed$ncells >= 10]
 
 library("scran")
-de.results <- pseudoBulkDGE(summed.filt, 
-    label=summed.filt$celltype.mapped,
-    design=~factor(pool) + tomato,
-    coef="tomatoTRUE",
-    condition=summed.filt$tomato 
+de.results <- pseudoBulkDGE(summed.filt,
+    label = summed.filt$celltype.mapped,
+    design = ~ factor(pool) + tomato,
+    coef = "tomatoTRUE",
+    condition = summed.filt$tomato
 )
 class(de.results)
 length(de.results)
@@ -425,7 +428,7 @@ length(de.results)
 
 ```{r}
 cur.results <- de.results[["Allantois"]]
-cur.results[order(cur.results$PValue),]
+cur.results[order(cur.results$PValue), ]
 
 y.allantois <- metadata(cur.results)$y
 plotBCV(y.allantois)
@@ -463,8 +466,8 @@ table(merged$sample)
 * Hagamos una tabla de la frecuencia de cada tipo celular a lo largo de nuestras muestras. Es decir, una tabla de abundancias
 
 ```{r}
-abundances <- table(merged$celltype.mapped, merged$sample) 
-abundances <- unclass(abundances) 
+abundances <- table(merged$celltype.mapped, merged$sample)
+abundances <- unclass(abundances)
 head(abundances)
 ```
 
@@ -472,8 +475,8 @@ head(abundances)
 
 ```{r}
 # Attaching some column metadata.
-extra.info <- colData(merged)[match(colnames(abundances), merged$sample),]
-y.ab <- DGEList(abundances, samples=extra.info)
+extra.info <- colData(merged)[match(colnames(abundances), merged$sample), ]
+y.ab <- DGEList(abundances, samples = extra.info)
 y.ab
 ```
 
@@ -482,8 +485,8 @@ y.ab
 * A continuación filtramos los tipos celulares para los cuales no tenemos suficiente información, si es el caso
 
 ```{r}
-keep <- filterByExpr(y.ab, group=y.ab$samples$tomato)
-y.ab <- y.ab[keep,]
+keep <- filterByExpr(y.ab, group = y.ab$samples$tomato)
+y.ab <- y.ab[keep, ]
 summary(keep)
 ```
 
@@ -492,28 +495,28 @@ summary(keep)
 * Es la misma formúla del modelo estadístico (`design`) que usamos anteriormente, pero para otros números
 
 ```{r}
-design <- model.matrix(~factor(pool) + factor(tomato), y.ab$samples)
+design <- model.matrix(~ factor(pool) + factor(tomato), y.ab$samples)
 design
 
-y.ab <- estimateDisp(y.ab, design, trend="none")
+y.ab <- estimateDisp(y.ab, design, trend = "none")
 summary(y.ab$common.dispersion)
 
-plotBCV(y.ab, cex=1)
+plotBCV(y.ab, cex = 1)
 ```
 
 * A diferencia de antes, tenemos pocos puntos (antes eran genes, ahora son tipos celulares), así que no estimaremos una curva, por eso usamos `abundance.trend = FALSE`
 
 ```{r}
-fit.ab <- glmQLFit(y.ab, design, robust=TRUE, abundance.trend=FALSE)
+fit.ab <- glmQLFit(y.ab, design, robust = TRUE, abundance.trend = FALSE)
 summary(fit.ab$var.prior)
 
-plotQLDisp(fit.ab, cex=1)
+plotQLDisp(fit.ab, cex = 1)
 ```
 
 * Corremos el análisis
 
 ```{r}
-res <- glmQLFTest(fit.ab, coef=ncol(design))
+res <- glmQLFTest(fit.ab, coef = ncol(design))
 summary(decideTests(res))
 
 topTags(res)

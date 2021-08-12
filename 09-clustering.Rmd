@@ -269,7 +269,7 @@ Para detalles sobre la seleccion de parámetros y comparaciones: [visitar esta p
 library("patchwork")
 
 plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster") +
-plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
+    plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
 ```
 
 ### Evaluando la separación de los clusters
