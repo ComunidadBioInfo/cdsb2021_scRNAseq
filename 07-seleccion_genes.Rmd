@@ -532,7 +532,6 @@ plot(fit.pbmc$mean, fit.pbmc$var,
 )
 points(fit.pbmc$mean[hvg.pbmc.var], fit.pbmc$var[hvg.pbmc.var], col = "orange")
 curve(fit.pbmc$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
-
 ```
 
 
