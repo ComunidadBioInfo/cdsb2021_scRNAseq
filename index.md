@@ -144,7 +144,7 @@ BiocManager::version()
 
 
 ```
-## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "celldex", "cowplot", "dplyr", "DropletUtils", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "lobstr", "MouseGastrulationData", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "postcards", "pryr", "RColorBrewer", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "SingleR", "suncalc", "TENxPBMCData", "usethis", "uwot"))
+## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "celldex", "cowplot", "dplyr", "DropletUtils", "edgeR", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "lobstr", "MouseGastrulationData", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "Polychrome", "postcards", "pryr", "RColorBrewer", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "SingleR", "suncalc", "TENxPBMCData", "usethis", "uwot"))
 ```
 
 
@@ -521,6 +521,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  plotly                   4.9.4.1    2021-06-18 [1] RSPM (R 4.1.0)
 ##  plyr                     1.8.6      2020-03-03 [1] RSPM (R 4.1.0)
 ##  png                      0.1-7      2013-12-03 [1] RSPM (R 4.1.0)
+##  Polychrome               1.3.1      2021-07-16 [1] RSPM (R 4.1.0)
 ##  polyclip                 1.10-0     2019-03-14 [1] RSPM (R 4.1.0)
 ##  postcards                0.2.2      2021-07-31 [1] RSPM (R 4.1.0)
 ##  pracma                   2.3.3      2021-01-23 [1] RSPM (R 4.1.0)
@@ -589,6 +590,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  scales                   1.1.1      2020-05-11 [1] RSPM (R 4.1.0)
 ##  scater                   1.20.1     2021-06-15 [1] Bioconductor  
 ##  scattermore              0.7        2020-11-24 [1] RSPM (R 4.1.0)
+##  scatterplot3d            0.3-41     2018-03-14 [1] RSPM (R 4.1.0)
 ##  scPipe                   1.14.0     2021-05-19 [1] Bioconductor  
 ##  scran                    1.20.1     2021-05-24 [1] Bioconductor  
 ##  scRNAseq                 2.6.1      2021-05-25 [1] Bioconductor  
@@ -672,7 +674,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-11 23:21:50.
+Fecha de la última actualización de esta página: 2021-08-11 23:36:14.
 
 ## Licencia  {-}
 

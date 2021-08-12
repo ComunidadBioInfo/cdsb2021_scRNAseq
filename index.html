@@ -519,8 +519,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html"><i class="fa fa-check"></i><b>12</b> Análisis de expresión diferencial</a>
 <ul>
 <li class="chapter" data-level="12.1" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#diapositivas-de-peter-hickey-6"><i class="fa fa-check"></i><b>12.1</b> Diapositivas de Peter Hickey</a></li>
-<li class="chapter" data-level="12.2" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#section"><i class="fa fa-check"></i><b>12.2</b> </a></li>
-<li class="chapter" data-level="12.3" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#detalles-de-la-sesión-de-r-11"><i class="fa fa-check"></i><b>12.3</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="12.2" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#datos-de-ejemplo"><i class="fa fa-check"></i><b>12.2</b> Datos de ejemplo</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#exploremos-los-datos-de-ejemplo"><i class="fa fa-check"></i><b>12.2.1</b> Exploremos los datos de ejemplo</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#nuestros-clusters-vs-los-originales"><i class="fa fa-check"></i><b>12.3</b> Nuestros clusters vs los originales</a></li>
+<li class="chapter" data-level="12.4" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#pseudo-bulking"><i class="fa fa-check"></i><b>12.4</b> Pseudo-bulking</a></li>
+<li class="chapter" data-level="12.5" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#análisis-de-expresión-diferencial-1"><i class="fa fa-check"></i><b>12.5</b> Análisis de expresión diferencial</a>
+<ul>
+<li class="chapter" data-level="12.5.1" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#convertir-a-un-objeto-nuevo"><i class="fa fa-check"></i><b>12.5.1</b> Convertir a un objeto nuevo</a></li>
+<li class="chapter" data-level="12.5.2" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#pre-procesamiento"><i class="fa fa-check"></i><b>12.5.2</b> Pre-procesamiento</a></li>
+<li class="chapter" data-level="12.5.3" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#modelo-estadístico"><i class="fa fa-check"></i><b>12.5.3</b> Modelo estadístico</a></li>
+<li class="chapter" data-level="12.5.4" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#de-forma-sencilla"><i class="fa fa-check"></i><b>12.5.4</b> De forma sencilla</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#análisis-de-abundancia-diferencial"><i class="fa fa-check"></i><b>12.6</b> Análisis de abundancia diferencial</a></li>
+<li class="chapter" data-level="12.7" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#comentarios-sobre-la-interpretación"><i class="fa fa-check"></i><b>12.7</b> Comentarios sobre la interpretación</a></li>
+<li class="chapter" data-level="12.8" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#detalles-de-la-sesión-de-r-11"><i class="fa fa-check"></i><b>12.8</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#patrocinadores-12"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html"><i class="fa fa-check"></i><b>13</b> Introducción a Seurat</a>
@@ -682,7 +696,7 @@ Do you want to learn how to analyze <a href="https://twitter.com/hashtag/scRNAse
 <span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># El anterior comando debe mostrar que estás usando la versión 3.13</span></span>
 <span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="index.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Instala los paquetes de R que necesitamos</span></span></code></pre></div>
-<pre><code>## BiocManager::install(c(&quot;batchelor&quot;, &quot;BiocFileCache&quot;, &quot;BiocSingular&quot;, &quot;bluster&quot;, &quot;celldex&quot;, &quot;cowplot&quot;, &quot;dplyr&quot;, &quot;DropletUtils&quot;, &quot;EnsDb.Hsapiens.v86&quot;, &quot;ExperimentHub&quot;, &quot;fossil&quot;, &quot;gert&quot;, &quot;gh&quot;, &quot;here&quot;, &quot;iSEE&quot;, &quot;kableExtra&quot;, &quot;lobstr&quot;, &quot;MouseGastrulationData&quot;, &quot;org.Mm.eg.db&quot;, &quot;patchwork&quot;, &quot;PCAtools&quot;, &quot;pheatmap&quot;, &quot;plotly&quot;, &quot;postcards&quot;, &quot;pryr&quot;, &quot;RColorBrewer&quot;, &quot;Rtsne&quot;, &quot;scater&quot;, &quot;scPipe&quot;, &quot;scran&quot;, &quot;scRNAseq&quot;, &quot;sessioninfo&quot;, &quot;Seurat&quot;, &quot;SingleCellExperiment&quot;, &quot;SingleR&quot;, &quot;suncalc&quot;, &quot;TENxPBMCData&quot;, &quot;usethis&quot;, &quot;uwot&quot;))</code></pre>
+<pre><code>## BiocManager::install(c(&quot;batchelor&quot;, &quot;BiocFileCache&quot;, &quot;BiocSingular&quot;, &quot;bluster&quot;, &quot;celldex&quot;, &quot;cowplot&quot;, &quot;dplyr&quot;, &quot;DropletUtils&quot;, &quot;edgeR&quot;, &quot;EnsDb.Hsapiens.v86&quot;, &quot;ExperimentHub&quot;, &quot;fossil&quot;, &quot;gert&quot;, &quot;gh&quot;, &quot;here&quot;, &quot;iSEE&quot;, &quot;kableExtra&quot;, &quot;lobstr&quot;, &quot;MouseGastrulationData&quot;, &quot;org.Mm.eg.db&quot;, &quot;patchwork&quot;, &quot;PCAtools&quot;, &quot;pheatmap&quot;, &quot;plotly&quot;, &quot;Polychrome&quot;, &quot;postcards&quot;, &quot;pryr&quot;, &quot;RColorBrewer&quot;, &quot;Rtsne&quot;, &quot;scater&quot;, &quot;scPipe&quot;, &quot;scran&quot;, &quot;scRNAseq&quot;, &quot;sessioninfo&quot;, &quot;Seurat&quot;, &quot;SingleCellExperiment&quot;, &quot;SingleR&quot;, &quot;suncalc&quot;, &quot;TENxPBMCData&quot;, &quot;usethis&quot;, &quot;uwot&quot;))</code></pre>
 </div>
 <div id="horario" class="section level2 unnumbered">
 <h2>Horario</h2>
@@ -1256,6 +1270,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ##  plotly                   4.9.4.1    2021-06-18 [1] RSPM (R 4.1.0)
 ##  plyr                     1.8.6      2020-03-03 [1] RSPM (R 4.1.0)
 ##  png                      0.1-7      2013-12-03 [1] RSPM (R 4.1.0)
+##  Polychrome               1.3.1      2021-07-16 [1] RSPM (R 4.1.0)
 ##  polyclip                 1.10-0     2019-03-14 [1] RSPM (R 4.1.0)
 ##  postcards                0.2.2      2021-07-31 [1] RSPM (R 4.1.0)
 ##  pracma                   2.3.3      2021-01-23 [1] RSPM (R 4.1.0)
@@ -1324,6 +1339,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ##  scales                   1.1.1      2020-05-11 [1] RSPM (R 4.1.0)
 ##  scater                   1.20.1     2021-06-15 [1] Bioconductor  
 ##  scattermore              0.7        2020-11-24 [1] RSPM (R 4.1.0)
+##  scatterplot3d            0.3-41     2018-03-14 [1] RSPM (R 4.1.0)
 ##  scPipe                   1.14.0     2021-05-19 [1] Bioconductor  
 ##  scran                    1.20.1     2021-05-24 [1] Bioconductor  
 ##  scRNAseq                 2.6.1      2021-05-25 [1] Bioconductor  
@@ -1405,7 +1421,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ## [1] /__w/_temp/Library
 ## [2] /usr/local/lib/R/site-library
 ## [3] /usr/local/lib/R/library</code></pre>
-<p>Fecha de la última actualización de esta página: 2021-08-11 23:21:50.</p>
+<p>Fecha de la última actualización de esta página: 2021-08-11 23:36:14.</p>
 </div>
 <div id="licencia" class="section level2 unnumbered">
 <h2>Licencia</h2>

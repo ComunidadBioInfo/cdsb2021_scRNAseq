@@ -519,8 +519,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html"><i class="fa fa-check"></i><b>12</b> Análisis de expresión diferencial</a>
 <ul>
 <li class="chapter" data-level="12.1" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#diapositivas-de-peter-hickey-6"><i class="fa fa-check"></i><b>12.1</b> Diapositivas de Peter Hickey</a></li>
-<li class="chapter" data-level="12.2" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#section"><i class="fa fa-check"></i><b>12.2</b> </a></li>
-<li class="chapter" data-level="12.3" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#detalles-de-la-sesión-de-r-11"><i class="fa fa-check"></i><b>12.3</b> Detalles de la sesión de R</a></li>
+<li class="chapter" data-level="12.2" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#datos-de-ejemplo"><i class="fa fa-check"></i><b>12.2</b> Datos de ejemplo</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#exploremos-los-datos-de-ejemplo"><i class="fa fa-check"></i><b>12.2.1</b> Exploremos los datos de ejemplo</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#nuestros-clusters-vs-los-originales"><i class="fa fa-check"></i><b>12.3</b> Nuestros clusters vs los originales</a></li>
+<li class="chapter" data-level="12.4" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#pseudo-bulking"><i class="fa fa-check"></i><b>12.4</b> Pseudo-bulking</a></li>
+<li class="chapter" data-level="12.5" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#análisis-de-expresión-diferencial-1"><i class="fa fa-check"></i><b>12.5</b> Análisis de expresión diferencial</a>
+<ul>
+<li class="chapter" data-level="12.5.1" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#convertir-a-un-objeto-nuevo"><i class="fa fa-check"></i><b>12.5.1</b> Convertir a un objeto nuevo</a></li>
+<li class="chapter" data-level="12.5.2" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#pre-procesamiento"><i class="fa fa-check"></i><b>12.5.2</b> Pre-procesamiento</a></li>
+<li class="chapter" data-level="12.5.3" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#modelo-estadístico"><i class="fa fa-check"></i><b>12.5.3</b> Modelo estadístico</a></li>
+<li class="chapter" data-level="12.5.4" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#de-forma-sencilla"><i class="fa fa-check"></i><b>12.5.4</b> De forma sencilla</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#análisis-de-abundancia-diferencial"><i class="fa fa-check"></i><b>12.6</b> Análisis de abundancia diferencial</a></li>
+<li class="chapter" data-level="12.7" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#comentarios-sobre-la-interpretación"><i class="fa fa-check"></i><b>12.7</b> Comentarios sobre la interpretación</a></li>
+<li class="chapter" data-level="12.8" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#detalles-de-la-sesión-de-r-11"><i class="fa fa-check"></i><b>12.8</b> Detalles de la sesión de R</a></li>
 <li class="chapter" data-level="" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#patrocinadores-12"><i class="fa fa-check"></i>Patrocinadores</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="introducción-a-seurat.html"><a href="introducción-a-seurat.html"><i class="fa fa-check"></i><b>13</b> Introducción a Seurat</a>
@@ -566,16 +580,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb549-2"><a href="análisis-de-expresión-diferencial.html#cb549-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;MouseGastrulationData&quot;</span>) <span class="do">## para descargar datos de ejemplo</span></span>
 <span id="cb549-3"><a href="análisis-de-expresión-diferencial.html#cb549-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scater&quot;</span>) <span class="do">## para gráficas y control de calidad</span></span>
 <span id="cb549-4"><a href="análisis-de-expresión-diferencial.html#cb549-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scran&quot;</span>) <span class="do">## para selección de genes, clustering, etc</span></span>
-<span id="cb549-5"><a href="análisis-de-expresión-diferencial.html#cb549-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;batchelor&quot;</span>) <span class="do">## para métodos de correción de batch (lote)</span></span></code></pre></div>
+<span id="cb549-5"><a href="análisis-de-expresión-diferencial.html#cb549-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;batchelor&quot;</span>) <span class="do">## para métodos de correción de batch (lote)</span></span>
+<span id="cb549-6"><a href="análisis-de-expresión-diferencial.html#cb549-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;patchwork&quot;</span>) <span class="do">## para agrupar gráficas</span></span>
+<span id="cb549-7"><a href="análisis-de-expresión-diferencial.html#cb549-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Polychrome&quot;</span>) <span class="do">## para muchos colores</span></span>
+<span id="cb549-8"><a href="análisis-de-expresión-diferencial.html#cb549-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;bluster&quot;</span>) <span class="do">## métodos de clustering</span></span>
+<span id="cb549-9"><a href="análisis-de-expresión-diferencial.html#cb549-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;edgeR&quot;</span>) <span class="do">## para expresión diferencial</span></span></code></pre></div>
 <div id="diapositivas-de-peter-hickey-6" class="section level2" number="12.1">
 <h2><span class="header-section-number">12.1</span> Diapositivas de Peter Hickey</h2>
 <p>Ve las diapositivas <a href="https://docs.google.com/presentation/d/1CRTE_1m8YHf8p6GMl-rbBpyOx2KS4UxdTC1dpvVgKEs/edit?usp=sharing">aquí</a></p>
 <p>Esas diapositivas están basadas en este <a href="https://bioconductor.org/books/release/OSCA/multi-sample-comparisons.html">capítulo de OSCA</a>.</p>
 </div>
-<div id="section" class="section level2" number="12.2">
-<h2><span class="header-section-number">12.2</span> </h2>
+<div id="datos-de-ejemplo" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Datos de ejemplo</h2>
 <div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="análisis-de-expresión-diferencial.html#cb550-1" aria-hidden="true" tabindex="-1"></a><span class="co">#--- loading ---#</span></span>
-<span id="cb550-2"><a href="análisis-de-expresión-diferencial.html#cb550-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MouseGastrulationData)</span>
+<span id="cb550-2"><a href="análisis-de-expresión-diferencial.html#cb550-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;MouseGastrulationData&quot;</span>)</span>
 <span id="cb550-3"><a href="análisis-de-expresión-diferencial.html#cb550-3" aria-hidden="true" tabindex="-1"></a>sce.chimera <span class="ot">&lt;-</span> <span class="fu">WTChimeraData</span>(<span class="at">samples=</span><span class="dv">5</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## snapshotDate(): 2021-05-18</code></pre>
 <pre><code>## see ?MouseGastrulationData and browseVignettes(&#39;MouseGastrulationData&#39;) for documentation</code></pre>
@@ -692,7 +710,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## mainExpName: NULL
 ## altExpNames(0):</code></pre>
 <div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="análisis-de-expresión-diferencial.html#cb654-1" aria-hidden="true" tabindex="-1"></a><span class="co">#--- feature-annotation ---#</span></span>
-<span id="cb654-2"><a href="análisis-de-expresión-diferencial.html#cb654-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb654-2"><a href="análisis-de-expresión-diferencial.html#cb654-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scater&quot;</span>)</span>
 <span id="cb654-3"><a href="análisis-de-expresión-diferencial.html#cb654-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sce.chimera) <span class="ot">&lt;-</span> <span class="fu">uniquifyFeatureNames</span>(</span>
 <span id="cb654-4"><a href="análisis-de-expresión-diferencial.html#cb654-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowData</span>(sce.chimera)<span class="sc">$</span>ENSEMBL, <span class="fu">rowData</span>(sce.chimera)<span class="sc">$</span>SYMBOL)</span>
 <span id="cb654-5"><a href="análisis-de-expresión-diferencial.html#cb654-5" aria-hidden="true" tabindex="-1"></a></span>
@@ -704,12 +722,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb654-11"><a href="análisis-de-expresión-diferencial.html#cb654-11" aria-hidden="true" tabindex="-1"></a>sce.chimera <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.chimera)</span>
 <span id="cb654-12"><a href="análisis-de-expresión-diferencial.html#cb654-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb654-13"><a href="análisis-de-expresión-diferencial.html#cb654-13" aria-hidden="true" tabindex="-1"></a><span class="co">#--- variance-modelling ---#</span></span>
-<span id="cb654-14"><a href="análisis-de-expresión-diferencial.html#cb654-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
+<span id="cb654-14"><a href="análisis-de-expresión-diferencial.html#cb654-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scran&quot;</span>)</span>
 <span id="cb654-15"><a href="análisis-de-expresión-diferencial.html#cb654-15" aria-hidden="true" tabindex="-1"></a>dec.chimera <span class="ot">&lt;-</span> <span class="fu">modelGeneVar</span>(sce.chimera, <span class="at">block=</span>sce.chimera<span class="sc">$</span>sample)</span>
 <span id="cb654-16"><a href="análisis-de-expresión-diferencial.html#cb654-16" aria-hidden="true" tabindex="-1"></a>chosen.hvgs <span class="ot">&lt;-</span> dec.chimera<span class="sc">$</span>bio <span class="sc">&gt;</span> <span class="dv">0</span></span>
 <span id="cb654-17"><a href="análisis-de-expresión-diferencial.html#cb654-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb654-18"><a href="análisis-de-expresión-diferencial.html#cb654-18" aria-hidden="true" tabindex="-1"></a><span class="co">#--- merging ---#</span></span>
-<span id="cb654-19"><a href="análisis-de-expresión-diferencial.html#cb654-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(batchelor)</span>
+<span id="cb654-19"><a href="análisis-de-expresión-diferencial.html#cb654-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;batchelor&quot;</span>)</span>
 <span id="cb654-20"><a href="análisis-de-expresión-diferencial.html#cb654-20" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">01001001</span>)</span>
 <span id="cb654-21"><a href="análisis-de-expresión-diferencial.html#cb654-21" aria-hidden="true" tabindex="-1"></a>merged <span class="ot">&lt;-</span> <span class="fu">correctExperiments</span>(sce.chimera, </span>
 <span id="cb654-22"><a href="análisis-de-expresión-diferencial.html#cb654-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch=</span>sce.chimera<span class="sc">$</span>sample, </span>
@@ -730,17 +748,511 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb654-37"><a href="análisis-de-expresión-diferencial.html#cb654-37" aria-hidden="true" tabindex="-1"></a><span class="co">#--- dimensionality-reduction ---#</span></span>
 <span id="cb654-38"><a href="análisis-de-expresión-diferencial.html#cb654-38" aria-hidden="true" tabindex="-1"></a>merged <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(merged, <span class="at">dimred=</span><span class="st">&quot;corrected&quot;</span>, <span class="at">external_neighbors=</span><span class="cn">TRUE</span>)</span>
 <span id="cb654-39"><a href="análisis-de-expresión-diferencial.html#cb654-39" aria-hidden="true" tabindex="-1"></a>merged <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(merged, <span class="at">dimred=</span><span class="st">&quot;corrected&quot;</span>, <span class="at">external_neighbors=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div id="exploremos-los-datos-de-ejemplo" class="section level3" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> Exploremos los datos de ejemplo</h3>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="análisis-de-expresión-diferencial.html#cb655-1" aria-hidden="true" tabindex="-1"></a>merged</span></code></pre></div>
+<pre><code>## class: SingleCellExperiment 
+## dim: 14699 19426 
+## metadata(2): merge.info pca.info
+## assays(3): reconstructed counts logcounts
+## rownames(14699): Xkr4 Rp1 ... Vmn2r122 CAAA01147332.1
+## rowData names(3): rotation ENSEMBL SYMBOL
+## colnames(19426): cell_9769 cell_9770 ... cell_30701 cell_30702
+## colData names(13): batch cell ... sizeFactor label
+## reducedDimNames(5): corrected pca.corrected.E7.5 pca.corrected.E8.5
+##   TSNE UMAP
+## mainExpName: NULL
+## altExpNames(0):</code></pre>
+<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="análisis-de-expresión-diferencial.html#cb657-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(merged)</span></code></pre></div>
+<pre><code>## DataFrame with 19426 rows and 13 columns
+##                  batch        cell          barcode    sample       stage
+##            &lt;character&gt; &lt;character&gt;      &lt;character&gt; &lt;integer&gt; &lt;character&gt;
+## cell_9769            5   cell_9769 AAACCTGAGACTGTAA         5        E8.5
+## cell_9770            5   cell_9770 AAACCTGAGATGCCTT         5        E8.5
+## cell_9771            5   cell_9771 AAACCTGAGCAGCCTC         5        E8.5
+## cell_9772            5   cell_9772 AAACCTGCATACTCTT         5        E8.5
+## cell_9773            5   cell_9773 AAACGGGTCAACACCA         5        E8.5
+## ...                ...         ...              ...       ...         ...
+## cell_30698          10  cell_30698 TTTGTCACAGCTCGAC        10        E8.5
+## cell_30699          10  cell_30699 TTTGTCACAGCTCGCA        10        E8.5
+## cell_30700          10  cell_30700 TTTGTCAGTCTAGTCA        10        E8.5
+## cell_30701          10  cell_30701 TTTGTCATCATCGGAT        10        E8.5
+## cell_30702          10  cell_30702 TTTGTCATCATTATCC        10        E8.5
+##               tomato      pool stage.mapped        celltype.mapped closest.cell
+##            &lt;logical&gt; &lt;integer&gt;  &lt;character&gt;            &lt;character&gt;  &lt;character&gt;
+## cell_9769       TRUE         3        E8.25             Mesenchyme   cell_24159
+## cell_9770       TRUE         3         E8.5            Endothelium   cell_96660
+## cell_9771       TRUE         3         E8.5              Allantois  cell_134982
+## cell_9772       TRUE         3         E8.5             Erythroid3  cell_133892
+## cell_9773       TRUE         3        E8.25             Erythroid1   cell_76296
+## ...              ...       ...          ...                    ...          ...
+## cell_30698     FALSE         5         E8.5             Erythroid2   cell_75562
+## cell_30699     FALSE         5         E8.5             Erythroid3   cell_38810
+## cell_30700     FALSE         5         E8.5       Surface ectoderm   cell_38588
+## cell_30701     FALSE         5        E8.25 Forebrain/Midbrain/H..   cell_66082
+## cell_30702     FALSE         5         E8.5             Erythroid3  cell_138114
+##            doub.density sizeFactor    label
+##               &lt;numeric&gt;  &lt;numeric&gt; &lt;factor&gt;
+## cell_9769    0.02985045    1.63488       19
+## cell_9770    0.00172753    1.42090       16
+## cell_9771    0.01338013    1.33620       15
+## cell_9772    0.00218402    1.48941       7 
+## cell_9773    0.00211723    2.06865       5 
+## ...                 ...        ...      ...
+## cell_30698   0.00332621   0.883343       7 
+## cell_30699   0.00146287   0.450624       26
+## cell_30700   0.00374155   0.681511       18
+## cell_30701   0.05651258   0.722800       1 
+## cell_30702   0.00108837   0.637552       26</code></pre>
+<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="análisis-de-expresión-diferencial.html#cb659-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(merged)</span></code></pre></div>
+<pre><code>## DataFrame with 14699 rows and 3 columns
+##                                                  rotation            ENSEMBL
+##                                                  &lt;matrix&gt;        &lt;character&gt;
+## Xkr4            2.34962e-05: 2.26353e-05:-3.93419e-05:... ENSMUSG00000051951
+## Rp1             2.40285e-05: 2.19175e-05: 2.08760e-04:... ENSMUSG00000025900
+## Sox17           3.31560e-03: 9.40744e-03:-8.22634e-03:... ENSMUSG00000025902
+## Mrpl15         -1.61444e-02:-1.07756e-02:-1.99889e-02:... ENSMUSG00000033845
+## Rgs20           3.39364e-04:-7.14509e-04: 1.02445e-04:... ENSMUSG00000002459
+## ...                                                   ...                ...
+## CR974586.5      1.29077e-06:-1.48600e-05: 1.08480e-05:... ENSMUSG00000096506
+## AC132444.6      8.57755e-07:-1.16664e-06: 2.37066e-07:... ENSMUSG00000096808
+## AC149090.1      1.97661e-03:-1.80301e-03:-1.10685e-03:... ENSMUSG00000095041
+## Vmn2r122        1.92291e-06:-1.98112e-06: 5.69466e-06:... ENSMUSG00000096730
+## CAAA01147332.1  5.55974e-05: 3.40175e-05:-1.00785e-04:... ENSMUSG00000095742
+##                        SYMBOL
+##                   &lt;character&gt;
+## Xkr4                     Xkr4
+## Rp1                       Rp1
+## Sox17                   Sox17
+## Mrpl15                 Mrpl15
+## Rgs20                   Rgs20
+## ...                       ...
+## CR974586.5         CR974586.5
+## AC132444.6         AC132444.6
+## AC149090.1         AC149090.1
+## Vmn2r122             Vmn2r122
+## CAAA01147332.1 CAAA01147332.1</code></pre>
+<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb661-1"><a href="análisis-de-expresión-diferencial.html#cb661-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assayNames</span>(merged)</span></code></pre></div>
+<pre><code>## [1] &quot;reconstructed&quot; &quot;counts&quot;        &quot;logcounts&quot;</code></pre>
+<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="análisis-de-expresión-diferencial.html#cb663-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Clusters vs DE por td-Tomato</span></span>
+<span id="cb663-2"><a href="análisis-de-expresión-diferencial.html#cb663-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">colLabels</span>(merged), merged<span class="sc">$</span>tomato)</span></code></pre></div>
+<pre><code>##     
+##      FALSE TRUE
+##   1    546  401
+##   2     60   52
+##   3    470  398
+##   4    469  211
+##   5    335  271
+##   6    258  249
+##   7   1241  967
+##   8    203  221
+##   9    630  629
+##   10    71  181
+##   11   417  310
+##   12    47   57
+##   13    58    0
+##   14   209  214
+##   15   414  630
+##   16   363  509
+##   17   234  198
+##   18   657  607
+##   19   151  303
+##   20   579  443
+##   21   137   74
+##   22    82   78
+##   23   155    1
+##   24   762  878
+##   25   363  497
+##   26  1420  716</code></pre>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="análisis-de-expresión-diferencial.html#cb665-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Clusters vs lotes de muestras (batch)</span></span>
+<span id="cb665-2"><a href="análisis-de-expresión-diferencial.html#cb665-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">colLabels</span>(merged), merged<span class="sc">$</span>pool)</span></code></pre></div>
+<pre><code>##     
+##         3    4    5
+##   1   224  173  550
+##   2    26   30   56
+##   3   226  172  470
+##   4    78  162  440
+##   5    99  227  280
+##   6   187  116  204
+##   7   300  909  999
+##   8    69  134  221
+##   9   229  423  607
+##   10  114   54   84
+##   11  179  169  379
+##   12   16   31   57
+##   13    2   51    5
+##   14   77   97  249
+##   15  114  289  641
+##   16  183  242  447
+##   17  157   81  194
+##   18  123  308  833
+##   19  106  118  230
+##   20  236  238  548
+##   21    3   10  198
+##   22   27   29  104
+##   23    6   84   66
+##   24  217  455  968
+##   25  132  172  556
+##   26  194  870 1072</code></pre>
+<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="análisis-de-expresión-diferencial.html#cb667-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;patchwork&quot;</span>)</span>
+<span id="cb667-2"><a href="análisis-de-expresión-diferencial.html#cb667-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotTSNE</span>(merged, <span class="at">colour_by=</span><span class="st">&quot;tomato&quot;</span>, <span class="at">text_by=</span><span class="st">&quot;label&quot;</span>) <span class="sc">+</span></span>
+<span id="cb667-3"><a href="análisis-de-expresión-diferencial.html#cb667-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotTSNE</span>(merged, <span class="at">colour_by=</span><span class="fu">data.frame</span>(<span class="at">pool=</span><span class="fu">factor</span>(merged<span class="sc">$</span>pool)))</span></code></pre></div>
+<p><img src="12-expresion_diferencial_files/figure-html/unnamed-chunk-4-1.png" width="960" /></p>
 </div>
-<div id="detalles-de-la-sesión-de-r-11" class="section level2" number="12.3">
-<h2><span class="header-section-number">12.3</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="análisis-de-expresión-diferencial.html#cb655-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb655-2"><a href="análisis-de-expresión-diferencial.html#cb655-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-11 23:53:17 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="análisis-de-expresión-diferencial.html#cb657-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+</div>
+<div id="nuestros-clusters-vs-los-originales" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Nuestros clusters vs los originales</h2>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="análisis-de-expresión-diferencial.html#cb668-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Definir colores, si no scater nos los pone en una escala</span></span>
+<span id="cb668-2"><a href="análisis-de-expresión-diferencial.html#cb668-2" aria-hidden="true" tabindex="-1"></a><span class="do">## continua</span></span>
+<span id="cb668-3"><a href="análisis-de-expresión-diferencial.html#cb668-3" aria-hidden="true" tabindex="-1"></a>cols_label <span class="ot">&lt;-</span> Polychrome<span class="sc">::</span><span class="fu">palette36.colors</span>(<span class="fu">length</span>(<span class="fu">unique</span>(merged<span class="sc">$</span>label)))</span>
+<span id="cb668-4"><a href="análisis-de-expresión-diferencial.html#cb668-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(cols_label) <span class="ot">&lt;-</span> <span class="fu">unique</span>(merged<span class="sc">$</span>label)</span>
+<span id="cb668-5"><a href="análisis-de-expresión-diferencial.html#cb668-5" aria-hidden="true" tabindex="-1"></a>cols_celltype.mapped <span class="ot">&lt;-</span> Polychrome<span class="sc">::</span><span class="fu">palette36.colors</span>(<span class="fu">length</span>(<span class="fu">unique</span>(merged<span class="sc">$</span>celltype.mapped)))</span>
+<span id="cb668-6"><a href="análisis-de-expresión-diferencial.html#cb668-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(cols_celltype.mapped) <span class="ot">&lt;-</span> <span class="fu">unique</span>(merged<span class="sc">$</span>celltype.mapped)</span>
+<span id="cb668-7"><a href="análisis-de-expresión-diferencial.html#cb668-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb668-8"><a href="análisis-de-expresión-diferencial.html#cb668-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Nuestros clusters vs anotación de células por los</span></span>
+<span id="cb668-9"><a href="análisis-de-expresión-diferencial.html#cb668-9" aria-hidden="true" tabindex="-1"></a><span class="do">## autores originales</span></span>
+<span id="cb668-10"><a href="análisis-de-expresión-diferencial.html#cb668-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plotTSNE</span>(merged, <span class="at">colour_by=</span><span class="st">&quot;label&quot;</span>, <span class="at">text_by=</span><span class="st">&quot;label&quot;</span>) <span class="sc">+</span></span>
+<span id="cb668-11"><a href="análisis-de-expresión-diferencial.html#cb668-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb668-12"><a href="análisis-de-expresión-diferencial.html#cb668-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> cols_label) <span class="sc">+</span></span>
+<span id="cb668-13"><a href="análisis-de-expresión-diferencial.html#cb668-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plotTSNE</span>(merged, <span class="at">colour_by=</span><span class="st">&quot;celltype.mapped&quot;</span>) <span class="sc">+</span></span>
+<span id="cb668-14"><a href="análisis-de-expresión-diferencial.html#cb668-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb668-15"><a href="análisis-de-expresión-diferencial.html#cb668-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> cols_celltype.mapped)</span></code></pre></div>
+<pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for &#39;colour&#39;,
+## which will replace the existing scale.
+## Scale for &#39;colour&#39; is already present. Adding another scale for &#39;colour&#39;,
+## which will replace the existing scale.</code></pre>
+<p><img src="12-expresion_diferencial_files/figure-html/unnamed-chunk-5-1.png" width="960" /></p>
+<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="análisis-de-expresión-diferencial.html#cb670-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;bluster&quot;</span>)</span>
+<span id="cb670-2"><a href="análisis-de-expresión-diferencial.html#cb670-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwiseRand</span>(<span class="fu">colLabels</span>(merged), merged<span class="sc">$</span>celltype.mapped, <span class="st">&quot;index&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] 0.5513742</code></pre>
+<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="análisis-de-expresión-diferencial.html#cb672-1" aria-hidden="true" tabindex="-1"></a>by.label <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">colLabels</span>(merged), merged<span class="sc">$</span>celltype.mapped)</span>
+<span id="cb672-2"><a href="análisis-de-expresión-diferencial.html#cb672-2" aria-hidden="true" tabindex="-1"></a>pheatmap<span class="sc">::</span><span class="fu">pheatmap</span>(<span class="fu">log2</span>(by.label<span class="sc">+</span><span class="dv">1</span>), <span class="at">color=</span>viridis<span class="sc">::</span><span class="fu">viridis</span>(<span class="dv">101</span>))</span></code></pre></div>
+<p><img src="12-expresion_diferencial_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="pseudo-bulking" class="section level2" number="12.4">
+<h2><span class="header-section-number">12.4</span> Pseudo-bulking</h2>
+<script async class="speakerdeck-embed" data-slide="10" data-id="dde92cd6dfc04f9589770e074915658f" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<p>Estas diapositivas son parte de un webinar que di con Kristen R Maynard el 2021-04-27 para BioTuring que pueden ver <a href="https://bioturing.com/sources/webinar/60752954a433e26dd8affcbd">desde su sitio web</a> o en YouTube.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/S8884Kde-1U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="análisis-de-expresión-diferencial.html#cb673-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using &#39;label&#39; and &#39;sample&#39; as our two factors; each column of the output</span></span>
+<span id="cb673-2"><a href="análisis-de-expresión-diferencial.html#cb673-2" aria-hidden="true" tabindex="-1"></a><span class="co"># corresponds to one unique combination of these two factors.</span></span>
+<span id="cb673-3"><a href="análisis-de-expresión-diferencial.html#cb673-3" aria-hidden="true" tabindex="-1"></a>summed <span class="ot">&lt;-</span> <span class="fu">aggregateAcrossCells</span>(merged, </span>
+<span id="cb673-4"><a href="análisis-de-expresión-diferencial.html#cb673-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">id=</span><span class="fu">colData</span>(merged)[,<span class="fu">c</span>(<span class="st">&quot;celltype.mapped&quot;</span>, <span class="st">&quot;sample&quot;</span>)])</span>
+<span id="cb673-5"><a href="análisis-de-expresión-diferencial.html#cb673-5" aria-hidden="true" tabindex="-1"></a>summed</span></code></pre></div>
+<pre><code>## class: SingleCellExperiment 
+## dim: 14699 186 
+## metadata(2): merge.info pca.info
+## assays(1): counts
+## rownames(14699): Xkr4 Rp1 ... Vmn2r122 CAAA01147332.1
+## rowData names(3): rotation ENSEMBL SYMBOL
+## colnames: NULL
+## colData names(16): batch cell ... sample ncells
+## reducedDimNames(5): corrected pca.corrected.E7.5 pca.corrected.E8.5
+##   TSNE UMAP
+## mainExpName: NULL
+## altExpNames(0):</code></pre>
+</div>
+<div id="análisis-de-expresión-diferencial-1" class="section level2" number="12.5">
+<h2><span class="header-section-number">12.5</span> Análisis de expresión diferencial</h2>
+<div id="convertir-a-un-objeto-nuevo" class="section level3" number="12.5.1">
+<h3><span class="header-section-number">12.5.1</span> Convertir a un objeto nuevo</h3>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="análisis-de-expresión-diferencial.html#cb675-1" aria-hidden="true" tabindex="-1"></a>label <span class="ot">&lt;-</span> <span class="st">&quot;Mesenchyme&quot;</span></span>
+<span id="cb675-2"><a href="análisis-de-expresión-diferencial.html#cb675-2" aria-hidden="true" tabindex="-1"></a>current <span class="ot">&lt;-</span> summed[,label<span class="sc">==</span>summed<span class="sc">$</span>celltype.mapped]</span>
+<span id="cb675-3"><a href="análisis-de-expresión-diferencial.html#cb675-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb675-4"><a href="análisis-de-expresión-diferencial.html#cb675-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating up a DGEList object for use in edgeR:</span></span>
+<span id="cb675-5"><a href="análisis-de-expresión-diferencial.html#cb675-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;edgeR&quot;</span>)</span>
+<span id="cb675-6"><a href="análisis-de-expresión-diferencial.html#cb675-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">DGEList</span>(<span class="fu">counts</span>(current), <span class="at">samples=</span><span class="fu">colData</span>(current))</span>
+<span id="cb675-7"><a href="análisis-de-expresión-diferencial.html#cb675-7" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<pre><code>## An object of class &quot;DGEList&quot;
+## $counts
+##        Sample1 Sample2 Sample3 Sample4 Sample5 Sample6
+## Xkr4         2       0       0       0       3       0
+## Rp1          0       0       1       0       0       0
+## Sox17        7       0       3       0      14       9
+## Mrpl15    1420     271    1009     379    1578     749
+## Rgs20        3       0       1       1       0       0
+## 14694 more rows ...
+## 
+## $samples
+##         group lib.size norm.factors batch cell barcode sample stage tomato pool
+## Sample1     1  4607053            1     5 &lt;NA&gt;    &lt;NA&gt;      5  E8.5   TRUE    3
+## Sample2     1  1064970            1     6 &lt;NA&gt;    &lt;NA&gt;      6  E8.5  FALSE    3
+## Sample3     1  2494010            1     7 &lt;NA&gt;    &lt;NA&gt;      7  E8.5   TRUE    4
+## Sample4     1  1028668            1     8 &lt;NA&gt;    &lt;NA&gt;      8  E8.5  FALSE    4
+## Sample5     1  4290221            1     9 &lt;NA&gt;    &lt;NA&gt;      9  E8.5   TRUE    5
+## Sample6     1  1950840            1    10 &lt;NA&gt;    &lt;NA&gt;     10  E8.5  FALSE    5
+##         stage.mapped celltype.mapped closest.cell doub.density sizeFactor label
+## Sample1         &lt;NA&gt;      Mesenchyme         &lt;NA&gt;           NA         NA  &lt;NA&gt;
+## Sample2         &lt;NA&gt;      Mesenchyme         &lt;NA&gt;           NA         NA  &lt;NA&gt;
+## Sample3         &lt;NA&gt;      Mesenchyme         &lt;NA&gt;           NA         NA  &lt;NA&gt;
+## Sample4         &lt;NA&gt;      Mesenchyme         &lt;NA&gt;           NA         NA  &lt;NA&gt;
+## Sample5         &lt;NA&gt;      Mesenchyme         &lt;NA&gt;           NA         NA  &lt;NA&gt;
+## Sample6         &lt;NA&gt;      Mesenchyme         &lt;NA&gt;           NA         NA  &lt;NA&gt;
+##         celltype.mapped.1 sample.1 ncells
+## Sample1        Mesenchyme        5    286
+## Sample2        Mesenchyme        6     55
+## Sample3        Mesenchyme        7    243
+## Sample4        Mesenchyme        8    134
+## Sample5        Mesenchyme        9    478
+## Sample6        Mesenchyme       10    299</code></pre>
+</div>
+<div id="pre-procesamiento" class="section level3" number="12.5.2">
+<h3><span class="header-section-number">12.5.2</span> Pre-procesamiento</h3>
+<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="análisis-de-expresión-diferencial.html#cb677-1" aria-hidden="true" tabindex="-1"></a>discarded <span class="ot">&lt;-</span> current<span class="sc">$</span>ncells <span class="sc">&lt;</span> <span class="dv">10</span></span>
+<span id="cb677-2"><a href="análisis-de-expresión-diferencial.html#cb677-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> y[,<span class="sc">!</span>discarded]</span>
+<span id="cb677-3"><a href="análisis-de-expresión-diferencial.html#cb677-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(discarded)</span></code></pre></div>
+<pre><code>##    Mode   FALSE 
+## logical       6</code></pre>
+<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="análisis-de-expresión-diferencial.html#cb679-1" aria-hidden="true" tabindex="-1"></a>keep <span class="ot">&lt;-</span> <span class="fu">filterByExpr</span>(y, <span class="at">group=</span>current<span class="sc">$</span>tomato)</span>
+<span id="cb679-2"><a href="análisis-de-expresión-diferencial.html#cb679-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> y[keep,]</span>
+<span id="cb679-3"><a href="análisis-de-expresión-diferencial.html#cb679-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(keep)</span></code></pre></div>
+<pre><code>##    Mode   FALSE    TRUE 
+## logical    9011    5688</code></pre>
+<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="análisis-de-expresión-diferencial.html#cb681-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">calcNormFactors</span>(y)</span>
+<span id="cb681-2"><a href="análisis-de-expresión-diferencial.html#cb681-2" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span>samples</span></code></pre></div>
+<pre><code>##         group lib.size norm.factors batch cell barcode sample stage tomato pool
+## Sample1     1  4607053    1.0683392     5 &lt;NA&gt;    &lt;NA&gt;      5  E8.5   TRUE    3
+## Sample2     1  1064970    1.0487418     6 &lt;NA&gt;    &lt;NA&gt;      6  E8.5  FALSE    3
+## Sample3     1  2494010    0.9582296     7 &lt;NA&gt;    &lt;NA&gt;      7  E8.5   TRUE    4
+## Sample4     1  1028668    0.9774156     8 &lt;NA&gt;    &lt;NA&gt;      8  E8.5  FALSE    4
+## Sample5     1  4290221    0.9707300     9 &lt;NA&gt;    &lt;NA&gt;      9  E8.5   TRUE    5
+## Sample6     1  1950840    0.9816914    10 &lt;NA&gt;    &lt;NA&gt;     10  E8.5  FALSE    5
+##         stage.mapped celltype.mapped closest.cell doub.density sizeFactor label
+## Sample1         &lt;NA&gt;      Mesenchyme         &lt;NA&gt;           NA         NA  &lt;NA&gt;
+## Sample2         &lt;NA&gt;      Mesenchyme         &lt;NA&gt;           NA         NA  &lt;NA&gt;
+## Sample3         &lt;NA&gt;      Mesenchyme         &lt;NA&gt;           NA         NA  &lt;NA&gt;
+## Sample4         &lt;NA&gt;      Mesenchyme         &lt;NA&gt;           NA         NA  &lt;NA&gt;
+## Sample5         &lt;NA&gt;      Mesenchyme         &lt;NA&gt;           NA         NA  &lt;NA&gt;
+## Sample6         &lt;NA&gt;      Mesenchyme         &lt;NA&gt;           NA         NA  &lt;NA&gt;
+##         celltype.mapped.1 sample.1 ncells
+## Sample1        Mesenchyme        5    286
+## Sample2        Mesenchyme        6     55
+## Sample3        Mesenchyme        7    243
+## Sample4        Mesenchyme        8    134
+## Sample5        Mesenchyme        9    478
+## Sample6        Mesenchyme       10    299</code></pre>
+<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="análisis-de-expresión-diferencial.html#cb683-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb683-2"><a href="análisis-de-expresión-diferencial.html#cb683-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">ncol</span>(y))) {</span>
+<span id="cb683-3"><a href="análisis-de-expresión-diferencial.html#cb683-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plotMD</span>(y, <span class="at">column=</span>i)</span>
+<span id="cb683-4"><a href="análisis-de-expresión-diferencial.html#cb683-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="12-expresion_diferencial_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="análisis-de-expresión-diferencial.html#cb684-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb684-2"><a href="análisis-de-expresión-diferencial.html#cb684-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMDS</span>(<span class="fu">cpm</span>(y, <span class="at">log=</span><span class="cn">TRUE</span>), </span>
+<span id="cb684-3"><a href="análisis-de-expresión-diferencial.html#cb684-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">col=</span><span class="fu">ifelse</span>(y<span class="sc">$</span>samples<span class="sc">$</span>tomato, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
+<p><img src="12-expresion_diferencial_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="modelo-estadístico" class="section level3" number="12.5.3">
+<h3><span class="header-section-number">12.5.3</span> Modelo estadístico</h3>
+<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="análisis-de-expresión-diferencial.html#cb685-1" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span><span class="fu">factor</span>(pool) <span class="sc">+</span> <span class="fu">factor</span>(tomato), y<span class="sc">$</span>samples)</span>
+<span id="cb685-2"><a href="análisis-de-expresión-diferencial.html#cb685-2" aria-hidden="true" tabindex="-1"></a>design</span></code></pre></div>
+<pre><code>##         (Intercept) factor(pool)4 factor(pool)5 factor(tomato)TRUE
+## Sample1           1             0             0                  1
+## Sample2           1             0             0                  0
+## Sample3           1             1             0                  1
+## Sample4           1             1             0                  0
+## Sample5           1             0             1                  1
+## Sample6           1             0             1                  0
+## attr(,&quot;assign&quot;)
+## [1] 0 1 1 2
+## attr(,&quot;contrasts&quot;)
+## attr(,&quot;contrasts&quot;)$`factor(pool)`
+## [1] &quot;contr.treatment&quot;
+## 
+## attr(,&quot;contrasts&quot;)$`factor(tomato)`
+## [1] &quot;contr.treatment&quot;</code></pre>
+<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb687-1"><a href="análisis-de-expresión-diferencial.html#cb687-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">estimateDisp</span>(y, design)</span>
+<span id="cb687-2"><a href="análisis-de-expresión-diferencial.html#cb687-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(y<span class="sc">$</span>trended.dispersion)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## 0.01026 0.01670 0.02128 0.02020 0.02349 0.02665</code></pre>
+<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="análisis-de-expresión-diferencial.html#cb689-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotBCV</span>(y)</span></code></pre></div>
+<p><img src="12-expresion_diferencial_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="análisis-de-expresión-diferencial.html#cb690-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">glmQLFit</span>(y, design, <span class="at">robust=</span><span class="cn">TRUE</span>)</span>
+<span id="cb690-2"><a href="análisis-de-expresión-diferencial.html#cb690-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit<span class="sc">$</span>var.prior)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.3179  0.7143  0.8538  0.8045  0.9128  1.0665</code></pre>
+<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="análisis-de-expresión-diferencial.html#cb692-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit<span class="sc">$</span>df.prior)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.2267 12.6749 12.6749 12.3390 12.6749 12.6749</code></pre>
+<div class="sourceCode" id="cb694"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb694-1"><a href="análisis-de-expresión-diferencial.html#cb694-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQLDisp</span>(fit)</span></code></pre></div>
+<p><img src="12-expresion_diferencial_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="análisis-de-expresión-diferencial.html#cb695-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">glmQLFTest</span>(fit, <span class="at">coef=</span><span class="fu">ncol</span>(design))</span>
+<span id="cb695-2"><a href="análisis-de-expresión-diferencial.html#cb695-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">decideTests</span>(res))</span></code></pre></div>
+<pre><code>##        factor(tomato)TRUE
+## Down                    8
+## NotSig               5672
+## Up                      8</code></pre>
+<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="análisis-de-expresión-diferencial.html#cb697-1" aria-hidden="true" tabindex="-1"></a><span class="fu">topTags</span>(res)</span></code></pre></div>
+<pre><code>## Coefficient:  factor(tomato)TRUE 
+##               logFC   logCPM          F       PValue          FDR
+## Phlda2   -4.3873546 9.934130 1638.59469 1.812293e-16 1.030832e-12
+## Erdr1     2.0690698 8.832662  356.36590 1.060836e-11 3.017019e-08
+## Mid1      1.5190728 6.931325  120.14656 1.844351e-08 3.496889e-05
+## H13      -1.0596020 7.540121   80.79795 2.373001e-07 2.526790e-04
+## Kcnq1ot1  1.3762700 7.241651   83.30701 2.392052e-07 2.526790e-04
+## Akr1e1   -1.7205826 5.127802   79.31386 2.665390e-07 2.526790e-04
+## Zdbf2     1.8008336 6.797367   83.66324 6.808994e-07 5.532794e-04
+## Asb4     -0.9234911 7.340648   53.44578 2.918297e-06 2.074909e-03
+## Impact    0.8516300 7.353208   50.31429 4.145416e-06 2.619903e-03
+## Lum      -0.6031413 9.274529   41.67104 1.204523e-05 6.851324e-03</code></pre>
+</div>
+<div id="de-forma-sencilla" class="section level3" number="12.5.4">
+<h3><span class="header-section-number">12.5.4</span> De forma sencilla</h3>
+<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb699-1"><a href="análisis-de-expresión-diferencial.html#cb699-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing all pseudo-bulk samples with &#39;insufficient&#39; cells.</span></span>
+<span id="cb699-2"><a href="análisis-de-expresión-diferencial.html#cb699-2" aria-hidden="true" tabindex="-1"></a>summed.filt <span class="ot">&lt;-</span> summed[,summed<span class="sc">$</span>ncells <span class="sc">&gt;=</span> <span class="dv">10</span>]</span>
+<span id="cb699-3"><a href="análisis-de-expresión-diferencial.html#cb699-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb699-4"><a href="análisis-de-expresión-diferencial.html#cb699-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;scran&quot;</span>)</span>
+<span id="cb699-5"><a href="análisis-de-expresión-diferencial.html#cb699-5" aria-hidden="true" tabindex="-1"></a>de.results <span class="ot">&lt;-</span> <span class="fu">pseudoBulkDGE</span>(summed.filt, </span>
+<span id="cb699-6"><a href="análisis-de-expresión-diferencial.html#cb699-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">label=</span>summed.filt<span class="sc">$</span>celltype.mapped,</span>
+<span id="cb699-7"><a href="análisis-de-expresión-diferencial.html#cb699-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">design=</span><span class="sc">~</span><span class="fu">factor</span>(pool) <span class="sc">+</span> tomato,</span>
+<span id="cb699-8"><a href="análisis-de-expresión-diferencial.html#cb699-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">coef=</span><span class="st">&quot;tomatoTRUE&quot;</span>,</span>
+<span id="cb699-9"><a href="análisis-de-expresión-diferencial.html#cb699-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">condition=</span>summed.filt<span class="sc">$</span>tomato </span>
+<span id="cb699-10"><a href="análisis-de-expresión-diferencial.html#cb699-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb700-1"><a href="análisis-de-expresión-diferencial.html#cb700-1" aria-hidden="true" tabindex="-1"></a>cur.results <span class="ot">&lt;-</span> de.results[[<span class="st">&quot;Allantois&quot;</span>]]</span>
+<span id="cb700-2"><a href="análisis-de-expresión-diferencial.html#cb700-2" aria-hidden="true" tabindex="-1"></a>cur.results[<span class="fu">order</span>(cur.results<span class="sc">$</span>PValue),]</span></code></pre></div>
+<pre><code>## DataFrame with 14699 rows and 5 columns
+##                               logFC    logCPM         F      PValue         FDR
+##                           &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt;   &lt;numeric&gt;
+## Phlda2                    -2.489508  12.58150  1207.016 3.33486e-21 1.60507e-17
+## Xist                      -7.978532   8.00166  1092.831 1.27783e-17 3.07510e-14
+## Erdr1                      1.947170   9.07321   296.937 1.58009e-14 2.53500e-11
+## Slc22a18                  -4.347153   4.04380   117.389 1.92517e-10 2.31647e-07
+## Slc38a4                    0.891849  10.24094   113.899 2.52208e-10 2.42776e-07
+## ...                             ...       ...       ...         ...         ...
+## Ccl27a_ENSMUSG00000095247        NA        NA        NA          NA          NA
+## CR974586.5                       NA        NA        NA          NA          NA
+## AC132444.6                       NA        NA        NA          NA          NA
+## Vmn2r122                         NA        NA        NA          NA          NA
+## CAAA01147332.1                   NA        NA        NA          NA          NA</code></pre>
+<div class="sourceCode" id="cb702"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb702-1"><a href="análisis-de-expresión-diferencial.html#cb702-1" aria-hidden="true" tabindex="-1"></a>y.allantois <span class="ot">&lt;-</span> <span class="fu">metadata</span>(cur.results)<span class="sc">$</span>y</span>
+<span id="cb702-2"><a href="análisis-de-expresión-diferencial.html#cb702-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotBCV</span>(y.allantois)</span></code></pre></div>
+<p><img src="12-expresion_diferencial_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="análisis-de-expresión-diferencial.html#cb703-1" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span>(de.results)<span class="sc">$</span>failed</span></code></pre></div>
+<pre><code>## [1] &quot;Blood progenitors 1&quot; &quot;Caudal epiblast&quot;     &quot;Caudal neurectoderm&quot;
+## [4] &quot;ExE ectoderm&quot;        &quot;Parietal endoderm&quot;   &quot;Stripped&quot;</code></pre>
+<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="análisis-de-expresión-diferencial.html#cb705-1" aria-hidden="true" tabindex="-1"></a>cur.results.Mesenchyme <span class="ot">&lt;-</span> de.results[[<span class="st">&quot;Mesenchyme&quot;</span>]]</span>
+<span id="cb705-2"><a href="análisis-de-expresión-diferencial.html#cb705-2" aria-hidden="true" tabindex="-1"></a>y.Mesenchyme <span class="ot">&lt;-</span> <span class="fu">metadata</span>(cur.results.Mesenchyme)<span class="sc">$</span>y</span>
+<span id="cb705-3"><a href="análisis-de-expresión-diferencial.html#cb705-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotBCV</span>(y.Mesenchyme)</span></code></pre></div>
+<p><img src="12-expresion_diferencial_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+</div>
+<div id="análisis-de-abundancia-diferencial" class="section level2" number="12.6">
+<h2><span class="header-section-number">12.6</span> Análisis de abundancia diferencial</h2>
+<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="análisis-de-expresión-diferencial.html#cb706-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(merged<span class="sc">$</span>sample)</span></code></pre></div>
+<pre><code>## 
+##    5    6    7    8    9   10 
+## 2298 1026 2740 2904 4057 6401</code></pre>
+<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="análisis-de-expresión-diferencial.html#cb708-1" aria-hidden="true" tabindex="-1"></a>abundances <span class="ot">&lt;-</span> <span class="fu">table</span>(merged<span class="sc">$</span>celltype.mapped, merged<span class="sc">$</span>sample) </span>
+<span id="cb708-2"><a href="análisis-de-expresión-diferencial.html#cb708-2" aria-hidden="true" tabindex="-1"></a>abundances <span class="ot">&lt;-</span> <span class="fu">unclass</span>(abundances) </span>
+<span id="cb708-3"><a href="análisis-de-expresión-diferencial.html#cb708-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(abundances)</span></code></pre></div>
+<pre><code>##                      
+##                        5  6   7   8   9  10
+##   Allantois           97 15 139 127 318 259
+##   Blood progenitors 1  6  3  16   6   8  17
+##   Blood progenitors 2 31  8  28  21  43 114
+##   Cardiomyocytes      85 21  79  31 174 211
+##   Caudal epiblast      2  2   0   0  22  45
+##   Caudal Mesoderm     10 10   9   3  10  29</code></pre>
+<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="análisis-de-expresión-diferencial.html#cb710-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Attaching some column metadata.</span></span>
+<span id="cb710-2"><a href="análisis-de-expresión-diferencial.html#cb710-2" aria-hidden="true" tabindex="-1"></a>extra.info <span class="ot">&lt;-</span> <span class="fu">colData</span>(merged)[<span class="fu">match</span>(<span class="fu">colnames</span>(abundances), merged<span class="sc">$</span>sample),]</span>
+<span id="cb710-3"><a href="análisis-de-expresión-diferencial.html#cb710-3" aria-hidden="true" tabindex="-1"></a>y.ab <span class="ot">&lt;-</span> <span class="fu">DGEList</span>(abundances, <span class="at">samples=</span>extra.info)</span>
+<span id="cb710-4"><a href="análisis-de-expresión-diferencial.html#cb710-4" aria-hidden="true" tabindex="-1"></a>y.ab</span></code></pre></div>
+<pre><code>## An object of class &quot;DGEList&quot;
+## $counts
+##                      
+##                        5  6   7   8   9  10
+##   Allantois           97 15 139 127 318 259
+##   Blood progenitors 1  6  3  16   6   8  17
+##   Blood progenitors 2 31  8  28  21  43 114
+##   Cardiomyocytes      85 21  79  31 174 211
+##   Caudal epiblast      2  2   0   0  22  45
+## 29 more rows ...
+## 
+## $samples
+##    group lib.size norm.factors batch       cell          barcode sample stage
+## 5      1     2298            1     5  cell_9769 AAACCTGAGACTGTAA      5  E8.5
+## 6      1     1026            1     6 cell_12180 AAACCTGCAGATGGCA      6  E8.5
+## 7      1     2740            1     7 cell_13227 AAACCTGAGACAAGCC      7  E8.5
+## 8      1     2904            1     8 cell_16234 AAACCTGCAAACCCAT      8  E8.5
+## 9      1     4057            1     9 cell_19332 AAACCTGCAACGATCT      9  E8.5
+## 10     1     6401            1    10 cell_23875 AAACCTGAGGCATGTG     10  E8.5
+##    tomato pool stage.mapped              celltype.mapped closest.cell
+## 5    TRUE    3        E8.25                   Mesenchyme   cell_24159
+## 6   FALSE    3        E8.25             Somitic mesoderm   cell_63247
+## 7    TRUE    4         E8.5             Somitic mesoderm   cell_25454
+## 8   FALSE    4        E8.25                 ExE mesoderm  cell_139075
+## 9    TRUE    5         E8.0                 ExE mesoderm  cell_116116
+## 10  FALSE    5         E8.5 Forebrain/Midbrain/Hindbrain   cell_39343
+##    doub.density sizeFactor label
+## 5    0.02985045  1.6348759    19
+## 6    0.29191572  2.5980769     6
+## 7    0.60173979  1.5939009    17
+## 8    0.00473259  0.8707367     9
+## 9    0.07941464  0.8932525    15
+## 10   0.04074704  0.3947355     1</code></pre>
+<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="análisis-de-expresión-diferencial.html#cb712-1" aria-hidden="true" tabindex="-1"></a>keep <span class="ot">&lt;-</span> <span class="fu">filterByExpr</span>(y.ab, <span class="at">group=</span>y.ab<span class="sc">$</span>samples<span class="sc">$</span>tomato)</span>
+<span id="cb712-2"><a href="análisis-de-expresión-diferencial.html#cb712-2" aria-hidden="true" tabindex="-1"></a>y.ab <span class="ot">&lt;-</span> y.ab[keep,]</span>
+<span id="cb712-3"><a href="análisis-de-expresión-diferencial.html#cb712-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(keep)</span></code></pre></div>
+<pre><code>##    Mode   FALSE    TRUE 
+## logical      10      24</code></pre>
+<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="análisis-de-expresión-diferencial.html#cb714-1" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span><span class="fu">factor</span>(pool) <span class="sc">+</span> <span class="fu">factor</span>(tomato), y.ab<span class="sc">$</span>samples)</span>
+<span id="cb714-2"><a href="análisis-de-expresión-diferencial.html#cb714-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-3"><a href="análisis-de-expresión-diferencial.html#cb714-3" aria-hidden="true" tabindex="-1"></a>y.ab <span class="ot">&lt;-</span> <span class="fu">estimateDisp</span>(y.ab, design, <span class="at">trend=</span><span class="st">&quot;none&quot;</span>)</span>
+<span id="cb714-4"><a href="análisis-de-expresión-diferencial.html#cb714-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(y.ab<span class="sc">$</span>common.dispersion)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.0614  0.0614  0.0614  0.0614  0.0614  0.0614</code></pre>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="análisis-de-expresión-diferencial.html#cb716-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotBCV</span>(y.ab, <span class="at">cex=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="12-expresion_diferencial_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="análisis-de-expresión-diferencial.html#cb717-1" aria-hidden="true" tabindex="-1"></a>fit.ab <span class="ot">&lt;-</span> <span class="fu">glmQLFit</span>(y.ab, design, <span class="at">robust=</span><span class="cn">TRUE</span>, <span class="at">abundance.trend=</span><span class="cn">FALSE</span>)</span>
+<span id="cb717-2"><a href="análisis-de-expresión-diferencial.html#cb717-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.ab<span class="sc">$</span>var.prior)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.254   1.254   1.254   1.254   1.254   1.254</code></pre>
+<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="análisis-de-expresión-diferencial.html#cb719-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQLDisp</span>(fit.ab, <span class="at">cex=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="12-expresion_diferencial_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="análisis-de-expresión-diferencial.html#cb720-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">glmQLFTest</span>(fit.ab, <span class="at">coef=</span><span class="fu">ncol</span>(design))</span>
+<span id="cb720-2"><a href="análisis-de-expresión-diferencial.html#cb720-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">decideTests</span>(res))</span></code></pre></div>
+<pre><code>##        factor(tomato)TRUE
+## Down                    1
+## NotSig                 22
+## Up                      1</code></pre>
+<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="análisis-de-expresión-diferencial.html#cb722-1" aria-hidden="true" tabindex="-1"></a><span class="fu">topTags</span>(res)</span></code></pre></div>
+<pre><code>## Coefficient:  factor(tomato)TRUE 
+##                                     logFC   logCPM         F       PValue
+## ExE ectoderm                   -6.5663339 13.02497 66.266874 1.352022e-10
+## Mesenchyme                      1.1651500 16.29382 11.290523 1.534506e-03
+## Allantois                       0.8345294 15.50702  5.312163 2.554581e-02
+## Cardiomyocytes                  0.8484008 14.86430  5.203963 2.701306e-02
+## Neural crest                   -0.7706378 14.76462  4.106177 4.830292e-02
+## Endothelium                     0.7518608 14.28905  3.911511 5.371320e-02
+## Erythroid3                     -0.6430834 17.28041  3.603666 6.367366e-02
+## Haematoendothelial progenitors  0.6581135 14.72323  3.123946 8.350641e-02
+## ExE mesoderm                    0.3805309 15.67835  1.180627 2.826550e-01
+## Pharyngeal mesoderm             0.3793160 15.72073  1.169279 2.849523e-01
+##                                         FDR
+## ExE ectoderm                   3.244852e-09
+## Mesenchyme                     1.841407e-02
+## Allantois                      1.620784e-01
+## Cardiomyocytes                 1.620784e-01
+## Neural crest                   2.148528e-01
+## Endothelium                    2.148528e-01
+## Erythroid3                     2.183097e-01
+## Haematoendothelial progenitors 2.505192e-01
+## ExE mesoderm                   6.257608e-01
+## Pharyngeal mesoderm            6.257608e-01</code></pre>
+</div>
+<div id="comentarios-sobre-la-interpretación" class="section level2" number="12.7">
+<h2><span class="header-section-number">12.7</span> Comentarios sobre la interpretación</h2>
+</div>
+<div id="detalles-de-la-sesión-de-r-11" class="section level2" number="12.8">
+<h2><span class="header-section-number">12.8</span> Detalles de la sesión de R</h2>
+<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="análisis-de-expresión-diferencial.html#cb724-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb724-2"><a href="análisis-de-expresión-diferencial.html#cb724-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-12 00:16:27 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb726"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb726-1"><a href="análisis-de-expresión-diferencial.html#cb726-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 282.352  25.710 299.727</code></pre>
-<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="análisis-de-expresión-diferencial.html#cb659-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb659-2"><a href="análisis-de-expresión-diferencial.html#cb659-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+## 449.027  31.940 464.170</code></pre>
+<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb728-1"><a href="análisis-de-expresión-diferencial.html#cb728-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb728-2"><a href="análisis-de-expresión-diferencial.html#cb728-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)
@@ -751,7 +1263,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-11                  
+##  date     2021-08-12                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package                * version  date       lib source        
@@ -774,7 +1286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  bit64                    4.0.5    2020-08-30 [1] RSPM (R 4.1.0)
 ##  bitops                   1.0-7    2021-04-24 [1] RSPM (R 4.1.0)
 ##  blob                     1.2.2    2021-07-23 [1] RSPM (R 4.1.0)
-##  bluster                  1.2.1    2021-05-27 [1] Bioconductor  
+##  bluster                * 1.2.1    2021-05-27 [1] Bioconductor  
 ##  bookdown                 0.22     2021-04-22 [1] RSPM (R 4.1.0)
 ##  bslib                    0.2.5.1  2021-05-18 [1] RSPM (R 4.1.0)
 ##  BumpyMatrix              1.0.1    2021-07-04 [1] Bioconductor  
@@ -782,6 +1294,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  cli                      3.0.1    2021-07-17 [2] RSPM (R 4.1.0)
 ##  cluster                  2.1.2    2021-04-17 [3] CRAN (R 4.1.0)
 ##  colorspace               2.0-2    2021-06-24 [1] RSPM (R 4.1.0)
+##  cowplot                  1.1.1    2020-12-30 [1] RSPM (R 4.1.0)
 ##  crayon                   1.4.1    2021-02-08 [2] RSPM (R 4.1.0)
 ##  curl                     4.3.2    2021-06-23 [2] RSPM (R 4.1.0)
 ##  DBI                      1.1.1    2021-01-15 [1] RSPM (R 4.1.0)
@@ -792,11 +1305,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  dplyr                    1.0.7    2021-06-18 [1] RSPM (R 4.1.0)
 ##  dqrng                    0.3.0    2021-05-01 [1] RSPM (R 4.1.0)
 ##  DropletUtils             1.12.2   2021-07-22 [1] Bioconductor  
-##  edgeR                    3.34.0   2021-05-19 [1] Bioconductor  
+##  edgeR                  * 3.34.0   2021-05-19 [1] Bioconductor  
 ##  ellipsis                 0.3.2    2021-04-29 [2] RSPM (R 4.1.0)
 ##  evaluate                 0.14     2019-05-28 [2] RSPM (R 4.1.0)
 ##  ExperimentHub            2.0.0    2021-05-19 [1] Bioconductor  
 ##  fansi                    0.5.0    2021-05-25 [2] RSPM (R 4.1.0)
+##  farver                   2.1.0    2021-02-28 [1] RSPM (R 4.1.0)
 ##  fastmap                  1.1.0    2021-01-25 [2] RSPM (R 4.1.0)
 ##  filelock                 1.0.2    2018-10-05 [1] RSPM (R 4.1.0)
 ##  generics                 0.1.0    2020-10-31 [1] RSPM (R 4.1.0)
@@ -809,6 +1323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  gridExtra                2.3      2017-09-09 [1] RSPM (R 4.1.0)
 ##  gtable                   0.3.0    2019-03-25 [1] RSPM (R 4.1.0)
 ##  HDF5Array                1.20.0   2021-05-19 [1] Bioconductor  
+##  highr                    0.9      2021-04-16 [2] RSPM (R 4.1.0)
 ##  htmltools                0.5.1.1  2021-01-22 [1] RSPM (R 4.1.0)
 ##  httpuv                   1.6.1    2021-05-07 [1] RSPM (R 4.1.0)
 ##  httr                     1.4.2    2020-07-20 [2] RSPM (R 4.1.0)
@@ -820,10 +1335,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  jsonlite                 1.7.2    2020-12-09 [2] RSPM (R 4.1.0)
 ##  KEGGREST                 1.32.0   2021-05-19 [1] Bioconductor  
 ##  knitr                    1.33     2021-04-24 [2] RSPM (R 4.1.0)
+##  labeling                 0.4.2    2020-10-20 [1] RSPM (R 4.1.0)
 ##  later                    1.2.0    2021-04-23 [1] RSPM (R 4.1.0)
 ##  lattice                  0.20-44  2021-05-02 [3] CRAN (R 4.1.0)
 ##  lifecycle                1.0.0    2021-02-15 [2] RSPM (R 4.1.0)
-##  limma                    3.48.3   2021-08-10 [1] Bioconductor  
+##  limma                  * 3.48.3   2021-08-10 [1] Bioconductor  
 ##  locfit                   1.5-9.4  2020-03-25 [1] RSPM (R 4.1.0)
 ##  magick                   2.7.2    2021-05-02 [1] RSPM (R 4.1.0)
 ##  magrittr                 2.0.1    2020-11-17 [2] RSPM (R 4.1.0)
@@ -835,9 +1351,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  mime                     0.11     2021-06-23 [2] RSPM (R 4.1.0)
 ##  MouseGastrulationData  * 1.6.0    2021-05-20 [1] Bioconductor  
 ##  munsell                  0.5.0    2018-06-12 [1] RSPM (R 4.1.0)
+##  patchwork              * 1.1.1    2020-12-17 [1] RSPM (R 4.1.0)
+##  pheatmap                 1.0.12   2019-01-04 [1] RSPM (R 4.1.0)
 ##  pillar                   1.6.2    2021-07-29 [2] RSPM (R 4.1.0)
 ##  pkgconfig                2.0.3    2019-09-22 [2] RSPM (R 4.1.0)
 ##  png                      0.1-7    2013-12-03 [1] RSPM (R 4.1.0)
+##  Polychrome             * 1.3.1    2021-07-16 [1] RSPM (R 4.1.0)
 ##  promises                 1.2.0.1  2021-02-11 [1] RSPM (R 4.1.0)
 ##  purrr                    0.3.4    2020-04-17 [2] RSPM (R 4.1.0)
 ##  R.methodsS3              1.8.1    2020-08-26 [1] RSPM (R 4.1.0)
@@ -845,6 +1364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  R.utils                  2.10.1   2020-08-26 [1] RSPM (R 4.1.0)
 ##  R6                       2.5.0    2020-10-28 [2] RSPM (R 4.1.0)
 ##  rappdirs                 0.3.3    2021-01-31 [2] RSPM (R 4.1.0)
+##  RColorBrewer             1.1-2    2014-12-07 [1] RSPM (R 4.1.0)
 ##  Rcpp                     1.0.7    2021-07-07 [2] RSPM (R 4.1.0)
 ##  RCurl                    1.98-1.3 2021-03-16 [1] RSPM (R 4.1.0)
 ##  ResidualMatrix           1.2.0    2021-05-19 [1] Bioconductor  
@@ -862,6 +1382,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  ScaledMatrix             1.0.0    2021-05-19 [1] Bioconductor  
 ##  scales                   1.1.1    2020-05-11 [1] RSPM (R 4.1.0)
 ##  scater                 * 1.20.1   2021-06-15 [1] Bioconductor  
+##  scatterplot3d            0.3-41   2018-03-14 [1] RSPM (R 4.1.0)
 ##  scran                  * 1.20.1   2021-05-24 [1] Bioconductor  
 ##  scuttle                * 1.2.1    2021-08-05 [1] Bioconductor  
 ##  sessioninfo              1.1.1    2018-11-05 [2] RSPM (R 4.1.0)
