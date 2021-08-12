@@ -265,6 +265,8 @@ análisis-de-expresión-diferencial
 diapositivas-de-peter-hickey-5
 motivación-9
 dos-categorías-de-análisis
+expresión-diferencial
+abundancia-diferencial
 datos-de-ejemplo
 descarguemos-los-datos-de-ejemplo
 procesamiento

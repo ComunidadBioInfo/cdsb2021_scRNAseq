@@ -17,7 +17,7 @@ library("edgeR") ## para expresión diferencial
 
 ## Diapositivas de Peter Hickey
 
-Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1CRTE_1m8YHf8p6GMl-rbBpyOx2KS4UxdTC1dpvVgKEs/edit?usp=sharing)
+Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1CRTE_1m8YHf8p6GMl-rbBpyOx2KS4UxdTC1dpvVgKEs/edit?usp=sharing).
 
 Esas diapositivas están basadas en este [capítulo de OSCA](https://bioconductor.org/books/release/OSCA/multi-sample-comparisons.html). El libro de OSCA tiene algunas partes más actualizadas de lo que vienen en las diapositivas.
 
@@ -39,6 +39,8 @@ Esas diapositivas están basadas en este [capítulo de OSCA](https://bioconducto
   
 **Son dos lados de la misma moneda**
 
+#### Expresión diferencial
+
 
 |gene  |condición |celula  | expresión|
 |:-----|:---------|:-------|---------:|
@@ -50,6 +52,8 @@ Esas diapositivas están basadas en este [capítulo de OSCA](https://bioconducto
 |gene1 |grupo2    |celula2 |      7.65|
 |gene2 |grupo1    |celula2 |     10.97|
 |gene2 |grupo2    |celula2 |      9.37|
+
+#### Abundancia diferencial
 
 
 |condición |celula  | frecuencia|
@@ -63,13 +67,13 @@ Esas diapositivas están basadas en este [capítulo de OSCA](https://bioconducto
 
 Embriones de ratón quiméricos. 
 
-> Chimeric E8.5 mouse embryos
+> * Chimeric E8.5 mouse embryos
 >   - td-Tomato+ ESCs injected into WT blastocyst
 >   - No genetic differences between the injected and background cells (except expression of td-Tomato in the former)
-> 3 replicate batches
+> * 3 replicate batches
 >   - Each batch contains td-Tomato+ and td-Tomato- cells sorted from a single pool of dissociated cells from 6-7 chimeric embryos
 >   - 2,000 - 7,000 cells/sample using 10X Genomics
-> Aim is to determine whether the injection procedure itself introduces differences in lineage commitment compared to the background cells
+> * Aim is to determine whether the injection procedure itself introduces differences in lineage commitment compared to the background cells
 
 https://bioconductor.org/books/release/OSCA/pijuan-sala-chimeric-mouse-embryo-10x-genomics.html
 
@@ -82,413 +86,6 @@ _Pijuan-Sala, B. et al. A single-cell molecular map of mouse gastrulation and ea
 #--- loading ---#
 library("MouseGastrulationData")
 sce.chimera <- WTChimeraData(samples = 5:10)
-```
-
-```
-## snapshotDate(): 2021-05-18
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```
-## see ?MouseGastrulationData and browseVignettes('MouseGastrulationData') for documentation
-```
-
-```
-## downloading 1 resources
-```
-
-```
-## retrieving 1 resource
-```
-
-```
-## loading from cache
-```
-
-```r
 sce.chimera
 ```
 
@@ -626,7 +223,7 @@ Básicamente:
 * `sample`: 6 ratones diferentes
 * `tomato`: inyectados o no con td-Tomato
 * `pool`: lote de secuenciación, cada lote con 1 con y otro sin inyección
-* `celltype.mappped`: 34 tipos de células anotados
+* `celltype.mappped`: 35 tipos de células anotados
 
 
 ```r
@@ -986,7 +583,7 @@ dim(current)
   - Esto sería un experimento pequeño de bulk RNA-seq
 
 * Usaremos `edgeR` de [Robinson, McCarthy e Smyth, _Bioinformatics_, 2010](https://pubmed.ncbi.nlm.nih.gov/19910308/) que es uno de los paquetes más usados para análisis de expresión diferencial en bulk RNA-seq
-  - Aaron Lun, autor de OSCA, fue formado por el mismo grupo en Australia
+  - Aaron Lun, autor de OSCA, se formó por el mismo grupo en Australia
 
 
 ```r
@@ -1573,7 +1170,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-12 08:09:20 UTC"
+## [1] "2021-08-12 08:25:58 UTC"
 ```
 
 ```r
@@ -1582,7 +1179,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 312.966  26.623 313.924
+## 392.102  30.647 408.117
 ```
 
 ```r
