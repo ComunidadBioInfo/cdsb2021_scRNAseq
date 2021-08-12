@@ -282,7 +282,7 @@ Para detalles sobre la seleccion de parámetros y comparaciones: [visitar esta p
 library("patchwork")
 
 plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster") +
-plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
+    plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
 ```
 
 <div class="figure">
@@ -478,7 +478,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-12 00:56:12 UTC"
+## [1] "2021-08-12 01:44:01 UTC"
 ```
 
 ```r
@@ -487,7 +487,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 227.356   5.293 229.313
+## 232.724   5.681 234.985
 ```
 
 ```r

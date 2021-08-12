@@ -144,7 +144,7 @@ BiocManager::version()
 
 
 ```
-## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "celldex", "cowplot", "dplyr", "DropletUtils", "edgeR", "EnsDb.Hsapiens.v86", "ExperimentHub", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "lobstr", "MouseGastrulationData", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "Polychrome", "postcards", "pryr", "RColorBrewer", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "SingleR", "suncalc", "TENxPBMCData", "usethis", "uwot"))
+## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "celldex", "cowplot", "dplyr", "DropletUtils", "edgeR", "EnsDb.Hsapiens.v86", "ExperimentHub", "ExploreModelMatrix", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "lobstr", "MouseGastrulationData", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "Polychrome", "postcards", "pryr", "RColorBrewer", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "SingleR", "suncalc", "TENxPBMCData", "usethis", "uwot"))
 ```
 
 
@@ -394,6 +394,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  ensembldb                2.16.4     2021-08-05 [1] Bioconductor  
 ##  evaluate                 0.14       2019-05-28 [2] RSPM (R 4.1.0)
 ##  ExperimentHub            2.0.0      2021-05-19 [1] Bioconductor  
+##  ExploreModelMatrix       1.4.0      2021-05-19 [1] Bioconductor  
 ##  fansi                    0.5.0      2021-05-25 [2] RSPM (R 4.1.0)
 ##  farver                   2.1.0      2021-02-28 [1] RSPM (R 4.1.0)
 ##  fastmap                  1.1.0      2021-01-25 [2] RSPM (R 4.1.0)
@@ -674,7 +675,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-12 00:37:10.
+Fecha de la última actualización de esta página: 2021-08-12 01:24:45.
 
 ## Licencia  {-}
 

@@ -261,11 +261,15 @@ resumen-y-recomendaciones-4
 detalles-de-la-sesión-de-r-10
 análisis-de-expresión-diferencial
 diapositivas-de-peter-hickey-6
+motivación-9
+dos-categorías-de-análisis
 datos-de-ejemplo
+descarguemos-los-datos-de-ejemplo
+procesamiento
 exploremos-los-datos-de-ejemplo
 nuestros-clusters-vs-los-originales
-pseudo-bulking
 análisis-de-expresión-diferencial-1
+pseudo-bulking
 convertir-a-un-objeto-nuevo
 pre-procesamiento
 modelo-estadístico
