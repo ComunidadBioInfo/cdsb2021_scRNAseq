@@ -251,7 +251,7 @@ plotExpression(sce.pbmc, rownames(interesting)[1:4],
 
 ### Con un heatmap
 
-```{r, warning=FALSE, message=FALSE}
+```{r, fig.height = 10}
 best.set <- interesting[interesting$Top <= 6, ]
 logFCs <- as.matrix(best.set[, -(1:3)])
 colnames(logFCs) <- sub("logFC.", "", colnames(logFCs))
@@ -295,7 +295,7 @@ interesting.up2 <- markers.pbmc.up2[[chosen]]
 
 ### Heatmap
 
-```{r, warning=FALSE, message=FALSE}
+```{r, fig.height = 8}
 best.set <- interesting.up2[interesting.up2$Top <= 5, ]
 logFCs <- as.matrix(best.set[, -(1:3)])
 colnames(logFCs) <- sub("logFC.", "", colnames(logFCs))
@@ -401,7 +401,7 @@ interesting.wmw <- markers.pbmc.wmw[[chosen]]
 
 ### Heatmap de genes marcadores con Wilcoxon
 
-```{r, warning=FALSE, message=FALSE}
+```{r, fig.height = 8}
 best.set <- interesting.wmw[interesting.wmw$Top <= 5, ]
 AUCs <- as.matrix(best.set[, -(1:3)])
 colnames(AUCs) <- sub("AUC.", "", colnames(AUCs))
