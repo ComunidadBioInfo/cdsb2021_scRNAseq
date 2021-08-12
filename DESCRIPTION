@@ -26,6 +26,7 @@ Imports:
     edgeR,
     EnsDb.Hsapiens.v86,
     ExperimentHub,
+    ExploreModelMatrix,
     fossil,
     gert,
     gh,
