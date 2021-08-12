@@ -413,11 +413,23 @@ plotReducedDim(sce.zeisel,
 - Baja perplejidad favorece la resolución de la estructura fina, posiblemente al grado de que la visualización parece rudio random.
 
 
-<div>
-<p style = 'text-align:center;'>
-<img src="img/tsne.png" width="800px">
-</p>
-</div>
+```{r, fig.dim = c(6, 4) }
+set.seed(100)
+
+par(mfrow=c(1,3))
+
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 5)
+plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
+
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 20)
+plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
+
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 80)
+plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
+
+```
+
+
 
 El siguiente [foro](http://distill.pub/2016/misread-tsne/) discute la selección de parámetros para t-SNE con cierta profundidad
 
