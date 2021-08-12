@@ -16,7 +16,7 @@ library("edgeR") ## para expresión diferencial
 
 ## Diapositivas de Peter Hickey
 
-Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1CRTE_1m8YHf8p6GMl-rbBpyOx2KS4UxdTC1dpvVgKEs/edit?usp=sharing)
+Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1CRTE_1m8YHf8p6GMl-rbBpyOx2KS4UxdTC1dpvVgKEs/edit?usp=sharing).
 
 Esas diapositivas están basadas en este [capítulo de OSCA](https://bioconductor.org/books/release/OSCA/multi-sample-comparisons.html). El libro de OSCA tiene algunas partes más actualizadas de lo que vienen en las diapositivas.
 
@@ -38,6 +38,8 @@ Esas diapositivas están basadas en este [capítulo de OSCA](https://bioconducto
   
 **Son dos lados de la misma moneda**
 
+#### Expresión diferencial
+
 ```{r, echo = FALSE}
 set.seed(20210811)
 knitr::kable(data.frame(
@@ -47,6 +49,8 @@ knitr::kable(data.frame(
     expresión = round(rnorm(8, mean = 10, sd = 2), 2)
 ))
 ```
+
+#### Abundancia diferencial
 
 ```{r, echo = FALSE}
 set.seed(20210811)
@@ -61,13 +65,13 @@ knitr::kable(data.frame(
 
 Embriones de ratón quiméricos. 
 
-> Chimeric E8.5 mouse embryos
+> * Chimeric E8.5 mouse embryos
 >   - td-Tomato+ ESCs injected into WT blastocyst
 >   - No genetic differences between the injected and background cells (except expression of td-Tomato in the former)
-> 3 replicate batches
+> * 3 replicate batches
 >   - Each batch contains td-Tomato+ and td-Tomato- cells sorted from a single pool of dissociated cells from 6-7 chimeric embryos
 >   - 2,000 - 7,000 cells/sample using 10X Genomics
-> Aim is to determine whether the injection procedure itself introduces differences in lineage commitment compared to the background cells
+> * Aim is to determine whether the injection procedure itself introduces differences in lineage commitment compared to the background cells
 
 https://bioconductor.org/books/release/OSCA/pijuan-sala-chimeric-mouse-embryo-10x-genomics.html
 
@@ -75,7 +79,7 @@ _Pijuan-Sala, B. et al. A single-cell molecular map of mouse gastrulation and ea
 
 ### Descarguemos los datos de ejemplo
 
-```{r}
+```{r, message = FALSE}
 #--- loading ---#
 library("MouseGastrulationData")
 sce.chimera <- WTChimeraData(samples = 5:10)
@@ -96,7 +100,7 @@ Básicamente:
 * `sample`: 6 ratones diferentes
 * `tomato`: inyectados o no con td-Tomato
 * `pool`: lote de secuenciación, cada lote con 1 con y otro sin inyección
-* `celltype.mappped`: 34 tipos de células anotados
+* `celltype.mappped`: 35 tipos de células anotados
 
 ```{r}
 ## Número de células en nuestras variables principales
@@ -297,7 +301,7 @@ dim(current)
   - Esto sería un experimento pequeño de bulk RNA-seq
 
 * Usaremos `edgeR` de [Robinson, McCarthy e Smyth, _Bioinformatics_, 2010](https://pubmed.ncbi.nlm.nih.gov/19910308/) que es uno de los paquetes más usados para análisis de expresión diferencial en bulk RNA-seq
-  - Aaron Lun, autor de OSCA, fue formado por el mismo grupo en Australia
+  - Aaron Lun, autor de OSCA, se formó por el mismo grupo en Australia
 
 ```{r}
 # Creating up a DGEList object for use in edgeR:
