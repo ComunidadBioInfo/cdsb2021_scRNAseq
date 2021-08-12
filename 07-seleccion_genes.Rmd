@@ -520,6 +520,22 @@ hvg.pbmc.cv2.3 <- getTopHVGs(dec.cv2.pbmc,
 str(hvg.pbmc.cv2.2)
 ```
 
+### EJERCICIO: Dibujando los HVGs
+
+Para este ejercicio tendrás que repetir la gráfica que muestra la tendencia de la relación media-varianza (ejeX: media de la expresión, ejeY: varianza de la expresión) incluyendo la línea de tendencia obtenida con alguna de las funciones vistas en la primer parte de la clase (modelGeneVar, modelGeneVarWithSpikes, modelGeneCV2). En esta gráfica, deberás colorear los puntos que corresponden a los HGVs obtenidos con algunos de los enfoques revisados
+
+**RESPUESTA**
+```{r }
+plot(fit.pbmc$mean, fit.pbmc$var,
+    xlab = "Mean of log-expression",
+    ylab = "Variance of log-expression"
+)
+points(fit.pbmc$mean[hvg.pbmc.var], fit.pbmc$var[hvg.pbmc.var], col = "orange")
+curve(fit.pbmc$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
+
+```
+
+
 ### Seleccionando genes de interés *a priori*
 
 Una estrategia contundente es usar sets predefinidos de genes de interés. No hay vergüenza en aprovechar el conocimiento biológivo previo
