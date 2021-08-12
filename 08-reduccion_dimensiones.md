@@ -471,33 +471,11 @@ plotReducedDim(sce.zeisel,
 - Baja perplejidad favorece la resolución de la estructura fina, posiblemente al grado de que la visualización parece rudio random.
 
 
-
-```r
-set.seed(100)
-
-par(mfrow=c(1,3))
-
-sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 5)
-plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
-```
-
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-1.png" width="576" />
-
-```r
-sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 20)
-plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
-```
-
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-2.png" width="576" />
-
-```r
-sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 80)
-plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
-```
-
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-3.png" width="576" />
-
-
+<div>
+<p style = 'text-align:center;'>
+<img src="img/tsne.png" width="800px">
+</p>
+</div>
 
 El siguiente [foro](http://distill.pub/2016/misread-tsne/) discute la selección de parámetros para t-SNE con cierta profundidad
 
@@ -528,7 +506,7 @@ plotReducedDim(sce.zeisel,
 )
 ```
 
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-24-1.png" width="576" />
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-1.png" width="576" />
 
 Comparado con t-SNE:
 
@@ -551,7 +529,7 @@ plotReducedDim(sce.zeisel,
 )
 ```
 
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-25-1.png" width="576" />
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-24-1.png" width="576" />
 
 #### Preguntas
 
@@ -608,7 +586,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-12 01:50:55 UTC"
+## [1] "2021-08-12 01:46:23 UTC"
 ```
 
 ```r
@@ -617,7 +595,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 262.622   5.568 265.779
+## 283.911   6.167 286.550
 ```
 
 ```r

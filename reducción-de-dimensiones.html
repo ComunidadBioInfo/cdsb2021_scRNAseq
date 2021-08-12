@@ -915,19 +915,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>Baja perplejidad favorece la resolución de la estructura fina, posiblemente al grado de que la visualización parece rudio random.</li>
 </ul>
-<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="reducción-de-dimensiones.html#cb467-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb467-2"><a href="reducción-de-dimensiones.html#cb467-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb467-3"><a href="reducción-de-dimensiones.html#cb467-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
-<span id="cb467-4"><a href="reducción-de-dimensiones.html#cb467-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb467-5"><a href="reducción-de-dimensiones.html#cb467-5" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">perplexity =</span> <span class="dv">5</span>)</span>
-<span id="cb467-6"><a href="reducción-de-dimensiones.html#cb467-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;TSNE&quot;</span>, <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span>)</span></code></pre></div>
-<p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-1.png" width="576" /></p>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="reducción-de-dimensiones.html#cb468-1" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">perplexity =</span> <span class="dv">20</span>)</span>
-<span id="cb468-2"><a href="reducción-de-dimensiones.html#cb468-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;TSNE&quot;</span>, <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span>)</span></code></pre></div>
-<p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-2.png" width="576" /></p>
-<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="reducción-de-dimensiones.html#cb469-1" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>, <span class="at">perplexity =</span> <span class="dv">80</span>)</span>
-<span id="cb469-2"><a href="reducción-de-dimensiones.html#cb469-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;TSNE&quot;</span>, <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span>)</span></code></pre></div>
-<p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-3.png" width="576" /></p>
+<div>
+<p style="text-align:center;">
+<img src="img/tsne.png" width="800px">
+</p>
+</div>
 <p>El siguiente <a href="http://distill.pub/2016/misread-tsne/">foro</a> discute la selección de parámetros para t-SNE con cierta profundidad</p>
 <ul>
 <li>No sobreinterpretes los resultados de t-SNE como un ‘mapa’ de las identidades de las células individuales</li>
@@ -944,13 +936,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Uniform manifold approximation and project (UMAP)</em> es una alternativa a t-SNE</p>
 <p>Así como t-SNE, UMAP <strong>intenta encontrar una representación (no lineal) de pocas dimensiones de los datos que preserve las distancias entre cada puntos y sus vecinos en el espacio multi-dimensional</strong></p>
 <p>t-SNE y UMAP están basados en diferentes teorías matemáticas</p>
-<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="reducción-de-dimensiones.html#cb470-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1100101001</span>)</span>
-<span id="cb470-2"><a href="reducción-de-dimensiones.html#cb470-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
-<span id="cb470-3"><a href="reducción-de-dimensiones.html#cb470-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
-<span id="cb470-4"><a href="reducción-de-dimensiones.html#cb470-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;UMAP&quot;</span>,</span>
-<span id="cb470-5"><a href="reducción-de-dimensiones.html#cb470-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
-<span id="cb470-6"><a href="reducción-de-dimensiones.html#cb470-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-24-1.png" width="576" /></p>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="reducción-de-dimensiones.html#cb467-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1100101001</span>)</span>
+<span id="cb467-2"><a href="reducción-de-dimensiones.html#cb467-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(sce.zeisel, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
+<span id="cb467-3"><a href="reducción-de-dimensiones.html#cb467-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
+<span id="cb467-4"><a href="reducción-de-dimensiones.html#cb467-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;UMAP&quot;</span>,</span>
+<span id="cb467-5"><a href="reducción-de-dimensiones.html#cb467-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
+<span id="cb467-6"><a href="reducción-de-dimensiones.html#cb467-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-1.png" width="576" /></p>
 <p>Comparado con t-SNE:</p>
 <ul>
 <li>UMAP tiende a encontrar clusters visualmente más compactos</li>
@@ -959,16 +951,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="retos-de-la-visualización-con-umap" class="section level4" number="8.7.5.1">
 <h4><span class="header-section-number">8.7.5.1</span> Retos de la visualización con UMAP</h4>
-<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="reducción-de-dimensiones.html#cb471-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb471-2"><a href="reducción-de-dimensiones.html#cb471-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(sce.zeisel,</span>
-<span id="cb471-3"><a href="reducción-de-dimensiones.html#cb471-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>,</span>
-<span id="cb471-4"><a href="reducción-de-dimensiones.html#cb471-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_neighbors =</span> <span class="dv">15</span></span>
-<span id="cb471-5"><a href="reducción-de-dimensiones.html#cb471-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb471-6"><a href="reducción-de-dimensiones.html#cb471-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
-<span id="cb471-7"><a href="reducción-de-dimensiones.html#cb471-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;UMAP&quot;</span>,</span>
-<span id="cb471-8"><a href="reducción-de-dimensiones.html#cb471-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
-<span id="cb471-9"><a href="reducción-de-dimensiones.html#cb471-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-25-1.png" width="576" /></p>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="reducción-de-dimensiones.html#cb468-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb468-2"><a href="reducción-de-dimensiones.html#cb468-2" aria-hidden="true" tabindex="-1"></a>sce.zeisel <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(sce.zeisel,</span>
+<span id="cb468-3"><a href="reducción-de-dimensiones.html#cb468-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>,</span>
+<span id="cb468-4"><a href="reducción-de-dimensiones.html#cb468-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_neighbors =</span> <span class="dv">15</span></span>
+<span id="cb468-5"><a href="reducción-de-dimensiones.html#cb468-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb468-6"><a href="reducción-de-dimensiones.html#cb468-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce.zeisel,</span>
+<span id="cb468-7"><a href="reducción-de-dimensiones.html#cb468-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">dimred =</span> <span class="st">&quot;UMAP&quot;</span>,</span>
+<span id="cb468-8"><a href="reducción-de-dimensiones.html#cb468-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_by =</span> <span class="st">&quot;level1class&quot;</span></span>
+<span id="cb468-9"><a href="reducción-de-dimensiones.html#cb468-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-24-1.png" width="576" /></p>
 </div>
 <div id="preguntas-2" class="section level4" number="8.7.5.2">
 <h4><span class="header-section-number">8.7.5.2</span> Preguntas</h4>
@@ -1018,14 +1010,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="detalles-de-la-sesión-de-r-7" class="section level2" number="8.9">
 <h2><span class="header-section-number">8.9</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="reducción-de-dimensiones.html#cb472-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb472-2"><a href="reducción-de-dimensiones.html#cb472-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-12 01:50:55 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="reducción-de-dimensiones.html#cb474-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="reducción-de-dimensiones.html#cb469-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb469-2"><a href="reducción-de-dimensiones.html#cb469-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-12 01:46:23 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="reducción-de-dimensiones.html#cb471-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 262.622   5.568 265.779</code></pre>
-<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="reducción-de-dimensiones.html#cb476-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb476-2"><a href="reducción-de-dimensiones.html#cb476-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+## 283.911   6.167 286.550</code></pre>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="reducción-de-dimensiones.html#cb473-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb473-2"><a href="reducción-de-dimensiones.html#cb473-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)
