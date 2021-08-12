@@ -413,7 +413,7 @@ plotReducedDim(sce.zeisel,
 - Baja perplejidad favorece la resolución de la estructura fina, posiblemente al grado de que la visualización parece rudio random.
 
 
-```{r, fig.dim = c(6, 4) }
+```{r, fig.width = 21 }
 set.seed(100)
 
 sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 5)
@@ -425,8 +425,8 @@ p2 <- plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
 sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 80)
 p3 <- plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
 
-
-gridExtra::grid.arrange(p1, p2, p3, nrow =1)
+library("patchwork")
+p1 + p2 + p3
 ```
 
 
