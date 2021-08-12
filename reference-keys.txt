@@ -147,7 +147,10 @@ eligiendo-el-número-de-pcs
 usando-el-punto-del-codo
 basados-en-la-estructura-de-la-población
 juntando-todo
+ejercicio
 usando-el-ruido-técnico
+qué-pasa-si-calculamos-la-relación-media-varianza-cn-la-función-modelgenevar-para-el-dataset-sce.pbmc
+qué-pasa-si-calculamos-el-número-de-pcs-usando-el-ruido-técnico-para-el-dataset-sce.pbmc
 reducción-de-dimensionalidad-para-visualización
 motivación-4
 visualizando-con-pca

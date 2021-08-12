@@ -27,12 +27,12 @@ Pero... tenemos decenas de miles de genes : **Reducción de dimensionalidad**
 
 Es poible porque la expresión de diferentes genes estará correlacionada si estos genes son afectados por el mismo proceso biológico.
 
-Por lo tanto, no necesitamos almacenar información independiente para genes individuales. Podemos comprimir móltiples "features" (genes) en una ónica dimensión.
+Por lo tanto, no necesitamos almacenar información independiente para genes individuales. Podemos comprimir múltiples "features" (genes) en una única dimensión.
 
 **Ventajas:**
 
 - Reduce trabajo computacional en análisis posteriores
-- Reduce el ruido al "promediar" mútiples genes obteniendo una representación mós precisa de los patrones en los datos
+- Reduce el ruido al "promediar" mútiples genes obteniendo una representación más precisa de los patrones en los datos
 - Permite una graficación efectiva en dos dimensiones
 
 ## Dataset ilustrativo: Zeisel
@@ -42,6 +42,19 @@ Por lo tanto, no necesitamos almacenar información independiente para genes ind
 ```r
 library(scRNAseq)
 sce.zeisel <- ZeiselBrainData(ensembl = TRUE)
+
+# Estos datos contienen tipos celulares previamente anotados
+table(sce.zeisel$level1class)
+```
+
+```
+## 
+## astrocytes_ependymal    endothelial-mural         interneurons 
+##                  224                  235                  290 
+##            microglia     oligodendrocytes        pyramidal CA1 
+##                   98                  820                  939 
+##         pyramidal SS 
+##                  399
 ```
 
 Estudio de tipos celulares en el cerebro de ratón (oligodendrocitos, microglia, neuronas, etc) procesados con el sistema STRT-seq (similar a CEL-Seq)
@@ -53,6 +66,7 @@ Descripción [aquí](https://osca.bioconductor.org/zeisel-mouse-brain-strt-seq.h
 
 ```r
 # Quality control
+# Descartar celulas con alto contenido mitocondrial o con alto porcentaje de spike-ins
 library(scater)
 is.mito <- which(rowData(sce.zeisel)$featureType == "mito")
 stats <- perCellQCMetrics(sce.zeisel,
@@ -67,6 +81,7 @@ sce.zeisel <- sce.zeisel[, !qc$discard]
 
 ```r
 # normalization
+# encontramos unos clusters rápidos para las células y usamos esa información para calcular los factores de tamaño
 library(scran)
 set.seed(1000)
 clusters <- quickCluster(sce.zeisel)
@@ -74,13 +89,22 @@ sce.zeisel <- computeSumFactors(sce.zeisel,
     cluster = clusters
 )
 sce.zeisel <- logNormCounts(sce.zeisel)
+```
 
+
+
+```r
 # variance-modelling
 dec.zeisel <- modelGeneVarWithSpikes(
     sce.zeisel,
     "ERCC"
 )
+top.zeisel <- getTopHVGs(dec.zeisel, n = 2000)
 ```
+
+- ¿Cómo se está modelando la relación media varianza?
+- ¿Cómo se están obteniendo los HGVs?
+
 
 ## Dataset ilustrativo: 10x PBMC4k no filtradas
 
@@ -157,6 +181,9 @@ dec.pbmc <- modelGeneVarByPoisson(sce.pbmc)
 top.pbmc <- getTopHVGs(dec.pbmc, prop = 0.1)
 ```
 
+- ¿Cómo se está modelando la relación media varianza?
+- ¿Cómo se están obteniendo los HGVs?
+
 
 ## Análisis de Componentes Principales
 
@@ -164,7 +191,7 @@ PCA es el arma principal de la reducción de dimensionalidad
 
 **PCA descubre las combinaciones (lineales) de "features" que capturan la cantidad más grande de variación**
 
-In PCA, la primer combinación lineal (componente principal) se elige tal que permite capturar la mayor varianza a través de las células. El siguiente PC se elige tal que es "ortogonal" al primero y captura la cantidad más grande de la variación restante, y así sucesivamente...
+En un PCA, la primer combinación lineal (componente principal) se elige tal que permite capturar la mayor varianza a través de las células. El siguiente PC se elige tal que es "ortogonal" al primero y captura la cantidad más grande de la variación restante, y así sucesivamente...
 
 ### PCA aplicado a datos de scRNA-seq
 
@@ -186,14 +213,15 @@ Podemos realizar reducción de dimensionalidad al aplicar PCA en la matriz de cu
 
 ```r
 library(scran)
-top.zeisel <- getTopHVGs(dec.zeisel, n = 2000)
-
 library(scater)
 set.seed(100)
 sce.zeisel <- runPCA(sce.zeisel,
     subset_row = top.zeisel
 )
 ```
+
+
+**¿Estamos corriendo el análisis sobre todos los genes de nuestro dataset?**
 
 Por default, **runPCA()** usa un método rápido aproximado que realiza simulaciones, por lo tanto, es necesario *'configurar la semilla'* para obtener resultados reproducibles
 
@@ -203,7 +231,7 @@ Por default, **runPCA()** usa un método rápido aproximado que realiza simulaci
 
 * Es común seleccionar un número de PCs "razonable" pero **arbitrario** (10-50), continuar con el análisis y regresar para checar la robustez de los resultados en cierto rango de valores
 
-Ahora exploraremos algunas estrategias guiadas por los datos (data-driven) para hacer esta selección
+Ahora exploraremos algunas estrategias guiadas por los datos (*data-driven*) para hacer esta selección
 
 #### Usando el punto del codo
 
@@ -216,7 +244,7 @@ plot(percent.var, xlab = "PC", ylab = "Variance explained (%)")
 abline(v = chosen.elbow, col = "red")
 ```
 
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-10-1.png" width="480" />
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-11-1.png" width="480" />
 
 Una heurística simple es elegir el número de PCs basado en el **porcentaje de varianza explicado** por PCs sucesivos
 
@@ -226,7 +254,14 @@ Una heurística simple es elegir el número de PCs basado en el **porcentaje de 
 ```r
 choices <- getClusteredPCs(reducedDim(sce.zeisel))
 chosen.clusters <- metadata(choices)$chosen
+
+plot(choices$n.pcs, choices$n.clusters,
+    xlab="Number of PCs", ylab="Number of clusters")
+abline(a=1, b=1, col="red")
+abline(v=chosen.clusters, col="grey80", lty=2)
 ```
+
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 Esta es una aproximación heurística más sofisticada que usa el número de clusters como un *proxy* del número de subpoblaciones
 
@@ -261,6 +296,14 @@ reducedDim(sce.zeisel, "PCA_clusters") <- reducedDim(
 )[, 1:chosen.clusters]
 ```
 
+### EJERCICIO
+
+1. Realiza un PCA para los datos **sce.pbmc**.
+2. Elige el número de PCs a conservar utilizando el método del codo
+3. Elige el número de PCs a conservar utilizando la estructura de la población
+4. Agrega esta información al objeto sce.pbmc
+
+
 ### Usando el ruido técnico
 
 
@@ -287,28 +330,15 @@ dim(reducedDim(denoised.pbmc, "PCA"))
 ## [1] 3985    9
 ```
 
-La dimensionalidad del output es el límite inferior para el número de PCs requeridos para explicar toda la variación biológica. Lo que significa que cualquier número menor de PCs definitivamente descartaría algún aspecto de la señal biológica
+La dimensionalidad del output es el límite inferior para el número de PCs requeridos para explicar toda la variación biológica. Lo que significa que cualquier número menor de PCs definitivamente descartará algún aspecto de la señal biológica
 
 **Esto no grantiza que los PCs retenidos capturen toda la señal biológica**
 
 *Esta técnica usualmente retiene más PCs que el método del punto del codo*
 
-
-```r
-set.seed(001001001)
-denoised.zeisel <- denoisePCA(sce.zeisel,
-    technical = dec.zeisel, subset.row = top.zeisel
-)
-dim(reducedDim(denoised.zeisel))
-```
-
-```
-## [1] 2815   50
-```
-
 **scran::denoisePCA()** internamente limita el numero de PCs, por default 5-50, para evitar la selección de excesivamente pocos PCs (cuando el ruido técnico es alto relativo al ruido biológico) o excesivamente muchos PCs (cuando el ruido técnico es demasiado bajo)
 
-*Los datos de cerebro de Zeisel están cerca de este límite superior*
+#### ¿Qué pasa si calculamos la relación media-varianza cn la función modelGeneVar para el dataset sce.pbmc?
 
 
 ```r
@@ -325,7 +355,28 @@ dim(reducedDim(denoised.pbmc2))
 
 **scran::denoisePCA()** tiende a funcionar mejor cuando la relación media-varianza refleja el ruiudo técnico verdadero, *i.e* estimado por **scran::modelGeneVarByPoisson()** o **scran::modelGeneVarWithSpikes()** en vez de  **scran::modelGeneVar()**
 
- *El dataset PBMC está cerca de este límite inferior*
+ *El dataset PBMC está cerca de este límite inferior: el ruido técnico es alto relativo al ruido biológico*
+
+
+
+#### ¿Qué pasa si calculamos el número de PCs usando el ruido técnico para el dataset sce.pbmc?
+
+
+```r
+set.seed(001001001)
+denoised.zeisel <- denoisePCA(sce.zeisel,
+    technical = dec.zeisel, subset.row = top.zeisel
+)
+dim(reducedDim(denoised.zeisel))
+```
+
+```
+## [1] 2815   50
+```
+
+
+*Los datos de cerebro de Zeisel están cerca de este límite superior: el ruido técnico es demasiado bajo*
+
 
 ## Reducción de dimensionalidad para visualización
 
@@ -342,7 +393,7 @@ Por lo tanto, necesitamos estrategias adicionales para la reducción de dimensio
 plotReducedDim(sce.zeisel, dimred = "PCA")
 ```
 
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-17-1.png" width="576" />
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-18-1.png" width="576" />
 
 
 ```r
@@ -352,7 +403,7 @@ plotReducedDim(sce.zeisel,
 )
 ```
 
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-18-1.png" width="576" />
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-19-1.png" width="576" />
 
 PCA es una técnica lineal, por lo tanto, no es eficiente para comprimir diferencias en más de 2 dimensiones en los primeros 2 PCs
 
@@ -366,16 +417,16 @@ plotReducedDim(sce.zeisel,
 )
 ```
 
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-19-1.png" width="576" />
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-20-1.png" width="576" />
 
 **Ventajas:**
 
 - PCA es predecible y no introducirá estructura aritficial en los datos
-- Es deterministico y robusto a cambios pequeños en los valores de entrada
+- Es determínistico y robusto a cambios pequeños en los valores de entrada
 
 **Desventajas:**
 
-- Usualmente no es satisfactoria paara visualizar la naturaleza compleja de los datos de scRNA-seq
+- Usualmente no la visualización no es suficiente para visualizar la naturaleza compleja de los datos de scRNA-seq
 
 ### Visualización con t-SNE
 
@@ -386,7 +437,7 @@ sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA")
 plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
 ```
 
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-20-1.png" width="480" />
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-21-1.png" width="480" />
 
 *t-stochastic neighbour embedding (t-SNE)* es la visualización por excelencia de datos de scRNA-seq. **Intenta encontrar una representación (no-lineal) de los datos usando pocas dimensiones que preserve las distancias entre cada punto y sus vecinos en el espacio multi-dimensional**
 
@@ -405,32 +456,54 @@ plotReducedDim(sce.zeisel,
 )
 ```
 
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-21-1.png" width="576" />
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-22-1.png" width="576" />
 
 #### Preguntas
 
-- ¿Qué pasa si vuelves a correr **runTSNE()** sin especifica la semilla?
+- ¿Qué pasa si vuelves a correr **runTSNE()** sin especificar la semilla?
 
-- ¿Qué pasa si especificas la semilla pero cambas el valor del parámetro *perplexity*?
+- ¿Qué pasa si especificas la semilla pero cambias el valor del parámetro *perplexity*?
 
 
 #### Continuando
 
 
-- Baja perplejidad favorece la resolución de la estrucutura fina, posiblemente al grado de que la visualización parece rudio random.
+- Baja perplejidad favorece la resolución de la estructura fina, posiblemente al grado de que la visualización parece rudio random.
 
 
-<div>
-<p style = 'text-align:center;'>
-<img src="img/tsne.png" width="800px">
-</p>
-</div>
+
+```r
+set.seed(100)
+
+par(mfrow=c(1,3))
+
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 5)
+plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
+```
+
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-1.png" width="576" />
+
+```r
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 20)
+plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
+```
+
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-2.png" width="576" />
+
+```r
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 80)
+plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
+```
+
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-3.png" width="576" />
+
+
 
 El siguiente [foro](http://distill.pub/2016/misread-tsne/) discute la selección de parámetros para t-SNE con cierta profundidad
 
 
 - No sobreinterpretes los resultados de t-SNE como un 'mapa' de las identidades de las células individuales
-- Componentes aleatorios y selección de parámetors cambiarán la visualización
+- Algunos componentes aleatorios y la selección de parámetors cambiarán la visualización
 - La interpretación puede ser engañada por el tamaño y posición de los clusters
 - t-SNE infla clusters densos y comprime clusters escasos
 - t-SNE no está obligado a preservar las localizaciones relativas de clusters no-vecinos (no puedes interpretar distancias no locales)
@@ -455,13 +528,13 @@ plotReducedDim(sce.zeisel,
 )
 ```
 
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-22-1.png" width="576" />
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-24-1.png" width="576" />
 
 Comparado con t-SNE:
 
-- UMAP tiende a tener clusters visualmente más compactos
+- UMAP tiende a encontrar clusters visualmente más compactos
 - Intenta preservar más de la estructura global que t-SNE
-- Tiende a ser más rápido que t-SNE, lo cual puede ser importante para datasets grandes. La diferencia desaprece cuando se aplican a PCs
+- Tiende a ser más rápido que t-SNE, lo cual puede ser importante para datasets grandes. La diferencia desaparece cuando se aplican sobre los primeros PCs
 
 #### Retos de la visualización con UMAP
 
@@ -478,13 +551,13 @@ plotReducedDim(sce.zeisel,
 )
 ```
 
-<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-23-1.png" width="576" />
+<img src="08-reduccion_dimensiones_files/figure-html/unnamed-chunk-25-1.png" width="576" />
 
 #### Preguntas
 
-- ¿Qué pasa si vuelves a correr **runUMAP()** sin especifica la semilla?
+- ¿Qué pasa si vuelves a correr **runUMAP()** sin especificar la semilla?
 
-- ¿Qué pasa si especificas la semilla pero cambas el valor del parámetro *n_neighbors*?
+- ¿Qué pasa si especificas la semilla pero cambias el valor del parámetro *n_neighbors*?
 
 #### Continuando
 
@@ -498,7 +571,7 @@ plotReducedDim(sce.zeisel,
 
 - Si el valor para los parámetros *n_neighbors* o *min_dist* es demasiado bajo entonces el ruido aleatorio se interpretará como estructura de alta-resolución, si son demasiado altos entonces se perderá la estructura fina
 
-**TIP: Trata un rango de valores para cada parámetro para asegurarte de que no comprometen ninguna de las conclusiones derivadas de la gráfica UMAP**
+**TIP: Trata un rango de valores para cada parámetro para asegurarte de que no comprometen ninguna de las conclusiones derivadas de la gráfica UMAP o t-SNE**
 
 ### Interpretando las gráficas
 
@@ -535,7 +608,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-12 01:40:06 UTC"
+## [1] "2021-08-12 01:50:55 UTC"
 ```
 
 ```r
@@ -544,7 +617,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 293.663   7.002 297.941
+## 262.622   5.568 265.779
 ```
 
 ```r
