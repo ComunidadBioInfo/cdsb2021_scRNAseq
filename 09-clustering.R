@@ -86,11 +86,26 @@ sce.pbmc$cluster <- factor(clust)
 plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster")
 
 
+## ---- warning=FALSE, message=FALSE----------------------
+library(scran)
+# Build graph using k = 50 nearest neighbours in PCA-space
+g50 <- buildSNNGraph(sce.pbmc, k = 50, use.dimred = "PCA")
+# Identify communities using the Walktrap method
+clust50 <- igraph::cluster_walktrap(g50)$membership
+
+
+## ---- warning=FALSE, message=FALSE, , fig.dim = c(6, 4)----
+# Visualise clusters on t-SNE plot
+library(scater)
+sce.pbmc$cluster50 <- factor(clust50)
+plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster50")
+
+
 ## ---- warning=FALSE, message=FALSE , fig.dim = c(6, 4)----
 # Jaccard-based weights followed by Louvain clustering
 # aka 'Seurat-style' clustering
-g <- buildSNNGraph(sce.pbmc, k = 10, use.dimred = "PCA", type = "jaccard")
-clust2 <- igraph::cluster_louvain(g)$membership
+g2 <- buildSNNGraph(sce.pbmc, k = 10, use.dimred = "PCA", type = "jaccard")
+clust2 <- igraph::cluster_louvain(g2)$membership
 sce.pbmc$cluster2 <- factor(clust2)
 plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
 
@@ -102,8 +117,24 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster") +
     plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
 
 
+## ---- eval = FALSE--------------------------------------
+## g.num <- buildSNNGraph(sce.pbmc, use.dimred = "PCA", type = "number")
+## g.jaccard <- buildSNNGraph(sce.pbmc, use.dimred = "PCA", type = "jaccard")
+## g.none <- buildKNNGraph(sce.pbmc, use.dimred = "PCA")
+
+
+## ---- eval = FALSE--------------------------------------
+## clust.louvain <- igraph::cluster_louvain(g)$membership
+## clust.infomap <- igraph::cluster_infomap(g)$membership
+## clust.fast <- igraph::cluster_fast_greedy(g)$membership
+## clust.labprop <- igraph::cluster_label_prop(g)$membership
+## clust.eigen <- igraph::cluster_leading_eigen(g)$membership
+
+
 ## ---- warning=FALSE, message=FALSE----------------------
 library(bluster)
+
+# obteniendo la métrica de modularidad
 ratio <- pairwiseModularity(g, clust, as.ratio = TRUE)
 dim(ratio)
 
@@ -151,7 +182,7 @@ plotExpression(sce.pbmc,
 ## ---- warning=FALSE, message=FALSE----------------------
 # Repeating modelling and PCA on the subset of cells we have
 # identified as memory T-cells (cluster 6).
-memory <- 6
+memory <- 10
 sce.memory <- sce.pbmc[, clust.full == memory]
 dec.memory <- modelGeneVar(sce.memory)
 sce.memory <- denoisePCA(sce.memory,

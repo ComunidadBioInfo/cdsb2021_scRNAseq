@@ -1,10 +1,14 @@
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE----------------------
 library(scRNAseq)
 sce.zeisel <- ZeiselBrainData(ensembl = TRUE)
 
+# Estos datos contienen tipos celulares previamente anotados
+table(sce.zeisel$level1class)
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+
+## ---- warning=FALSE, message=FALSE----------------------
 # Quality control
+# Descartar celulas con alto contenido mitocondrial o con alto porcentaje de spike-ins
 library(scater)
 is.mito <- which(rowData(sce.zeisel)$featureType == "mito")
 stats <- perCellQCMetrics(sce.zeisel,
@@ -16,8 +20,9 @@ qc <- quickPerCellQC(stats,
 sce.zeisel <- sce.zeisel[, !qc$discard]
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE----------------------
 # normalization
+# encontramos unos clusters rápidos para las células y usamos esa información para calcular los factores de tamaño
 library(scran)
 set.seed(1000)
 clusters <- quickCluster(sce.zeisel)
@@ -26,14 +31,17 @@ sce.zeisel <- computeSumFactors(sce.zeisel,
 )
 sce.zeisel <- logNormCounts(sce.zeisel)
 
+
+## ---- warning=FALSE, message=FALSE----------------------
 # variance-modelling
 dec.zeisel <- modelGeneVarWithSpikes(
     sce.zeisel,
     "ERCC"
 )
+top.zeisel <- getTopHVGs(dec.zeisel, n = 2000)
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE----------------------
 library(BiocFileCache)
 bfc <- BiocFileCache()
 raw.path <- bfcrpath(bfc, file.path(
@@ -43,14 +51,14 @@ raw.path <- bfcrpath(bfc, file.path(
 untar(raw.path, exdir = file.path(tempdir(), "pbmc4k"))
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE----------------------
 library(DropletUtils)
 library(Matrix)
 fname <- file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38")
 sce.pbmc <- read10xCounts(fname, col.names = TRUE)
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE----------------------
 # gene-annotation
 library(scater)
 rownames(sce.pbmc) <- uniquifyFeatureNames(
@@ -68,7 +76,7 @@ e.out <- emptyDrops(counts(sce.pbmc))
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE----------------------
 # quality-control
 stats <- perCellQCMetrics(sce.pbmc,
     subsets = list(Mito = which(location == "MT"))
@@ -86,17 +94,15 @@ sce.pbmc <- computeSumFactors(sce.pbmc, cluster = clusters)
 sce.pbmc <- logNormCounts(sce.pbmc)
 
 
-## ----------------------------------------------------------------------------------------------------
+## -------------------------------------------------------
 # variance modelling
 set.seed(1001)
 dec.pbmc <- modelGeneVarByPoisson(sce.pbmc)
 top.pbmc <- getTopHVGs(dec.pbmc, prop = 0.1)
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE----------------------
 library(scran)
-top.zeisel <- getTopHVGs(dec.zeisel, n = 2000)
-
 library(scater)
 set.seed(100)
 sce.zeisel <- runPCA(sce.zeisel,
@@ -104,7 +110,7 @@ sce.zeisel <- runPCA(sce.zeisel,
 )
 
 
-## ---- warning=FALSE, message=FALSE, fig.dim = c(5, 4)------------------------------------------------
+## ---- warning=FALSE, message=FALSE, fig.dim = c(5, 4)----
 library(PCAtools)
 percent.var <- attr(reducedDim(sce.zeisel), "percentVar")
 chosen.elbow <- PCAtools::findElbowPoint(percent.var)
@@ -112,12 +118,18 @@ plot(percent.var, xlab = "PC", ylab = "Variance explained (%)")
 abline(v = chosen.elbow, col = "red")
 
 
-## ----------------------------------------------------------------------------------------------------
+## -------------------------------------------------------
 choices <- getClusteredPCs(reducedDim(sce.zeisel))
 chosen.clusters <- metadata(choices)$chosen
 
+plot(choices$n.pcs, choices$n.clusters,
+    xlab = "Number of PCs", ylab = "Number of clusters"
+)
+abline(a = 1, b = 1, col = "red")
+abline(v = chosen.clusters, col = "grey80", lty = 2)
 
-## ----------------------------------------------------------------------------------------------------
+
+## -------------------------------------------------------
 set.seed(100)
 # Compute and store the 'full' set of PCs
 sce.zeisel <- runPCA(sce.zeisel, subset_row = top.zeisel)
@@ -133,7 +145,7 @@ reducedDim(sce.zeisel, "PCA_clusters") <- reducedDim(
 )[, 1:chosen.clusters]
 
 
-## ---- warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE----------------------
 library(scran)
 set.seed(111001001)
 denoised.pbmc <- denoisePCA(sce.pbmc,
@@ -141,19 +153,11 @@ denoised.pbmc <- denoisePCA(sce.pbmc,
 )
 
 
-## ----------------------------------------------------------------------------------------------------
+## -------------------------------------------------------
 dim(reducedDim(denoised.pbmc, "PCA"))
 
 
-## ----------------------------------------------------------------------------------------------------
-set.seed(001001001)
-denoised.zeisel <- denoisePCA(sce.zeisel,
-    technical = dec.zeisel, subset.row = top.zeisel
-)
-dim(reducedDim(denoised.zeisel))
-
-
-## ----------------------------------------------------------------------------------------------------
+## -------------------------------------------------------
 dec.pbmc2 <- modelGeneVar(sce.pbmc)
 denoised.pbmc2 <- denoisePCA(sce.pbmc,
     technical = dec.pbmc2, subset.row = top.pbmc
@@ -161,31 +165,39 @@ denoised.pbmc2 <- denoisePCA(sce.pbmc,
 dim(reducedDim(denoised.pbmc2))
 
 
-## ---- fig.dim = c(6, 4)------------------------------------------------------------------------------
+## -------------------------------------------------------
+set.seed(001001001)
+denoised.zeisel <- denoisePCA(sce.zeisel,
+    technical = dec.zeisel, subset.row = top.zeisel
+)
+dim(reducedDim(denoised.zeisel))
+
+
+## ---- fig.dim = c(6, 4)---------------------------------
 plotReducedDim(sce.zeisel, dimred = "PCA")
 
 
-## ---- fig.dim = c(6, 4)------------------------------------------------------------------------------
+## ---- fig.dim = c(6, 4)---------------------------------
 plotReducedDim(sce.zeisel,
     dimred = "PCA",
     colour_by = "level1class"
 )
 
 
-## ---- fig.dim = c(6, 4)------------------------------------------------------------------------------
+## ---- fig.dim = c(6, 4)---------------------------------
 plotReducedDim(sce.zeisel,
     dimred = "PCA",
     ncomponents = 4, colour_by = "level1class"
 )
 
 
-## ---- fig.dim = c(5, 4)------------------------------------------------------------------------------
+## ---- fig.dim = c(5, 4)---------------------------------
 set.seed(00101001101)
 sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA")
 plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
 
 
-## ---- fig.dim = c(6, 4)------------------------------------------------------------------------------
+## ---- fig.dim = c(6, 4)---------------------------------
 set.seed(100)
 sce.zeisel <- runTSNE(sce.zeisel,
     dimred = "PCA",
@@ -197,7 +209,23 @@ plotReducedDim(sce.zeisel,
 )
 
 
-## ---- fig.dim = c(6, 4)------------------------------------------------------------------------------
+## ---- fig.width = 21------------------------------------
+set.seed(100)
+
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 5)
+p1 <- plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
+
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 20)
+p2 <- plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
+
+sce.zeisel <- runTSNE(sce.zeisel, dimred = "PCA", perplexity = 80)
+p3 <- plotReducedDim(sce.zeisel, dimred = "TSNE", colour_by = "level1class")
+
+library("patchwork")
+p1 + p2 + p3
+
+
+## ---- fig.dim = c(6, 4)---------------------------------
 set.seed(1100101001)
 sce.zeisel <- runUMAP(sce.zeisel, dimred = "PCA")
 plotReducedDim(sce.zeisel,
@@ -206,7 +234,7 @@ plotReducedDim(sce.zeisel,
 )
 
 
-## ---- fig.dim = c(6, 4)------------------------------------------------------------------------------
+## ---- fig.dim = c(6, 4)---------------------------------
 
 set.seed(100)
 sce.zeisel <- runUMAP(sce.zeisel,
@@ -219,7 +247,7 @@ plotReducedDim(sce.zeisel,
 )
 
 
-## ----------------------------------------------------------------------------------------------------
+## -------------------------------------------------------
 ## Información de la sesión de R
 Sys.time()
 proc.time()

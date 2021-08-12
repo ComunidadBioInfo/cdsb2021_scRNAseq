@@ -304,9 +304,9 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster") +
 **Distintas métricas de distancia**
 
 ```{r, eval = FALSE}
-g.num <- buildSNNGraph(sce.pbmc, use.dimred="PCA", type="number")
-g.jaccard <- buildSNNGraph(sce.pbmc, use.dimred="PCA", type="jaccard")
-g.none <- buildKNNGraph(sce.pbmc, use.dimred="PCA")
+g.num <- buildSNNGraph(sce.pbmc, use.dimred = "PCA", type = "number")
+g.jaccard <- buildSNNGraph(sce.pbmc, use.dimred = "PCA", type = "jaccard")
+g.none <- buildKNNGraph(sce.pbmc, use.dimred = "PCA")
 ```
 
 **Distintos métodos de clustering**

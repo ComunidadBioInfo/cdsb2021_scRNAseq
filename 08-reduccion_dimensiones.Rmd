@@ -232,9 +232,10 @@ choices <- getClusteredPCs(reducedDim(sce.zeisel))
 chosen.clusters <- metadata(choices)$chosen
 
 plot(choices$n.pcs, choices$n.clusters,
-    xlab="Number of PCs", ylab="Number of clusters")
-abline(a=1, b=1, col="red")
-abline(v=chosen.clusters, col="grey80", lty=2)
+    xlab = "Number of PCs", ylab = "Number of clusters"
+)
+abline(a = 1, b = 1, col = "red")
+abline(v = chosen.clusters, col = "grey80", lty = 2)
 ```
 
 Esta es una aproximación heurística más sofisticada que usa el número de clusters como un *proxy* del número de subpoblaciones
