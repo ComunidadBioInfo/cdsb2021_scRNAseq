@@ -303,14 +303,15 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster") +
 
 **Distintas métricas de distancia**
 
-```{r, warning=FALSE, message=FALSE}
+```{r, eval = FALSE}
 g.num <- buildSNNGraph(sce.pbmc, use.dimred="PCA", type="number")
 g.jaccard <- buildSNNGraph(sce.pbmc, use.dimred="PCA", type="jaccard")
 g.none <- buildKNNGraph(sce.pbmc, use.dimred="PCA")
 ```
 
 **Distintos métodos de clustering**
-```{r, warning=FALSE, message=FALSE}
+
+```{r, eval = FALSE}
 clust.louvain <- igraph::cluster_louvain(g)$membership
 clust.infomap <- igraph::cluster_infomap(g)$membership
 clust.fast <- igraph::cluster_fast_greedy(g)$membership
