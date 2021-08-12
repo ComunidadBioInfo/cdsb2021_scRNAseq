@@ -125,6 +125,7 @@ seleccionando-hvgs-sobre-la-métrica-de-varianza
 estrategias-para-seleccionar-x
 seleccionando-hvgs-de-acuerdo-a-su-significancia-estadística
 seleccionando-genes-por-arriba-de-la-tendencia-media-varianza
+ejercicio-dibujando-los-hvgs
 seleccionando-genes-de-interés-a-priori
 poniendo-todo-junto
 quedándonos-sólo-con-los-hgvs

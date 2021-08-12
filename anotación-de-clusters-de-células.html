@@ -342,7 +342,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.13.1" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-sobre-la-métrica-de-varianza"><i class="fa fa-check"></i><b>7.13.1</b> Seleccionando HVGs sobre la métrica de varianza</a></li>
 <li class="chapter" data-level="7.13.2" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-de-acuerdo-a-su-significancia-estadística"><i class="fa fa-check"></i><b>7.13.2</b> Seleccionando HVGs de acuerdo a su significancia estadística</a></li>
 <li class="chapter" data-level="7.13.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-por-arriba-de-la-tendencia-media-varianza"><i class="fa fa-check"></i><b>7.13.3</b> Seleccionando genes por arriba de la tendencia media-varianza</a></li>
-<li class="chapter" data-level="7.13.4" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-de-interés-a-priori"><i class="fa fa-check"></i><b>7.13.4</b> Seleccionando genes de interés <em>a priori</em></a></li>
+<li class="chapter" data-level="7.13.4" data-path="selección-de-genes.html"><a href="selección-de-genes.html#ejercicio-dibujando-los-hvgs"><i class="fa fa-check"></i><b>7.13.4</b> EJERCICIO: Dibujando los HVGs</a></li>
+<li class="chapter" data-level="7.13.5" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-de-interés-a-priori"><i class="fa fa-check"></i><b>7.13.5</b> Seleccionando genes de interés <em>a priori</em></a></li>
 </ul></li>
 <li class="chapter" data-level="7.14" data-path="selección-de-genes.html"><a href="selección-de-genes.html#poniendo-todo-junto"><i class="fa fa-check"></i><b>7.14</b> Poniendo todo junto</a>
 <ul>
@@ -603,83 +604,83 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="dataset-ilustrativo-pbmc4k-10x-sin-filtrar-2" class="section level2" number="11.3">
 <h2><span class="header-section-number">11.3</span> Dataset ilustrativo: PBMC4k 10X sin filtrar</h2>
-<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="anotación-de-clusters-de-células.html#cb526-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usemos datos de pbmc4k</span></span>
-<span id="cb526-2"><a href="anotación-de-clusters-de-células.html#cb526-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocFileCache)</span>
-<span id="cb526-3"><a href="anotación-de-clusters-de-células.html#cb526-3" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
-<span id="cb526-4"><a href="anotación-de-clusters-de-células.html#cb526-4" aria-hidden="true" tabindex="-1"></a>raw.path <span class="ot">&lt;-</span> <span class="fu">bfcrpath</span>(bfc, <span class="fu">file.path</span>(</span>
-<span id="cb526-5"><a href="anotación-de-clusters-de-células.html#cb526-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;http://cf.10xgenomics.com/samples&quot;</span>,</span>
-<span id="cb526-6"><a href="anotación-de-clusters-de-células.html#cb526-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz&quot;</span></span>
-<span id="cb526-7"><a href="anotación-de-clusters-de-células.html#cb526-7" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb526-8"><a href="anotación-de-clusters-de-células.html#cb526-8" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(raw.path, <span class="at">exdir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k&quot;</span>))</span>
-<span id="cb526-9"><a href="anotación-de-clusters-de-células.html#cb526-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb526-10"><a href="anotación-de-clusters-de-células.html#cb526-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DropletUtils)</span>
-<span id="cb526-11"><a href="anotación-de-clusters-de-células.html#cb526-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
-<span id="cb526-12"><a href="anotación-de-clusters-de-células.html#cb526-12" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k/raw_gene_bc_matrices/GRCh38&quot;</span>)</span>
-<span id="cb526-13"><a href="anotación-de-clusters-de-células.html#cb526-13" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">read10xCounts</span>(fname, <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="anotación-de-clusters-de-células.html#cb527-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usemos datos de pbmc4k</span></span>
+<span id="cb527-2"><a href="anotación-de-clusters-de-células.html#cb527-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocFileCache)</span>
+<span id="cb527-3"><a href="anotación-de-clusters-de-células.html#cb527-3" aria-hidden="true" tabindex="-1"></a>bfc <span class="ot">&lt;-</span> <span class="fu">BiocFileCache</span>()</span>
+<span id="cb527-4"><a href="anotación-de-clusters-de-células.html#cb527-4" aria-hidden="true" tabindex="-1"></a>raw.path <span class="ot">&lt;-</span> <span class="fu">bfcrpath</span>(bfc, <span class="fu">file.path</span>(</span>
+<span id="cb527-5"><a href="anotación-de-clusters-de-células.html#cb527-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;http://cf.10xgenomics.com/samples&quot;</span>,</span>
+<span id="cb527-6"><a href="anotación-de-clusters-de-células.html#cb527-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz&quot;</span></span>
+<span id="cb527-7"><a href="anotación-de-clusters-de-células.html#cb527-7" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb527-8"><a href="anotación-de-clusters-de-células.html#cb527-8" aria-hidden="true" tabindex="-1"></a><span class="fu">untar</span>(raw.path, <span class="at">exdir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k&quot;</span>))</span>
+<span id="cb527-9"><a href="anotación-de-clusters-de-células.html#cb527-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb527-10"><a href="anotación-de-clusters-de-células.html#cb527-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DropletUtils)</span>
+<span id="cb527-11"><a href="anotación-de-clusters-de-células.html#cb527-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
+<span id="cb527-12"><a href="anotación-de-clusters-de-células.html#cb527-12" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;pbmc4k/raw_gene_bc_matrices/GRCh38&quot;</span>)</span>
+<span id="cb527-13"><a href="anotación-de-clusters-de-células.html#cb527-13" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">read10xCounts</span>(fname, <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Dataset “Células mononucleares humanas de sangre periférica” de 10X Genomics</p>
 <p>Descripción <a href="https://osca.bioconductor.org/unfiltered-human-pbmcs-10x-genomics.html">aquí</a> <a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a></p>
 <div id="anotación-2" class="section level3" number="11.3.1">
 <h3><span class="header-section-number">11.3.1</span> Anotación</h3>
-<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="anotación-de-clusters-de-células.html#cb527-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Anotación de los genes</span></span>
-<span id="cb527-2"><a href="anotación-de-clusters-de-células.html#cb527-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
-<span id="cb527-3"><a href="anotación-de-clusters-de-células.html#cb527-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sce.pbmc) <span class="ot">&lt;-</span> <span class="fu">uniquifyFeatureNames</span>(</span>
-<span id="cb527-4"><a href="anotación-de-clusters-de-células.html#cb527-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID, <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>Symbol</span>
-<span id="cb527-5"><a href="anotación-de-clusters-de-células.html#cb527-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb527-6"><a href="anotación-de-clusters-de-células.html#cb527-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EnsDb.Hsapiens.v86)</span>
-<span id="cb527-7"><a href="anotación-de-clusters-de-células.html#cb527-7" aria-hidden="true" tabindex="-1"></a>location <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(EnsDb.Hsapiens.v86,</span>
-<span id="cb527-8"><a href="anotación-de-clusters-de-células.html#cb527-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">keys =</span> <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID,</span>
-<span id="cb527-9"><a href="anotación-de-clusters-de-células.html#cb527-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">&quot;SEQNAME&quot;</span>, <span class="at">keytype =</span> <span class="st">&quot;GENEID&quot;</span></span>
-<span id="cb527-10"><a href="anotación-de-clusters-de-células.html#cb527-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb527-11"><a href="anotación-de-clusters-de-células.html#cb527-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb527-12"><a href="anotación-de-clusters-de-células.html#cb527-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Detección de _droplets_ con células</span></span>
-<span id="cb527-13"><a href="anotación-de-clusters-de-células.html#cb527-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb527-14"><a href="anotación-de-clusters-de-células.html#cb527-14" aria-hidden="true" tabindex="-1"></a>e.out <span class="ot">&lt;-</span> <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc))</span>
-<span id="cb527-15"><a href="anotación-de-clusters-de-células.html#cb527-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="fu">which</span>(e.out<span class="sc">$</span>FDR <span class="sc">&lt;=</span> <span class="fl">0.001</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="anotación-de-clusters-de-células.html#cb528-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Anotación de los genes</span></span>
+<span id="cb528-2"><a href="anotación-de-clusters-de-células.html#cb528-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb528-3"><a href="anotación-de-clusters-de-células.html#cb528-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sce.pbmc) <span class="ot">&lt;-</span> <span class="fu">uniquifyFeatureNames</span>(</span>
+<span id="cb528-4"><a href="anotación-de-clusters-de-células.html#cb528-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID, <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>Symbol</span>
+<span id="cb528-5"><a href="anotación-de-clusters-de-células.html#cb528-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb528-6"><a href="anotación-de-clusters-de-células.html#cb528-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EnsDb.Hsapiens.v86)</span>
+<span id="cb528-7"><a href="anotación-de-clusters-de-células.html#cb528-7" aria-hidden="true" tabindex="-1"></a>location <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(EnsDb.Hsapiens.v86,</span>
+<span id="cb528-8"><a href="anotación-de-clusters-de-células.html#cb528-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">keys =</span> <span class="fu">rowData</span>(sce.pbmc)<span class="sc">$</span>ID,</span>
+<span id="cb528-9"><a href="anotación-de-clusters-de-células.html#cb528-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">&quot;SEQNAME&quot;</span>, <span class="at">keytype =</span> <span class="st">&quot;GENEID&quot;</span></span>
+<span id="cb528-10"><a href="anotación-de-clusters-de-células.html#cb528-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb528-11"><a href="anotación-de-clusters-de-células.html#cb528-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb528-12"><a href="anotación-de-clusters-de-células.html#cb528-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Detección de _droplets_ con células</span></span>
+<span id="cb528-13"><a href="anotación-de-clusters-de-células.html#cb528-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb528-14"><a href="anotación-de-clusters-de-células.html#cb528-14" aria-hidden="true" tabindex="-1"></a>e.out <span class="ot">&lt;-</span> <span class="fu">emptyDrops</span>(<span class="fu">counts</span>(sce.pbmc))</span>
+<span id="cb528-15"><a href="anotación-de-clusters-de-células.html#cb528-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="fu">which</span>(e.out<span class="sc">$</span>FDR <span class="sc">&lt;=</span> <span class="fl">0.001</span>)]</span></code></pre></div>
 </div>
 <div id="control-de-calidad-3" class="section level3" number="11.3.2">
 <h3><span class="header-section-number">11.3.2</span> Control de calidad</h3>
-<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="anotación-de-clusters-de-células.html#cb528-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Control de calidad</span></span>
-<span id="cb528-2"><a href="anotación-de-clusters-de-células.html#cb528-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">perCellQCMetrics</span>(sce.pbmc,</span>
-<span id="cb528-3"><a href="anotación-de-clusters-de-células.html#cb528-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mito =</span> <span class="fu">which</span>(location <span class="sc">==</span> <span class="st">&quot;MT&quot;</span>))</span>
-<span id="cb528-4"><a href="anotación-de-clusters-de-células.html#cb528-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb528-5"><a href="anotación-de-clusters-de-células.html#cb528-5" aria-hidden="true" tabindex="-1"></a>high.mito <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(stats<span class="sc">$</span>subsets_Mito_percent,</span>
-<span id="cb528-6"><a href="anotación-de-clusters-de-células.html#cb528-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span></span>
-<span id="cb528-7"><a href="anotación-de-clusters-de-células.html#cb528-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb528-8"><a href="anotación-de-clusters-de-células.html#cb528-8" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="sc">!</span>high.mito]</span>
-<span id="cb528-9"><a href="anotación-de-clusters-de-células.html#cb528-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb528-10"><a href="anotación-de-clusters-de-células.html#cb528-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalización de los datos</span></span>
-<span id="cb528-11"><a href="anotación-de-clusters-de-células.html#cb528-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
-<span id="cb528-12"><a href="anotación-de-clusters-de-células.html#cb528-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span>
-<span id="cb528-13"><a href="anotación-de-clusters-de-células.html#cb528-13" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">quickCluster</span>(sce.pbmc)</span>
-<span id="cb528-14"><a href="anotación-de-clusters-de-células.html#cb528-14" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">computeSumFactors</span>(sce.pbmc, <span class="at">cluster =</span> clusters)</span>
-<span id="cb528-15"><a href="anotación-de-clusters-de-células.html#cb528-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.pbmc)</span></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="anotación-de-clusters-de-células.html#cb529-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Control de calidad</span></span>
+<span id="cb529-2"><a href="anotación-de-clusters-de-células.html#cb529-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">perCellQCMetrics</span>(sce.pbmc,</span>
+<span id="cb529-3"><a href="anotación-de-clusters-de-células.html#cb529-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">subsets =</span> <span class="fu">list</span>(<span class="at">Mito =</span> <span class="fu">which</span>(location <span class="sc">==</span> <span class="st">&quot;MT&quot;</span>))</span>
+<span id="cb529-4"><a href="anotación-de-clusters-de-células.html#cb529-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb529-5"><a href="anotación-de-clusters-de-células.html#cb529-5" aria-hidden="true" tabindex="-1"></a>high.mito <span class="ot">&lt;-</span> <span class="fu">isOutlier</span>(stats<span class="sc">$</span>subsets_Mito_percent,</span>
+<span id="cb529-6"><a href="anotación-de-clusters-de-células.html#cb529-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;higher&quot;</span></span>
+<span id="cb529-7"><a href="anotación-de-clusters-de-células.html#cb529-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb529-8"><a href="anotación-de-clusters-de-células.html#cb529-8" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> sce.pbmc[, <span class="sc">!</span>high.mito]</span>
+<span id="cb529-9"><a href="anotación-de-clusters-de-células.html#cb529-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb529-10"><a href="anotación-de-clusters-de-células.html#cb529-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalización de los datos</span></span>
+<span id="cb529-11"><a href="anotación-de-clusters-de-células.html#cb529-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span>
+<span id="cb529-12"><a href="anotación-de-clusters-de-células.html#cb529-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span>
+<span id="cb529-13"><a href="anotación-de-clusters-de-células.html#cb529-13" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">quickCluster</span>(sce.pbmc)</span>
+<span id="cb529-14"><a href="anotación-de-clusters-de-células.html#cb529-14" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">computeSumFactors</span>(sce.pbmc, <span class="at">cluster =</span> clusters)</span>
+<span id="cb529-15"><a href="anotación-de-clusters-de-células.html#cb529-15" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce.pbmc)</span></code></pre></div>
 </div>
 <div id="genes-variables-1" class="section level3" number="11.3.3">
 <h3><span class="header-section-number">11.3.3</span> Genes variables</h3>
-<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="anotación-de-clusters-de-células.html#cb529-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Identificación de genes altamente variables</span></span>
-<span id="cb529-2"><a href="anotación-de-clusters-de-células.html#cb529-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1001</span>)</span>
-<span id="cb529-3"><a href="anotación-de-clusters-de-células.html#cb529-3" aria-hidden="true" tabindex="-1"></a>dec.pbmc <span class="ot">&lt;-</span> <span class="fu">modelGeneVarByPoisson</span>(sce.pbmc)</span>
-<span id="cb529-4"><a href="anotación-de-clusters-de-células.html#cb529-4" aria-hidden="true" tabindex="-1"></a>top.pbmc <span class="ot">&lt;-</span> <span class="fu">getTopHVGs</span>(dec.pbmc, <span class="at">prop =</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="anotación-de-clusters-de-células.html#cb530-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Identificación de genes altamente variables</span></span>
+<span id="cb530-2"><a href="anotación-de-clusters-de-células.html#cb530-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1001</span>)</span>
+<span id="cb530-3"><a href="anotación-de-clusters-de-células.html#cb530-3" aria-hidden="true" tabindex="-1"></a>dec.pbmc <span class="ot">&lt;-</span> <span class="fu">modelGeneVarByPoisson</span>(sce.pbmc)</span>
+<span id="cb530-4"><a href="anotación-de-clusters-de-células.html#cb530-4" aria-hidden="true" tabindex="-1"></a>top.pbmc <span class="ot">&lt;-</span> <span class="fu">getTopHVGs</span>(dec.pbmc, <span class="at">prop =</span> <span class="fl">0.1</span>)</span></code></pre></div>
 </div>
 <div id="reducción-de-dimensiones-2" class="section level3" number="11.3.4">
 <h3><span class="header-section-number">11.3.4</span> Reducción de dimensiones</h3>
-<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="anotación-de-clusters-de-células.html#cb530-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Reducción de dimensiones</span></span>
-<span id="cb530-2"><a href="anotación-de-clusters-de-células.html#cb530-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10000</span>)</span>
-<span id="cb530-3"><a href="anotación-de-clusters-de-células.html#cb530-3" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.pbmc,</span>
-<span id="cb530-4"><a href="anotación-de-clusters-de-células.html#cb530-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset.row =</span> top.pbmc,</span>
-<span id="cb530-5"><a href="anotación-de-clusters-de-células.html#cb530-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">technical =</span> dec.pbmc</span>
-<span id="cb530-6"><a href="anotación-de-clusters-de-células.html#cb530-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb530-7"><a href="anotación-de-clusters-de-células.html#cb530-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100000</span>)</span>
-<span id="cb530-8"><a href="anotación-de-clusters-de-células.html#cb530-8" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(sce.pbmc, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
-<span id="cb530-9"><a href="anotación-de-clusters-de-células.html#cb530-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000000</span>)</span>
-<span id="cb530-10"><a href="anotación-de-clusters-de-células.html#cb530-10" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(sce.pbmc, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="anotación-de-clusters-de-células.html#cb531-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Reducción de dimensiones</span></span>
+<span id="cb531-2"><a href="anotación-de-clusters-de-células.html#cb531-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10000</span>)</span>
+<span id="cb531-3"><a href="anotación-de-clusters-de-células.html#cb531-3" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">denoisePCA</span>(sce.pbmc,</span>
+<span id="cb531-4"><a href="anotación-de-clusters-de-células.html#cb531-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset.row =</span> top.pbmc,</span>
+<span id="cb531-5"><a href="anotación-de-clusters-de-células.html#cb531-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">technical =</span> dec.pbmc</span>
+<span id="cb531-6"><a href="anotación-de-clusters-de-células.html#cb531-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb531-7"><a href="anotación-de-clusters-de-células.html#cb531-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100000</span>)</span>
+<span id="cb531-8"><a href="anotación-de-clusters-de-células.html#cb531-8" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">runTSNE</span>(sce.pbmc, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
+<span id="cb531-9"><a href="anotación-de-clusters-de-células.html#cb531-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000000</span>)</span>
+<span id="cb531-10"><a href="anotación-de-clusters-de-células.html#cb531-10" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">runUMAP</span>(sce.pbmc, <span class="at">dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span></code></pre></div>
 </div>
 <div id="clustering-2" class="section level3" number="11.3.5">
 <h3><span class="header-section-number">11.3.5</span> Clustering</h3>
-<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="anotación-de-clusters-de-células.html#cb531-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clustering</span></span>
-<span id="cb531-2"><a href="anotación-de-clusters-de-células.html#cb531-2" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(sce.pbmc, <span class="at">k =</span> <span class="dv">10</span>, <span class="at">use.dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
-<span id="cb531-3"><a href="anotación-de-clusters-de-células.html#cb531-3" aria-hidden="true" tabindex="-1"></a>clust <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">cluster_walktrap</span>(g)<span class="sc">$</span>membership</span>
-<span id="cb531-4"><a href="anotación-de-clusters-de-células.html#cb531-4" aria-hidden="true" tabindex="-1"></a>sce.pbmc<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">factor</span>(clust)</span></code></pre></div>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="anotación-de-clusters-de-células.html#cb532-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clustering</span></span>
+<span id="cb532-2"><a href="anotación-de-clusters-de-células.html#cb532-2" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">buildSNNGraph</span>(sce.pbmc, <span class="at">k =</span> <span class="dv">10</span>, <span class="at">use.dimred =</span> <span class="st">&quot;PCA&quot;</span>)</span>
+<span id="cb532-3"><a href="anotación-de-clusters-de-células.html#cb532-3" aria-hidden="true" tabindex="-1"></a>clust <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">cluster_walktrap</span>(g)<span class="sc">$</span>membership</span>
+<span id="cb532-4"><a href="anotación-de-clusters-de-células.html#cb532-4" aria-hidden="true" tabindex="-1"></a>sce.pbmc<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">factor</span>(clust)</span></code></pre></div>
 </div>
 </div>
 <div id="asignando-las-etiquetas-celulares-a-partir-de-los-datos-de-referencia" class="section level2" number="11.4">
@@ -706,37 +707,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="singler-incluye-varias-referencias" class="section level3" number="11.5.1">
 <h3><span class="header-section-number">11.5.1</span> SingleR incluye varias referencias</h3>
 <p><a href="https://bioconductor.org/packages/3.11/bioc/vignettes/SingleR/inst/doc/SingleR.html#5_available_references">Ver referencias</a></p>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="anotación-de-clusters-de-células.html#cb532-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Human</span></span>
-<span id="cb532-2"><a href="anotación-de-clusters-de-células.html#cb532-2" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">BlueprintEncodeData</span>()</span>
-<span id="cb532-3"><a href="anotación-de-clusters-de-células.html#cb532-3" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">DatabaseImmuneCellExpressionData</span>()</span>
-<span id="cb532-4"><a href="anotación-de-clusters-de-células.html#cb532-4" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">HumanPrimaryCellAtlasData</span>()</span>
-<span id="cb532-5"><a href="anotación-de-clusters-de-células.html#cb532-5" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">MonacoImmuneData</span>()</span>
-<span id="cb532-6"><a href="anotación-de-clusters-de-células.html#cb532-6" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">NovershternHematopoieticData</span>()</span>
-<span id="cb532-7"><a href="anotación-de-clusters-de-células.html#cb532-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb532-8"><a href="anotación-de-clusters-de-células.html#cb532-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Mice</span></span>
-<span id="cb532-9"><a href="anotación-de-clusters-de-células.html#cb532-9" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">ImmGenData</span>()</span>
-<span id="cb532-10"><a href="anotación-de-clusters-de-células.html#cb532-10" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">MouseRNASeqData</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="anotación-de-clusters-de-células.html#cb533-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Human</span></span>
+<span id="cb533-2"><a href="anotación-de-clusters-de-células.html#cb533-2" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">BlueprintEncodeData</span>()</span>
+<span id="cb533-3"><a href="anotación-de-clusters-de-células.html#cb533-3" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">DatabaseImmuneCellExpressionData</span>()</span>
+<span id="cb533-4"><a href="anotación-de-clusters-de-células.html#cb533-4" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">HumanPrimaryCellAtlasData</span>()</span>
+<span id="cb533-5"><a href="anotación-de-clusters-de-células.html#cb533-5" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">MonacoImmuneData</span>()</span>
+<span id="cb533-6"><a href="anotación-de-clusters-de-células.html#cb533-6" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">NovershternHematopoieticData</span>()</span>
+<span id="cb533-7"><a href="anotación-de-clusters-de-células.html#cb533-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb533-8"><a href="anotación-de-clusters-de-células.html#cb533-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Mice</span></span>
+<span id="cb533-9"><a href="anotación-de-clusters-de-células.html#cb533-9" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">ImmGenData</span>()</span>
+<span id="cb533-10"><a href="anotación-de-clusters-de-células.html#cb533-10" aria-hidden="true" tabindex="-1"></a>SingleR<span class="sc">::</span><span class="fu">MouseRNASeqData</span>()</span></code></pre></div>
 </div>
 <div id="usando-las-referencias" class="section level3" number="11.5.2">
 <h3><span class="header-section-number">11.5.2</span> Usando las referencias</h3>
-<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="anotación-de-clusters-de-células.html#cb533-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if needed install celldex</span></span>
-<span id="cb533-2"><a href="anotación-de-clusters-de-células.html#cb533-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create directory? y</span></span>
-<span id="cb533-3"><a href="anotación-de-clusters-de-células.html#cb533-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(celldex)</span>
-<span id="cb533-4"><a href="anotación-de-clusters-de-células.html#cb533-4" aria-hidden="true" tabindex="-1"></a>ref <span class="ot">&lt;-</span> celldex<span class="sc">::</span><span class="fu">BlueprintEncodeData</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="anotación-de-clusters-de-células.html#cb534-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if needed install celldex</span></span>
+<span id="cb534-2"><a href="anotación-de-clusters-de-células.html#cb534-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create directory? y</span></span>
+<span id="cb534-3"><a href="anotación-de-clusters-de-células.html#cb534-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(celldex)</span>
+<span id="cb534-4"><a href="anotación-de-clusters-de-células.html#cb534-4" aria-hidden="true" tabindex="-1"></a>ref <span class="ot">&lt;-</span> celldex<span class="sc">::</span><span class="fu">BlueprintEncodeData</span>()</span></code></pre></div>
 <p>❓ ¿Qué tipos celulares están disponibles en este dataset de referencia?</p>
 </div>
 <div id="usando-las-referencias-integradas" class="section level3" number="11.5.3">
 <h3><span class="header-section-number">11.5.3</span> Usando las referencias integradas</h3>
-<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="anotación-de-clusters-de-células.html#cb534-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SingleR)</span>
-<span id="cb534-2"><a href="anotación-de-clusters-de-células.html#cb534-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">SingleR</span>(</span>
-<span id="cb534-3"><a href="anotación-de-clusters-de-células.html#cb534-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">test =</span> sce.pbmc, <span class="at">ref =</span> ref,</span>
-<span id="cb534-4"><a href="anotación-de-clusters-de-células.html#cb534-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> ref<span class="sc">$</span>label.main</span>
-<span id="cb534-5"><a href="anotación-de-clusters-de-células.html#cb534-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="anotación-de-clusters-de-células.html#cb535-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SingleR)</span>
+<span id="cb535-2"><a href="anotación-de-clusters-de-células.html#cb535-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">SingleR</span>(</span>
+<span id="cb535-3"><a href="anotación-de-clusters-de-células.html#cb535-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">test =</span> sce.pbmc, <span class="at">ref =</span> ref,</span>
+<span id="cb535-4"><a href="anotación-de-clusters-de-células.html#cb535-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> ref<span class="sc">$</span>label.main</span>
+<span id="cb535-5"><a href="anotación-de-clusters-de-células.html#cb535-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ul>
 <li>❓ ¿Qué etiquetas han sido asignadas a los datos single-cell?</li>
 <li>❓ ¿Cómo usaríamos las etiquetas “finas” con SingleR?</li>
 </ul>
-<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="anotación-de-clusters-de-células.html#cb535-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotScoreHeatmap</span>(pred)</span></code></pre></div>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="anotación-de-clusters-de-células.html#cb536-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotScoreHeatmap</span>(pred)</span></code></pre></div>
 <p><img src="11-anotacion_clusters_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <ul>
 <li>👉 Inspeccionamos los resultados usando un heatmap de los scores por célula y por etiqueta</li>
@@ -746,14 +747,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="podado-de-etiquetas-label-pruning" class="section level3" number="11.5.4">
 <h3><span class="header-section-number">11.5.4</span> Podado de etiquetas (Label pruning)</h3>
-<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="anotación-de-clusters-de-células.html#cb536-1" aria-hidden="true" tabindex="-1"></a>total_pruned <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(pred<span class="sc">$</span>pruned.labels))</span>
-<span id="cb536-2"><a href="anotación-de-clusters-de-células.html#cb536-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotScoreHeatmap</span>(pred, <span class="at">show.pruned =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="anotación-de-clusters-de-células.html#cb537-1" aria-hidden="true" tabindex="-1"></a>total_pruned <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(pred<span class="sc">$</span>pruned.labels))</span>
+<span id="cb537-2"><a href="anotación-de-clusters-de-células.html#cb537-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotScoreHeatmap</span>(pred, <span class="at">show.pruned =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="11-anotacion_clusters_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <ul>
 <li>👉 SingleR intentará podar aquellas asignaciones de baja calidad marcándolas como NA</li>
 <li>🤓 El podado se hace calculando la diferencia del score de la etiqueta asignada a partir del score de la mediana dentro de cada célula y entonces podando las células con un valor pequeño de esta diferencia</li>
 </ul>
-<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="anotación-de-clusters-de-células.html#cb537-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotScoreDistribution</span>(pred)</span></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="anotación-de-clusters-de-células.html#cb538-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotScoreDistribution</span>(pred)</span></code></pre></div>
 <p><img src="11-anotacion_clusters_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>👉 Distribución de las diferencias del score de la etiqueta asignada a partir del score de la mediana dentro de cada célula</p>
 </div>
@@ -764,44 +765,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>👉 Examina la expresión de los genes marcadores para cada etiqueta en el dataset de prueba</li>
 <li>👉 Si una célula en el dataset de prueba está asignado con confianza a una etiqueta en particular, uno esperaría que tenga una fuerte expresión de los marcadores de esa etiqueta (al menos sobreexpresión con respecto a las células asignadas a otras etiquetas)</li>
 </ul>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="anotación-de-clusters-de-células.html#cb538-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install gmp, ClusterR, mbkmeans dependencies if needed</span></span>
-<span id="cb538-2"><a href="anotación-de-clusters-de-células.html#cb538-2" aria-hidden="true" tabindex="-1"></a>sce.pbmc<span class="sc">$</span>labels <span class="ot">&lt;-</span> pred<span class="sc">$</span>labels</span>
-<span id="cb538-3"><a href="anotación-de-clusters-de-células.html#cb538-3" aria-hidden="true" tabindex="-1"></a>all.markers <span class="ot">&lt;-</span> <span class="fu">metadata</span>(pred)<span class="sc">$</span>de.genes</span>
-<span id="cb538-4"><a href="anotación-de-clusters-de-células.html#cb538-4" aria-hidden="true" tabindex="-1"></a>lab <span class="ot">&lt;-</span> <span class="st">&quot;B-cells&quot;</span></span>
-<span id="cb538-5"><a href="anotación-de-clusters-de-células.html#cb538-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get top-10 marker genes for B-cells compared to each other cell</span></span>
-<span id="cb538-6"><a href="anotación-de-clusters-de-células.html#cb538-6" aria-hidden="true" tabindex="-1"></a><span class="co"># type</span></span>
-<span id="cb538-7"><a href="anotación-de-clusters-de-células.html#cb538-7" aria-hidden="true" tabindex="-1"></a>top.markers <span class="ot">&lt;-</span> <span class="fu">Reduce</span>(union, <span class="fu">sapply</span>(all.markers[[lab]], head, <span class="dv">10</span>))</span>
-<span id="cb538-8"><a href="anotación-de-clusters-de-células.html#cb538-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb538-9"><a href="anotación-de-clusters-de-células.html#cb538-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plotHeatmap</span>(sce.pbmc,</span>
-<span id="cb538-10"><a href="anotación-de-clusters-de-células.html#cb538-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">order_columns_by =</span> <span class="st">&quot;labels&quot;</span>,</span>
-<span id="cb538-11"><a href="anotación-de-clusters-de-células.html#cb538-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">features =</span> top.markers, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">zlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">main =</span> lab</span>
-<span id="cb538-12"><a href="anotación-de-clusters-de-células.html#cb538-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="anotación-de-clusters-de-células.html#cb539-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install gmp, ClusterR, mbkmeans dependencies if needed</span></span>
+<span id="cb539-2"><a href="anotación-de-clusters-de-células.html#cb539-2" aria-hidden="true" tabindex="-1"></a>sce.pbmc<span class="sc">$</span>labels <span class="ot">&lt;-</span> pred<span class="sc">$</span>labels</span>
+<span id="cb539-3"><a href="anotación-de-clusters-de-células.html#cb539-3" aria-hidden="true" tabindex="-1"></a>all.markers <span class="ot">&lt;-</span> <span class="fu">metadata</span>(pred)<span class="sc">$</span>de.genes</span>
+<span id="cb539-4"><a href="anotación-de-clusters-de-células.html#cb539-4" aria-hidden="true" tabindex="-1"></a>lab <span class="ot">&lt;-</span> <span class="st">&quot;B-cells&quot;</span></span>
+<span id="cb539-5"><a href="anotación-de-clusters-de-células.html#cb539-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get top-10 marker genes for B-cells compared to each other cell</span></span>
+<span id="cb539-6"><a href="anotación-de-clusters-de-células.html#cb539-6" aria-hidden="true" tabindex="-1"></a><span class="co"># type</span></span>
+<span id="cb539-7"><a href="anotación-de-clusters-de-células.html#cb539-7" aria-hidden="true" tabindex="-1"></a>top.markers <span class="ot">&lt;-</span> <span class="fu">Reduce</span>(union, <span class="fu">sapply</span>(all.markers[[lab]], head, <span class="dv">10</span>))</span>
+<span id="cb539-8"><a href="anotación-de-clusters-de-células.html#cb539-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb539-9"><a href="anotación-de-clusters-de-células.html#cb539-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plotHeatmap</span>(sce.pbmc,</span>
+<span id="cb539-10"><a href="anotación-de-clusters-de-células.html#cb539-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">order_columns_by =</span> <span class="st">&quot;labels&quot;</span>,</span>
+<span id="cb539-11"><a href="anotación-de-clusters-de-células.html#cb539-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">features =</span> top.markers, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">zlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">main =</span> lab</span>
+<span id="cb539-12"><a href="anotación-de-clusters-de-células.html#cb539-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="11-anotacion_clusters_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>❓ Toma otro tipo celular e identifica los genes que dirigen la anotación</p>
 </div>
 <div id="comparando-las-etiquetas-con-los-clústeres" class="section level3" number="11.5.6">
 <h3><span class="header-section-number">11.5.6</span> Comparando las etiquetas con los clústeres</h3>
-<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="anotación-de-clusters-de-células.html#cb539-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">Assigned =</span> pred<span class="sc">$</span>pruned.labels, <span class="at">Cluster =</span> sce.pbmc<span class="sc">$</span>cluster)</span>
-<span id="cb539-2"><a href="anotación-de-clusters-de-células.html#cb539-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb539-3"><a href="anotación-de-clusters-de-células.html#cb539-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
-<span id="cb539-4"><a href="anotación-de-clusters-de-células.html#cb539-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Proportion of cells in each cluster assigned to each label</span></span>
-<span id="cb539-5"><a href="anotación-de-clusters-de-células.html#cb539-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(<span class="fu">prop.table</span>(tab, <span class="at">margin =</span> <span class="dv">2</span>),</span>
-<span id="cb539-6"><a href="anotación-de-clusters-de-células.html#cb539-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;blue&quot;</span>))(<span class="dv">101</span>)</span>
-<span id="cb539-7"><a href="anotación-de-clusters-de-células.html#cb539-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="anotación-de-clusters-de-células.html#cb540-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">Assigned =</span> pred<span class="sc">$</span>pruned.labels, <span class="at">Cluster =</span> sce.pbmc<span class="sc">$</span>cluster)</span>
+<span id="cb540-2"><a href="anotación-de-clusters-de-células.html#cb540-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb540-3"><a href="anotación-de-clusters-de-células.html#cb540-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
+<span id="cb540-4"><a href="anotación-de-clusters-de-células.html#cb540-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Proportion of cells in each cluster assigned to each label</span></span>
+<span id="cb540-5"><a href="anotación-de-clusters-de-células.html#cb540-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(<span class="fu">prop.table</span>(tab, <span class="at">margin =</span> <span class="dv">2</span>),</span>
+<span id="cb540-6"><a href="anotación-de-clusters-de-células.html#cb540-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;blue&quot;</span>))(<span class="dv">101</span>)</span>
+<span id="cb540-7"><a href="anotación-de-clusters-de-células.html#cb540-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="11-anotacion_clusters_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="anotación-de-clusters-de-células.html#cb540-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (log-)number of cells in each cluster assigned to each label</span></span>
-<span id="cb540-2"><a href="anotación-de-clusters-de-células.html#cb540-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding a pseudo-count of 10 to avoid strong color jumps with just</span></span>
-<span id="cb540-3"><a href="anotación-de-clusters-de-células.html#cb540-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 cell.</span></span>
-<span id="cb540-4"><a href="anotación-de-clusters-de-células.html#cb540-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(<span class="fu">log2</span>(tab <span class="sc">+</span> <span class="dv">10</span>),</span>
-<span id="cb540-5"><a href="anotación-de-clusters-de-células.html#cb540-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;blue&quot;</span>))(<span class="dv">101</span>)</span>
-<span id="cb540-6"><a href="anotación-de-clusters-de-células.html#cb540-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="anotación-de-clusters-de-células.html#cb541-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (log-)number of cells in each cluster assigned to each label</span></span>
+<span id="cb541-2"><a href="anotación-de-clusters-de-células.html#cb541-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding a pseudo-count of 10 to avoid strong color jumps with just</span></span>
+<span id="cb541-3"><a href="anotación-de-clusters-de-células.html#cb541-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 cell.</span></span>
+<span id="cb541-4"><a href="anotación-de-clusters-de-células.html#cb541-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(<span class="fu">log2</span>(tab <span class="sc">+</span> <span class="dv">10</span>),</span>
+<span id="cb541-5"><a href="anotación-de-clusters-de-células.html#cb541-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;blue&quot;</span>))(<span class="dv">101</span>)</span>
+<span id="cb541-6"><a href="anotación-de-clusters-de-células.html#cb541-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="11-anotacion_clusters_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
 </div>
 <div id="voilà" class="section level3" number="11.5.7">
 <h3><span class="header-section-number">11.5.7</span> Voilà</h3>
-<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="anotación-de-clusters-de-células.html#cb541-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotTSNE</span>(sce.pbmc, <span class="at">colour_by =</span> <span class="st">&quot;labels&quot;</span>, <span class="at">text_by =</span> <span class="st">&quot;labels&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="anotación-de-clusters-de-células.html#cb542-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotTSNE</span>(sce.pbmc, <span class="at">colour_by =</span> <span class="st">&quot;labels&quot;</span>, <span class="at">text_by =</span> <span class="st">&quot;labels&quot;</span>)</span></code></pre></div>
 <p><img src="11-anotacion_clusters_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="anotación-de-clusters-de-células.html#cb542-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotTSNE</span>(sce.pbmc, <span class="at">colour_by =</span> <span class="st">&quot;cluster&quot;</span>, <span class="at">text_by =</span> <span class="st">&quot;labels&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="anotación-de-clusters-de-células.html#cb543-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotTSNE</span>(sce.pbmc, <span class="at">colour_by =</span> <span class="st">&quot;cluster&quot;</span>, <span class="at">text_by =</span> <span class="st">&quot;labels&quot;</span>)</span></code></pre></div>
 <p><img src="11-anotacion_clusters_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
 <div id="aventura-en-el-tiempo" class="section level4" number="11.5.7.1">
 <h4><span class="header-section-number">11.5.7.1</span> Aventura en el tiempo</h4>
@@ -870,14 +871,14 @@ Ok, not identical, but not bad with BioC 3.13 only<br><br>Left: BioC 3.13 with e
 </div>
 <div id="detalles-de-la-sesión-de-r-10" class="section level2" number="11.9">
 <h2><span class="header-section-number">11.9</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="anotación-de-clusters-de-células.html#cb543-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb543-2"><a href="anotación-de-clusters-de-células.html#cb543-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-12 00:08:43 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="anotación-de-clusters-de-células.html#cb545-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="anotación-de-clusters-de-células.html#cb544-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb544-2"><a href="anotación-de-clusters-de-células.html#cb544-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-12 01:06:14 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="anotación-de-clusters-de-células.html#cb546-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 236.331   5.477 241.889</code></pre>
-<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="anotación-de-clusters-de-células.html#cb547-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb547-2"><a href="anotación-de-clusters-de-células.html#cb547-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+## 214.944   4.575 219.784</code></pre>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="anotación-de-clusters-de-células.html#cb548-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb548-2"><a href="anotación-de-clusters-de-células.html#cb548-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)

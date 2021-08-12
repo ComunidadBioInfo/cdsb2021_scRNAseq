@@ -712,6 +712,24 @@ str(hvg.pbmc.cv2.2)
 ##  chr [1:1972] "PPBP" "PRTFDC1" "HIST1H2AC" "FAM81B" "PF4" "GNG11" ...
 ```
 
+### EJERCICIO: Dibujando los HVGs
+
+Para este ejercicio tendrás que repetir la gráfica que muestra la tendencia de la relación media-varianza (ejeX: media de la expresión, ejeY: varianza de la expresión) incluyendo la línea de tendencia obtenida con alguna de las funciones vistas en la primer parte de la clase (modelGeneVar, modelGeneVarWithSpikes, modelGeneCV2). En esta gráfica, deberás colorear los puntos que corresponden a los HGVs obtenidos con algunos de los enfoques revisados
+
+**RESPUESTA**
+
+```r
+plot(fit.pbmc$mean, fit.pbmc$var,
+    xlab = "Mean of log-expression",
+    ylab = "Variance of log-expression"
+)
+points(fit.pbmc$mean[hvg.pbmc.var], fit.pbmc$var[hvg.pbmc.var], col = "orange")
+curve(fit.pbmc$trend(x), col = "dodgerblue", add = TRUE, lwd = 2)
+```
+
+<img src="07-seleccion_genes_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+
+
 ### Seleccionando genes de interés *a priori*
 
 Una estrategia contundente es usar sets predefinidos de genes de interés. No hay vergüenza en aprovechar el conocimiento biológivo previo
@@ -896,7 +914,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-11 23:47:53 UTC"
+## [1] "2021-08-12 00:47:33 UTC"
 ```
 
 ```r
@@ -905,7 +923,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 172.602   4.987 180.834
+## 158.441   4.322 166.597
 ```
 
 ```r
@@ -924,7 +942,7 @@ sessioninfo::session_info()
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-11                  
+##  date     2021-08-12                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package                * version  date       lib source        

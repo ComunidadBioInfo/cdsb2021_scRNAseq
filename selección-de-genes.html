@@ -342,7 +342,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.13.1" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-sobre-la-métrica-de-varianza"><i class="fa fa-check"></i><b>7.13.1</b> Seleccionando HVGs sobre la métrica de varianza</a></li>
 <li class="chapter" data-level="7.13.2" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-hvgs-de-acuerdo-a-su-significancia-estadística"><i class="fa fa-check"></i><b>7.13.2</b> Seleccionando HVGs de acuerdo a su significancia estadística</a></li>
 <li class="chapter" data-level="7.13.3" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-por-arriba-de-la-tendencia-media-varianza"><i class="fa fa-check"></i><b>7.13.3</b> Seleccionando genes por arriba de la tendencia media-varianza</a></li>
-<li class="chapter" data-level="7.13.4" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-de-interés-a-priori"><i class="fa fa-check"></i><b>7.13.4</b> Seleccionando genes de interés <em>a priori</em></a></li>
+<li class="chapter" data-level="7.13.4" data-path="selección-de-genes.html"><a href="selección-de-genes.html#ejercicio-dibujando-los-hvgs"><i class="fa fa-check"></i><b>7.13.4</b> EJERCICIO: Dibujando los HVGs</a></li>
+<li class="chapter" data-level="7.13.5" data-path="selección-de-genes.html"><a href="selección-de-genes.html#seleccionando-genes-de-interés-a-priori"><i class="fa fa-check"></i><b>7.13.5</b> Seleccionando genes de interés <em>a priori</em></a></li>
 </ul></li>
 <li class="chapter" data-level="7.14" data-path="selección-de-genes.html"><a href="selección-de-genes.html#poniendo-todo-junto"><i class="fa fa-check"></i><b>7.14</b> Poniendo todo junto</a>
 <ul>
@@ -1125,8 +1126,20 @@ Factor experimental.
 <span id="cb422-6"><a href="selección-de-genes.html#cb422-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(hvg.pbmc.cv2<span class="fl">.2</span>)</span></code></pre></div>
 <pre><code>##  chr [1:1972] &quot;PPBP&quot; &quot;PRTFDC1&quot; &quot;HIST1H2AC&quot; &quot;FAM81B&quot; &quot;PF4&quot; &quot;GNG11&quot; ...</code></pre>
 </div>
-<div id="seleccionando-genes-de-interés-a-priori" class="section level3" number="7.13.4">
-<h3><span class="header-section-number">7.13.4</span> Seleccionando genes de interés <em>a priori</em></h3>
+<div id="ejercicio-dibujando-los-hvgs" class="section level3" number="7.13.4">
+<h3><span class="header-section-number">7.13.4</span> EJERCICIO: Dibujando los HVGs</h3>
+<p>Para este ejercicio tendrás que repetir la gráfica que muestra la tendencia de la relación media-varianza (ejeX: media de la expresión, ejeY: varianza de la expresión) incluyendo la línea de tendencia obtenida con alguna de las funciones vistas en la primer parte de la clase (modelGeneVar, modelGeneVarWithSpikes, modelGeneCV2). En esta gráfica, deberás colorear los puntos que corresponden a los HGVs obtenidos con algunos de los enfoques revisados</p>
+<p><strong>RESPUESTA</strong></p>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="selección-de-genes.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.pbmc<span class="sc">$</span>mean, fit.pbmc<span class="sc">$</span>var,</span>
+<span id="cb424-2"><a href="selección-de-genes.html#cb424-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Mean of log-expression&quot;</span>,</span>
+<span id="cb424-3"><a href="selección-de-genes.html#cb424-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Variance of log-expression&quot;</span></span>
+<span id="cb424-4"><a href="selección-de-genes.html#cb424-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb424-5"><a href="selección-de-genes.html#cb424-5" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(fit.pbmc<span class="sc">$</span>mean[hvg.pbmc.var], fit.pbmc<span class="sc">$</span>var[hvg.pbmc.var], <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>)</span>
+<span id="cb424-6"><a href="selección-de-genes.html#cb424-6" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(fit.pbmc<span class="sc">$</span><span class="fu">trend</span>(x), <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="07-seleccion_genes_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+<div id="seleccionando-genes-de-interés-a-priori" class="section level3" number="7.13.5">
+<h3><span class="header-section-number">7.13.5</span> Seleccionando genes de interés <em>a priori</em></h3>
 <p>Una estrategia contundente es usar sets predefinidos de genes de interés. No hay vergüenza en aprovechar el conocimiento biológivo previo</p>
 <p>Sin embargo, limita nuestra capacidad de descubrir aspectos nuevos o inesperados de la variación. Por lo tanto, considera esta como una estrategia complementaria a otros tipo de estrategias de selección de HGVs</p>
 <p>También podrías eliminar listas pre-definidas de genes:</p>
@@ -1138,10 +1151,10 @@ Factor experimental.
 </div>
 <div id="poniendo-todo-junto" class="section level2" number="7.14">
 <h2><span class="header-section-number">7.14</span> Poniendo todo junto</h2>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="selección-de-genes.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Elegimos el 10% de los genes con con componente biologico de variacion mayor</span></span>
-<span id="cb424-2"><a href="selección-de-genes.html#cb424-2" aria-hidden="true" tabindex="-1"></a>dec.pbmc <span class="ot">&lt;-</span> <span class="fu">modelGeneVar</span>(sce.pbmc)</span>
-<span id="cb424-3"><a href="selección-de-genes.html#cb424-3" aria-hidden="true" tabindex="-1"></a>chosen <span class="ot">&lt;-</span> <span class="fu">getTopHVGs</span>(dec.pbmc, <span class="at">prop =</span> <span class="fl">0.1</span>)</span>
-<span id="cb424-4"><a href="selección-de-genes.html#cb424-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(chosen)</span></code></pre></div>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="selección-de-genes.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Elegimos el 10% de los genes con con componente biologico de variacion mayor</span></span>
+<span id="cb425-2"><a href="selección-de-genes.html#cb425-2" aria-hidden="true" tabindex="-1"></a>dec.pbmc <span class="ot">&lt;-</span> <span class="fu">modelGeneVar</span>(sce.pbmc)</span>
+<span id="cb425-3"><a href="selección-de-genes.html#cb425-3" aria-hidden="true" tabindex="-1"></a>chosen <span class="ot">&lt;-</span> <span class="fu">getTopHVGs</span>(dec.pbmc, <span class="at">prop =</span> <span class="fl">0.1</span>)</span>
+<span id="cb425-4"><a href="selección-de-genes.html#cb425-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(chosen)</span></code></pre></div>
 <pre><code>##  chr [1:1274] &quot;LYZ&quot; &quot;S100A9&quot; &quot;S100A8&quot; &quot;HLA-DRA&quot; &quot;CD74&quot; &quot;CST3&quot; &quot;TYROBP&quot; ...</code></pre>
 <p>Después de esto tenemos varias opciones para imponer nuestra selección de HGVs durante el resto del análisis:</p>
 <ol style="list-style-type: decimal">
@@ -1151,8 +1164,8 @@ Factor experimental.
 </ol>
 <div id="quedándonos-sólo-con-los-hgvs" class="section level3" number="7.14.1">
 <h3><span class="header-section-number">7.14.1</span> Quedándonos sólo con los HGVs</h3>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="selección-de-genes.html#cb426-1" aria-hidden="true" tabindex="-1"></a>sce.pbmc.hvg <span class="ot">&lt;-</span> sce.pbmc[chosen, ]</span>
-<span id="cb426-2"><a href="selección-de-genes.html#cb426-2" aria-hidden="true" tabindex="-1"></a>sce.pbmc.hvg</span></code></pre></div>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="selección-de-genes.html#cb427-1" aria-hidden="true" tabindex="-1"></a>sce.pbmc.hvg <span class="ot">&lt;-</span> sce.pbmc[chosen, ]</span>
+<span id="cb427-2"><a href="selección-de-genes.html#cb427-2" aria-hidden="true" tabindex="-1"></a>sce.pbmc.hvg</span></code></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 1274 3985 
 ## metadata(1): Samples
@@ -1170,11 +1183,11 @@ Factor experimental.
 </div>
 <div id="especificando-los-hgvs" class="section level3" number="7.14.2">
 <h3><span class="header-section-number">7.14.2</span> Especificando los HGVs</h3>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="selección-de-genes.html#cb428-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example of specifying HVGs in a downstream function</span></span>
-<span id="cb428-2"><a href="selección-de-genes.html#cb428-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Performing PCA only on the chosen HVGs.</span></span>
-<span id="cb428-3"><a href="selección-de-genes.html#cb428-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
-<span id="cb428-4"><a href="selección-de-genes.html#cb428-4" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">runPCA</span>(sce.pbmc, <span class="at">subset_row =</span> chosen)</span>
-<span id="cb428-5"><a href="selección-de-genes.html#cb428-5" aria-hidden="true" tabindex="-1"></a>sce.pbmc</span></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="selección-de-genes.html#cb429-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example of specifying HVGs in a downstream function</span></span>
+<span id="cb429-2"><a href="selección-de-genes.html#cb429-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Performing PCA only on the chosen HVGs.</span></span>
+<span id="cb429-3"><a href="selección-de-genes.html#cb429-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb429-4"><a href="selección-de-genes.html#cb429-4" aria-hidden="true" tabindex="-1"></a>sce.pbmc <span class="ot">&lt;-</span> <span class="fu">runPCA</span>(sce.pbmc, <span class="at">subset_row =</span> chosen)</span>
+<span id="cb429-5"><a href="selección-de-genes.html#cb429-5" aria-hidden="true" tabindex="-1"></a>sce.pbmc</span></code></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 33694 3985 
 ## metadata(1): Samples
@@ -1193,9 +1206,9 @@ Factor experimental.
 </div>
 <div id="witchcraft-brujería" class="section level3" number="7.14.3">
 <h3><span class="header-section-number">7.14.3</span> Witchcraft (Brujería)</h3>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="selección-de-genes.html#cb430-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the full SCE to the subsetted data SCE</span></span>
-<span id="cb430-2"><a href="selección-de-genes.html#cb430-2" aria-hidden="true" tabindex="-1"></a><span class="fu">altExp</span>(sce.pbmc.hvg, <span class="st">&quot;original&quot;</span>) <span class="ot">&lt;-</span> sce.pbmc</span>
-<span id="cb430-3"><a href="selección-de-genes.html#cb430-3" aria-hidden="true" tabindex="-1"></a>sce.pbmc.hvg</span></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="selección-de-genes.html#cb431-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the full SCE to the subsetted data SCE</span></span>
+<span id="cb431-2"><a href="selección-de-genes.html#cb431-2" aria-hidden="true" tabindex="-1"></a><span class="fu">altExp</span>(sce.pbmc.hvg, <span class="st">&quot;original&quot;</span>) <span class="ot">&lt;-</span> sce.pbmc</span>
+<span id="cb431-3"><a href="selección-de-genes.html#cb431-3" aria-hidden="true" tabindex="-1"></a>sce.pbmc.hvg</span></code></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 1274 3985 
 ## metadata(1): Samples
@@ -1208,7 +1221,7 @@ Factor experimental.
 ## reducedDimNames(0):
 ## mainExpName: NULL
 ## altExpNames(1): original</code></pre>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="selección-de-genes.html#cb432-1" aria-hidden="true" tabindex="-1"></a><span class="fu">altExp</span>(sce.pbmc.hvg, <span class="st">&quot;original&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="selección-de-genes.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">altExp</span>(sce.pbmc.hvg, <span class="st">&quot;original&quot;</span>)</span></code></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 33694 3985 
 ## metadata(1): Samples
@@ -1253,14 +1266,14 @@ Factor experimental.
 </div>
 <div id="detalles-de-la-sesión-de-r-6" class="section level2" number="7.17">
 <h2><span class="header-section-number">7.17</span> Detalles de la sesión de R</h2>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="selección-de-genes.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
-<span id="cb434-2"><a href="selección-de-genes.html#cb434-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-11 23:47:53 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="selección-de-genes.html#cb436-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="selección-de-genes.html#cb435-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
+<span id="cb435-2"><a href="selección-de-genes.html#cb435-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-08-12 00:47:33 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="selección-de-genes.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 172.602   4.987 180.834</code></pre>
-<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="selección-de-genes.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
-<span id="cb438-2"><a href="selección-de-genes.html#cb438-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+## 158.441   4.322 166.597</code></pre>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="selección-de-genes.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb439-2"><a href="selección-de-genes.html#cb439-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.1.0 (2021-05-18)
@@ -1271,7 +1284,7 @@ Factor experimental.
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-11                  
+##  date     2021-08-12                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package                * version  date       lib source        
