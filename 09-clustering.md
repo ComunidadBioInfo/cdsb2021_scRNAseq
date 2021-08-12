@@ -2,9 +2,7 @@
 
 Instructora: [Laura Gómez-Romero](https://comunidadbioinfo.github.io/es/authors/lgomez/)
 
-## Diapositivas de Peter Hickey
-
-Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1YTmP5QLxRg5JIT_bnQtMADg3eszsKEz7l5u6rOMeQ1A/edit)
+Este contenido está basado en las diapositivas de Peter Hickey. Ve las diapositivas [aquí](https://docs.google.com/presentation/d/1YTmP5QLxRg5JIT_bnQtMADg3eszsKEz7l5u6rOMeQ1A/edit). Y en el curso de OSCA, lee el material [aquí](https://bioconductor.org/books/release/OSCA/clustering.html)
 
 ## Dataset ilustrativo: 10X PBMC4k no filtrado
 
@@ -92,6 +90,11 @@ set.seed(1000000)
 sce.pbmc <- runUMAP(sce.pbmc, dimred = "PCA")
 ```
 
+- **¿Alquien me puede explicar que hace el método que etamos usando para reducir la dimensionalidad de los datos?**
+
+- **¿Los HGVs están almacenados en nuestro objeto sce.pbmc?**
+
+
 ## Motivación
 
 **Clustering** es un procedimiento **no supervisado** par definir grupos de células con perfiles de expresión similares
@@ -173,6 +176,8 @@ De una gráfica KNN se puede construir una grafica SNN
 </p>
 </div>
 
+En este tipo de grago, dos células estarán conectadas por una arista si comparten alguno de sus vecinos más próximos.
+ 
 Podemos asignar **pesos** a cada arista del grafo, basándonos en la similaridad de las células involucradas, dándole pesos más altos a células que están más cercanamente relacionadas
 
 ### Gráfica SNN con pesos en las aristas
@@ -183,7 +188,13 @@ Podemos asignar **pesos** a cada arista del grafo, basándonos en la similaridad
 </p>
 </div>
 
-### Pasando de una gráfica SNN pesada cluster mediante detección de comunidades
+Para ver los distintos esquemas de pesado puedes consultar la documentación de la función **makeSNNGraph** del paquete *bluster*. Algunos ejemplos son:
+
+-Rango: El peso entre dos nodos está dado por *k*-*r*/2 donde *r* es la suma más pequeña de los rangos (de proximidad, el vecino más cercano tiene el rango 1) para cualquiera de los vecinos compartidos
+-Número: el peso entre dos nodos es igual al número de vecinos más próximos compartidos
+-Jaccard: el peso entre dos nodos es igual a la similaridad de Jaccard entre los conjuntos de vecinos de estos nodos
+
+### Obteniendo comunidades a partir de una gráfica SNN pesada mediante un algoritmo de clustering
 
 A partir de una gráfica SNN pesada podemos aplicar algoritmos para identificar **comunidades** de células
 
@@ -201,18 +212,18 @@ Cada comunidad representa un cluster
 
 * La construcción y búsqueda de una red KNN es rápida, por lo tanto, es escalable para datasets grandes
 * Debes evitar obtener conclusiones fuertes acerca de la forma de los clusters o la distribución de células dentro de cada cluster
-* Cada célula es conectada con un número mínimo de células vecinas obligatoriamente, esto reduce el riesgo de cluster no informativos con unos pocos *outliers*
+* El algoritmo, conecta cada célula con un número mínimo de células vecinas, lo cual reduce el riesgo de clusters no informativos con unos pocos *outliers*
 
 Después de la construcción del grafo, no se almacena información adicional más alla de las células vecinas. Esto puede producir subclusters artificiales en regiones con muchas células
 
-## Implementación
+### Detalles a considerar en la implementación
 
 * ¿Cuántas céulas vecinas debo considerar durante la construcción del grafo?
 * ¿Cómo debo pesar las aristas?
 * ¿Cuál algoritmo de detección de comunidades se debe usar para definir los clusters?
 
 
-## Clustering basado en grafos
+### Implementación
 
 
 ```r
@@ -235,11 +246,31 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster")
 
 **¿Qué pasa si utilizas una k más grande o más pequeña?**
 
-### Detalles adicionales del ejemplo previo
 
-* KNNs se basan en la distancia Euclideana entre células
-* Las aristas se crean entre todos los pares de células que comparten por lo menos un vecino
-* Usa el esquema de peso de: [Xu and Su (2015)](https://pubmed.ncbi.nlm.nih.gov/25805722/)
+```r
+library(scran)
+# Build graph using k = 50 nearest neighbours in PCA-space
+g50 <- buildSNNGraph(sce.pbmc, k = 50, use.dimred = "PCA")
+# Identify communities using the Walktrap method
+clust50 <- igraph::cluster_walktrap(g50)$membership
+```
+
+
+```r
+# Visualise clusters on t-SNE plot
+library(scater)
+sce.pbmc$cluster50 <- factor(clust50)
+plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster50")
+```
+
+<img src="09-clustering_files/figure-html/unnamed-chunk-9-1.png" width="576" />
+
+
+**En esta implementación:**
+
+* La construcción de la red KNN se baso en la distancia Euclideana entre células
+* La construcción de la red KNN implica que las aristas se crean entre todos los pares de células que comparten por lo menos un vecino
+* Se utilizó el esquema de peso de: [Xu and Su (2015)](https://pubmed.ncbi.nlm.nih.gov/25805722/)
 
 ### Eligiendo un valor de *k*
 
@@ -249,21 +280,21 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster")
 
 * Esto incrementa el riesgo de que la subpoblación en cuestión no forme su propio cluster
 
-### Estilo Seurat
+### Una implementación diferente: estilo Seurat
 
 
 ```r
 # Jaccard-based weights followed by Louvain clustering
 # aka 'Seurat-style' clustering
-g <- buildSNNGraph(sce.pbmc, k = 10, use.dimred = "PCA", type = "jaccard")
-clust2 <- igraph::cluster_louvain(g)$membership
+g2 <- buildSNNGraph(sce.pbmc, k = 10, use.dimred = "PCA", type = "jaccard")
+clust2 <- igraph::cluster_louvain(g2)$membership
 sce.pbmc$cluster2 <- factor(clust2)
 plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster2")
 ```
 
-<img src="09-clustering_files/figure-html/unnamed-chunk-8-1.png" width="576" />
+<img src="09-clustering_files/figure-html/unnamed-chunk-10-1.png" width="576" />
 
-### Clustering basado en un grafo 
+### Detalles de las implementaciones más comunes
 
 **Pipelines basados en Seurat:**
 
@@ -286,22 +317,47 @@ plotReducedDim(sce.pbmc, "TSNE", colour_by = "cluster") +
 ```
 
 <div class="figure">
-<img src="09-clustering_files/figure-html/unnamed-chunk-9-1.png" alt="Estilo scran vs estilo Seurat." width="960" />
+<img src="09-clustering_files/figure-html/unnamed-chunk-11-1.png" alt="Estilo scran vs estilo Seurat." width="960" />
 <p class="caption">Estilo scran vs estilo Seurat.</p>
 </div>
 
-### Evaluando la separación de los clusters
+### Otras implementaciones
+
+**Distintas métricas de distancia**
+
+
+```r
+g.num <- buildSNNGraph(sce.pbmc, use.dimred="PCA", type="number")
+g.jaccard <- buildSNNGraph(sce.pbmc, use.dimred="PCA", type="jaccard")
+g.none <- buildKNNGraph(sce.pbmc, use.dimred="PCA")
+```
+
+**Distintos métodos de clustering**
+
+```r
+clust.louvain <- igraph::cluster_louvain(g)$membership
+clust.infomap <- igraph::cluster_infomap(g)$membership
+clust.fast <- igraph::cluster_fast_greedy(g)$membership
+clust.labprop <- igraph::cluster_label_prop(g)$membership
+clust.eigen <- igraph::cluster_leading_eigen(g)$membership
+```
+
+
+
+## Evaluando la separación de los clusters
 
 **Modularidad** es una métrica natural para evaluar la separación entre comunidades/clusters
 
-Definido como la diferencia (escalada) entre el peso total observado de las aristas entre los nodos en el mismo cluster y el peso total esperado si los pesos fueran distribuidos aleatoriamente entre todos los pares de nodos
+La modularidad se define como la diferencia (escalada) entre el peso total observado de las aristas entre los nodos en el mismo cluster y el peso total esperado si los pesos fueran distribuidos aleatoriamente entre todos los pares de nodos
 
-Nosotros computaremos un **score de modularidad** para cada cluster (usando las tasas en vez de las diferencias)
+Nosotros calcularemos un **score de modularidad** para cada cluster usando las tasas en vez de las diferencias, debido a que las tasas no se ven tan fuertemente influenciadas por el tamaño de los clusters
 
 
 
 ```r
 library(bluster)
+
+# obteniendo la métrica de modularidad
 ratio <- pairwiseModularity(g, clust, as.ratio = TRUE)
 dim(ratio)
 ```
@@ -321,7 +377,7 @@ pheatmap(log2(ratio + 1),
 )
 ```
 
-<img src="09-clustering_files/figure-html/unnamed-chunk-11-1.png" width="576" />
+<img src="09-clustering_files/figure-html/unnamed-chunk-15-1.png" width="576" />
 
 Un dataset que contiene clusters bien separados debería contener la mayoría del peso total observado en las entradas diagonales, *i.e* la mayoría de las aristas ocurren entre células del mismo cluster
 
@@ -332,24 +388,24 @@ Para más detalles sobre evaluación de la separación entre clusters [visite es
 
 **Clustering por k-means**
 
- + *Rápido*
+ - **PRO:** Rápido
  - Se debe especificar el número de clusters de antemano
  - Favorece clusters esféricos
  
  
  **Clustering jerárquico**
  
- + *Produce un dendograma (árbol) representando las células y la similaridad entre subpoblaciones a varias resoluciones*
+ - **Produce un dendograma (árbol) representando las células y la similaridad entre subpoblaciones a varias resoluciones**
  - Demasiado lento para correrse en algo más grande que los datasets más pequeños de scRNA-seq
  
-## Evaluando estabilidad de los clusters
+## Evaluando la estabilidad de los clusters
 
-Una propiedad deseable de un cluster dado es que éste sea estable a las perturbaciones en los datos de entrada:
+Una propiedad deseable de un cluster dado es que éste sea estable a las perturbaciones en los datos de entrada, de esta manera:
 
 * Pequeños cambios al procesamiento no cambiarán el resultado
-* Esto incrementa la probabilida de que las conclusiones puedan ser replicadas en un estudio independiente
+* Se incrementa la probabilidad de que las conclusiones puedan ser replicadas en un estudio independiente
 
-Uno puede hacer un proceso de **bootstrap** para evaluar la estabilidad de un algoritmo de clustering en un dataset dado
+Uno puede hacer un proceso de **bootstrap** para evaluar la estabilidad de un algoritmo de clustering en un dataset dado y calcular la **coasignación**. La coasignación es la probabilidad de que células elegidas al azar del cluster X y Y sean asignadas al mismo cluster en la réplica del proceso de bootstrap
 
 
 ```r
@@ -366,7 +422,6 @@ coassign <- bootstrapStability(sce.pbmc,
 )
 ```
 
-**Coasignación** es la probabilidad de que células elegidas al azar del cluster X y Y sean asignadas al mismo cluster en la réplica del proceso de bootstrap
 
 
 ```r
@@ -376,14 +431,15 @@ pheatmap(coassign,
 )
 ```
 
-<img src="09-clustering_files/figure-html/unnamed-chunk-13-1.png" width="576" />
+<img src="09-clustering_files/figure-html/unnamed-chunk-17-1.png" width="576" />
 
-*Probabilidad alta de coasignación indica que X no es estable con respecto a su separación de Y.
-*Queremos altas probabilidades de coasignación en la diagonal
+**Probabilidad alta de coasignación** indica que X no es estable con respecto a su separación de Y.
 
-*Bootstraping solo considera el efecto del ruido de muestreo e ignora otros factores que pueden afectar la reproducinilidad (efectos de batch, variación entre los donadores)*
+**Queremos altas probabilidades de coasignación en la diagonal**
 
-*Pobre separación puede ser altamente estable*
+Debes considerar que el bootstraping solo considera el efecto del ruido de muestreo e ignora otros factores que pueden afectar la reproducibilidad (como efectos de batch o variación entre los donadores)
+
+Además, **una pobre separación puede ser altamente estable**
 
 ## Subclustering
 
@@ -404,7 +460,7 @@ plotExpression(sce.pbmc,
 )
 ```
 
-<img src="09-clustering_files/figure-html/unnamed-chunk-14-1.png" width="576" />
+<img src="09-clustering_files/figure-html/unnamed-chunk-18-1.png" width="576" />
 
 *CD3E, CCR7, CD69, y CD44 son marcadores de células T de memoria*. Dentro de las  células T de memoria, ¿dónde están las subpoblaciones CD4+ y CD8+?
 
@@ -412,7 +468,7 @@ plotExpression(sce.pbmc,
 ```r
 # Repeating modelling and PCA on the subset of cells we have
 # identified as memory T-cells (cluster 6).
-memory <- 6
+memory <- 10
 sce.memory <- sce.pbmc[, clust.full == memory]
 dec.memory <- modelGeneVar(sce.memory)
 sce.memory <- denoisePCA(sce.memory,
@@ -433,7 +489,7 @@ plotExpression(sce.memory,
 )
 ```
 
-<img src="09-clustering_files/figure-html/unnamed-chunk-16-1.png" width="576" />
+<img src="09-clustering_files/figure-html/unnamed-chunk-20-1.png" width="576" />
 
 Expresión de CD4 es bajo, por lo tanto, su cambio es modesto, pero la interpretación es clara
 
@@ -478,7 +534,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-12 02:35:27 UTC"
+## [1] "2021-08-12 04:07:57 UTC"
 ```
 
 ```r
@@ -487,7 +543,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 235.670   5.513 237.843
+## 248.698   6.943 250.171
 ```
 
 ```r
