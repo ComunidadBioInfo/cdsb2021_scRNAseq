@@ -199,7 +199,7 @@ _Consulta el calendario de este curso en: <http://bit.ly/calendarcdsb2021>._
 | 11:30-12:30 | Análisis de expresión diferencial | [Leonardo Collado-Torres](http://comunidadbioinfo.github.io/authors/lcollado/) |
 | 12:30-14:00 | Introducción a `Seurat` | [Kevin Emmanuel Meza Landeros](https://twitter.com/KevsGenomic) |
 | 14:00-15:30 | Descanso: comida | |
-| 15:30-17:00 | Plática científica y sesión de preguntas | [Ricardo Ramirez Flores](https://twitter.com/roramirezf94) |
+| 15:30-17:00 | [Plática científica](https://www.dropbox.com/s/59keej5ifbtvjo4/Rico_CDSB_13.08.20.pdf?dl=0) y sesión de preguntas | [Ricardo Ramirez Flores](https://twitter.com/roramirezf94) |
 | 17:00-17:30 | Clausura y recordatorio de la CDSB |      |
 | 17:30-18:00 | (opcional) Interactúa con lxs instructores y ayudantes | |
 
@@ -675,7 +675,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-13 15:13:31.
+Fecha de la última actualización de esta página: 2021-08-13 16:00:00.
 
 ## Licencia  {-}
 
