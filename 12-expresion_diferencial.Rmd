@@ -186,6 +186,26 @@ plotTSNE(merged, colour_by = "tomato", text_by = "label") +
     plotTSNE(merged, colour_by = data.frame(pool = factor(merged$pool)))
 ```
 
+* Podemos usar `facet_wrap()` para reducir el _over-plotting_ y ver mejor la información.
+
+```{r, fig.width=10}
+plotTSNE(merged,
+    colour_by = "tomato",
+    other_fields = c("tomato")
+) + facet_wrap(~tomato)
+```
+
+```{r, fig.width=15}
+plotTSNE(merged,
+    colour_by = data.frame(pool = factor(merged$pool)),
+    other_fields = c("pool")
+) + facet_wrap(~pool)
+```
+
+* También podríamos usar [`Nebulosa`](https://bioconductor.org/packages/Nebulosa).
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">This one is from a while back, but on 2020-11-20 I presented for <a href="https://twitter.com/LIBDrstats?ref_src=twsrc%5Etfw">@LIBDrstats</a> the <a href="https://twitter.com/hashtag/Nebulosa?src=hash&amp;ref_src=twsrc%5Etfw">#Nebulosa</a> <a href="https://twitter.com/Bioconductor?ref_src=twsrc%5Etfw">@Bioconductor</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> package by <a href="https://twitter.com/josealquicirah?ref_src=twsrc%5Etfw">@josealquicirah</a> et al for visualizing sc/snRNA-seq data<br><br>📔 <a href="https://t.co/vWmT398lXG">https://t.co/vWmT398lXG</a><a href="https://t.co/D3TbpOKkwF">https://t.co/D3TbpOKkwF</a> <a href="https://t.co/KFihrSGVUy">https://t.co/KFihrSGVUy</a></p>&mdash; 🇲🇽 Leonardo Collado-Torres (@lcolladotor) <a href="https://twitter.com/lcolladotor/status/1382675331614642177?ref_src=twsrc%5Etfw">April 15, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 ### Nuestros clusters vs los originales
 
 * Las siguientes gráficas nos ayudan a comparar nuestros clusters vs los que encontraron en el estudio original
@@ -282,7 +302,7 @@ with(colData(merged), length(unique(celltype.mapped)) * length(unique(sample)))
 
 * Esto puede afectar nuestro análisis, y pues afecta cuantas variables podremos usar para ajustar
   - Por ejemplo, si agregamos sexo con 2 opciones, duplicaríamos el número teórico de columnas pero tal vez no tengamos suficientes datos
-  - Si lo llevas al extremo, terminas con los mismos datos que con los que empezamos
+  - Si lo llevas al extremo, terminas con los mismos datos de scRNA-seq que con los que empezamos
 
 
 ### Convertir a un objeto nuevo
@@ -323,7 +343,7 @@ y <- y[, !discarded]
 summary(discarded)
 ```
 
-* A continuación eliminaremos genes que tengan bajos nivels de expresión
+* A continuación eliminaremos genes que tengan bajos niveles de expresión
 
 ```{r}
 keep <- filterByExpr(y, group = current$tomato)
@@ -358,6 +378,17 @@ plotMDS(cpm(y, log = TRUE),
     col = ifelse(y$samples$tomato, "red", "blue")
 )
 ```
+
+* Podemos repetir el `plotMDS()` pero con colores por lote (batch) de `pool`.
+
+```{r}
+plotMDS(cpm(y, log = TRUE),
+    col = c("3" = "darkorchid1", "4" = "darkblue", "5" = "tomato4")[factor(y$samples$pool)]
+)
+```
+
+* Acá vemos que si hay diferencias entre lotes, en particular entre el lote de las muestras 1 y 2 y el resto, ya que el eje X explica el 38% de la varianza.
+
 
 ### Modelo estadístico
 
@@ -397,12 +428,13 @@ plotQLDisp(fit)
 
 ```{r}
 res <- glmQLFTest(fit, coef = ncol(design))
-summary(decideTests(res))
+de_n <- summary(decideTests(res))
+de_n
 
 topTags(res)
 ```
 
-* Encontramos 32 y 48 genes diferencialmente expresados por la inyección de td-Tomato.
+* Encontramos `r sum(de_n[c(1, 3), 1])` genes diferencialmente expresados por la inyección de td-Tomato.
 
 
 ### De forma sencilla
@@ -481,13 +513,16 @@ library("ggplot2")
 # [1] "S4Vectors"
 df <- as.data.frame(cur.results.Mesenchyme)
 df$label <- rownames(df)
-p <- ggplot(df,
+p <- ggplot(
+    df,
     aes(
         x = logFC,
         y = -log10(PValue),
         color = FDR < 0.05,
         label = label
-    )) + geom_point()
+    )
+) +
+    geom_point()
 p
 ```
 
@@ -495,6 +530,7 @@ p
 * Si usas el paquete `ggplot2`, tendrás que usar `as.data.frame()` para convertir un objeto `DFrame` a un `data.frame`.
 * Revisa que valores salen en cada eje y en los colores.
 * Tal vez algunos valores tiene alguna transformación.
+* ¿Por qué sale un _warning_ diciendo que eliminamos `r sum(is.na(df$logFC))` puntos? ^[Revisa cuántos genes no pasaron nuestro filtro de expresión cuando lo hicimos de forma manual en nuestro objeto `keep`. Corre otra vez `table(keep)`.]
 
 ### Respuestas
 
