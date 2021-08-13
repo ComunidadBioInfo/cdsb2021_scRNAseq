@@ -236,7 +236,7 @@ plotTSNE(merged, colour_by = "label", text_by = "label") +
 
 * También podemos hacer un heatmap
 
-```{r}
+```{r, fig.height = 8}
 library("bluster")
 pairwiseRand(colLabels(merged), merged$celltype.mapped, "index")
 

@@ -141,7 +141,7 @@ plotTSNE(merged, colour_by = "label", text_by = "label") +
     scale_colour_manual(values = cols_celltype.mapped)
 
 
-## -----------------------------------------------------------------------
+## ---- fig.height = 8----------------------------------------------------
 library("bluster")
 pairwiseRand(colLabels(merged), merged$celltype.mapped, "index")
 
