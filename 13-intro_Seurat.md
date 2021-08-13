@@ -649,19 +649,19 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 ```
 
 ```
-## 19:35:34 UMAP embedding parameters a = 0.9922 b = 1.112
+## 20:19:38 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ```
-## 19:35:34 Read 2638 rows and found 10 numeric columns
+## 20:19:38 Read 2638 rows and found 10 numeric columns
 ```
 
 ```
-## 19:35:34 Using Annoy for neighbor search, n_neighbors = 30
+## 20:19:38 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ```
-## 19:35:34 Building Annoy index with metric = cosine, n_trees = 50
+## 20:19:38 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ```
@@ -674,13 +674,13 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 
 ```
 ## **************************************************|
-## 19:35:34 Writing NN index file to temp file /tmp/RtmpUv1Tht/file49d2dad0f6a
-## 19:35:34 Searching Annoy index using 1 thread, search_k = 3000
-## 19:35:35 Annoy recall = 100%
-## 19:35:36 Commencing smooth kNN distance calibration using 1 thread
-## 19:35:36 Initializing from normalized Laplacian + noise
-## 19:35:37 Commencing optimization for 500 epochs, with 105124 positive edges
-## 19:35:40 Optimization finished
+## 20:19:38 Writing NN index file to temp file /tmp/Rtmp0tTrNK/file4a013381bda
+## 20:19:38 Searching Annoy index using 1 thread, search_k = 3000
+## 20:19:39 Annoy recall = 100%
+## 20:19:39 Commencing smooth kNN distance calibration using 1 thread
+## 20:19:40 Initializing from normalized Laplacian + noise
+## 20:19:40 Commencing optimization for 500 epochs, with 105124 positive edges
+## 20:19:44 Optimization finished
 ```
 
 ```r
@@ -897,7 +897,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-13 19:36:23 UTC"
+## [1] "2021-08-13 20:20:23 UTC"
 ```
 
 ```r
@@ -906,7 +906,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 198.708  14.968 143.661
+## 228.628  12.807 154.431
 ```
 
 ```r
