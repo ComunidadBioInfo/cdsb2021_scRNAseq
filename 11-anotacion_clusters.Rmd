@@ -157,15 +157,15 @@ sce.pbmc$cluster <- factor(clust)
 
 ```{r, warning=FALSE, message=FALSE, eval = FALSE}
 # Human
-SingleR::BlueprintEncodeData()
-SingleR::DatabaseImmuneCellExpressionData()
-SingleR::HumanPrimaryCellAtlasData()
-SingleR::MonacoImmuneData()
-SingleR::NovershternHematopoieticData()
+celldex::BlueprintEncodeData()
+celldex::DatabaseImmuneCellExpressionData()
+celldex::HumanPrimaryCellAtlasData()
+celldex::MonacoImmuneData()
+celldex::NovershternHematopoieticData()
 
 # Mice
-SingleR::ImmGenData()
-SingleR::MouseRNASeqData()
+celldex::ImmGenData()
+celldex::MouseRNASeqData()
 ```
 
 

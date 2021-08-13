@@ -1,4 +1,4 @@
-## ---- warning=FALSE, message=FALSE------------------------------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------
 library("scRNAseq")
 sce.416b <- LunSpikeInData(which = "416b")
 
@@ -233,7 +233,7 @@ sizeFactors(sce) <- scater::librarySizeFactors(sce)
 head(sizeFactors(sce))
 
 
-## ---------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------
 # Creamos un data.frame
 df <- data.frame(x = c(TRUE, FALSE, NA, NA), y = c(12, 34, 56, 78))
 row.names(df) <- letters[1:4]
@@ -266,7 +266,7 @@ bool_info <- df$y < 20 | df$y > 60
 df[bool_info, ]
 
 
-## ---------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------
 library("SingleCellExperiment")
 library("scRNAseq")
 
@@ -282,17 +282,17 @@ col.data <- DataFrame(read.csv(archivo_colData, row.names = 1, header = TRUE, ch
 row.data <- read.csv(archivo_rowData, row.names = 1, header = TRUE, check.names = F)
 
 
-## ---------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------
 int_gen <- c("Angpt1", "Chic2", "Mir503", "Magee2", "Nenf", "Eps15l1", "Hsf2bp", "Gnptg", "Vegfb", "Atmin", "Gad1", "Gad2", "Slc32a1", "Dner", "Slc2a13", "Slc6a1", "Nrxn3")
 
 
-## ---- eval= FALSE-----------------------------------------------------------------------------------
+## ---- eval= FALSE-------------------------------------------------------
 ## library("scater")
 ## 
 ## plotHeatmap(object = tej_min_sce, features = rownames(tej_min_sce), order_columns_by = "level1class")
 
 
-## ---------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------
 sce <- SingleCellExperiment(
     assays = list(counts = counts),
     colData = col.data,
@@ -304,12 +304,12 @@ sce <- scater::logNormCounts(sce)
 sce
 
 
-## ---------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------
 bool_data <- rownames(rowData(sce))
 min_sce <- sce[bool_data %in% int_gen, ]
 
 
-## ---------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------
 tej_int <- min_sce$level1class == "interneurons"
 tej_pyr <- min_sce$level1class == "pyramidal CA1"
 
@@ -317,17 +317,17 @@ tej_pyr <- min_sce$level1class == "pyramidal CA1"
 tej_min_sce <- min_sce[, tej_int | tej_pyr]
 
 
-## ---------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------
 library("scater")
 
 plotHeatmap(object = tej_min_sce, features = rownames(tej_min_sce), order_columns_by = "level1class")
 
 
-## ---------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------
 int_gen <- c("ENSMUSG00000071076", "ENSMUSG00000002076", "ENSMUSG00000024962", "ENSMUSG00000031224", "ENSMSG00000036560", "ENSMUSG00000037499", "ENSMUSG00000006276", "ENSMUSG00000035521", "ENSMUSG00000047388", "ENSMUSG0000051079", "ENSMUSG00000076122", "ENSMUSG00000029229", "ENSMUSG00000022309", "ENSMUSG00000036766", "ENSMUSG00000070880", "ENSMUSG00000026787", "ENSMUSG00000066392", "ENSMUSG00000036298", "ENSMUSG00000037771", "ENSMUSG00000030310")
 
 
-## ---------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------
 # Descarga datos de ejemplo procesados con CellRanger
 # Paréntesis: al usar BiocFileCache solo tenemos que descargar
 #             los datos una vez.
@@ -466,7 +466,7 @@ lun.sce
 lobstr::obj_size(lun.sce) / 1024^2 ## En MB
 
 
-## ---------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------
 ## Información de la sesión de R
 Sys.time()
 proc.time()
