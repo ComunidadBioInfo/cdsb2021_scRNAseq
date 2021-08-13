@@ -1,6 +1,6 @@
 # Estructura e importe de datos
 
-Instructoras: [Elisa Márquez Zavala](https://twitter.com/naielisha), [Citlali Gil Aguillon](http://twitter.com/argininaa)
+Instructoras: [Elisa Márquez Zavala](https://twitter.com/naielisha), [Citlali Gil Aguillon](http://twitter.com/argininaa).
 
 Contenido adaptado de [CDSB2020: Introducción a scRNA-seq, estructura e importe de datos
 ](https://comunidadbioinfo.github.io/cdsb2020/scRNAseq/02-data-infrastructure-and-import.html#1) de [Leonardo Collado Torres](https://twitter.com/lcolladotor). 
