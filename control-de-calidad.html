@@ -32,7 +32,7 @@
 <link rel="prev" href="estructura-e-importe-de-datos.html"/>
 <link rel="next" href="normalización-de-datos.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -53,6 +53,13 @@
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -536,6 +543,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.4.3" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#pre-procesamiento"><i class="fa fa-check"></i><b>12.4.3</b> Pre-procesamiento</a></li>
 <li class="chapter" data-level="12.4.4" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#modelo-estadístico"><i class="fa fa-check"></i><b>12.4.4</b> Modelo estadístico</a></li>
 <li class="chapter" data-level="12.4.5" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#de-forma-sencilla"><i class="fa fa-check"></i><b>12.4.5</b> De forma sencilla</a></li>
+<li class="chapter" data-level="12.4.6" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#ejercicios-1"><i class="fa fa-check"></i><b>12.4.6</b> Ejercicios</a></li>
+<li class="chapter" data-level="12.4.7" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#respuestas-1"><i class="fa fa-check"></i><b>12.4.7</b> Respuestas</a></li>
 </ul></li>
 <li class="chapter" data-level="12.5" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#análisis-de-abundancia-diferencial"><i class="fa fa-check"></i><b>12.5</b> Análisis de abundancia diferencial</a></li>
 <li class="chapter" data-level="12.6" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#comentarios-sobre-la-interpretación"><i class="fa fa-check"></i><b>12.6</b> Comentarios sobre la interpretación</a></li>
@@ -1163,10 +1172,10 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 <h2><span class="header-section-number">5.15</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="control-de-calidad.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb314-2"><a href="control-de-calidad.html#cb314-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-12 22:22:28 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-13 15:19:37 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="control-de-calidad.html#cb316-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 212.785   3.709 233.152</code></pre>
+## 213.057   4.034 226.841</code></pre>
 <div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="control-de-calidad.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb318-2"><a href="control-de-calidad.html#cb318-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -1179,7 +1188,7 @@ Descripción gráfica de <code>ExperimentSubset</code>. Fuente: <a href="http://
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-12                  
+##  date     2021-08-13                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package                * version  date       lib source        

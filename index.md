@@ -144,7 +144,7 @@ BiocManager::version()
 
 
 ```
-## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "celldex", "cowplot", "dplyr", "DropletUtils", "edgeR", "EnsDb.Hsapiens.v86", "ExperimentHub", "ExploreModelMatrix", "fossil", "gert", "gh", "here", "iSEE", "kableExtra", "lobstr", "MouseGastrulationData", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "Polychrome", "postcards", "pryr", "RColorBrewer", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "SingleR", "suncalc", "TENxPBMCData", "usethis", "uwot"))
+## BiocManager::install(c("batchelor", "BiocFileCache", "BiocSingular", "bluster", "celldex", "cowplot", "dplyr", "DropletUtils", "edgeR", "EnsDb.Hsapiens.v86", "ExperimentHub", "ExploreModelMatrix", "fossil", "gert", "ggrepel", "gh", "here", "iSEE", "kableExtra", "lobstr", "MouseGastrulationData", "org.Mm.eg.db", "patchwork", "PCAtools", "pheatmap", "plotly", "Polychrome", "postcards", "pryr", "RColorBrewer", "Rtsne", "scater", "scPipe", "scran", "scRNAseq", "sessioninfo", "Seurat", "SingleCellExperiment", "SingleR", "suncalc", "TENxPBMCData", "usethis", "uwot"))
 ```
 
 
@@ -297,7 +297,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-12                  
+##  date     2021-08-13                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package                * version    date       lib source        
@@ -348,7 +348,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  Cairo                    1.5-12.2   2020-07-07 [1] RSPM (R 4.1.0)
 ##  callr                    3.7.0      2021-04-20 [2] RSPM (R 4.1.0)
 ##  caTools                  1.18.2     2021-03-28 [1] RSPM (R 4.1.0)
-##  cdsb2021scRNAseq         0.99.0     2021-08-12 [1] local         
+##  cdsb2021scRNAseq         0.99.0     2021-08-13 [1] local         
 ##  celldex                  1.2.0      2021-05-20 [1] Bioconductor  
 ##  circlize                 0.4.13     2021-06-09 [1] RSPM (R 4.1.0)
 ##  class                    7.3-19     2021-05-03 [3] CRAN (R 4.1.0)
@@ -675,7 +675,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-12 22:16:21.
+Fecha de la última actualización de esta página: 2021-08-13 15:13:31.
 
 ## Licencia  {-}
 

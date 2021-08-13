@@ -278,6 +278,14 @@ convertir-a-un-objeto-nuevo
 pre-procesamiento
 modelo-estadístico
 de-forma-sencilla
+ejercicios-1
+pseudo-bulking-1
+visualización-de-resultados-de-expresión-diferencial
+respuestas-1
+pseudo-bulking-2
+visualización-de-resultados-de-expresión-diferencial-1
+con-etiquetas
+versión-interactiva
 análisis-de-abundancia-diferencial
 comentarios-sobre-la-interpretación
 detalles-de-la-sesión-de-r-11

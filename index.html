@@ -32,7 +32,7 @@
 
 <link rel="next" href="inauguración-cdsb2021.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -53,6 +53,13 @@
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -536,6 +543,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.4.3" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#pre-procesamiento"><i class="fa fa-check"></i><b>12.4.3</b> Pre-procesamiento</a></li>
 <li class="chapter" data-level="12.4.4" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#modelo-estadístico"><i class="fa fa-check"></i><b>12.4.4</b> Modelo estadístico</a></li>
 <li class="chapter" data-level="12.4.5" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#de-forma-sencilla"><i class="fa fa-check"></i><b>12.4.5</b> De forma sencilla</a></li>
+<li class="chapter" data-level="12.4.6" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#ejercicios-1"><i class="fa fa-check"></i><b>12.4.6</b> Ejercicios</a></li>
+<li class="chapter" data-level="12.4.7" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#respuestas-1"><i class="fa fa-check"></i><b>12.4.7</b> Respuestas</a></li>
 </ul></li>
 <li class="chapter" data-level="12.5" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#análisis-de-abundancia-diferencial"><i class="fa fa-check"></i><b>12.5</b> Análisis de abundancia diferencial</a></li>
 <li class="chapter" data-level="12.6" data-path="análisis-de-expresión-diferencial.html"><a href="análisis-de-expresión-diferencial.html#comentarios-sobre-la-interpretación"><i class="fa fa-check"></i><b>12.6</b> Comentarios sobre la interpretación</a></li>
@@ -701,7 +710,7 @@ Do you want to learn how to analyze <a href="https://twitter.com/hashtag/scRNAse
 <span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># El anterior comando debe mostrar que estás usando la versión 3.13</span></span>
 <span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="index.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Instala los paquetes de R que necesitamos</span></span></code></pre></div>
-<pre><code>## BiocManager::install(c(&quot;batchelor&quot;, &quot;BiocFileCache&quot;, &quot;BiocSingular&quot;, &quot;bluster&quot;, &quot;celldex&quot;, &quot;cowplot&quot;, &quot;dplyr&quot;, &quot;DropletUtils&quot;, &quot;edgeR&quot;, &quot;EnsDb.Hsapiens.v86&quot;, &quot;ExperimentHub&quot;, &quot;ExploreModelMatrix&quot;, &quot;fossil&quot;, &quot;gert&quot;, &quot;gh&quot;, &quot;here&quot;, &quot;iSEE&quot;, &quot;kableExtra&quot;, &quot;lobstr&quot;, &quot;MouseGastrulationData&quot;, &quot;org.Mm.eg.db&quot;, &quot;patchwork&quot;, &quot;PCAtools&quot;, &quot;pheatmap&quot;, &quot;plotly&quot;, &quot;Polychrome&quot;, &quot;postcards&quot;, &quot;pryr&quot;, &quot;RColorBrewer&quot;, &quot;Rtsne&quot;, &quot;scater&quot;, &quot;scPipe&quot;, &quot;scran&quot;, &quot;scRNAseq&quot;, &quot;sessioninfo&quot;, &quot;Seurat&quot;, &quot;SingleCellExperiment&quot;, &quot;SingleR&quot;, &quot;suncalc&quot;, &quot;TENxPBMCData&quot;, &quot;usethis&quot;, &quot;uwot&quot;))</code></pre>
+<pre><code>## BiocManager::install(c(&quot;batchelor&quot;, &quot;BiocFileCache&quot;, &quot;BiocSingular&quot;, &quot;bluster&quot;, &quot;celldex&quot;, &quot;cowplot&quot;, &quot;dplyr&quot;, &quot;DropletUtils&quot;, &quot;edgeR&quot;, &quot;EnsDb.Hsapiens.v86&quot;, &quot;ExperimentHub&quot;, &quot;ExploreModelMatrix&quot;, &quot;fossil&quot;, &quot;gert&quot;, &quot;ggrepel&quot;, &quot;gh&quot;, &quot;here&quot;, &quot;iSEE&quot;, &quot;kableExtra&quot;, &quot;lobstr&quot;, &quot;MouseGastrulationData&quot;, &quot;org.Mm.eg.db&quot;, &quot;patchwork&quot;, &quot;PCAtools&quot;, &quot;pheatmap&quot;, &quot;plotly&quot;, &quot;Polychrome&quot;, &quot;postcards&quot;, &quot;pryr&quot;, &quot;RColorBrewer&quot;, &quot;Rtsne&quot;, &quot;scater&quot;, &quot;scPipe&quot;, &quot;scran&quot;, &quot;scRNAseq&quot;, &quot;sessioninfo&quot;, &quot;Seurat&quot;, &quot;SingleCellExperiment&quot;, &quot;SingleR&quot;, &quot;suncalc&quot;, &quot;TENxPBMCData&quot;, &quot;usethis&quot;, &quot;uwot&quot;))</code></pre>
 </div>
 <div id="horario" class="section level2 unnumbered">
 <h2>Horario</h2>
@@ -1051,7 +1060,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-12                  
+##  date     2021-08-13                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package                * version    date       lib source        
@@ -1102,7 +1111,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ##  Cairo                    1.5-12.2   2020-07-07 [1] RSPM (R 4.1.0)
 ##  callr                    3.7.0      2021-04-20 [2] RSPM (R 4.1.0)
 ##  caTools                  1.18.2     2021-03-28 [1] RSPM (R 4.1.0)
-##  cdsb2021scRNAseq         0.99.0     2021-08-12 [1] local         
+##  cdsb2021scRNAseq         0.99.0     2021-08-13 [1] local         
 ##  celldex                  1.2.0      2021-05-20 [1] Bioconductor  
 ##  circlize                 0.4.13     2021-06-09 [1] RSPM (R 4.1.0)
 ##  class                    7.3-19     2021-05-03 [3] CRAN (R 4.1.0)
@@ -1427,7 +1436,7 @@ Figure 0.3: Especifica que el <em>Repository URL</em> es <code>https://github.co
 ## [1] /__w/_temp/Library
 ## [2] /usr/local/lib/R/site-library
 ## [3] /usr/local/lib/R/library</code></pre>
-<p>Fecha de la última actualización de esta página: 2021-08-12 22:16:21.</p>
+<p>Fecha de la última actualización de esta página: 2021-08-13 15:13:31.</p>
 </div>
 <div id="licencia" class="section level2 unnumbered">
 <h2>Licencia</h2>

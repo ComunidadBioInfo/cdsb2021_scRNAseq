@@ -649,19 +649,19 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 ```
 
 ```
-## 22:54:46 UMAP embedding parameters a = 0.9922 b = 1.112
+## 15:52:23 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ```
-## 22:54:46 Read 2638 rows and found 10 numeric columns
+## 15:52:23 Read 2638 rows and found 10 numeric columns
 ```
 
 ```
-## 22:54:46 Using Annoy for neighbor search, n_neighbors = 30
+## 15:52:23 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ```
-## 22:54:46 Building Annoy index with metric = cosine, n_trees = 50
+## 15:52:23 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ```
@@ -674,13 +674,13 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 
 ```
 ## **************************************************|
-## 22:54:46 Writing NN index file to temp file /tmp/RtmpBvHzhu/file49d2fc2426d
-## 22:54:46 Searching Annoy index using 1 thread, search_k = 3000
-## 22:54:47 Annoy recall = 100%
-## 22:54:48 Commencing smooth kNN distance calibration using 1 thread
-## 22:54:48 Initializing from normalized Laplacian + noise
-## 22:54:48 Commencing optimization for 500 epochs, with 105124 positive edges
-## 22:54:52 Optimization finished
+## 15:52:23 Writing NN index file to temp file /tmp/RtmpMXbS0f/file4a73d5ec6e9
+## 15:52:23 Searching Annoy index using 1 thread, search_k = 3000
+## 15:52:24 Annoy recall = 100%
+## 15:52:25 Commencing smooth kNN distance calibration using 1 thread
+## 15:52:25 Initializing from normalized Laplacian + noise
+## 15:52:25 Commencing optimization for 500 epochs, with 105124 positive edges
+## 15:52:29 Optimization finished
 ```
 
 ```r
@@ -897,7 +897,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-12 22:55:33 UTC"
+## [1] "2021-08-13 15:53:12 UTC"
 ```
 
 ```r
@@ -906,7 +906,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 252.018  13.893 168.281
+## 196.298  13.820 142.957
 ```
 
 ```r
@@ -925,7 +925,7 @@ sessioninfo::session_info()
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-12                  
+##  date     2021-08-13                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package         * version date       lib source        
