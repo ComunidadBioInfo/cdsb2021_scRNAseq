@@ -164,15 +164,15 @@ sce.pbmc$cluster <- factor(clust)
 
 ```r
 # Human
-SingleR::BlueprintEncodeData()
-SingleR::DatabaseImmuneCellExpressionData()
-SingleR::HumanPrimaryCellAtlasData()
-SingleR::MonacoImmuneData()
-SingleR::NovershternHematopoieticData()
+celldex::BlueprintEncodeData()
+celldex::DatabaseImmuneCellExpressionData()
+celldex::HumanPrimaryCellAtlasData()
+celldex::MonacoImmuneData()
+celldex::NovershternHematopoieticData()
 
 # Mice
-SingleR::ImmGenData()
-SingleR::MouseRNASeqData()
+celldex::ImmGenData()
+celldex::MouseRNASeqData()
 ```
 
 
@@ -367,7 +367,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-13 23:01:44 UTC"
+## [1] "2021-08-13 23:03:49 UTC"
 ```
 
 ```r
@@ -376,7 +376,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 203.208   4.917 208.296
+## 206.047   4.517 207.803
 ```
 
 ```r
