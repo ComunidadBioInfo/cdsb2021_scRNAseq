@@ -1,6 +1,6 @@
 # Estructura e importe de datos
 
-Instructoras: [Elisa Márquez Zavala](https://twitter.com/naielisha), [Citlali Gil Aguillon](http://twitter.com/argininaa)
+Instructoras: [Elisa Márquez Zavala](https://twitter.com/naielisha), [Citlali Gil Aguillon](http://twitter.com/argininaa).
 
 Contenido adaptado de [CDSB2020: Introducción a scRNA-seq, estructura e importe de datos
 ](https://comunidadbioinfo.github.io/cdsb2020/scRNAseq/02-data-infrastructure-and-import.html#1) de [Leonardo Collado Torres](https://twitter.com/lcolladotor). 
@@ -879,12 +879,12 @@ reducedDim(sce, "PCA")[1:6, 1:3]
 
 ```
 ##                                             PC1        PC2        PC3
-## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -18.717668  27.598132  -5.939654
-## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1  -2.480705  27.564583  -4.916567
-## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -42.034018   7.552435 -12.126964
-## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1   8.494303 -31.833727 -15.760853
-## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1  49.737390  -4.226795  -6.123169
-## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1  44.528081   3.215503 -10.384939
+## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1  18.717668 -27.598132  -5.939654
+## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1   2.480705 -27.564583  -4.916567
+## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1  42.034018  -7.552435 -12.126964
+## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  -8.494303  31.833727 -15.760853
+## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1 -49.737390   4.226795  -6.123169
+## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 -44.528081  -3.215503 -10.384939
 ```
 
 ```r
@@ -919,13 +919,13 @@ head(reducedDim(sce, "TSNE"))
 ```
 
 ```
-##                                            [,1]       [,2]
-## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -3.4219795  1.2503733
-## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -0.4348518  0.1878648
-## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -5.1473028  2.5343976
-## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1 -5.9632932 -1.3140288
-## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1  6.4031785 -5.2273472
-## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1  7.1829236 -4.8431105
+##                                           [,1]       [,2]
+## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -2.328942  3.4304705
+## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -2.041031  0.4471838
+## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -2.788120  5.7615813
+## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  1.529879  5.0918668
+## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1  5.342740 -8.0297700
+## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1  4.602692 -8.3692072
 ```
 
 ```r
@@ -943,12 +943,12 @@ head(reducedDim(sce, "UMAP"))
 
 ```
 ##                                            [,1]      [,2]
-## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -1.1741473 -3.733017
-## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -0.5663974 -3.013503
-## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -1.1201846 -4.085144
-## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  0.5506809 -2.244453
-## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1  1.3352476 -1.892762
-## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1  1.2282978 -2.047957
+## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -2.2757488 -4.205433
+## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -1.3217068 -3.132766
+## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -2.7545348 -3.517244
+## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1 -1.1050396 -1.944387
+## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1 -0.3163214 -1.077796
+## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 -0.8798228 -1.565879
 ```
 
 ```r
@@ -1679,7 +1679,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-13 20:52:31 UTC"
+## [1] "2021-08-13 22:35:49 UTC"
 ```
 
 ```r
@@ -1688,7 +1688,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##  74.767   4.313 101.644
+##  78.511   4.295 129.603
 ```
 
 ```r
