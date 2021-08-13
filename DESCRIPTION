@@ -29,6 +29,7 @@ Imports:
     ExploreModelMatrix,
     fossil,
     gert,
+    ggrepel,
     gh,
     here,
     iSEE,

@@ -452,6 +452,94 @@ y.Mesenchyme <- metadata(cur.results.Mesenchyme)$y
 plotBCV(y.Mesenchyme)
 ```
 
+### Ejercicios
+
+#### Pseudo-bulking
+
+Hagamos el cálculo de pseudo-bulking de forma manual para la primera muestra de `summed` y el gene con los valores más altos de expresión para esa muestra. Es decir, trabajaremos con el siguiente gene.
+
+```{r}
+colData(summed)[1, ]
+which.max(counts(summed)[, 1])
+```
+
+Usa el objeto `merged` para volver a calcular el siguiente valor.
+
+```{r}
+counts(summed)[which.max(counts(summed)[, 1]), 1]
+```
+
+#### Visualización de resultados de expresión diferencial
+
+Usando los resultados de expresión diferencial para el tipo celular `Mesenchyme`, reproduce la siguiente visualización.
+
+```{r volcano, echo = FALSE}
+library("ggplot2")
+## class(cur.results.Mesenchyme)
+# [1] "DFrame"
+# attr(,"package")
+# [1] "S4Vectors"
+df <- as.data.frame(cur.results.Mesenchyme)
+df$label <- rownames(df)
+p <- ggplot(df,
+    aes(
+        x = logFC,
+        y = -log10(PValue),
+        color = FDR < 0.05,
+        label = label
+    )) + geom_point()
+p
+```
+
+* Explora la información que tenemos en `cur.results.Mesenchyme`.
+* Si usas el paquete `ggplot2`, tendrás que usar `as.data.frame()` para convertir un objeto `DFrame` a un `data.frame`.
+* Revisa que valores salen en cada eje y en los colores.
+* Tal vez algunos valores tiene alguna transformación.
+
+### Respuestas
+
+#### Pseudo-bulking
+
+```{r}
+## Valor esperado
+counts(summed)[which.max(counts(summed)[, 1]), 1]
+
+## Respuesta
+sum(counts(merged)[
+    names(which.max(counts(summed)[, 1])),
+    merged$celltype.mapped == "Allantois" & merged$sample == 5
+])
+
+## Otra versión
+sum(counts(merged)[
+    "Ptma",
+    with(colData(merged), celltype.mapped == "Allantois" & sample == 5)
+])
+```
+
+#### Visualización de resultados de expresión diferencial
+
+```{r}
+<<volcano>>
+```
+
+* Este tipo de gráfica es un _volcano plot_ donde vemos en el eje X el cambio de expresión y en el eje Y el valor p transformado con `-log10(p)`. Usamos colores para marcar los genes con un `FDR < 0.05`.
+
+#### Con etiquetas
+
+* Podemos agregarle etiquetas usando el paquete `ggrepel`.
+
+```{r}
+p + ggrepel::geom_text_repel(data = subset(df, FDR < 0.05))
+```
+
+#### Versión interactiva
+
+* O podemos hacer una versión interactiva con `plotly`.
+
+```{r}
+plotly::ggplotly(p)
+```
 
 ## Análisis de abundancia diferencial
 
