@@ -314,8 +314,8 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  backports                1.2.1      2020-12-09 [1] RSPM (R 4.1.0)
 ##  base                   * 4.1.0      2021-07-29 [3] local         
 ##  base64enc                0.1-3      2015-07-28 [1] RSPM (R 4.1.0)
-##  batchelor                1.8.0      2021-05-19 [1] Bioconductor  
-##  beachmat                 2.8.0      2021-05-19 [1] Bioconductor  
+##  batchelor                1.8.1      2021-08-12 [1] Bioconductor  
+##  beachmat                 2.8.1      2021-08-12 [1] Bioconductor  
 ##  beeswarm                 0.4.0      2021-06-01 [1] RSPM (R 4.1.0)
 ##  benchmarkme              1.0.7      2021-03-21 [1] RSPM (R 4.1.0)
 ##  benchmarkmeData          1.0.4      2020-04-23 [1] RSPM (R 4.1.0)
@@ -675,7 +675,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-13 19:43:08.
+Fecha de la última actualización de esta página: 2021-08-13 20:50:47.
 
 ## Licencia  {-}
 

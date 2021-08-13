@@ -367,7 +367,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-13 20:11:34 UTC"
+## [1] "2021-08-13 21:18:12 UTC"
 ```
 
 ```r
@@ -376,7 +376,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 204.523   4.255 208.865
+## 205.432   4.571 207.300
 ```
 
 ```r
@@ -403,7 +403,7 @@ sessioninfo::session_info()
 ##  AnnotationFilter       * 1.16.0   2021-05-19 [1] Bioconductor  
 ##  AnnotationHub            3.0.1    2021-06-20 [1] Bioconductor  
 ##  assertthat               0.2.1    2019-03-21 [1] RSPM (R 4.1.0)
-##  beachmat                 2.8.0    2021-05-19 [1] Bioconductor  
+##  beachmat                 2.8.1    2021-08-12 [1] Bioconductor  
 ##  beeswarm                 0.4.0    2021-06-01 [1] RSPM (R 4.1.0)
 ##  Biobase                * 2.52.0   2021-05-19 [1] Bioconductor  
 ##  BiocFileCache          * 2.0.0    2021-05-19 [1] Bioconductor  

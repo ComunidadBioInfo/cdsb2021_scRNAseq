@@ -390,6 +390,10 @@ gert::git_push()
 **Recuerden subir sus repositorios al**
 [Google Sheet](https://docs.google.com/spreadsheets/d/13xHCfRb3vATXCFxS1prIA5cYgHNFnzI0GLlcIjtenyw/edit)
 
+* Acá podemos ver varias de las páginas web que hicieron lxs participantes del taller.
+
+<blockquote class="twitter-tweet"><p lang="es" dir="ltr">En el taller de <a href="https://twitter.com/hashtag/scRNAseq?src=hash&amp;ref_src=twsrc%5Etfw">#scRNAseq</a> aprendimos a usar <a href="https://twitter.com/hashtag/postcards?src=hash&amp;ref_src=twsrc%5Etfw">#postcards</a> de <a href="https://twitter.com/seankross?ref_src=twsrc%5Etfw">@seankross</a> y <a href="https://twitter.com/hashtag/usethis?src=hash&amp;ref_src=twsrc%5Etfw">#usethis</a> de <a href="https://twitter.com/JennyBryan?ref_src=twsrc%5Etfw">@JennyBryan</a> <a href="https://twitter.com/jimhester_?ref_src=twsrc%5Etfw">@jimhester_</a> et al para hacer páginas web✨<br><br>El objetivo: aumentar la presencia de Latinxs en la red 🌐<br><br>Instructoras 🦆: Elisa <a href="https://twitter.com/naielisha?ref_src=twsrc%5Etfw">@naielisha</a> y <a href="https://twitter.com/argininaa?ref_src=twsrc%5Etfw">@argininaa</a> <a href="https://twitter.com/hashtag/rstatsES?src=hash&amp;ref_src=twsrc%5Etfw">#rstatsES</a><a href="https://t.co/O6AoxRqp6o">https://t.co/O6AoxRqp6o</a> <a href="https://t.co/rGWb1l38hk">pic.twitter.com/rGWb1l38hk</a></p>&mdash; ComunidadBioInfo (@CDSBMexico) <a href="https://twitter.com/CDSBMexico/status/1426259850523201544?ref_src=twsrc%5Etfw">August 13, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 ## Detalles de la sesión de R
 
 
@@ -399,7 +403,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-13 19:43:09 UTC"
+## [1] "2021-08-13 20:50:48 UTC"
 ```
 
 ```r
@@ -408,7 +412,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-##   0.566   0.125   0.579
+##   0.591   0.098   0.561
 ```
 
 ```r
