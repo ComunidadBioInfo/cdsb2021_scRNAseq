@@ -649,19 +649,19 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 ```
 
 ```
-## 23:18:46 UMAP embedding parameters a = 0.9922 b = 1.112
+## 15:49:35 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ```
-## 23:18:46 Read 2638 rows and found 10 numeric columns
+## 15:49:35 Read 2638 rows and found 10 numeric columns
 ```
 
 ```
-## 23:18:46 Using Annoy for neighbor search, n_neighbors = 30
+## 15:49:35 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ```
-## 23:18:46 Building Annoy index with metric = cosine, n_trees = 50
+## 15:49:35 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ```
@@ -674,13 +674,13 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 
 ```
 ## **************************************************|
-## 23:18:46 Writing NN index file to temp file /tmp/RtmpqJlrbx/file5578f55231
-## 23:18:46 Searching Annoy index using 1 thread, search_k = 3000
-## 23:18:47 Annoy recall = 100%
-## 23:18:47 Commencing smooth kNN distance calibration using 1 thread
-## 23:18:48 Initializing from normalized Laplacian + noise
-## 23:18:48 Commencing optimization for 500 epochs, with 105124 positive edges
-## 23:18:52 Optimization finished
+## 15:49:35 Writing NN index file to temp file /tmp/RtmptOf5dE/file85718fe4172
+## 15:49:35 Searching Annoy index using 1 thread, search_k = 3000
+## 15:49:36 Annoy recall = 100%
+## 15:49:36 Commencing smooth kNN distance calibration using 1 thread
+## 15:49:37 Initializing from normalized Laplacian + noise
+## 15:49:37 Commencing optimization for 500 epochs, with 105124 positive edges
+## 15:49:40 Optimization finished
 ```
 
 ```r
@@ -897,7 +897,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-13 23:19:32 UTC"
+## [1] "2021-08-19 15:50:19 UTC"
 ```
 
 ```r
@@ -906,7 +906,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 189.420  14.356 137.137
+## 164.156  12.161 120.738
 ```
 
 ```r
@@ -925,7 +925,7 @@ sessioninfo::session_info()
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-13                  
+##  date     2021-08-19                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package         * version date       lib source        
@@ -935,7 +935,7 @@ sessioninfo::session_info()
 ##  bit               4.0.4   2020-08-04 [1] RSPM (R 4.1.0)
 ##  bit64             4.0.5   2020-08-30 [1] RSPM (R 4.1.0)
 ##  blob              1.2.2   2021-07-23 [1] RSPM (R 4.1.0)
-##  bookdown          0.22    2021-04-22 [1] RSPM (R 4.1.0)
+##  bookdown          0.23    2021-08-13 [1] RSPM (R 4.1.0)
 ##  bslib             0.2.5.1 2021-05-18 [1] RSPM (R 4.1.0)
 ##  cachem            1.0.5   2021-05-15 [2] RSPM (R 4.1.0)
 ##  cli               3.0.1   2021-07-17 [2] RSPM (R 4.1.0)
@@ -959,7 +959,7 @@ sessioninfo::session_info()
 ##  filelock          1.0.2   2018-10-05 [1] RSPM (R 4.1.0)
 ##  fitdistrplus      1.1-5   2021-05-28 [1] RSPM (R 4.1.0)
 ##  future            1.21.0  2020-12-10 [1] RSPM (R 4.1.0)
-##  future.apply      1.7.0   2021-01-04 [1] RSPM (R 4.1.0)
+##  future.apply      1.8.1   2021-08-10 [1] RSPM (R 4.1.0)
 ##  generics          0.1.0   2020-10-31 [1] RSPM (R 4.1.0)
 ##  ggplot2           3.3.5   2021-06-25 [1] RSPM (R 4.1.0)
 ##  ggrepel           0.9.1   2021-01-15 [1] RSPM (R 4.1.0)
@@ -1041,7 +1041,7 @@ sessioninfo::session_info()
 ##  spatstat.utils    2.2-0   2021-06-14 [1] RSPM (R 4.1.0)
 ##  stringi           1.7.3   2021-07-16 [2] RSPM (R 4.1.0)
 ##  stringr           1.4.0   2019-02-10 [2] RSPM (R 4.1.0)
-##  survival          3.2-11  2021-04-26 [3] CRAN (R 4.1.0)
+##  survival          3.2-12  2021-08-13 [3] RSPM (R 4.1.0)
 ##  tensor            1.5     2012-05-05 [1] RSPM (R 4.1.0)
 ##  tibble            3.1.3   2021-07-23 [2] RSPM (R 4.1.0)
 ##  tidyr             1.1.3   2021-03-03 [1] RSPM (R 4.1.0)

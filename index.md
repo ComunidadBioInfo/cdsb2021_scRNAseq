@@ -297,7 +297,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-13                  
+##  date     2021-08-19                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package                * version    date       lib source        
@@ -331,14 +331,14 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  BiocStyle                2.20.2     2021-06-17 [1] Bioconductor  
 ##  biocthis                 1.2.0      2021-05-19 [1] Bioconductor  
 ##  BiocVersion              3.13.1     2021-03-19 [2] Bioconductor  
-##  biomaRt                  2.48.2     2021-07-01 [1] Bioconductor  
+##  biomaRt                  2.48.3     2021-08-15 [1] Bioconductor  
 ##  Biostrings               2.60.2     2021-08-05 [1] Bioconductor  
 ##  bit                      4.0.4      2020-08-04 [1] RSPM (R 4.1.0)
 ##  bit64                    4.0.5      2020-08-30 [1] RSPM (R 4.1.0)
 ##  bitops                   1.0-7      2021-04-24 [1] RSPM (R 4.1.0)
 ##  blob                     1.2.2      2021-07-23 [1] RSPM (R 4.1.0)
 ##  bluster                  1.2.1      2021-05-27 [1] Bioconductor  
-##  bookdown                 0.22       2021-04-22 [1] RSPM (R 4.1.0)
+##  bookdown                 0.23       2021-08-13 [1] RSPM (R 4.1.0)
 ##  boot                     1.3-28     2021-05-03 [3] CRAN (R 4.1.0)
 ##  brew                     1.0-6      2011-04-13 [2] RSPM (R 4.1.0)
 ##  brio                     1.1.2      2021-04-23 [2] RSPM (R 4.1.0)
@@ -348,7 +348,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  Cairo                    1.5-12.2   2020-07-07 [1] RSPM (R 4.1.0)
 ##  callr                    3.7.0      2021-04-20 [2] RSPM (R 4.1.0)
 ##  caTools                  1.18.2     2021-03-28 [1] RSPM (R 4.1.0)
-##  cdsb2021scRNAseq         0.99.0     2021-08-13 [1] local         
+##  cdsb2021scRNAseq         0.99.0     2021-08-19 [1] local         
 ##  celldex                  1.2.0      2021-05-20 [1] Bioconductor  
 ##  circlize                 0.4.13     2021-06-09 [1] RSPM (R 4.1.0)
 ##  class                    7.3-19     2021-05-03 [3] CRAN (R 4.1.0)
@@ -410,15 +410,15 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  futile.logger            1.4.3      2016-07-10 [1] RSPM (R 4.1.0)
 ##  futile.options           1.0.1      2018-04-20 [1] RSPM (R 4.1.0)
 ##  future                   1.21.0     2020-12-10 [1] RSPM (R 4.1.0)
-##  future.apply             1.7.0      2021-01-04 [1] RSPM (R 4.1.0)
+##  future.apply             1.8.1      2021-08-10 [1] RSPM (R 4.1.0)
 ##  genefilter               1.74.0     2021-05-19 [1] Bioconductor  
 ##  generics                 0.1.0      2020-10-31 [1] RSPM (R 4.1.0)
 ##  GenomeInfoDb             1.28.1     2021-07-01 [1] Bioconductor  
 ##  GenomeInfoDbData         1.2.6      2021-07-29 [1] Bioconductor  
 ##  GenomicAlignments        1.28.0     2021-05-19 [1] Bioconductor  
-##  GenomicFeatures          1.44.0     2021-05-19 [1] Bioconductor  
+##  GenomicFeatures          1.44.1     2021-08-15 [1] Bioconductor  
 ##  GenomicRanges            1.44.0     2021-05-19 [1] Bioconductor  
-##  gert                     1.3.1      2021-06-23 [2] RSPM (R 4.1.0)
+##  gert                     1.3.2      2021-08-16 [2] RSPM (R 4.1.0)
 ##  GetoptLong               1.0.5      2020-12-15 [1] RSPM (R 4.1.0)
 ##  GGally                   2.1.2      2021-06-21 [1] RSPM (R 4.1.0)
 ##  ggbeeswarm               0.6.0      2017-08-07 [1] RSPM (R 4.1.0)
@@ -551,7 +551,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  RcppEigen                0.3.3.9.1  2020-12-17 [1] RSPM (R 4.1.0)
 ##  RcppHNSW                 0.3.0      2020-09-06 [1] RSPM (R 4.1.0)
 ##  RcppProgress             0.4.2      2020-02-06 [1] RSPM (R 4.1.0)
-##  RCurl                    1.98-1.3   2021-03-16 [1] RSPM (R 4.1.0)
+##  RCurl                    1.98-1.4   2021-08-17 [1] RSPM (R 4.1.0)
 ##  registry                 0.5-1      2019-03-05 [1] RSPM (R 4.1.0)
 ##  rematch2                 2.1.2      2020-05-01 [2] RSPM (R 4.1.0)
 ##  remotes                  2.4.0      2021-06-02 [1] RSPM (R 4.1.0)
@@ -581,7 +581,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  RSQLite                  2.2.7      2021-04-22 [1] RSPM (R 4.1.0)
 ##  rstudioapi               0.13       2020-11-12 [2] RSPM (R 4.1.0)
 ##  rsvd                     1.0.5      2021-04-16 [1] RSPM (R 4.1.0)
-##  rtracklayer              1.52.0     2021-05-19 [1] Bioconductor  
+##  rtracklayer              1.52.1     2021-08-15 [1] Bioconductor  
 ##  Rtsne                    0.15       2018-11-10 [1] RSPM (R 4.1.0)
 ##  rversions                2.1.1      2021-05-31 [2] RSPM (R 4.1.0)
 ##  rvest                    1.0.1      2021-07-26 [1] RSPM (R 4.1.0)
@@ -632,7 +632,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  styler                   1.5.1      2021-07-13 [1] RSPM (R 4.1.0)
 ##  SummarizedExperiment     1.22.0     2021-05-19 [1] Bioconductor  
 ##  suncalc                  0.5.0      2019-04-03 [1] RSPM (R 4.1.0)
-##  survival                 3.2-11     2021-04-26 [3] CRAN (R 4.1.0)
+##  survival                 3.2-12     2021-08-13 [3] RSPM (R 4.1.0)
 ##  svglite                  2.0.0      2021-02-20 [1] RSPM (R 4.1.0)
 ##  sys                      3.4        2020-07-23 [2] RSPM (R 4.1.0)
 ##  systemfonts              1.0.2      2021-05-11 [1] RSPM (R 4.1.0)
@@ -659,7 +659,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ##  whisker                  0.4        2019-08-28 [2] RSPM (R 4.1.0)
 ##  withr                    2.4.2      2021-04-18 [2] RSPM (R 4.1.0)
 ##  xfun                     0.25       2021-08-06 [2] RSPM (R 4.1.0)
-##  XML                      3.99-0.6   2021-03-16 [1] RSPM (R 4.1.0)
+##  XML                      3.99-0.7   2021-08-17 [1] RSPM (R 4.1.0)
 ##  xml2                     1.3.2      2020-04-23 [2] RSPM (R 4.1.0)
 ##  xopen                    1.0.0      2018-09-17 [2] RSPM (R 4.1.0)
 ##  xtable                   1.8-4      2019-04-21 [1] RSPM (R 4.1.0)
@@ -675,7 +675,7 @@ sessioninfo::session_info(pkgs, include_base = TRUE)
 ## [3] /usr/local/lib/R/library
 ```
 
-Fecha de la última actualización de esta página: 2021-08-13 22:40:51.
+Fecha de la última actualización de esta página: 2021-08-19 15:15:46.
 
 ## Licencia  {-}
 

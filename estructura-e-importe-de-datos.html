@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 Estructura e importe de datos | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor</title>
   <meta name="description" content="4 Estructura e importe de datos | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 Estructura e importe de datos | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,7 @@
 <link rel="prev" href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html"/>
 <link rel="next" href="control-de-calidad.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -1223,12 +1223,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="estructura-e-importe-de-datos.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Accesa la matriz de PCA del componente (slot) reducedDims</span></span>
 <span id="cb131-2"><a href="estructura-e-importe-de-datos.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">reducedDim</span>(sce, <span class="st">&quot;PCA&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div>
 <pre><code>##                                             PC1        PC2        PC3
-## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1  18.717668  27.598132  -5.939654
-## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1   2.480705  27.564583  -4.916567
-## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1  42.034018   7.552435 -12.126964
-## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  -8.494303 -31.833727 -15.760853
-## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1 -49.737390  -4.226795  -6.123169
-## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 -44.528081   3.215503 -10.384939</code></pre>
+## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -18.717668  27.598132  -5.939654
+## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1  -2.480705  27.564583  -4.916567
+## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -42.034018   7.552435 -12.126964
+## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1   8.494303 -31.833727 -15.760853
+## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1  49.737390  -4.226795  -6.123169
+## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1  44.528081   3.215503 -10.384939</code></pre>
 <div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="estructura-e-importe-de-datos.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo, agrega una representación de los logcounts en t-SNE</span></span>
 <span id="cb133-2"><a href="estructura-e-importe-de-datos.html#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="co"># NOTA: aprenderemos más sobre t-SNE después</span></span>
 <span id="cb133-3"><a href="estructura-e-importe-de-datos.html#cb133-3" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> scater<span class="sc">::</span><span class="fu">runTSNE</span>(sce)</span>
@@ -1251,13 +1251,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## altExpNames(2): ERCC SIRV</code></pre>
 <div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="estructura-e-importe-de-datos.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Accesa a la matriz de t-SNE en el componente (slot) de reducedDims</span></span>
 <span id="cb135-2"><a href="estructura-e-importe-de-datos.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">reducedDim</span>(sce, <span class="st">&quot;TSNE&quot;</span>))</span></code></pre></div>
-<pre><code>##                                            [,1]        [,2]
-## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1  0.5568235  5.68933692
-## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -0.8967879  1.97563143
-## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1  2.4316635  6.97060465
-## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  5.6272718  0.05118545
-## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1 -6.0159125 -5.71717453
-## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 -7.0569643 -6.08703781</code></pre>
+<pre><code>##                                            [,1]       [,2]
+## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -7.3181642  2.2840490
+## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -3.6464118 -0.8207964
+## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -7.6479076  4.6719923
+## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1  0.7775377  4.4127326
+## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1  8.0179911 -6.4277429
+## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1  7.8965473 -7.8963465</code></pre>
 <div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="estructura-e-importe-de-datos.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo: agrega una representación &#39;manual&#39; de los logcounts en UMAP</span></span>
 <span id="cb137-2"><a href="estructura-e-importe-de-datos.html#cb137-2" aria-hidden="true" tabindex="-1"></a><span class="co"># NOTA: aprenderemos más sobre UMAP después y de una forma más sencilla de</span></span>
 <span id="cb137-3"><a href="estructura-e-importe-de-datos.html#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="co">#       calcularla</span></span>
@@ -1268,13 +1268,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb137-8"><a href="estructura-e-importe-de-datos.html#cb137-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb137-9"><a href="estructura-e-importe-de-datos.html#cb137-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Accesa a la matriz de UMAP desde el componente (slot) reducedDims</span></span>
 <span id="cb137-10"><a href="estructura-e-importe-de-datos.html#cb137-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">reducedDim</span>(sce, <span class="st">&quot;UMAP&quot;</span>))</span></code></pre></div>
-<pre><code>##                                            [,1]        [,2]
-## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -3.4821581 -0.33319079
-## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -2.5041556 -1.16626464
-## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -3.3740523  0.07708276
-## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1 -1.2282229 -1.18647562
-## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1 -0.4487172 -1.77893125
-## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 -0.8058608 -1.45928680</code></pre>
+<pre><code>##                                            [,1]      [,2]
+## SLX-9555.N701_S502.C89V9ANXX.s_1.r_1 -2.9007656 -1.724959
+## SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 -1.9364034 -1.711854
+## SLX-9555.N701_S504.C89V9ANXX.s_1.r_1 -3.2449543 -1.109732
+## SLX-9555.N701_S505.C89V9ANXX.s_1.r_1 -0.3859376 -1.198746
+## SLX-9555.N701_S506.C89V9ANXX.s_1.r_1  0.2112636 -1.497831
+## SLX-9555.N701_S507.C89V9ANXX.s_1.r_1 -0.1741835 -1.455346</code></pre>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="estructura-e-importe-de-datos.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Enumera los resultados de reducción de dimensiones en nuestro objeto SCE</span></span>
 <span id="cb139-2"><a href="estructura-e-importe-de-datos.html#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="fu">reducedDims</span>(sce)</span></code></pre></div>
 <pre><code>## List of length 3
@@ -1712,10 +1712,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">4.7</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="estructura-e-importe-de-datos.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb229-2"><a href="estructura-e-importe-de-datos.html#cb229-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-13 22:43:17 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-19 15:17:33 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="estructura-e-importe-de-datos.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  87.808   5.272 143.001</code></pre>
+##  75.942   4.503 105.138</code></pre>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="estructura-e-importe-de-datos.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb233-2"><a href="estructura-e-importe-de-datos.html#cb233-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -1728,7 +1728,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-13                  
+##  date     2021-08-19                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package                * version  date       lib source        
@@ -1747,14 +1747,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  BiocParallel             1.26.1   2021-07-04 [1] Bioconductor  
 ##  BiocSingular             1.8.1    2021-06-08 [1] Bioconductor  
 ##  BiocVersion              3.13.1   2021-03-19 [2] Bioconductor  
-##  biomaRt                  2.48.2   2021-07-01 [1] Bioconductor  
+##  biomaRt                  2.48.3   2021-08-15 [1] Bioconductor  
 ##  Biostrings               2.60.2   2021-08-05 [1] Bioconductor  
 ##  bit                      4.0.4    2020-08-04 [1] RSPM (R 4.1.0)
 ##  bit64                    4.0.5    2020-08-30 [1] RSPM (R 4.1.0)
 ##  bitops                   1.0-7    2021-04-24 [1] RSPM (R 4.1.0)
 ##  blob                     1.2.2    2021-07-23 [1] RSPM (R 4.1.0)
 ##  bluster                  1.2.1    2021-05-27 [1] Bioconductor  
-##  bookdown                 0.22     2021-04-22 [1] RSPM (R 4.1.0)
+##  bookdown                 0.23     2021-08-13 [1] RSPM (R 4.1.0)
 ##  bslib                    0.2.5.1  2021-05-18 [1] RSPM (R 4.1.0)
 ##  cachem                   1.0.5    2021-05-15 [2] RSPM (R 4.1.0)
 ##  cli                      3.0.1    2021-07-17 [2] RSPM (R 4.1.0)
@@ -1785,7 +1785,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  GenomeInfoDb           * 1.28.1   2021-07-01 [1] Bioconductor  
 ##  GenomeInfoDbData         1.2.6    2021-07-29 [1] Bioconductor  
 ##  GenomicAlignments        1.28.0   2021-05-19 [1] Bioconductor  
-##  GenomicFeatures        * 1.44.0   2021-05-19 [1] Bioconductor  
+##  GenomicFeatures        * 1.44.1   2021-08-15 [1] Bioconductor  
 ##  GenomicRanges          * 1.44.0   2021-05-19 [1] Bioconductor  
 ##  GGally                   2.1.2    2021-06-21 [1] RSPM (R 4.1.0)
 ##  ggbeeswarm               0.6.0    2017-08-07 [1] RSPM (R 4.1.0)
@@ -1842,7 +1842,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  rappdirs                 0.3.3    2021-01-31 [2] RSPM (R 4.1.0)
 ##  RColorBrewer             1.1-2    2014-12-07 [1] RSPM (R 4.1.0)
 ##  Rcpp                     1.0.7    2021-07-07 [2] RSPM (R 4.1.0)
-##  RCurl                    1.98-1.3 2021-03-16 [1] RSPM (R 4.1.0)
+##  RCurl                    1.98-1.4 2021-08-17 [1] RSPM (R 4.1.0)
 ##  reshape                  0.8.8    2018-10-23 [1] RSPM (R 4.1.0)
 ##  restfulr                 0.0.13   2017-08-06 [1] RSPM (R 4.1.0)
 ##  rhdf5                    2.36.0   2021-05-19 [1] Bioconductor  
@@ -1857,7 +1857,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  RSpectra                 0.16-0   2019-12-01 [1] RSPM (R 4.1.0)
 ##  RSQLite                  2.2.7    2021-04-22 [1] RSPM (R 4.1.0)
 ##  rsvd                     1.0.5    2021-04-16 [1] RSPM (R 4.1.0)
-##  rtracklayer              1.52.0   2021-05-19 [1] Bioconductor  
+##  rtracklayer              1.52.1   2021-08-15 [1] Bioconductor  
 ##  Rtsne                    0.15     2018-11-10 [1] RSPM (R 4.1.0)
 ##  S4Vectors              * 0.30.0   2021-05-19 [1] Bioconductor  
 ##  sass                     0.4.0    2021-05-12 [1] RSPM (R 4.1.0)
@@ -1886,7 +1886,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  viridisLite              0.4.0    2021-04-13 [1] RSPM (R 4.1.0)
 ##  withr                    2.4.2    2021-04-18 [2] RSPM (R 4.1.0)
 ##  xfun                     0.25     2021-08-06 [2] RSPM (R 4.1.0)
-##  XML                      3.99-0.6 2021-03-16 [1] RSPM (R 4.1.0)
+##  XML                      3.99-0.7 2021-08-17 [1] RSPM (R 4.1.0)
 ##  xml2                     1.3.2    2020-04-23 [2] RSPM (R 4.1.0)
 ##  xtable                   1.8-4    2019-04-21 [1] RSPM (R 4.1.0)
 ##  XVector                  0.32.0   2021-05-19 [1] Bioconductor  
@@ -1955,6 +1955,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

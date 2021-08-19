@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>13 Introducción a Seurat | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor</title>
   <meta name="description" content="13 Introducción a Seurat | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="13 Introducción a Seurat | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,7 @@
 <link rel="prev" href="análisis-de-expresión-diferencial.html"/>
 <link rel="next" href="plática-de-ricardo-ramirez.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -958,20 +958,20 @@ La función Read10X() lee en la salida de cellranger de 10X (de donde se obtuvie
 <pre><code>## Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
 ## To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
 ## This message will be shown once per session</code></pre>
-<pre><code>## 23:18:46 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>## 23:18:46 Read 2638 rows and found 10 numeric columns</code></pre>
-<pre><code>## 23:18:46 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>## 23:18:46 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>## 15:49:35 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>## 15:49:35 Read 2638 rows and found 10 numeric columns</code></pre>
+<pre><code>## 15:49:35 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>## 15:49:35 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 <pre><code>## 0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
 <pre><code>## [----|----|----|----|----|----|----|----|----|----|</code></pre>
 <pre><code>## **************************************************|
-## 23:18:46 Writing NN index file to temp file /tmp/RtmpqJlrbx/file5578f55231
-## 23:18:46 Searching Annoy index using 1 thread, search_k = 3000
-## 23:18:47 Annoy recall = 100%
-## 23:18:47 Commencing smooth kNN distance calibration using 1 thread
-## 23:18:48 Initializing from normalized Laplacian + noise
-## 23:18:48 Commencing optimization for 500 epochs, with 105124 positive edges
-## 23:18:52 Optimization finished</code></pre>
+## 15:49:35 Writing NN index file to temp file /tmp/RtmptOf5dE/file85718fe4172
+## 15:49:35 Searching Annoy index using 1 thread, search_k = 3000
+## 15:49:36 Annoy recall = 100%
+## 15:49:36 Commencing smooth kNN distance calibration using 1 thread
+## 15:49:37 Initializing from normalized Laplacian + noise
+## 15:49:37 Commencing optimization for 500 epochs, with 105124 positive edges
+## 15:49:40 Optimization finished</code></pre>
 <div class="sourceCode" id="cb751"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb751-1"><a href="introducción-a-seurat.html#cb751-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that you can set `label = TRUE` or use the LabelClusters function to help label</span></span>
 <span id="cb751-2"><a href="introducción-a-seurat.html#cb751-2" aria-hidden="true" tabindex="-1"></a><span class="co"># individual clusters</span></span>
 <span id="cb751-3"><a href="introducción-a-seurat.html#cb751-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(pbmc, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>)</span></code></pre></div>
@@ -1089,10 +1089,10 @@ Como otra opción para acelerar estos cálculos, se puede configurar el número 
 <h2><span class="header-section-number">13.15</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="introducción-a-seurat.html#cb777-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb777-2"><a href="introducción-a-seurat.html#cb777-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-13 23:19:32 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-19 15:50:19 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="introducción-a-seurat.html#cb779-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-## 189.420  14.356 137.137</code></pre>
+## 164.156  12.161 120.738</code></pre>
 <div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="introducción-a-seurat.html#cb781-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb781-2"><a href="introducción-a-seurat.html#cb781-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -1105,7 +1105,7 @@ Como otra opción para acelerar estos cálculos, se puede configurar el número 
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-13                  
+##  date     2021-08-19                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package         * version date       lib source        
@@ -1115,7 +1115,7 @@ Como otra opción para acelerar estos cálculos, se puede configurar el número 
 ##  bit               4.0.4   2020-08-04 [1] RSPM (R 4.1.0)
 ##  bit64             4.0.5   2020-08-30 [1] RSPM (R 4.1.0)
 ##  blob              1.2.2   2021-07-23 [1] RSPM (R 4.1.0)
-##  bookdown          0.22    2021-04-22 [1] RSPM (R 4.1.0)
+##  bookdown          0.23    2021-08-13 [1] RSPM (R 4.1.0)
 ##  bslib             0.2.5.1 2021-05-18 [1] RSPM (R 4.1.0)
 ##  cachem            1.0.5   2021-05-15 [2] RSPM (R 4.1.0)
 ##  cli               3.0.1   2021-07-17 [2] RSPM (R 4.1.0)
@@ -1139,7 +1139,7 @@ Como otra opción para acelerar estos cálculos, se puede configurar el número 
 ##  filelock          1.0.2   2018-10-05 [1] RSPM (R 4.1.0)
 ##  fitdistrplus      1.1-5   2021-05-28 [1] RSPM (R 4.1.0)
 ##  future            1.21.0  2020-12-10 [1] RSPM (R 4.1.0)
-##  future.apply      1.7.0   2021-01-04 [1] RSPM (R 4.1.0)
+##  future.apply      1.8.1   2021-08-10 [1] RSPM (R 4.1.0)
 ##  generics          0.1.0   2020-10-31 [1] RSPM (R 4.1.0)
 ##  ggplot2           3.3.5   2021-06-25 [1] RSPM (R 4.1.0)
 ##  ggrepel           0.9.1   2021-01-15 [1] RSPM (R 4.1.0)
@@ -1221,7 +1221,7 @@ Como otra opción para acelerar estos cálculos, se puede configurar el número 
 ##  spatstat.utils    2.2-0   2021-06-14 [1] RSPM (R 4.1.0)
 ##  stringi           1.7.3   2021-07-16 [2] RSPM (R 4.1.0)
 ##  stringr           1.4.0   2019-02-10 [2] RSPM (R 4.1.0)
-##  survival          3.2-11  2021-04-26 [3] CRAN (R 4.1.0)
+##  survival          3.2-12  2021-08-13 [3] RSPM (R 4.1.0)
 ##  tensor            1.5     2012-05-05 [1] RSPM (R 4.1.0)
 ##  tibble            3.1.3   2021-07-23 [2] RSPM (R 4.1.0)
 ##  tidyr             1.1.3   2021-03-03 [1] RSPM (R 4.1.0)
@@ -1296,6 +1296,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

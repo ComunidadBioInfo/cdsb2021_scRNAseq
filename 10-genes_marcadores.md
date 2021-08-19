@@ -611,7 +611,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2021-08-13 23:06:54 UTC"
+## [1] "2021-08-19 15:39:06 UTC"
 ```
 
 ```r
@@ -620,7 +620,7 @@ proc.time()
 
 ```
 ##    user  system elapsed 
-## 370.476   5.013 372.397
+## 337.015   4.850 338.857
 ```
 
 ```r
@@ -639,7 +639,7 @@ sessioninfo::session_info()
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-13                  
+##  date     2021-08-19                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package              * version  date       lib source        
@@ -655,14 +655,14 @@ sessioninfo::session_info()
 ##  BiocNeighbors          1.10.0   2021-05-19 [1] Bioconductor  
 ##  BiocParallel           1.26.1   2021-07-04 [1] Bioconductor  
 ##  BiocSingular           1.8.1    2021-06-08 [1] Bioconductor  
-##  biomaRt                2.48.2   2021-07-01 [1] Bioconductor  
+##  biomaRt                2.48.3   2021-08-15 [1] Bioconductor  
 ##  Biostrings             2.60.2   2021-08-05 [1] Bioconductor  
 ##  bit                    4.0.4    2020-08-04 [1] RSPM (R 4.1.0)
 ##  bit64                  4.0.5    2020-08-30 [1] RSPM (R 4.1.0)
 ##  bitops                 1.0-7    2021-04-24 [1] RSPM (R 4.1.0)
 ##  blob                   1.2.2    2021-07-23 [1] RSPM (R 4.1.0)
 ##  bluster                1.2.1    2021-05-27 [1] Bioconductor  
-##  bookdown               0.22     2021-04-22 [1] RSPM (R 4.1.0)
+##  bookdown               0.23     2021-08-13 [1] RSPM (R 4.1.0)
 ##  bslib                  0.2.5.1  2021-05-18 [1] RSPM (R 4.1.0)
 ##  cachem                 1.0.5    2021-05-15 [2] RSPM (R 4.1.0)
 ##  cli                    3.0.1    2021-07-17 [2] RSPM (R 4.1.0)
@@ -693,7 +693,7 @@ sessioninfo::session_info()
 ##  GenomeInfoDb         * 1.28.1   2021-07-01 [1] Bioconductor  
 ##  GenomeInfoDbData       1.2.6    2021-07-29 [1] Bioconductor  
 ##  GenomicAlignments      1.28.0   2021-05-19 [1] Bioconductor  
-##  GenomicFeatures      * 1.44.0   2021-05-19 [1] Bioconductor  
+##  GenomicFeatures      * 1.44.1   2021-08-15 [1] Bioconductor  
 ##  GenomicRanges        * 1.44.0   2021-05-19 [1] Bioconductor  
 ##  ggbeeswarm             0.6.0    2017-08-07 [1] RSPM (R 4.1.0)
 ##  ggplot2              * 3.3.5    2021-06-25 [1] RSPM (R 4.1.0)
@@ -741,7 +741,7 @@ sessioninfo::session_info()
 ##  rappdirs               0.3.3    2021-01-31 [2] RSPM (R 4.1.0)
 ##  RColorBrewer           1.1-2    2014-12-07 [1] RSPM (R 4.1.0)
 ##  Rcpp                   1.0.7    2021-07-07 [2] RSPM (R 4.1.0)
-##  RCurl                  1.98-1.3 2021-03-16 [1] RSPM (R 4.1.0)
+##  RCurl                  1.98-1.4 2021-08-17 [1] RSPM (R 4.1.0)
 ##  restfulr               0.0.13   2017-08-06 [1] RSPM (R 4.1.0)
 ##  rhdf5                  2.36.0   2021-05-19 [1] Bioconductor  
 ##  rhdf5filters           1.4.0    2021-05-19 [1] Bioconductor  
@@ -754,7 +754,7 @@ sessioninfo::session_info()
 ##  RSQLite                2.2.7    2021-04-22 [1] RSPM (R 4.1.0)
 ##  rstudioapi             0.13     2020-11-12 [2] RSPM (R 4.1.0)
 ##  rsvd                   1.0.5    2021-04-16 [1] RSPM (R 4.1.0)
-##  rtracklayer            1.52.0   2021-05-19 [1] Bioconductor  
+##  rtracklayer            1.52.1   2021-08-15 [1] Bioconductor  
 ##  Rtsne                  0.15     2018-11-10 [1] RSPM (R 4.1.0)
 ##  rvest                  1.0.1    2021-07-26 [1] RSPM (R 4.1.0)
 ##  S4Vectors            * 0.30.0   2021-05-19 [1] Bioconductor  
@@ -784,7 +784,7 @@ sessioninfo::session_info()
 ##  webshot                0.5.2    2019-11-22 [1] RSPM (R 4.1.0)
 ##  withr                  2.4.2    2021-04-18 [2] RSPM (R 4.1.0)
 ##  xfun                   0.25     2021-08-06 [2] RSPM (R 4.1.0)
-##  XML                    3.99-0.6 2021-03-16 [1] RSPM (R 4.1.0)
+##  XML                    3.99-0.7 2021-08-17 [1] RSPM (R 4.1.0)
 ##  xml2                   1.3.2    2020-04-23 [2] RSPM (R 4.1.0)
 ##  XVector                0.32.0   2021-05-19 [1] Bioconductor  
 ##  yaml                   2.2.1    2020-02-01 [2] RSPM (R 4.1.0)

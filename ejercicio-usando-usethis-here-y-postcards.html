@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 Ejercicio usando usethis, here y postcards | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor</title>
   <meta name="description" content="2 Ejercicio usando usethis, here y postcards | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 Ejercicio usando usethis, here y postcards | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,7 @@
 <link rel="prev" href="introducción-a-r-y-rstudio.html"/>
 <link rel="next" href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -903,10 +903,10 @@ En el taller de <a href="https://twitter.com/hashtag/scRNAseq?src=hash&amp;ref_s
 <h2><span class="header-section-number">2.5</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb41-2"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-13 22:40:53 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-19 15:15:47 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.755   0.079   0.722</code></pre>
+##   0.544   0.141   0.570</code></pre>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb45-2"><a href="ejercicio-usando-usethis-here-y-postcards.html#cb45-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -919,11 +919,11 @@ En el taller de <a href="https://twitter.com/hashtag/scRNAseq?src=hash&amp;ref_s
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-13                  
+##  date     2021-08-19                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package     * version date       lib source        
-##  bookdown      0.22    2021-04-22 [1] RSPM (R 4.1.0)
+##  bookdown      0.23    2021-08-13 [1] RSPM (R 4.1.0)
 ##  bslib         0.2.5.1 2021-05-18 [1] RSPM (R 4.1.0)
 ##  cli           3.0.1   2021-07-17 [2] RSPM (R 4.1.0)
 ##  digest        0.6.27  2020-10-24 [2] RSPM (R 4.1.0)
@@ -1006,6 +1006,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

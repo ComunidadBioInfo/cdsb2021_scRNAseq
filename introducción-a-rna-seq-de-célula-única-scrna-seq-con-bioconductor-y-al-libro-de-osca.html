@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Introducción a RNA-seq de célula única (scRNA-seq) con Bioconductor y al libro de OSCA | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor</title>
   <meta name="description" content="3 Introducción a RNA-seq de célula única (scRNA-seq) con Bioconductor y al libro de OSCA | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Introducción a RNA-seq de célula única (scRNA-seq) con Bioconductor y al libro de OSCA | Análisis de datos transcriptómicos de célula única (scRNA-seq) con R y Bioconductor" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,7 @@
 <link rel="prev" href="ejercicio-usando-usethis-here-y-postcards.html"/>
 <link rel="next" href="estructura-e-importe-de-datos.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -808,10 +808,10 @@ Teach online data science, bioinformatics, or other computational skills interac
 <h2><span class="header-section-number">3.3</span> Detalles de la sesión de R</h2>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Información de la sesión de R</span></span>
 <span id="cb47-2"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-08-13 22:40:54 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2021-08-19 15:15:48 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.469   0.123   0.469</code></pre>
+##   0.395   0.118   0.399</code></pre>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
 <span id="cb51-2"><a href="introducción-a-rna-seq-de-célula-única-scrna-seq-con-bioconductor-y-al-libro-de-osca.html#cb51-2" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -824,11 +824,11 @@ Teach online data science, bioinformatics, or other computational skills interac
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       UTC                         
-##  date     2021-08-13                  
+##  date     2021-08-19                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  package     * version date       lib source        
-##  bookdown      0.22    2021-04-22 [1] RSPM (R 4.1.0)
+##  bookdown      0.23    2021-08-13 [1] RSPM (R 4.1.0)
 ##  bslib         0.2.5.1 2021-05-18 [1] RSPM (R 4.1.0)
 ##  cli           3.0.1   2021-07-17 [2] RSPM (R 4.1.0)
 ##  digest        0.6.27  2020-10-24 [2] RSPM (R 4.1.0)
@@ -910,6 +910,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
