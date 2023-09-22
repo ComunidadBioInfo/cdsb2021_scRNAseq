@@ -322,12 +322,12 @@ col = "grey80"
 ## ----pbmc_chrMT_ayuda-------------------------------------------------------------------------------
 sce.pbmc <- sce.pbmc[, which(e.out$FDR <= 0.001)]
 is.mito <- grep("^MT-", rowData(sce.pbmc)$Symbol)
-sce.pmbc <- addPerCellQC(sce.pbmc, subsets = list(MT = is.mito))
+sce.pbmc <- addPerCellQC(sce.pbmc, subsets = list(MT = is.mito))
 discard.mito <-
-    isOutlier(sce.pmbc$subsets_MT_percent, type = "higher")
+    isOutlier(sce.pbmc$subsets_MT_percent, type = "higher")
 plot(
-    sce.pmbc$sum,
-    sce.pmbc$subsets_MT_percent,
+    sce.pbmc$sum,
+    sce.pbmc$subsets_MT_percent,
     log = "x",
     xlab = "Total count",
     ylab = "Mitochondrial %"
